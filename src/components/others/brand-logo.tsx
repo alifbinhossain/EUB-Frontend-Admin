@@ -4,10 +4,11 @@ import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface IBrandLogoProps {
+	name: string;
 	className?: string;
 }
 
-const BrandLogo: React.FC<IBrandLogoProps> = ({ className, ...props }) => {
+const BrandLogo: React.FC<IBrandLogoProps> = ({ className, name, ...props }) => {
 	const route = sidebarRoutes[0];
 
 	return (
@@ -19,7 +20,7 @@ const BrandLogo: React.FC<IBrandLogoProps> = ({ className, ...props }) => {
 			to={route.path!}
 			{...props}
 		>
-			FZL
+			{name}
 		</NavLink>
 	);
 };

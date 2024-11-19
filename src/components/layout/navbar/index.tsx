@@ -23,7 +23,7 @@ const Navbar = () => {
 						homePage && 'border-none'
 					)}
 				>
-					<BrandLogo className={'w-fit text-primary'} />
+					<BrandLogo name='EUB' className={'w-fit text-primary'} />
 					<SidebarMobileToggle />
 				</div>
 

@@ -14,7 +14,7 @@ const SidebarHeader = () => {
 	return (
 		<div>
 			<div className='relative border-b border-border/10 px-4 py-6'>
-				<BrandLogo />
+				<BrandLogo name='EUB' />
 
 				<span className='absolute right-4 top-4 hidden text-xs italic text-secondary-light md:block'>V2.0</span>
 
