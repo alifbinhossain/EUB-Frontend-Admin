@@ -58,7 +58,7 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { invalidateQuery: invalidateUsers } = useHrUsers();
+	const { invalidateQuery: invalidateUsers } = useHrUsers({});
 	const { invalidateQuery: invalidateDesignations } = useHrDesignations();
 	const { data } = useHrDepartmentsByUUID<IDepartmentTableData>(updatedData?.uuid as string);
 
