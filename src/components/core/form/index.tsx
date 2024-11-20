@@ -1,6 +1,7 @@
 import FormAddEditWrapper from './add-edit-wrapper';
 import FormCheckbox from './checkbox';
 import FormDatePicker from './date-picker';
+import FormFile from './file';
 import FormDynamicFields from './form-dynamic-fields';
 import FormInput from './input';
 import FormJoinInputSelect from './join-input-select';
@@ -18,6 +19,7 @@ const Form = {
 	DatePicker: FormDatePicker,
 	Checkbox: FormCheckbox,
 	Select: FormSelect,
+	File: FormFile,
 	MultiSelect: FormMultiSelect,
 	ReactSelect: FormReactSelect,
 	Submit: FormSubmit,

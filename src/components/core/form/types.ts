@@ -1,6 +1,7 @@
 //
 import React from 'react';
 import { CheckboxProps } from '@radix-ui/react-checkbox';
+import { Accept } from 'react-dropzone';
 import { ControllerFieldState, ControllerRenderProps, UseFormReturn, UseFormStateReturn } from 'react-hook-form';
 
 import { CalendarProps } from '@/components/ui/calendar';
@@ -126,6 +127,21 @@ export interface FormInputProps extends InputProps {
 	optional?: boolean;
 	icon?: React.ReactNode;
 	disableLabel?: boolean;
+}
+
+// * form-file
+export interface FormFileProps {
+	field: ControllerRenderProps<any, any>;
+	fieldState: ControllerFieldState;
+	formState: UseFormStateReturn<any>;
+	label?: string;
+	subLabel?: string;
+	optional?: boolean;
+	disableLabel?: boolean;
+	disabled?: boolean;
+	className?: string;
+	multi?: boolean;
+	accept?: Accept;
 }
 
 // * form-date-picker

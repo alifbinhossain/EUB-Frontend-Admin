@@ -17,7 +17,7 @@ const NewsPortal = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, refetch } = useNewsPortal<INewsPortalTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('News Portal', url, 'news_portal'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('News Portal', url, 'news__portal'), [url]);
 
 	const handleCreate = () => navigate('/news-portal/add');
 

@@ -4,12 +4,12 @@ import FieldActionButton from '@/components/buttons/field-action';
 import { FieldDef } from '@core/form/form-dynamic-fields/types';
 import { IFormSelectOption } from '@core/form/types';
 
-import { ITest3 } from '../../_config/schema';
+import { INews_Portal } from '../../_config/schema';
 
 interface IGenerateFieldDefsProps {
 	copy: (index: number) => void;
 	remove: (index: number) => void;
-	watch?: UseFormWatch<ITest3>; // TODO: Update Schema Type
+	watch?: UseFormWatch<INews_Portal>; // TODO: Update Schema Type
 }
 
 const useGenerateFieldDefs = ({ copy, remove, watch }: IGenerateFieldDefsProps): FieldDef[] => {

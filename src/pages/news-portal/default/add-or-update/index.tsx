@@ -22,15 +22,15 @@ const AddOrUpdate = () => {
 	const { id } = useParams();
 	const isUpdate = !!id;
 
-	const { url: testUrl, updateData, postData, deleteData } = useNewsPortal();
+	const { url: newsPortalUrl, updateData, postData, deleteData } = useNewsPortal();
 
-	const { data, invalidateQuery: invalidateTestDetails } = useNewsPortalByUUID(id as string);
+	const { data, invalidateQuery: invalidateNewsPortalDetails } = useNewsPortalByUUID(id as string);
 
 	const form = useRHF(NEWS_PORTAL_SCHEMA, NEWS_PORTAL_NULL);
 
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
-		name: 'document',
+		name: 'documents',
 	});
 
 	useEffect(() => {
@@ -42,25 +42,22 @@ const AddOrUpdate = () => {
 
 	async function onSubmit(values: INews_Portal) {
 		/* -------------------------------------------------------------------------- */
-		/*                                 UPDATE TEST                                */
+		/*                             UPDATE NEWS PORTAL                             */
 		/* -------------------------------------------------------------------------- */
 		if (isUpdate) {
-			// TODO: Update variable name ⬇️
-			const test_data = {
+			const data = {
 				...values,
 				updated_at: getDateTime(),
 			};
 
-			// TODO: Update variable name and url ⬇️
-			const test_promise = await updateData.mutateAsync({
-				url: `${testUrl}/${id}`,
-				updatedData: test_data,
+			const news_promise = await updateData.mutateAsync({
+				url: `${newsPortalUrl}/${id}`,
+				updatedData: data,
 				isOnCloseNeeded: false,
 			});
 
-			// TODO: Update variable name ⬇️
-			const employees_promise = values.employees.map((item) => {
-				if (item.uuid === undefined) {
+			const documents_promise = values.documents.map((item) => {
+				if (item instanceof FileList) {
 					const newData = {
 						...item,
 						purchase_description_uuid: id,
@@ -88,11 +85,10 @@ const AddOrUpdate = () => {
 			});
 
 			try {
-				// TODO: Update promises name ⬇️
-				await Promise.all([test_promise, ...employees_promise])
-					.then(() => form.reset(TEST_NULL_3)) // TODO: Update reset data
+				await Promise.all([news_promise, ...documents_promise])
+					.then(() => form.reset(NEWS_PORTAL_NULL))
 					.then(() => {
-						invalidateTestDetails(); // TODO: Update invalidate query
+						invalidateNewsPortalDetails();
 						// navigate(`/test/type3/${id}`);
 					});
 			} catch (err) {
@@ -103,46 +99,41 @@ const AddOrUpdate = () => {
 		}
 
 		/* -------------------------------------------------------------------------- */
-		/*                                  ADD TEST                                  */
+		/*                               ADD NEWS PORTAL                              */
 		/* -------------------------------------------------------------------------- */
-		const new_test_uuid = nanoid(); // TODO: Update variable name
+		const new_news_uuid = nanoid();
 		const created_at = getDateTime();
 		const created_by = user?.uuid;
 
-		// Create purchase description
-		//TODO: Update variable name ⬇️
-		const test_data = {
+		// Create news
+		const data = {
 			...values,
-			uuid: new_test_uuid,
+			uuid: new_news_uuid,
 			created_at,
 			created_by,
 		};
 
 		// delete purchase field from data to be sent
-		// TODO: Update field name (e.g. employees)
-		if ('employees' in test_data) {
-			delete (test_data as { employees?: any })['employees'];
+		if ('documents' in data) {
+			delete (data as { documents?: any })['documents'];
 		}
 
-		// TODO: Update url and variable name ⬇️
-		const test_promise = await postData.mutateAsync({
-			url: testUrl,
-			newData: test_data,
+		const news_promise = await postData.mutateAsync({
+			url: newsPortalUrl,
+			newData: data,
 			isOnCloseNeeded: false,
 		});
 
-		// Create purchase entries
-		// TODO: Update field name (e.g. employees) and variable name ⬇️
-		const employees_entries = [...values.employees].map((item) => ({
+		// Create document entries
+		const documents_entries = [...values.documents].map((item) => ({
 			...item,
-			test_uuid: new_test_uuid,
+			test_uuid: new_news_uuid,
 			uuid: nanoid(),
 			created_at,
 			created_by,
 		}));
 
-		// TODO: Update url and variable name ⬇️
-		const employees_entries_promise = employees_entries.map((item) =>
+		const documents_promise = documents_entries.map((item) =>
 			postData.mutateAsync({
 				url: '/purchase/entry',
 				newData: item,
@@ -151,29 +142,26 @@ const AddOrUpdate = () => {
 		);
 
 		try {
-			// TODO: Update promises name ⬇️
-			await Promise.all([test_promise, ...employees_entries_promise])
-				.then(() => form.reset(TEST_NULL_3)) // TODO: Update reset data
+			await Promise.all([news_promise, ...documents_promise])
+				.then(() => form.reset(NEWS_PORTAL_NULL))
 				.then(() => {
-					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/test/type3`); // TODO: Update navigate url
+					invalidateNewsPortalDetails();
+					navigate(`/test/type3`);
 				});
 		} catch (err) {
 			console.error(`Error with Promise.all: ${err}`);
 		}
 	}
 
-	const handleAdd = () => {
-		// TODO: Update field names
-
-		append({
-			name: '',
-			email: '',
-			phone: '',
-			designation: '',
-			department: '',
-		});
-	};
+	// const handleAdd = () => {
+	// 	append({
+	// 		name: '',
+	// 		email: '',
+	// 		phone: '',
+	// 		designation: '',
+	// 		department: '',
+	// 	});
+	// };
 
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
@@ -185,7 +173,7 @@ const AddOrUpdate = () => {
 		if (fields[index].id) {
 			setDeleteItem({
 				id: fields[index].id, // TODO: Update field id
-				name: fields[index].name, // TODO: Update field name
+				name: fields[index].id, // TODO: Update field name
 			});
 		} else {
 			remove(index);
@@ -193,26 +181,26 @@ const AddOrUpdate = () => {
 	};
 
 	// Copy Handler
-	const handleCopy = (index: number) => {
-		// TODO: Update fields ⬇️
-		const field = form.watch('employees')[index];
-		append({
-			name: field.name,
-			email: field.email,
-			phone: field.phone,
-			designation: field.designation,
-			department: field.department,
-		});
-	};
+	// const handleCopy = (index: number) => {
+	// 	// TODO: Update fields ⬇️
+	// 	const field = form.watch('employees')[index];
+	// 	append({
+	// 		name: field.name,
+	// 		email: field.email,
+	// 		phone: field.phone,
+	// 		designation: field.designation,
+	// 		department: field.department,
+	// 	});
+	// };
 
 	return (
 		<CoreForm.AddEditWrapper
-			title={isUpdate ? 'Edit Test' : 'Add Test'} // TODO: Update title
+			title={isUpdate ? 'Edit News' : 'Add News'} // TODO: Update title
 			form={form}
 			onSubmit={onSubmit}
 		>
 			<Header />
-			<CoreForm.DynamicFields
+			{/* <CoreForm.DynamicFields
 				title='Employees' // TODO: Update title
 				form={form}
 				fieldName='employees' // TODO: Update field name
@@ -224,9 +212,9 @@ const AddOrUpdate = () => {
 				})}
 				handleAdd={handleAdd}
 				fields={fields}
-			/>
+			/> */}
 
-			<Suspense fallback={null}>
+			{/* <Suspense fallback={null}>
 				<DeleteModal
 					{...{
 						deleteItem,
@@ -235,15 +223,15 @@ const AddOrUpdate = () => {
 						deleteData,
 						onClose: () => {
 							form.setValue(
-								'employees', // TODO: Update field name
+								'documents', // TODO: Update field name
 								form
-									.getValues('employees') // TODO: Update field name
+									.getValues('documents') // TODO: Update field name
 									.filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}
 				/>
-			</Suspense>
+			</Suspense> */}
 		</CoreForm.AddEditWrapper>
 	);
 };

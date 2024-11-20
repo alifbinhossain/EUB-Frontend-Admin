@@ -14,7 +14,7 @@ export const NEWS_PORTAL_SCHEMA = z.object({
 	subtitle: STRING_OPTIONAL,
 	description: STRING_REQUIRED,
 	content: JSON_STRING_REQUIRED,
-	document: z.array(IMAGE_FILE.or(z.object({ type: STRING_REQUIRED, url: STRING_REQUIRED }))),
+	documents: z.array(IMAGE_FILE.or(z.object({ uuid: STRING_REQUIRED, type: STRING_REQUIRED, url: STRING_REQUIRED }))),
 	cover_image: IMAGE_FILE.or(STRING_OPTIONAL),
 	published_date: DATE_REQUIRED,
 	remarks: STRING_NULLABLE,
