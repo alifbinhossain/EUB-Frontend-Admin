@@ -1,7 +1,9 @@
 import { z } from 'zod';
-import { zu } from 'zod_utilz';
 
 export const handelNumberDefaultValue = (value: number) => (value === null ? undefined : value);
+
+export const MAX_IMAGE_FILE_SIZE = 5000000;
+export const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 // STRING
 export const STRING = (message = 'Required', typeError = 'Invalid String') =>
@@ -45,8 +47,17 @@ export const EMAIL_REQUIRED = EMAIL('Required');
 export const EMAIL_OPTIONAL = EMAIL().optional();
 export const EMAIL_NULLABLE = EMAIL().nullable();
 
+// FILE TYPE
+export const IMAGE_FILE = z
+	.instanceof(FileList)
+	.refine((files) => files?.[0]?.size <= MAX_IMAGE_FILE_SIZE, `Max image size is 5MB.`)
+	.refine(
+		(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+		'Only .jpg, .jpeg, .png and .webp formats are supported.'
+	);
+
 // JSON STRING
-export const JSON_STRING = zu.json();
+export const JSON_STRING = z.unknown();
 export const JSON_STRING_REQUIRED = JSON_STRING;
 export const JSON_STRING_OPTION = JSON_STRING.optional();
 
