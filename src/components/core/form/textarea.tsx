@@ -16,8 +16,9 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
 	return (
 		<FormItem className='space-y-1.5'>
 			{!disableLabel && (
-				<FormLabel className='flex items-center justify-between capitalize'>
-					{label || field.name} {optional ? <span className='text-xs'>(Optional)</span> : ''}
+				<FormLabel className='flex items-center gap-1 capitalize'>
+					{label || field.name}{' '}
+					{optional ? <span className='text-xs text-muted-foreground'>(Optional)</span> : ''}
 				</FormLabel>
 			)}
 			<FormControl>

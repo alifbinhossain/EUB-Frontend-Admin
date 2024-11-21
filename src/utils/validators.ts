@@ -4,6 +4,16 @@ export const handelNumberDefaultValue = (value: number) => (value === null ? und
 
 export const MAX_IMAGE_FILE_SIZE = 5000000;
 export const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+export const ACCEPTED_ALL_FILE_TYPES = [
+	'image/jpeg',
+	'image/jpg',
+	'image/png',
+	'image/webp',
+	'video/mp4',
+	'video/webm',
+	'video/ogg',
+	'application/pdf',
+];
 
 // STRING
 export const STRING = (message = 'Required', typeError = 'Invalid String') =>
@@ -47,14 +57,23 @@ export const EMAIL_REQUIRED = EMAIL('Required');
 export const EMAIL_OPTIONAL = EMAIL().optional();
 export const EMAIL_NULLABLE = EMAIL().nullable();
 
-// FILE TYPE
+// FILE TYPE (IMAGE)
 export const IMAGE_FILE = z
-	.any()
-	.refine((files) => files?.[0]?.size <= MAX_IMAGE_FILE_SIZE, `Max image size is 5MB.`)
+	.instanceof(File)
+	.refine((file: File) => file?.size <= MAX_IMAGE_FILE_SIZE, `Max image size is 5MB.`)
 	.refine(
-		(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+		(file: File) => ACCEPTED_IMAGE_TYPES.includes(file.type),
 		'Only .jpg, .jpeg, .png and .webp formats are supported.'
 	);
+
+export const IMAGE_FILE_REQUIRED = IMAGE_FILE;
+export const IMAGE_FILE_OPTIONAL = IMAGE_FILE.optional();
+
+// FILE TYPE (ALL)
+export const ALL_FILE = z
+	.any()
+	.refine((file: File) => file?.size <= MAX_IMAGE_FILE_SIZE, `Max file size is 5MB.`)
+	.refine((file: File) => ACCEPTED_ALL_FILE_TYPES.includes(file.type), 'Unsupported file type.');
 
 // JSON STRING
 export const JSON_STRING = z.unknown();

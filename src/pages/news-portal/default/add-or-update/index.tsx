@@ -12,7 +12,6 @@ import { getDateTime } from '@/utils';
 import { useNewsPortal, useNewsPortalByUUID } from '../../_config/query';
 import { INews_Portal, NEWS_PORTAL_NULL, NEWS_PORTAL_SCHEMA } from '../../_config/schema';
 import Header from './header';
-import useGenerateFieldDefs from './useGenerateFieldDefs';
 
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
@@ -101,14 +100,14 @@ const AddOrUpdate = () => {
 		/* -------------------------------------------------------------------------- */
 		/*                               ADD NEWS PORTAL                              */
 		/* -------------------------------------------------------------------------- */
-		const new_news_uuid = nanoid();
+		const new_news_portal_uuid = nanoid();
 		const created_at = getDateTime();
 		const created_by = user?.uuid;
 
 		// Create news
 		const data = {
 			...values,
-			uuid: new_news_uuid,
+			uuid: new_news_portal_uuid,
 			created_at,
 			created_by,
 		};
@@ -126,8 +125,8 @@ const AddOrUpdate = () => {
 
 		// Create document entries
 		const documents_entries = [...values.documents].map((item) => ({
-			...item,
-			test_uuid: new_news_uuid,
+			documents: item,
+			news_portal_uuid: new_news_portal_uuid,
 			uuid: nanoid(),
 			created_at,
 			created_by,
@@ -135,7 +134,7 @@ const AddOrUpdate = () => {
 
 		const documents_promise = documents_entries.map((item) =>
 			postData.mutateAsync({
-				url: '/purchase/entry',
+				url: '/news/documents-entry',
 				newData: item,
 				isOnCloseNeeded: false,
 			})
@@ -146,7 +145,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(NEWS_PORTAL_NULL))
 				.then(() => {
 					invalidateNewsPortalDetails();
-					navigate(`/test/type3`);
+					navigate(`/news-portal`);
 				});
 		} catch (err) {
 			console.error(`Error with Promise.all: ${err}`);
@@ -200,19 +199,6 @@ const AddOrUpdate = () => {
 			onSubmit={onSubmit}
 		>
 			<Header />
-			{/* <CoreForm.DynamicFields
-				title='Employees' // TODO: Update title
-				form={form}
-				fieldName='employees' // TODO: Update field name
-				// TODO: Go to _generateFieldDefs.tsx and update field name
-				fieldDefs={useGenerateFieldDefs({
-					copy: handleCopy,
-					remove: handleRemove,
-					watch: form.watch,
-				})}
-				handleAdd={handleAdd}
-				fields={fields}
-			/> */}
 
 			{/* <Suspense fallback={null}>
 				<DeleteModal

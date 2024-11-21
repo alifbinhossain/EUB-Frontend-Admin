@@ -1,11 +1,11 @@
 import React from 'react';
 import { Eye, File, FileImage, Trash2, Video } from 'lucide-react';
-import { useFormContext, useFormState } from 'react-hook-form';
 
+import TooltipWrapper from '@/components/others/tooltip-wrapper';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useFormField } from '@/components/ui/form';
 
+import { useFormFile } from '.';
 import { IFileType } from '../types';
 
 const FileType: React.FC<{ type: IFileType }> = ({ type }) => {
@@ -22,7 +22,9 @@ const FileType: React.FC<{ type: IFileType }> = ({ type }) => {
 	}
 };
 
-const FilePreview: React.FC<{ file: File }> = ({ file }) => {
+const FilePreview: React.FC<{ file: File; index?: number }> = ({ file, index }) => {
+	const { onDelete } = useFormFile();
+
 	const type = file.type.split('/')[0] as IFileType;
 
 	return (
@@ -32,7 +34,9 @@ const FilePreview: React.FC<{ file: File }> = ({ file }) => {
 		>
 			<div className='flex items-center gap-2'>
 				<FileType type={type} />
-				<p className='max-w-[260px] truncate text-sm'>{file.name}</p>
+				<TooltipWrapper message={file.name}>
+					<p className='max-w-[260px] truncate text-sm'>{file.name}</p>
+				</TooltipWrapper>
 			</div>
 
 			<div className='flex items-center'>
@@ -65,7 +69,13 @@ const FilePreview: React.FC<{ file: File }> = ({ file }) => {
 						</div>
 					</DialogContent>
 				</Dialog>
-				<Button size={'icon'} variant='ghost-destructive' className='rounded-full'>
+				<Button
+					onClick={() => onDelete(index)}
+					type='button'
+					size={'icon'}
+					variant='ghost-destructive'
+					className='rounded-full'
+				>
 					<Trash2 className='size-4' />
 				</Button>
 			</div>
@@ -81,10 +91,10 @@ const Preview: React.FC<PreviewProps> = ({ files }) => {
 	if (Array.isArray(files)) {
 		return (
 			<ul className='mt-2 space-y-2'>
-				{Array.from(files).map((file) => {
+				{Array.from(files).map((file, index) => {
 					return (
 						<li key={file.name}>
-							<FilePreview file={file} />
+							<FilePreview file={file} index={index} />
 						</li>
 					);
 				})}

@@ -24,7 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
 				<FormLabel className='flex items-center justify-between capitalize'>
 					<span>
 						{label || field.name.replace('_', ' ')}{' '}
-						{optional ? <span className='text-xs'>(Optional)</span> : ''}
+						{optional ? <span className='text-xs text-muted-foreground'>(Optional)</span> : ''}
 					</span>
 					{subLabel && <span className='text-xs'>{subLabel}</span>}
 				</FormLabel>

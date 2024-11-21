@@ -144,6 +144,21 @@ export interface FormFileProps {
 	className?: string;
 	multi?: boolean;
 	accept?: Accept;
+	placeholder?: string;
+	onDelete: (index?: number) => void;
+}
+
+// * form-editor
+export interface FormEditorProps {
+	field: ControllerRenderProps<any, any>;
+	fieldState: ControllerFieldState;
+	formState: UseFormStateReturn<any>;
+	label?: string;
+	subLabel?: string;
+	placeholder?: string;
+	optional?: boolean;
+	icon?: React.ReactNode;
+	disableLabel?: boolean;
 }
 
 // * form-date-picker
