@@ -21,7 +21,7 @@ const FormFile: React.FC<FormFileProps> = ({
 	accept,
 }) => {
 	const [onDrag, setOnDrag] = useState(false);
-	const files: FileList | null = field.value ? field.value : null;
+	const files: FileList | File | null = field.value ? field.value : null;
 
 	return (
 		<FormItem className='space-y-1.5'>
@@ -45,7 +45,9 @@ const FormFile: React.FC<FormFileProps> = ({
 						onDragLeave={() => setOnDrag(false)}
 						onDropAccepted={() => setOnDrag(false)}
 						onDropRejected={() => setOnDrag(false)}
-						onDrop={(acceptedFiles) => field.onChange(acceptedFiles)}
+						onDrop={(acceptedFiles) => {
+							field.onChange(acceptedFiles);
+						}}
 					>
 						{({ getRootProps, getInputProps }) => (
 							<div
@@ -61,7 +63,7 @@ const FormFile: React.FC<FormFileProps> = ({
 							</div>
 						)}
 					</Dropzone>
-					{files && files.length > 0 ? <Preview files={files} /> : null}
+					{files ? <Preview files={files} /> : null}
 				</div>
 			</FormControl>
 			<FormMessage />

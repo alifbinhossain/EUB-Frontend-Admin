@@ -129,6 +129,8 @@ export interface FormInputProps extends InputProps {
 	disableLabel?: boolean;
 }
 
+export type IFileType = 'application' | 'image' | 'video';
+
 // * form-file
 export interface FormFileProps {
 	field: ControllerRenderProps<any, any>;

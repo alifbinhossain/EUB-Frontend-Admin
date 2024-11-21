@@ -49,7 +49,7 @@ export const EMAIL_NULLABLE = EMAIL().nullable();
 
 // FILE TYPE
 export const IMAGE_FILE = z
-	.instanceof(FileList)
+	.any()
 	.refine((files) => files?.[0]?.size <= MAX_IMAGE_FILE_SIZE, `Max image size is 5MB.`)
 	.refine(
 		(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
