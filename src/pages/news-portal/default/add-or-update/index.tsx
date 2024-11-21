@@ -49,50 +49,50 @@ const AddOrUpdate = () => {
 				updated_at: getDateTime(),
 			};
 
-			const news_promise = await updateData.mutateAsync({
-				url: `${newsPortalUrl}/${id}`,
-				updatedData: data,
-				isOnCloseNeeded: false,
-			});
+			// const news_promise = await updateData.mutateAsync({
+			// 	url: `${newsPortalUrl}/${id}`,
+			// 	updatedData: data,
+			// 	isOnCloseNeeded: false,
+			// });
 
-			const documents_promise = values.documents.map((item) => {
-				if (item instanceof FileList) {
-					const newData = {
-						...item,
-						purchase_description_uuid: id,
-						created_at: getDateTime(),
-						created_by: user?.uuid,
-						uuid: nanoid(),
-					};
+			// const documents_promise = values.documents.map((item) => {
+			// 	if (item instanceof FileList) {
+			// 		const newData = {
+			// 			...item,
+			// 			purchase_description_uuid: id,
+			// 			created_at: getDateTime(),
+			// 			created_by: user?.uuid,
+			// 			uuid: nanoid(),
+			// 		};
 
-					return postData.mutateAsync({
-						url: '/test/entry', // TODO: Update url
-						newData: newData,
-						isOnCloseNeeded: false,
-					});
-				} else {
-					const updatedData = {
-						...item,
-						updated_at: getDateTime(),
-					};
-					return updateData.mutateAsync({
-						url: `/test/entry/${item.uuid}`, // TODO: Update url
-						updatedData,
-						isOnCloseNeeded: false,
-					});
-				}
-			});
+			// 		return postData.mutateAsync({
+			// 			url: '/test/entry', // TODO: Update url
+			// 			newData: newData,
+			// 			isOnCloseNeeded: false,
+			// 		});
+			// 	} else {
+			// 		const updatedData = {
+			// 			...item,
+			// 			updated_at: getDateTime(),
+			// 		};
+			// 		return updateData.mutateAsync({
+			// 			url: `/test/entry/${item.uuid}`, // TODO: Update url
+			// 			updatedData,
+			// 			isOnCloseNeeded: false,
+			// 		});
+			// 	}
+			// });
 
-			try {
-				await Promise.all([news_promise, ...documents_promise])
-					.then(() => form.reset(NEWS_PORTAL_NULL))
-					.then(() => {
-						invalidateNewsPortalDetails();
-						// navigate(`/test/type3/${id}`);
-					});
-			} catch (err) {
-				console.error(`Error with Promise.all: ${err}`);
-			}
+			// try {
+			// 	await Promise.all([news_promise, ...documents_promise])
+			// 		.then(() => form.reset(NEWS_PORTAL_NULL))
+			// 		.then(() => {
+			// 			invalidateNewsPortalDetails();
+			// 			// navigate(`/test/type3/${id}`);
+			// 		});
+			// } catch (err) {
+			// 	console.error(`Error with Promise.all: ${err}`);
+			// }
 
 			return;
 		}
