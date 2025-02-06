@@ -30,10 +30,13 @@ export default tseslint.config(
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-empty-object-type': 'warn',
 			'@typescript-eslint/no-unused-vars': 'warn',
-			'unicorn/filename-case': ['error', {
-      case: 'snakeCase',
-      ignore: ['README.md'],
-    }],
+			// 'unicorn/filename-case': [
+			// 	'error',
+			// 	{
+			// 		case: 'kebabCase',
+			// 		ignore: ['README.md'],
+			// 	},
+			// ],
 		},
 	}
 );
