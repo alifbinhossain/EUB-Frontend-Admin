@@ -9,7 +9,7 @@ import { hrQK } from './queryKeys';
 export const useHrUsers = <T>(params: IParams) =>
 	useTQuery<T>({
 		queryKey: hrQK.user(params),
-		url: addUrlParams('/hr/user', params),
+		url: addUrlParams('/hr/users', params),
 	});
 
 export const useHrUsersByUUID = <T>(uuid: string) =>

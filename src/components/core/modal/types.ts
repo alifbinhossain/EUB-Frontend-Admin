@@ -1,4 +1,4 @@
-import { IResponse } from '@/types';
+import { IResponse, IToast } from '@/types';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { UseFormReturn } from 'react-hook-form';
@@ -23,8 +23,8 @@ export interface IDeleteAllModalProps {
 	>;
 	url: string;
 	deleteData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			isOnCloseNeeded?: boolean;
@@ -48,8 +48,8 @@ export interface IDeleteModalProps {
 	>;
 	url: string;
 	deleteData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			isOnCloseNeeded?: boolean;

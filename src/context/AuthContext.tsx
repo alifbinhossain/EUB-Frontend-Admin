@@ -65,7 +65,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const login = useCallback(
 		async (data: ILoginData) => {
 			try {
-				const response = await api.post<IAuthResponse>('/hr/user/login', data);
+				const response = await api.post<IAuthResponse>('/signin', data);
+				console.log(response);
+
 				const { token, user, can_access } = response.data;
 
 				updateAuthCookie(`Bearer ${token || ''}`);

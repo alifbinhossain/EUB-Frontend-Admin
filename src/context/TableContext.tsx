@@ -72,6 +72,7 @@ interface ITableContext<TData> {
 	isClear?: boolean;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const TableContext = createContext({} as ITableContext<any>);
 
 interface ITableProviderProps<TData, TValue> {

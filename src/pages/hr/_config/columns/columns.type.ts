@@ -1,7 +1,7 @@
 //* Department
 export type IDepartmentTableData = {
 	uuid: string;
-	department: string;
+	name: string;
 	created_at: string;
 	updated_at: string;
 	remarks: string;
@@ -10,7 +10,7 @@ export type IDepartmentTableData = {
 //* Designation
 export type IDesignationTableData = {
 	uuid: string;
-	designation: string;
+	name: string;
 	created_at: string;
 	updated_at: string;
 	remarks: string;

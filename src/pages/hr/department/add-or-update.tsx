@@ -1,7 +1,4 @@
 import { useEffect } from 'react';
-import { IResponse } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -63,19 +60,19 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
-		} else {
-			// ADD NEW ITEM
-			postData.mutateAsync({
-				url,
-				newData: {
-					...values,
-					created_at: getDateTime(),
-					created_by: user?.uuid,
-					uuid: nanoid(),
-				},
-				onClose,
-			});
+			return;
 		}
+
+		postData.mutateAsync({
+			url,
+			newData: {
+				...values,
+				created_at: getDateTime(),
+				created_by: user?.uuid,
+				uuid: nanoid(),
+			},
+			onClose,
+		});
 	}
 
 	return (
@@ -86,7 +83,7 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='department' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

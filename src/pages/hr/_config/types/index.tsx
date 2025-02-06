@@ -1,5 +1,6 @@
-import { IResponse } from '@/types';
+import { IResponse, IToast } from '@/types';
 import { UseMutationResult } from '@tanstack/react-query';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { AxiosError } from 'axios';
 
 import {
@@ -12,6 +13,15 @@ import {
 
 //* user
 
+export type UserColumnProps = {
+	statusAccess: boolean;
+	resetPasswordAccess: boolean;
+	pageAssignAccess: boolean;
+	handleStatus: (row: Row<any>) => void;
+	handleResetPassword: (row: Row<any>) => void;
+	handlePageAssign: (row: Row<any>) => void;
+};
+
 export interface IUserAddOrUpdateProps {
 	url: string;
 	open: boolean;
@@ -19,8 +29,8 @@ export interface IUserAddOrUpdateProps {
 	updatedData?: IUserTableData | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
 	postData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			newData: any;
@@ -30,8 +40,8 @@ export interface IUserAddOrUpdateProps {
 		any
 	>;
 	updateData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			updatedData: any;
@@ -49,8 +59,8 @@ export interface IPageAssignProps {
 	updatedData?: IPageAssign | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<IPageAssign | null>>;
 	updateData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			updatedData: any;
@@ -68,8 +78,8 @@ export interface IResetPasswordProps {
 	updatedData?: IResetPassword | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<IResetPassword | null>>;
 	updateData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			updatedData: any;
@@ -87,8 +97,8 @@ export interface IDepartmentAddOrUpdateProps {
 	updatedData?: IDepartmentTableData | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
 	postData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			newData: any;
@@ -98,8 +108,8 @@ export interface IDepartmentAddOrUpdateProps {
 		any
 	>;
 	updateData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			updatedData: any;
@@ -118,8 +128,8 @@ export interface IDesignationAddOrUpdateProps {
 	updatedData?: IDesignationTableData | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
 	postData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			newData: any;
@@ -129,8 +139,8 @@ export interface IDesignationAddOrUpdateProps {
 		any
 	>;
 	updateData: UseMutationResult<
-		IResponse<any>,
-		AxiosError<IResponse<any>, any>,
+		IToast,
+		AxiosError<IToast, any>,
 		{
 			url: string;
 			updatedData: any;

@@ -11,7 +11,6 @@ import { useHrDesignations } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 
 const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
@@ -27,41 +26,22 @@ const Designation = () => {
 	};
 
 	const [updatedData, setUpdatedData] = useState<IDesignationTableData | null>(null);
-
 	const handleUpdate = (row: Row<IDesignationTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
 
 	// Delete Modal state
-	// Single Delete Item
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	// Single Delete Handler
 	const handleDelete = (row: Row<IDesignationTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.designation,
+			name: row?.original?.name,
 		});
-	};
-
-	// Delete All Item
-	const [deleteItems, setDeleteItems] = useState<{ id: string; name: string; checked: boolean }[] | null>(null);
-
-	// Delete All Row Handlers
-	const handleDeleteAll = (rows: Row<IDesignationTableData>[]) => {
-		const selectedRows = rows.map((row) => row.original);
-
-		setDeleteItems(
-			selectedRows.map((row) => ({
-				id: row.uuid,
-				name: row.designation,
-				checked: true,
-			}))
-		);
 	};
 
 	// Table Columns
@@ -78,7 +58,6 @@ const Designation = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				handleDeleteAll={handleDeleteAll}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate
@@ -97,14 +76,6 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
-							deleteData,
-						}}
-					/>,
-					<DeleteAllModal
-						{...{
-							deleteItems,
-							setDeleteItems,
 							url,
 							deleteData,
 						}}

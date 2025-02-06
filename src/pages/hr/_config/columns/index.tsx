@@ -4,12 +4,13 @@ import PageAssign from '@/components/buttons/page-assign';
 import ResetPassword from '@/components/buttons/reset-password';
 import { Switch } from '@/components/ui/switch';
 
+import { UserColumnProps } from '../types';
 import { IDepartmentTableData, IDesignationTableData, IUserTableData } from './columns.type';
 
 // Department Columns
 export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 	{
-		accessorKey: 'department',
+		accessorKey: 'name',
 		header: 'Department',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue(),
@@ -19,7 +20,7 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 // Designation Columns
 export const designationColumns = (): ColumnDef<IDesignationTableData>[] => [
 	{
-		accessorKey: 'designation',
+		accessorKey: 'name',
 		header: 'Designation',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue(),
@@ -34,14 +35,7 @@ export function userColumns({
 	handleStatus,
 	handleResetPassword,
 	handlePageAssign,
-}: {
-	statusAccess: boolean;
-	resetPasswordAccess: boolean;
-	pageAssignAccess: boolean;
-	handleStatus: (row: Row<any>) => void;
-	handleResetPassword: (row: Row<any>) => void;
-	handlePageAssign: (row: Row<any>) => void;
-}): ColumnDef<IUserTableData>[] {
+}: UserColumnProps): ColumnDef<IUserTableData>[] {
 	return [
 		{
 			accessorKey: 'status',
@@ -56,12 +50,6 @@ export function userColumns({
 			meta: {
 				hidden: !statusAccess,
 			},
-		},
-		{
-			accessorKey: 'user_type',
-			header: 'Type',
-			enableColumnFilter: false,
-			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
 		},
 		{
 			accessorKey: 'name',

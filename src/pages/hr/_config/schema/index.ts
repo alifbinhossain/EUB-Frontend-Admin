@@ -11,12 +11,12 @@ import {
 
 //* Department Schema
 export const DEPARTMENT_SCHEMA = z.object({
-	department: STRING_REQUIRED,
+	name: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 
 export const DEPARTMENT_NULL: Partial<IDepartment> = {
-	department: '',
+	name: '',
 	remarks: null,
 };
 
@@ -24,12 +24,12 @@ export type IDepartment = z.infer<typeof DEPARTMENT_SCHEMA>;
 
 //* Designation Schema
 export const DESIGNATION_SCHEMA = z.object({
-	designation: STRING_REQUIRED,
+	name: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 
 export const DESIGNATION_NULL: Partial<IDesignation> = {
-	designation: '',
+	name: '',
 	remarks: null,
 };
 
