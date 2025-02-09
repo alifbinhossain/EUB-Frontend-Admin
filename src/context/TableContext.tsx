@@ -88,7 +88,7 @@ interface ITableProviderProps<TData, TValue> {
 	handleCreate?: () => void;
 	handleUpdate?: (row: Row<TData>) => void;
 	handleDelete?: (row: Row<TData>) => void;
-	handleRefetch?: (options?: RefetchOptions) => Promise<QueryObserverResult<IResponse<any>, Error>>;
+	handleRefetch?: (options?: RefetchOptions) => Promise<QueryObserverResult<any, Error>>;
 	handleDeleteAll?: (rows: Row<TData>[]) => void;
 	facetedFilters?: ITableFacetedFilter[];
 	advanceFilters?: ITableAdvanceFilter[];

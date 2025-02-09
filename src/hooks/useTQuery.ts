@@ -1,4 +1,4 @@
-import { IResponse, IToast } from '@/types';
+import { IToast } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
@@ -27,7 +27,7 @@ interface IUpdate {
 const useTQuery = <T>({ queryKey, url, enabled = true }: IUseTQuery) => {
 	const queryClient = useQueryClient();
 
-	const { data, isError, isLoading, isPending, refetch, isFetching, status } = useQuery<IResponse<T>>({
+	const { data, isError, isLoading, isPending, refetch, isFetching, status } = useQuery<T>({
 		queryKey,
 		queryFn: () => api.get(url).then((res) => res.data),
 		refetchInterval: false,

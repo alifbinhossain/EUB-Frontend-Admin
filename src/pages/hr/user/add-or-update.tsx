@@ -1,19 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ImagePlus } from 'lucide-react';
-import { useDropzone } from 'react-dropzone';
+import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { IFormSelectOption } from '@/components/core/form/types';
+import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
-import { IFormSelectOption } from '@core/form/types';
 import { AddModal } from '@core/modal';
 
 import { useOtherDepartment, useOtherDesignation } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
-import { API_IMAGE_URL } from '@/lib/secret';
-import { cn } from '@/lib/utils';
 import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
 
@@ -30,7 +25,6 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 	imagePostData,
 	imageUpdateData,
 }) => {
-	const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
@@ -40,33 +34,9 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 
 	const form = useRHF(USER_SCHEMA(isUpdate) as any, USER_NULL);
 
-	const onDrop = useCallback(
-		(acceptedFiles: File[]) => {
-			const reader = new FileReader();
-			try {
-				reader.onload = () => setPreview(reader.result);
-				reader.readAsDataURL(acceptedFiles[0]);
-				form.setValue('image', acceptedFiles[0]);
-				form.clearErrors('image');
-			} catch (error) {
-				setPreview(null);
-				form.resetField('image');
-			}
-		},
-		[form]
-	);
-
-	const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
-		onDrop,
-		maxFiles: 1,
-		maxSize: 1000000,
-		accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
-	});
-
 	const onClose = () => {
 		setUpdatedData?.(null);
 		form.reset(USER_NULL);
-		setPreview(null);
 		setOpen((prev) => !prev);
 	};
 
@@ -74,7 +44,6 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 	useEffect(() => {
 		if (data && isUpdate) {
 			form.reset(data);
-			setPreview(API_IMAGE_URL + form.getValues('image'));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
@@ -118,7 +87,7 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<div className='flex gap-4'>
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
 					name='department_uuid'
@@ -145,14 +114,17 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 					)}
 				/>
 			</div>
-			<div className='flex gap-4'>
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
+			</div>
+
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
 			</div>
 			{!isUpdate && (
-				<div className='flex gap-4'>
+				<div className='grid grid-cols-2 gap-4'>
 					<FormField
 						control={form.control}
 						name='pass'
@@ -165,52 +137,11 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 					/>
 				</div>
 			)}
-			<div className='flex gap-4'>
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
 					name='image'
-					render={() => (
-						<FormItem className='flex w-full flex-col items-start justify-center'>
-							<FormLabel className='flex items-center justify-between capitalize'>Image</FormLabel>
-							<FormControl>
-								<div {...getRootProps()} className='flex w-full items-center justify-center'>
-									<label
-										htmlFor='dropzone-file'
-										className='flex h-28 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500'
-									>
-										<div className='flex flex-col items-center justify-center pb-6 pt-5'>
-											{preview ? (
-												<img
-													className='max-h-[100px] rounded-lg'
-													src={preview as string}
-													alt='User image'
-												/>
-											) : (
-												<>
-													<ImagePlus className={cn(`block size-8`, preview && 'hidden')} />
-
-													<p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
-														<span className='font-semibold'>Click to upload</span> or drag
-														and drop
-													</p>
-													<p className='text-xs text-gray-500 dark:text-gray-400'>
-														SVG, PNG, JPG or GIF (MAX. 800x400px)
-													</p>
-												</>
-											)}
-											<Input {...getInputProps()} type='file' />
-										</div>
-										<Input {...getInputProps()} type='file' className='hidden' />
-									</label>
-								</div>
-							</FormControl>
-							<FormMessage>
-								{fileRejections.length !== 0 && (
-									<p>Image must be less than 1MB and of type png, jpg, or jpeg</p>
-								)}
-							</FormMessage>
-						</FormItem>
-					)}
+					render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
 				/>
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</div>

@@ -14,6 +14,7 @@ export const useOtherDepartment = <T>() =>
 		queryKey: otherQK.department(),
 		url: `/other/hr/department/value/label`,
 	});
+
 //* GET OTHER Designation
 export const useOtherDesignation = <T>() =>
 	useTQuery<T>({
