@@ -11,7 +11,7 @@ import { useOtherFaculty } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useDepartmentsByUUID, useFaculty } from '../_config/query';
+import { useDepartmentsByUUID } from '../_config/query';
 import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_NULL, PORTFOLIO_DEPARTMENT_SCHEMA } from '../_config/schema';
 import { IDepartmentAddOrUpdateProps } from '../_config/types';
 import { categories } from './utils';
