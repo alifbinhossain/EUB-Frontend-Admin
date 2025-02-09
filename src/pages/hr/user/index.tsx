@@ -21,7 +21,9 @@ const User = () => {
 	const handleChangeStatus = () => setStatus(!status);
 	const handleClearStatus = () => setStatus(undefined);
 
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useHrUsers<IUserTableData[]>({
+	const { data, isLoading, url, deleteData, imagePostData, imageUpdateData, updateData, refetch } = useHrUsers<
+		IUserTableData[]
+	>({
 		status,
 	});
 
@@ -107,7 +109,7 @@ const User = () => {
 		const status = Number(row?.original?.status) === 1 ? 0 : 1;
 		const updated_at = getDateTime();
 
-		await updateData.mutateAsync({
+		await imageUpdateData.mutateAsync({
 			url: `/hr/user/status/${row?.original?.uuid}`,
 			updatedData: { status, updated_at },
 		});
@@ -152,8 +154,8 @@ const User = () => {
 							setOpen: setIsOpenAddModal,
 							updatedData,
 							setUpdatedData,
-							postData,
-							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 

@@ -164,3 +164,15 @@ export interface IFormAddEditWrapperProps {
 	onSubmit(values: any): void;
 	title?: string;
 }
+
+// * file upload
+export interface FormFileUploadProps {
+	field: ControllerRenderProps<any, any>;
+	label?: string;
+	placeholder?: string;
+	optional?: boolean;
+	className?: string;
+	disableLabel?: boolean;
+	accept?: string;
+	multiple?: boolean;
+}

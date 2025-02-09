@@ -22,9 +22,9 @@ export type IUserTableData = {
 	name: string;
 	email: string;
 	designation_uuid: string;
-	designation: string;
+	designation_name: string;
 	department_uuid: string;
-	department: string;
+	department_name: string;
 	user_type: string;
 	ext: string;
 	phone: string;

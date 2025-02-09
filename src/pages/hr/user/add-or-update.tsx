@@ -25,8 +25,8 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 	setOpen,
 	updatedData,
 	setUpdatedData,
-	postData,
-	updateData,
+	imagePostData,
+	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
 
@@ -34,16 +34,6 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 	const { data } = useHrUsersByUUID(updatedData?.uuid as string);
 	const { data: departmentData } = useOtherDepartment<IFormSelectOption[]>();
 	const { data: designationData } = useOtherDesignation<IFormSelectOption[]>();
-	const typeOptions = [
-		{
-			label: 'Customer',
-			value: 'customer',
-		},
-		{
-			label: 'Employ',
-			value: 'employee',
-		},
-	];
 
 	const form = useRHF(USER_SCHEMA(isUpdate) as any, USER_NULL);
 
@@ -63,27 +53,35 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 
 	// Submit handler
 	async function onSubmit(values: IUser) {
-		console.log({ values });
+		const formData = new FormData();
+		formData.append('name', values.name);
+		formData.append('email', values.email);
+		formData.append('department_uuid', values.department_uuid || '');
+		formData.append('designation_uuid', values.designation_uuid || '');
+		formData.append('ext', values.ext || '');
+		formData.append('phone', values.phone || '');
+		formData.append('remarks', values.remarks || '');
+		formData.append('office', values.office || '');
+
 		if (isUpdate) {
+			formData.append('updated_at', getDateTime());
 			// UPDATE ITEM
-			await updateData.mutateAsync({
+			await imageUpdateData.mutateAsync({
 				url: `${url}/${updatedData?.uuid}`,
-				updatedData: {
-					...values,
-					updated_at: getDateTime(),
-				},
+				updatedData: formData,
 				onClose,
 			});
 		} else {
 			// ADD NEW ITEM
-			await postData.mutateAsync({
+			formData.append('created_at', getDateTime());
+			formData.append('created_by', user?.uuid || '');
+			formData.append('uuid', nanoid());
+			formData.append('pass', values.pass || '');
+			formData.append('repeatPass', values.repeatPass || '');
+
+			await imagePostData.mutateAsync({
 				url,
-				newData: {
-					...values,
-					created_at: getDateTime(),
-					created_by: user?.uuid,
-					uuid: nanoid(),
-				},
+				newData: formData,
 				onClose,
 			});
 		}
@@ -101,50 +99,36 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 			<div className='grid grid-cols-3 gap-4'>
 				<FormField
 					control={form.control}
-					name='user_type'
+					name='department_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='User Type'
-							placeholder='Select Type'
-							options={typeOptions!}
+							label='Department'
+							placeholder='Select Department'
+							options={departmentData!}
 							{...props}
 						/>
 					)}
 				/>
-				{form.watch('user_type') === 'employee' && (
-					<FormField
-						control={form.control}
-						name='department_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect
-								label='Department'
-								placeholder='Select Department'
-								options={departmentData!}
-								{...props}
-							/>
-						)}
-					/>
-				)}
-				{form.watch('user_type') === 'employee' && (
-					<FormField
-						control={form.control}
-						name='designation_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect
-								label='Designation'
-								placeholder='Select Designation'
-								options={designationData!}
-								{...props}
-							/>
-						)}
-					/>
-				)}
+
+				<FormField
+					control={form.control}
+					name='designation_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Designation'
+							placeholder='Select Designation'
+							options={designationData!}
+							{...props}
+						/>
+					)}
+				/>
 			</div>
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='ext' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
 			</div>
 			{!isUpdate && (
 				<div className='grid grid-cols-2 gap-4'>
