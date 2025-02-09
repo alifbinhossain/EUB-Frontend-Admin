@@ -22,7 +22,7 @@ export const useHrUsersByUUID = <T>(uuid: string) =>
 export const useHrCanAccess = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: hrQK.userCanAccess(uuid),
-		url: `/hr/user/can-access/${uuid}`,
+		url: `/hr/users/can-access/${uuid}`,
 		enabled: !!uuid,
 	});
 
