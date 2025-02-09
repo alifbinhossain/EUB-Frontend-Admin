@@ -1,9 +1,12 @@
+import { useCallback, useEffect, useState } from 'react';
 import { ImagePlus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
+import { useFormContext } from 'react-hook-form';
 
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
+import { API_IMAGE_URL } from '@/lib/secret';
 import { cn } from '@/lib/utils';
 
 import { FormFileUploadProps } from './types';
@@ -12,21 +15,50 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 	field,
 	label,
 	subLabel,
-	placeholder = 'Write here',
 	optional = false,
-	type,
-	className,
-	icon,
 	disabled = false,
 	disableLabel,
-	onDrop,
+	options,
+	isUpdate,
 }) => {
-	const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
+	const form = useFormContext();
+
+	const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
+
+	const onDrop = useCallback(
+		(acceptedFiles: File[]) => {
+			const reader = new FileReader();
+			try {
+				reader.onload = () => setPreview(reader.result);
+				reader.readAsDataURL(acceptedFiles[0]);
+				field.onChange(acceptedFiles[0]);
+				form.clearErrors(field.name);
+
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			} catch (error) {
+				setPreview(null);
+				form.resetField(field.name);
+			}
+		},
+		[form, field]
+	);
+
+	useEffect(() => {
+		if (isUpdate) {
+			if (field.value) {
+				setPreview(API_IMAGE_URL + field.value);
+			}
+		}
+	}, [isUpdate, field.value]);
+
+	const { getRootProps, getInputProps, fileRejections } = useDropzone({
 		onDrop,
 		maxFiles: 1,
 		maxSize: 1000000,
 		accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
+		...options,
 	});
+
 	return (
 		<FormItem className='w-full space-y-1.5'>
 			{!disableLabel && (
@@ -51,16 +83,17 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 							) : (
 								<>
 									<ImagePlus className={cn(`block size-8`, preview && 'hidden')} />
-									<Input {...getInputProps()} type='file' />
 
-									<p className='mb-2 text-sm text-gray-500'>
+									<p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
 										<span className='font-semibold'>Click to upload</span> or drag and drop
 									</p>
-									<p className='text-xs text-gray-500'>SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+									<p className='text-xs text-gray-500 dark:text-gray-400'>
+										SVG, PNG, JPG or GIF (MAX. 800x400px)
+									</p>
 								</>
 							)}
 						</div>
-						<Input {...getInputProps()} type='file' className='hidden' />
+						<Input disabled={disabled} {...getInputProps()} type='file' className='hidden' />
 					</label>
 				</div>
 			</FormControl>

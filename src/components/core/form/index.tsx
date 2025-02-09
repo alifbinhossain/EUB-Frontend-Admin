@@ -1,6 +1,7 @@
 import FormAddEditWrapper from './add-edit-wrapper';
 import FormCheckbox from './checkbox';
 import FormDatePicker from './date-picker';
+import FormFileUpload from './file-upload';
 import FormDynamicFields from './form-dynamic-fields';
 import FormInput from './input';
 import FormJoinInputSelect from './join-input-select';
@@ -26,6 +27,7 @@ const Form = {
 	JoinInputSelect: FormJoinInputSelect,
 	DynamicFields: FormDynamicFields,
 	AddEditWrapper: FormAddEditWrapper,
+	FileUpload: FormFileUpload,
 };
 
 export default Form;
