@@ -6,14 +6,15 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherPrograms } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useHrDesignationByUUID, useHrUsers } from '../_config/query';
-import { DESIGNATION_NULL, DESIGNATION_SCHEMA, IDesignation } from '../_config/schema';
-import { IDesignationAddOrUpdateProps } from '../_config/types';
+import { usePortfolioCertificateCourseFeeByUUID } from '../_config/query';
+import { CERTIFICATE_COURSE_FEE_NULL, CERTIFICATE_COURSE_FEE_SCHEMA, ICertificateCourseFee } from '../_config/schema';
+import { ICertificateCourseFeeAddOrUpdateProps } from '../_config/types';
 
-const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<ICertificateCourseFeeAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -25,15 +26,14 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useHrDesignationByUUID(updatedData?.uuid as string);
-	const { invalidateQuery: invalidateUserQuery } = useHrUsers({});
+	const { data } = usePortfolioCertificateCourseFeeByUUID(updatedData?.uuid as string);
+	const { data: programsOptions } = useOtherPrograms();
 
-	const form = useRHF(DESIGNATION_SCHEMA, DESIGNATION_NULL);
+	const form = useRHF(CERTIFICATE_COURSE_FEE_SCHEMA, CERTIFICATE_COURSE_FEE_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(DESIGNATION_NULL);
-		invalidateUserQuery();
+		form.reset(CERTIFICATE_COURSE_FEE_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -46,7 +46,7 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IDesignation) {
+	async function onSubmit(values: ICertificateCourseFee) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -76,11 +76,27 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Designation' : 'Add Designation'}
+			title={isUpdate ? 'Update Certificate Course Fee' : 'Add Certificate Course Fee'}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='programs_uuid'
+				render={(props) => (
+					<CoreForm.ReactSelect
+						label='Program'
+						placeholder='Select Program'
+						options={programsOptions}
+						{...props}
+					/>
+				)}
+			/>
+			<FormField
+				control={form.control}
+				name='fee_per_course'
+				render={(props) => <CoreForm.Input type='number' {...props} />}
+			/>
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);
