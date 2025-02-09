@@ -5,18 +5,17 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { designationColumns } from '../_config/columns';
-import { IDesignationTableData } from '../_config/columns/columns.type';
-import { useHrDesignations } from '../_config/query';
+import { facultyColumns } from '../_config/columns';
+import { IFacultyTableData } from '../_config/columns/columns.type';
+import { useFaculty } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useHrDesignations<IDesignationTableData[]>();
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useFaculty<IFacultyTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('HR/Designation', url, 'admin__user_designation'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Faculty', url, 'portfolio__faculty'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +24,8 @@ const Designation = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IDesignationTableData | null>(null);
-	const handleUpdate = (row: Row<IDesignationTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IFacultyTableData | null>(null);
+	const handleUpdate = (row: Row<IFacultyTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,7 +36,7 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IDesignationTableData>) => {
+	const handleDelete = (row: Row<IFacultyTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
@@ -45,7 +44,7 @@ const Designation = () => {
 	};
 
 	// Table Columns
-	const columns = designationColumns();
+	const columns = facultyColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

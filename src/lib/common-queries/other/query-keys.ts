@@ -7,6 +7,8 @@ const otherQK = {
 	department: () => [...otherQK.all(), 'department'],
 	//* Designation
 	designation: () => [...otherQK.all(), 'designation'],
+	//* Faculty
+	faculty: () => [...otherQK.all(), 'faculty'],
 	//* Group
 	group: () => [...otherQK.all(), 'group'],
 
@@ -53,6 +55,8 @@ const otherQK = {
 	//* User
 	user: () => [...otherQK.all(), 'user'],
 	userByQuery: (query: string) => [...otherQK.all(), 'byUserQuery', query],
+	//* Programs
+	programs: () => [...otherQK.all(), 'programs'],
 };
 
 export default otherQK;

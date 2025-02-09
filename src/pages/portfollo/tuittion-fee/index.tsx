@@ -1,89 +1,91 @@
 import { lazy, useMemo, useState } from 'react';
-import { PageProvider, TableProvider } from '@/context';
-import { Row } from '@tanstack/react-table';
 
-import { PageInfo } from '@/utils';
-import renderSuspenseModals from '@/utils/renderSuspenseModals';
+// import { PageProvider, TableProvider } from '@/context';
+// import { Row } from '@tanstack/react-table';
 
-import { designationColumns } from '../_config/columns';
-import { IDesignationTableData } from '../_config/columns/columns.type';
-import { useHrDesignations } from '../_config/query';
+// import { PageInfo } from '@/utils';
+// import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-const AddOrUpdate = lazy(() => import('./add-or-update'));
-const DeleteModal = lazy(() => import('@core/modal/delete'));
+import { tuitionFeeColumns } from '../_config/columns';
+import { ITuitionFeeTableData } from '../_config/columns/columns.type';
+import { usePortfolioTuitionFees } from '../_config/query';
 
-const Designation = () => {
+// const AddOrUpdate = lazy(() => import('./add-or-update'));
+// const DeleteModal = lazy(() => import('@core/modal/delete'));
+
+const TuitionFee = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useHrDesignations<IDesignationTableData[]>();
+		usePortfolioTuitionFees<ITuitionFeeTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('HR/Designation', url, 'admin__user_designation'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Portfolio/TuitionFee', url, 'portfolio__tuition_fee'), [url]);
 
-	// Add/Update Modal state
-	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+	// // Add/Update Modal state
+	// const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
-	const handleCreate = () => {
-		setIsOpenAddModal(true);
-	};
+	// const handleCreate = () => {
+	// 	setIsOpenAddModal(true);
+	// };
 
-	const [updatedData, setUpdatedData] = useState<IDesignationTableData | null>(null);
-	const handleUpdate = (row: Row<IDesignationTableData>) => {
+	const [updatedData, setUpdatedData] = useState<ITuitionFeeTableData | null>(null);
+	const handleUpdate = (row: Row<ITuitionFeeTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
 
-	// Delete Modal state
-	const [deleteItem, setDeleteItem] = useState<{
-		id: string;
-		name: string;
-	} | null>(null);
+	// // Delete Modal state
+	// const [deleteItem, setDeleteItem] = useState<{
+	// 	id: string;
+	// 	name: string;
+	// } | null>(null);
 
-	const handleDelete = (row: Row<IDesignationTableData>) => {
+	const handleDelete = (row: Row<ITuitionFeeTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.title,
 		});
 	};
 
 	// Table Columns
-	const columns = designationColumns();
+	const columns = tuitionFeeColumns();
 
 	return (
-		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
-			<TableProvider
-				title={pageInfo.getTitle()}
-				columns={columns}
-				data={data ?? []}
-				isLoading={isLoading}
-				handleCreate={handleCreate}
-				handleUpdate={handleUpdate}
-				handleDelete={handleDelete}
-				handleRefetch={refetch}
-			>
-				{renderSuspenseModals([
-					<AddOrUpdate
-						{...{
-							url,
-							open: isOpenAddModal,
-							setOpen: setIsOpenAddModal,
-							updatedData,
-							setUpdatedData,
-							postData,
-							updateData,
-						}}
-					/>,
+		// <PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
+		// 	<TableProvider
+		// 		title={pageInfo.getTitle()}
+		// 		columns={columns}
+		// 		data={data ?? []}
+		// 		isLoading={isLoading}
+		// 		handleCreate={handleCreate}
+		// 		handleUpdate={handleUpdate}
+		// 		handleDelete={handleDelete}
+		// 		handleRefetch={refetch}
+		// 	>
+		// 		{renderSuspenseModals([
+		// 			<AddOrUpdate
+		// 				{...{
+		// 					url,
+		// 					open: isOpenAddModal,
+		// 					setOpen: setIsOpenAddModal,
+		// 					updatedData,
+		// 					setUpdatedData,
+		// 					postData,
+		// 					updateData,
+		// 				}}
+		// 			/>,
 
-					<DeleteModal
-						{...{
-							deleteItem,
-							setDeleteItem,
-							url,
-							deleteData,
-						}}
-					/>,
-				])}
-			</TableProvider>
-		</PageProvider>
+		// 			<DeleteModal
+		// 				{...{
+		// 					deleteItem,
+		// 					setDeleteItem,
+		// 					url,
+		// 					deleteData,
+		// 				}}
+		// 			/>,
+		// 		])}
+		// 	</TableProvider>
+		// </PageProvider>
+		<div>asdasd</div>
 	);
 };
 
-export default Designation;
+export default TuitionFee;
