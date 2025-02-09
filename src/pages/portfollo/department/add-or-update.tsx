@@ -14,6 +14,7 @@ import { getDateTime } from '@/utils';
 import { useDepartmentsByUUID, useFaculty } from '../_config/query';
 import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL } from '../_config/schema';
 import { IDesignationAddOrUpdateProps } from '../_config/types';
+import { categories } from './utils';
 
 const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	url,
@@ -29,11 +30,6 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = useDepartmentsByUUID(updatedData?.uuid as string);
 	const { data: faculties } = useOtherFaculty<IFormSelectOption[]>();
-	const categories = [
-		{ label: 'Undergraduate', value: 'undergraduate' },
-		{ label: 'Graduate', value: 'graduate' },
-		{ label: 'Certificate', value: 'certificate' },
-	];
 
 	const form = useRHF(PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL);
 
