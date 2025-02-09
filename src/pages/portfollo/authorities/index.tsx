@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { designationColumns } from '../_config/columns';
-import { IDesignationTableData } from '../_config/columns/columns.type';
-import { useHrDesignations } from '../_config/query';
+import { authoritiesColumns } from '../_config/columns';
+import { IAuthoritiesTableData } from '../_config/columns/columns.type';
+import { usePortfolioAuthorities } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Designation = () => {
+const Authorities = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useHrDesignations<IDesignationTableData[]>();
+		usePortfolioAuthorities<IAuthoritiesTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('HR/Designation', url, 'admin__user_designation'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Portfolio/Authorities', url, 'portfolio__authorities'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +25,8 @@ const Designation = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IDesignationTableData | null>(null);
-	const handleUpdate = (row: Row<IDesignationTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IAuthoritiesTableData | null>(null);
+	const handleUpdate = (row: Row<IAuthoritiesTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,15 +37,15 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IDesignationTableData>) => {
+	const handleDelete = (row: Row<IAuthoritiesTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.user_name,
 		});
 	};
 
 	// Table Columns
-	const columns = designationColumns();
+	const columns = authoritiesColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -86,4 +86,4 @@ const Designation = () => {
 	);
 };
 
-export default Designation;
+export default Authorities;
