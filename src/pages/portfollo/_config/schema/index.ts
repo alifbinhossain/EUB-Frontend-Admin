@@ -114,7 +114,7 @@ export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 	remarks: STRING_NULLABLE,
 });
 
-export const PORTFOLIO_DESIGNATION_NULL: Partial<IDesignation> = {
+export const PORTFOLIO_DEPARTMENT_NULL: Partial<IPortfolioDepartment> = {
 	name: '',
 	faculty_uuid: '',
 	category: '',

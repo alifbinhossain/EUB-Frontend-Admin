@@ -12,11 +12,11 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { useDepartmentsByUUID, useFaculty } from '../_config/query';
-import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL } from '../_config/schema';
-import { IDesignationAddOrUpdateProps } from '../_config/types';
+import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_NULL, PORTFOLIO_DEPARTMENT_SCHEMA } from '../_config/schema';
+import { IDepartmentAddOrUpdateProps } from '../_config/types';
 import { categories } from './utils';
 
-const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -31,11 +31,11 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	const { data } = useDepartmentsByUUID(updatedData?.uuid as string);
 	const { data: faculties } = useOtherFaculty<IFormSelectOption[]>();
 
-	const form = useRHF(PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL);
+	const form = useRHF(PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DEPARTMENT_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(PORTFOLIO_DESIGNATION_NULL);
+		form.reset(PORTFOLIO_DEPARTMENT_NULL);
 		setOpen((prev) => !prev);
 	};
 

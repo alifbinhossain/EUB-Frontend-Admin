@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
@@ -27,7 +28,7 @@ const AddOrUpdate: React.FC<ICertificateCourseFeeAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioCertificateCourseFeeByUUID(updatedData?.uuid as string);
-	const { data: programsOptions } = useOtherPrograms();
+	const { data: programsOptions } = useOtherPrograms<IFormSelectOption[]>();
 
 	const form = useRHF(CERTIFICATE_COURSE_FEE_SCHEMA, CERTIFICATE_COURSE_FEE_NULL);
 
@@ -87,7 +88,7 @@ const AddOrUpdate: React.FC<ICertificateCourseFeeAddOrUpdateProps> = ({
 					<CoreForm.ReactSelect
 						label='Program'
 						placeholder='Select Program'
-						options={programsOptions}
+						options={programsOptions!}
 						{...props}
 					/>
 				)}

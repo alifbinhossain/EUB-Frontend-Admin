@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
@@ -27,7 +28,7 @@ const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioAuthorityByUUID(updatedData?.uuid as string);
-	const { data: userOption } = useOtherUser();
+	const { data: userOption } = useOtherUser<IFormSelectOption[]>();
 	const categoryOptions = [
 		{
 			label: 'Chancellor',
@@ -126,7 +127,7 @@ const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 				control={form.control}
 				name='user_uuid'
 				render={(props) => (
-					<CoreForm.ReactSelect label='User' placeholder='Select User' options={userOption} {...props} />
+					<CoreForm.ReactSelect label='User' placeholder='Select User' options={userOption!} {...props} />
 				)}
 			/>
 			<FormField
