@@ -83,7 +83,7 @@ const AddOrUpdate: React.FC<ITuitionFeeAddOrUpdateProps> = ({
 			<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
-				name='programs_uuid'
+				name='program_uuid'
 				render={(props) => (
 					<CoreForm.ReactSelect
 						label='Program'
@@ -105,7 +105,7 @@ const AddOrUpdate: React.FC<ITuitionFeeAddOrUpdateProps> = ({
 			/>
 			<FormField
 				control={form.control}
-				name='student_activity_fee_per_semester'
+				name='student_activity_fee'
 				render={(props) => (
 					<CoreForm.Input type='number' label='Student Activity Fee Per Semester' {...props} />
 				)}

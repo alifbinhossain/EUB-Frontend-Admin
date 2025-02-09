@@ -46,8 +46,8 @@ export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 //* Certificate Course Fee Columns
 export const certificateCourseFeeColumns = (): ColumnDef<ICertificateCourseFeeTableData>[] => [
 	{
-		accessorKey: 'programs_uuid',
-		header: 'Program UUID',
+		accessorKey: 'program_name',
+		header: 'Program',
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),
 	},
