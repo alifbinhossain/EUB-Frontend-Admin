@@ -1,5 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 
+import { PageInfo } from '@/utils';
+
 // import { PageProvider, TableProvider } from '@/context';
 // import { Row } from '@tanstack/react-table';
 

@@ -10,6 +10,28 @@ import {
 	ITuitionFeeTableData,
 } from './columns.type';
 
+// * Department
+export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
 //* Program Columns
 export const programColumns = (): ColumnDef<IProgramTableData>[] => [
 	{
@@ -128,7 +150,6 @@ export const facultyColumns = (): ColumnDef<IFacultyTableData>[] => [
 		cell: (info) => info.getValue(),
 	},
 ];
-
 
 //* BOT Columns
 export const botColumns = (): ColumnDef<IBotTableData>[] => [
