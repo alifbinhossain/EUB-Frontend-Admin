@@ -1,9 +1,13 @@
 import { IParams } from '@/types';
 
-export const hrQK = {
-	all: () => ['admin'],
+export const portfolioQK = {
+	all: () => ['portfolio'],
 
 	//* designation
-	designation: () => [...hrQK.all(), 'designation'],
-	designationByUUID: (uuid: string) => [...hrQK.designation(), uuid],
+	designation: () => [...portfolioQK.all(), 'designation'],
+	designationByUUID: (uuid: string) => [...portfolioQK.designation(), uuid],
+
+	//* bot
+	bot: () => [...portfolioQK.all(), 'bot'],
+	botByUUID: (uuid: string) => [...portfolioQK.bot(), uuid],
 };

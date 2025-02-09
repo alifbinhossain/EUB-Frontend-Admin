@@ -1,6 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table';
 
-import { IAuthoritiesTableData, ICertificateCourseFeeTableData, ITuitionFeeTableData } from './columns.type';
+import {
+	IAuthoritiesTableData,
+	IBotTableData,
+	ICertificateCourseFeeTableData,
+	ITuitionFeeTableData,
+} from './columns.type';
 
 //* Authorities Columns
 export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
@@ -51,5 +56,34 @@ export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 		header: 'Tuition Fee per Credit',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue() || 0,
+	},
+];
+
+//* BOT Columns
+export const botColumns = (): ColumnDef<IBotTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: false,
+	},
+	{
+		accessorKey: 'user_name',
+		header: 'User Name',
+		enableColumnFilter: false,
+	},
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		enableColumnFilter: false,
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: false,
 	},
 ];

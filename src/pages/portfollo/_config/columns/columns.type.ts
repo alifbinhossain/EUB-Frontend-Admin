@@ -35,3 +35,18 @@ export type ITuitionFeeTableData = {
 	science_lab_fee_per_semester?: number;
 	studio_lab_fee?: number;
 };
+
+//* bot
+export type IBotTableData = {
+	id: number;
+	uuid: string;
+	category: 'syndicate' | 'academic_council';
+	user_name: string;
+	status: 'chairman' | 'member' | 'member_secretary';
+	file?: string;
+	description?: string;
+	created_by_name: string;
+	created_at: string;
+	updated_at: string;
+	remarks: string;
+};

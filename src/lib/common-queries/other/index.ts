@@ -8,12 +8,14 @@ export const useOtherHR = <T>() =>
 		queryKey: otherQK.hr(),
 		url: `/other/hr/value/label`,
 	});
+
 //* GET OTHER DEPARTMENT
 export const useOtherDepartment = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.department(),
 		url: `/other/hr/department/value/label`,
 	});
+
 //* GET OTHER Designation
 export const useOtherDesignation = <T>() =>
 	useTQuery<T>({
@@ -48,24 +50,28 @@ export const useOtherSize = <T>() =>
 		queryKey: otherQK.size(),
 		url: `/other/size/value/label`,
 	});
+
 //* GET OTHER CATEGORY
 export const useOtherCategory = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.category(),
 		url: `/other/category/value/label`,
 	});
+
 //* GET OTHER PRODUCT
 export const useOtherProduct = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.product(),
 		url: `/other/product/value/label`,
 	});
+
 //* GET OTHER VENDOR
 export const useOtherVendor = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.vendor(),
 		url: `/other/vendor/value/label`,
 	});
+
 //* GET OTHER STOCK
 export const useOtherStock = <T>() =>
 	useTQuery<T>({
@@ -79,12 +85,14 @@ export const useOtherBranch = <T>() =>
 		queryKey: otherQK.branch(),
 		url: `/other/branch/value/label`,
 	});
+
 //* GET OTHER PURCHASE
 export const useOtherPurchase = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.purchase(),
 		url: `/other/purchase/value/label`,
 	});
+
 //* GET OTHER WAREHOUSE
 export const useOtherWarehouse = <T>() =>
 	useTQuery<T>({
@@ -126,6 +134,7 @@ export const useOtherProblem = <T>() =>
 		queryKey: otherQK.problem(),
 		url: `/other/problem/value/label`,
 	});
+
 //* GET OTHER SECTION
 export const useOtherSection = <T>() =>
 	useTQuery<T>({
