@@ -1,8 +1,4 @@
-import { IDesignationTableData } from '@/pages/hr/_config/columns/columns.type';
-import { IDefaultAddOrUpdateProps, IToast } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { AxiosError } from 'axios';
+import { IDefaultAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
@@ -19,184 +15,30 @@ export interface IBotAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IBotTableData | null;
 }
 //* Departments
-export interface IDepartmentAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface IDepartmentAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IDepartmentTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
+
 // * Faculty
-export interface IFacultyAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface IFacultyAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IFacultyTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
 //* Programs
-export interface IProgramsAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface IProgramsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IProgramTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
 
 //* Authorities
-export interface IAuthoritiesAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface IAuthoritiesAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IAuthoritiesTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
 
 //* Certificate Course Fee
-export interface ICertificateCourseFeeAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface ICertificateCourseFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ICertificateCourseFeeTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
+
 //* Tuition Fee
-export interface ITuitionFeeAddOrUpdateProps {
-	url: string;
-	open: boolean;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export interface ITuitionFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ITuitionFeeTableData | null;
-	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	updateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
