@@ -48,3 +48,19 @@ export type IProgramTableData = {
 	category: 'graduate' | 'undergraduate' | 'certificate';
 	remarks: string;
 };
+
+// * Faculty
+export type IFacultyTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+};
+
+// * Department
+export type IDepartmentTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	faculty_uuid: string;
+	category: string;
+};

@@ -16,3 +16,15 @@ export const portfolioQK = {
 	tuitionFees: () => [...portfolioQK.all(), 'tuition_fee'],
 	tuitionFeeByUUID: (uuid: string) => [...portfolioQK.tuitionFees(), uuid],
 };
+
+export const facultyQK = {
+	all: () => ['faculty'],
+	faculty: () => [...facultyQK.all(), 'faculty'],
+	facultyByUUID: (uuid: string) => [...facultyQK.faculty(), uuid],
+};
+
+export const departmentQK = {
+	all: () => ['department'],
+	department: () => [...departmentQK.all(), 'department'],
+	departmentByUUID: (uuid: string) => [...departmentQK.department(), uuid],
+};

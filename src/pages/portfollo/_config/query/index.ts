@@ -3,7 +3,7 @@ import useTQuery from '@/hooks/useTQuery';
 
 import addUrlParams from '@/utils/routes/addUrlParams';
 
-import { portfolioQK } from './queryKeys';
+import { departmentQK, facultyQK, portfolioQK } from './queryKeys';
 
 //* Programs
 export const usePortfolioPrograms = <T>() =>
@@ -59,5 +59,37 @@ export const usePortfolioTuitionFeeByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: portfolioQK.tuitionFeeByUUID(uuid),
 		url: `/portfolio/tuition-fee/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? FACULTY
+// * ALL Faculty
+export const useFaculty = <T>() =>
+	useTQuery<T>({
+		queryKey: facultyQK.faculty(),
+		url: `/portfolio/faculty`,
+	});
+
+// * Faculty By UUID
+export const useFacultyByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: facultyQK.facultyByUUID(uuid),
+		url: `/portfolio/faculty/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? DEPARTMENT
+// * ALL Department
+export const useDepartments = <T>() =>
+	useTQuery<T>({
+		queryKey: departmentQK.department(),
+		url: `/portfolio/department`,
+	});
+
+// * Department By UUID
+export const useDepartmentsByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: departmentQK.departmentByUUID(uuid),
+		url: `/portfolio/department/${uuid}`,
 		enabled: !!uuid,
 	});

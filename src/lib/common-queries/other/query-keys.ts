@@ -7,6 +7,8 @@ const otherQK = {
 	department: () => [...otherQK.all(), 'department'],
 	//* Designation
 	designation: () => [...otherQK.all(), 'designation'],
+	//* Faculty
+	faculty: () => [...otherQK.all(), 'faculty'],
 	//* Group
 	group: () => [...otherQK.all(), 'group'],
 

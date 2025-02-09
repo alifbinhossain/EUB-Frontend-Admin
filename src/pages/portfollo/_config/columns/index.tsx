@@ -3,6 +3,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import {
 	IAuthoritiesTableData,
 	ICertificateCourseFeeTableData,
+	IDepartmentTableData,
+	IFacultyTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
@@ -113,5 +115,37 @@ export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 		header: 'Studio Lab Fee',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue() || 0,
+	},
+];
+
+// * Faculty Columns
+export const facultyColumns = (): ColumnDef<IFacultyTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * Department
+export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
 	},
 ];

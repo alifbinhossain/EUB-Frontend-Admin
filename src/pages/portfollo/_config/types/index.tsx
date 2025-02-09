@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import {
 	IAuthoritiesTableData,
 	ICertificateCourseFeeTableData,
+	IFacultyTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
@@ -108,6 +109,37 @@ export interface ITuitionFeeAddOrUpdateProps {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	updatedData?: ITuitionFeeTableData | null;
+	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
+	postData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			newData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
+	updateData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			updatedData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
+}
+
+// * Faculty
+export interface IFacultyAddOrUpdateProps {
+	url: string;
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	updatedData?: IFacultyTableData | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
 	postData: UseMutationResult<
 		IToast,
