@@ -1,47 +1,37 @@
-//* Department
-export type IDepartmentTableData = {
+//* Authorities
+export type IAuthoritiesTableData = {
+	id: number;
 	uuid: string;
-	name: string;
-	created_at: string;
-	updated_at: string;
-	remarks: string;
+	user_uuid: string;
+	category:
+		| 'chancellor'
+		| 'chairman'
+		| 'vc'
+		| 'pro_vc'
+		| 'dean'
+		| 'treasurer'
+		| 'director_coordination'
+		| 'registrar';
+	short_biography: string;
 };
-
-//* Designation
-export type IDesignationTableData = {
+//* Certificate Course Fee
+export type ICertificateCourseFeeTableData = {
+	id: number;
 	uuid: string;
-	name: string;
-	created_at: string;
-	updated_at: string;
-	remarks: string;
+	programs_uuid: string;
+	fee_per_course: number;
 };
-
-//* User
-export type IUserTableData = {
+//* Tuition Fee
+export type ITuitionFeeTableData = {
+	id: number;
 	uuid: string;
-	name: string;
-	email: string;
-	designation_uuid: string;
-	designation_name: string;
-	department_uuid: string;
-	department_name: string;
-	user_type: string;
-	ext: string;
-	phone: string;
-	created_at: string;
-	updated_at: any;
-	status: string;
-	remarks: string;
-};
-
-//* Reset Password
-export type IResetPassword = {
-	uuid: string;
-	name: string;
-};
-
-//* Page Assign
-export type IPageAssign = {
-	uuid: string;
-	name: string;
+	title: string;
+	program_uuid: string;
+	admission_fee: number; // Decimal(20,4)
+	tuition_fee_per_credit?: number; // Optional fields
+	student_activity_fee_per_semester?: number;
+	library_fee_per_semester?: number;
+	computer_lab_fee_per_semester?: number;
+	science_lab_fee_per_semester?: number;
+	studio_lab_fee?: number; // Default value is 0
 };

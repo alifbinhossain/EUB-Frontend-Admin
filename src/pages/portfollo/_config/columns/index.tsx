@@ -1,141 +1,55 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 
-import PageAssign from '@/components/buttons/page-assign';
-import ResetPassword from '@/components/buttons/reset-password';
-import { Switch } from '@/components/ui/switch';
+import { IAuthoritiesTableData, ICertificateCourseFeeTableData, ITuitionFeeTableData } from './columns.type';
 
-import { API_IMAGE_URL } from '@/lib/secret';
-
-import { UserColumnProps } from '../types';
-import { IDepartmentTableData, IDesignationTableData, IUserTableData } from './columns.type';
-
-// Department Columns
-export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
+//* Authorities Columns
+export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 	{
-		accessorKey: 'name',
-		header: 'Department',
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'short_biography',
+		header: 'Short Biography',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue(),
 	},
 ];
-
-// Designation Columns
-export const designationColumns = (): ColumnDef<IDesignationTableData>[] => [
+//* Certificate Course Fee Columns
+export const certificateCourseFeeColumns = (): ColumnDef<ICertificateCourseFeeTableData>[] => [
 	{
-		accessorKey: 'name',
-		header: 'Designation',
+		accessorKey: 'programs_uuid',
+		header: 'Program UUID',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'fee_per_course',
+		header: 'Fee per Course',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue(),
 	},
 ];
-
-// User Columns
-export function userColumns({
-	pageAssignAccess,
-	resetPasswordAccess,
-	statusAccess,
-	handleStatus,
-	handleResetPassword,
-	handlePageAssign,
-}: UserColumnProps): ColumnDef<IUserTableData>[] {
-	return [
-		{
-			accessorKey: 'status',
-			header: 'Status',
-			enableColumnFilter: false,
-			cell: (info) => {
-				return (
-					<Switch checked={Number(info.getValue()) === 1} onCheckedChange={() => handleStatus(info.row)} />
-				);
-			},
-			size: 40,
-			meta: {
-				hidden: !statusAccess,
-			},
-		},
-		{
-			accessorKey: 'image',
-			header: 'Role',
-			enableColumnFilter: false,
-			cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
-		},
-
-		{
-			accessorKey: 'name',
-			header: 'Name',
-			enableColumnFilter: false,
-			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
-		},
-		{
-			accessorKey: 'phone',
-			header: 'Phone',
-			enableColumnFilter: false,
-			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
-		},
-		{
-			accessorKey: 'email',
-			header: 'Email',
-			enableColumnFilter: false,
-			cell: (info) => info.getValue(),
-		},
-		{
-			accessorKey: 'office',
-			header: 'Email',
-			enableColumnFilter: false,
-			cell: (info) => info.getValue(),
-		},
-		{
-			accessorKey: 'department_name',
-			header: 'Department',
-			enableColumnFilter: false,
-			cell: (info) => {
-				const { department_name, designation_name } = info.row.original;
-
-				return (
-					<div className='flex flex-col'>
-						<span className='capitalize'>{department_name}</span>
-						<span className='text-xs capitalize text-gray-400'>{designation_name}</span>
-					</div>
-				);
-			},
-		},
-
-		{
-			accessorKey: 'reset_pass_actions',
-			id: 'reset_pass_actions',
-			header: () => (
-				<span>
-					Reset <br />
-					Password
-				</span>
-			),
-			enableColumnFilter: false,
-			enableSorting: false,
-			cell: (info) => <ResetPassword onClick={() => handleResetPassword(info.row)} />,
-			size: 40,
-			meta: {
-				hidden: !resetPasswordAccess,
-				disableFullFilter: true,
-			},
-		},
-
-		{
-			accessorKey: 'page_assign_actions',
-			id: 'page_assign_actions',
-			header: () => (
-				<span>
-					Page <br />
-					Assign
-				</span>
-			),
-			enableColumnFilter: false,
-			enableSorting: false,
-			cell: (info) => <PageAssign onClick={() => handlePageAssign(info.row)} />,
-			size: 40,
-			meta: {
-				hidden: !pageAssignAccess,
-				disableFullFilter: true,
-			},
-		},
-	];
-}
+//* Tuition Fee Columns
+export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'admission_fee',
+		header: 'Admission Fee',
+		enableColumnFilter: false,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'tuition_fee_per_credit',
+		header: 'Tuition Fee per Credit',
+		enableColumnFilter: false,
+		cell: (info) => info.getValue() || 0,
+	},
+];
