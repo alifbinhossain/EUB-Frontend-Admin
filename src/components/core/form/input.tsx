@@ -19,7 +19,7 @@ const FormInput: React.FC<FormInputProps> = ({
 	disableLabel,
 }) => {
 	return (
-		<FormItem className='space-y-1.5'>
+		<FormItem className='w-full space-y-1.5'>
 			{!disableLabel && (
 				<FormLabel className='flex items-center justify-between capitalize'>
 					<span>

@@ -23,7 +23,6 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/certificates-course-fee',
 				element: <CertificatesCourseFee />,
 				page_name: 'portfolio__certificates_course_fee',
-				hidden: true,
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
