@@ -1,4 +1,4 @@
-const fileFields: readonly string[] = ['image'];
+const fileFields: readonly string[] = ['image', 'file', 'cover_image', 'documents'];
 
 const Formdata = <T extends Record<string, any>>(data: T) => {
 	const formData = new FormData();
