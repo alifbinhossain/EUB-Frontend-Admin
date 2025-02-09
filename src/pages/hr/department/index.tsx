@@ -54,7 +54,7 @@ const Department = () => {
 			<TableProvider
 				title={pageInfo.getTitle()}
 				columns={columns}
-				data={Array.isArray(data) ? data : (data?.data ?? [])}
+				data={data ?? []}
 				isLoading={isLoading}
 				handleCreate={handleCreate}
 				handleUpdate={handleUpdate}
