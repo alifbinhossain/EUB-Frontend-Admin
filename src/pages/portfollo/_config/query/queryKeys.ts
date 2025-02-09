@@ -1,5 +1,3 @@
-import { IParams } from '@/types';
-
 export const portfolioQK = {
 	all: () => ['portfolio'],
 	//* program
