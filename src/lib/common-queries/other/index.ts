@@ -21,6 +21,13 @@ export const useOtherDesignation = <T>() =>
 		url: `/other/hr/designation/value/label`,
 	});
 
+//* GET OTHER FACULTY
+export const useOtherFaculty = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.faculty(),
+		url: `/other/portfolio/faculty/value/label`,
+	});
+
 //* GET OTHER GROUP
 export const useOtherGroup = <T>() =>
 	useTQuery<T>({

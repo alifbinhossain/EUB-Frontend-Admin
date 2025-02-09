@@ -35,3 +35,19 @@ export type ITuitionFeeTableData = {
 	science_lab_fee_per_semester?: number;
 	studio_lab_fee?: number;
 };
+
+// * Faculty
+export type IFacultyTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+};
+
+// * Department
+export type IDepartmentTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	faculty_uuid: string;
+	category: string;
+};

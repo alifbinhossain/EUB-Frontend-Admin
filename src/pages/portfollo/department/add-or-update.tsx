@@ -2,15 +2,17 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherFaculty } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useHrDesignationByUUID, useHrUsers } from '../_config/query';
-import { DESIGNATION_NULL, DESIGNATION_SCHEMA, IDesignation } from '../_config/schema';
+import { useDepartmentsByUUID, useFaculty } from '../_config/query';
+import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL } from '../_config/schema';
 import { IDesignationAddOrUpdateProps } from '../_config/types';
 
 const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
@@ -25,15 +27,19 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useHrDesignationByUUID(updatedData?.uuid as string);
-	const { invalidateQuery: invalidateUserQuery } = useHrUsers({});
+	const { data } = useDepartmentsByUUID(updatedData?.uuid as string);
+	const { data: faculties } = useOtherFaculty<IFormSelectOption[]>();
+	const categories = [
+		{ label: 'Undergraduate', value: 'undergraduate' },
+		{ label: 'Graduate', value: 'graduate' },
+		{ label: 'Certificate', value: 'certificate' },
+	];
 
-	const form = useRHF(DESIGNATION_SCHEMA, DESIGNATION_NULL);
+	const form = useRHF(PORTFOLIO_DEPARTMENT_SCHEMA, PORTFOLIO_DESIGNATION_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(DESIGNATION_NULL);
-		invalidateUserQuery();
+		form.reset(PORTFOLIO_DESIGNATION_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -46,7 +52,7 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IDesignation) {
+	async function onSubmit(values: IPortfolioDepartment) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -76,11 +82,35 @@ const AddOrUpdate: React.FC<IDesignationAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Designation' : 'Add Designation'}
+			title={isUpdate ? 'Update Department' : 'Add Department'}
 			form={form}
 			onSubmit={onSubmit}
 		>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='faculty_uuid'
+				render={(props) => (
+					<CoreForm.ReactSelect
+						label='Faculty'
+						placeholder='Select Faculty'
+						options={faculties!}
+						{...props}
+					/>
+				)}
+			/>
+			<FormField
+				control={form.control}
+				name='category'
+				render={(props) => (
+					<CoreForm.ReactSelect
+						label='Category'
+						placeholder='Select Category'
+						options={categories!}
+						{...props}
+					/>
+				)}
+			/>
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

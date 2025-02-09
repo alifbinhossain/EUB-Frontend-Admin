@@ -1,6 +1,12 @@
 import { ColumnDef } from '@tanstack/react-table';
 
-import { IAuthoritiesTableData, ICertificateCourseFeeTableData, ITuitionFeeTableData } from './columns.type';
+import {
+	IAuthoritiesTableData,
+	ICertificateCourseFeeTableData,
+	IDepartmentTableData,
+	IFacultyTableData,
+	ITuitionFeeTableData,
+} from './columns.type';
 
 //* Authorities Columns
 export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
@@ -51,5 +57,37 @@ export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 		header: 'Tuition Fee per Credit',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue() || 0,
+	},
+];
+
+// * Faculty Columns
+export const facultyColumns = (): ColumnDef<IFacultyTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * Department
+export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
 	},
 ];
