@@ -55,7 +55,7 @@ export function userColumns({
 		},
 		{
 			accessorKey: 'image',
-			header: 'Role',
+			header: 'Image',
 			enableColumnFilter: false,
 			cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
 		},

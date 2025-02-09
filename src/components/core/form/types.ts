@@ -1,4 +1,3 @@
-//
 import React from 'react';
 import { CheckboxProps } from '@radix-ui/react-checkbox';
 import { ControllerFieldState, ControllerRenderProps, UseFormReturn, UseFormStateReturn } from 'react-hook-form';
@@ -46,11 +45,6 @@ export interface IFormSectionProps {
 }
 
 // * form-react-select
-export interface IFormSelectOption {
-	label: string;
-	value: string | number;
-}
-
 export interface FormReactSelectProps {
 	field: ControllerRenderProps<any, any>;
 	fieldState: ControllerFieldState;
@@ -67,11 +61,6 @@ export interface FormReactSelectProps {
 }
 
 // * form-multi-select
-export interface IFormSelectOption {
-	label: string;
-	value: string | number;
-}
-
 export interface FormMultiSelectProps {
 	field: ControllerRenderProps<any, any>;
 	fieldState: ControllerFieldState;
@@ -117,6 +106,19 @@ export interface FormJoinInputSelectProps extends InputProps {
 
 // * form-input
 export interface FormInputProps extends InputProps {
+	field: ControllerRenderProps<any, any>;
+	fieldState: ControllerFieldState;
+	formState: UseFormStateReturn<any>;
+	label?: string;
+	subLabel?: string;
+	placeholder?: string;
+	optional?: boolean;
+	icon?: React.ReactNode;
+	disableLabel?: boolean;
+}
+
+// * form-file-upload
+export interface FormFileUploadProps extends InputProps {
 	field: ControllerRenderProps<any, any>;
 	fieldState: ControllerFieldState;
 	formState: UseFormStateReturn<any>;

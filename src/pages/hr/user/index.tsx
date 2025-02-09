@@ -14,7 +14,6 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const ResetPassword = lazy(() => import('./reset-password'));
 const PageAssign = lazy(() => import('./page-assign'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 
 const User = () => {
 	const [status, setStatus] = useState<boolean | undefined>(undefined);
@@ -23,9 +22,7 @@ const User = () => {
 
 	const { data, isLoading, url, deleteData, imagePostData, imageUpdateData, updateData, refetch } = useHrUsers<
 		IUserTableData[]
-	>({
-		status,
-	});
+	>({ status });
 
 	const pageInfo = useMemo(() => new PageInfo('Admin/User', url, 'admin__user'), [url]);
 
@@ -48,34 +45,16 @@ const User = () => {
 	};
 
 	// Delete Modal state
-	// Single Delete Item
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	// Single Delete Handler
 	const handleDelete = (row: Row<IUserTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
 		});
-	};
-
-	// Delete All Item
-	const [deleteItems, setDeleteItems] = useState<{ id: string; name: string; checked: boolean }[] | null>(null);
-
-	// Delete All Row Handlers
-	const handleDeleteAll = (rows: Row<IUserTableData>[]) => {
-		const selectedRows = rows.map((row) => row.original);
-
-		setDeleteItems(
-			selectedRows.map((row) => ({
-				id: row.uuid,
-				name: row.name,
-				checked: true,
-			}))
-		);
 	};
 
 	// Action Trx Modal state
@@ -144,7 +123,6 @@ const User = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				handleDeleteAll={handleDeleteAll}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate
@@ -163,14 +141,6 @@ const User = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
-							deleteData,
-						}}
-					/>,
-					<DeleteAllModal
-						{...{
-							deleteItems,
-							setDeleteItems,
 							url,
 							deleteData,
 						}}
