@@ -16,9 +16,9 @@ export type IToast = {
 	message: string;
 };
 
-export type IResponse<T> = {
-	data: T;
-};
+// export type IResponse<T> = {
+// 	data: T;
+// };
 
 export type IParams = {
 	start_date?: Date | string | undefined;
