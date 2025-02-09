@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
-import { api } from '@/lib/api';
+import { api, image_api } from '@/lib/api';
 
 interface IUseTQuery {
 	queryKey: (string | number | boolean | Date | undefined)[];
@@ -43,7 +43,36 @@ const useTQuery = <T>({ queryKey, url, enabled = true }: IUseTQuery) => {
 			const response = await api.post<IToast>(url, newData);
 			return response?.data;
 		},
+		onMutate: async ({ newData }) => {
+			await queryClient.cancelQueries({ queryKey });
+			return { newData };
+		},
 
+		onSuccess: (data) => {
+			toast.success(data?.message);
+		},
+
+		onError: (error: AxiosError<IToast>, newUser, context) => {
+			queryClient.setQueryData(queryKey, ({ data }: { data: [] }) =>
+				data?.filter((item: any) => item.id !== context?.newData?.uuid)
+			);
+			console.error(error);
+			toast.error(error?.response?.data?.message);
+		},
+
+		onSettled: (data, error, variables) => {
+			queryClient.invalidateQueries({ queryKey });
+
+			if (variables?.isOnCloseNeeded !== false) {
+				variables?.onClose?.();
+			}
+		},
+	});
+	const imagePostData = useMutation({
+		mutationFn: async ({ url, newData }: IPost) => {
+			const response = await image_api.post<IToast>(url, newData);
+			return response?.data;
+		},
 		onMutate: async ({ newData }) => {
 			await queryClient.cancelQueries({ queryKey });
 			return { newData };
@@ -73,6 +102,34 @@ const useTQuery = <T>({ queryKey, url, enabled = true }: IUseTQuery) => {
 	const updateData = useMutation({
 		mutationFn: async ({ url, updatedData }: IUpdate) => {
 			const response = await api.patch<IToast>(url, updatedData);
+			return response.data;
+		},
+		onMutate: async () => {
+			await queryClient.cancelQueries({
+				queryKey,
+			});
+			const previousData = queryClient.getQueryData(queryKey);
+			return { previousData: previousData };
+		},
+		onSuccess: (data) => {
+			toast.warning(data?.message);
+		},
+		onError: (error: AxiosError<IToast>, variables, context: any) => {
+			queryClient.setQueryData(queryKey, context.previousData);
+			console.log(error);
+			toast.error(error?.response!.data?.message);
+		},
+
+		onSettled: (data, error, variables) => {
+			queryClient.invalidateQueries({ queryKey });
+			if (variables?.isOnCloseNeeded !== false) {
+				variables?.onClose?.();
+			}
+		},
+	});
+	const imageUpdateData = useMutation({
+		mutationFn: async ({ url, updatedData }: IUpdate) => {
+			const response = await image_api.patch<IToast>(url, updatedData);
 			return response.data;
 		},
 		onMutate: async () => {
@@ -132,6 +189,8 @@ const useTQuery = <T>({ queryKey, url, enabled = true }: IUseTQuery) => {
 		status,
 
 		// * Mutations
+		imagePostData,
+		imageUpdateData,
 		updateData,
 		postData,
 		deleteData,

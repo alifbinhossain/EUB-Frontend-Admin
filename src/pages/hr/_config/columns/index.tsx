@@ -4,6 +4,8 @@ import PageAssign from '@/components/buttons/page-assign';
 import ResetPassword from '@/components/buttons/reset-password';
 import { Switch } from '@/components/ui/switch';
 
+import { API_IMAGE_URL } from '@/lib/secret';
+
 import { UserColumnProps } from '../types';
 import { IDepartmentTableData, IDesignationTableData, IUserTableData } from './columns.type';
 
@@ -52,6 +54,13 @@ export function userColumns({
 			},
 		},
 		{
+			accessorKey: 'image',
+			header: 'Role',
+			enableColumnFilter: false,
+			cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+		},
+
+		{
 			accessorKey: 'name',
 			header: 'Name',
 			enableColumnFilter: false,
@@ -70,16 +79,22 @@ export function userColumns({
 			cell: (info) => info.getValue(),
 		},
 		{
-			accessorKey: 'department',
+			accessorKey: 'office',
+			header: 'Email',
+			enableColumnFilter: false,
+			cell: (info) => info.getValue(),
+		},
+		{
+			accessorKey: 'department_name',
 			header: 'Department',
 			enableColumnFilter: false,
 			cell: (info) => {
-				const { department, designation } = info.row.original;
+				const { department_name, designation_name } = info.row.original;
 
 				return (
 					<div className='flex flex-col'>
-						<span className='capitalize'>{department}</span>
-						<span className='text-xs capitalize text-gray-400'>{designation}</span>
+						<span className='capitalize'>{department_name}</span>
+						<span className='text-xs capitalize text-gray-400'>{designation_name}</span>
 					</div>
 				);
 			},

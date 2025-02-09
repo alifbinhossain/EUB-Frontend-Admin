@@ -15,7 +15,7 @@ export const useHrUsers = <T>(params: IParams) =>
 export const useHrUsersByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: hrQK.userByUUID(uuid),
-		url: `/hr/user/${uuid}`,
+		url: `/hr/users/${uuid}`,
 		enabled: !!uuid,
 	});
 

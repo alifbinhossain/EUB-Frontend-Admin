@@ -12,13 +12,13 @@ export const useOtherHR = <T>() =>
 export const useOtherDepartment = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.department(),
-		url: `/other/department/value/label`,
+		url: `/other/hr/department/value/label`,
 	});
 //* GET OTHER Designation
 export const useOtherDesignation = <T>() =>
 	useTQuery<T>({
 		queryKey: otherQK.designation(),
-		url: `/other/designation/value/label`,
+		url: `/other/hr/designation/value/label`,
 	});
 
 //* GET OTHER GROUP

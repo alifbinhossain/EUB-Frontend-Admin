@@ -28,7 +28,7 @@ export interface IUserAddOrUpdateProps {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	updatedData?: IUserTableData | null;
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
-	postData: UseMutationResult<
+	imagePostData: UseMutationResult<
 		IToast,
 		AxiosError<IToast, any>,
 		{
@@ -39,7 +39,7 @@ export interface IUserAddOrUpdateProps {
 		},
 		any
 	>;
-	updateData: UseMutationResult<
+	imageUpdateData: UseMutationResult<
 		IToast,
 		AxiosError<IToast, any>,
 		{

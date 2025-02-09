@@ -43,7 +43,7 @@ const AddModal: React.FC<IAddModalProps> = ({
 				</DialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className='relative'>
+					<form encType='multipart/form-data' onSubmit={form.handleSubmit(onSubmit)} className='relative'>
 						<div className='space-y-3'>{children}</div>
 						<DialogFooter className='mt-6'>
 							<CoreForm.Submit className='w-full' title='Save' />
