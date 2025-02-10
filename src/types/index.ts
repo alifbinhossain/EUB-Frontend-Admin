@@ -142,3 +142,28 @@ export interface IDefaultImageAddOrUpdateProps {
 		any
 	>;
 }
+
+export interface IDefaultFileAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	imagePostData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			newData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
+	imageUpdateData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			updatedData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
+}

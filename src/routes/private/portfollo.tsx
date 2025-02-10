@@ -12,6 +12,10 @@ const Office = lazy(() => import('@/pages/portfollo/office'));
 const OfficeDetails = lazy(() => import('@/pages/portfollo/office/details'));
 const OfficeEntry = lazy(() => import('@/pages/portfollo/office/add-or-update'));
 const FinancialInformation = lazy(() => import('@/pages/portfollo/financial-info'));
+const Info = lazy(() => import('@/pages/portfollo/info'));
+const Routine = lazy(() => import('@/pages/portfollo/routine'));
+const JobCircular = lazy(() => import('@/pages/portfollo/job-circular'));
+
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -101,6 +105,27 @@ const portfolioRoutes: IRoute[] = [
 				path: 'portfolio/financial-information',
 				element: <FinancialInformation />,
 				page_name: 'portfolio__financial_information',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Info',
+				path: '/portfolio/info',
+				element: <Info />,
+				page_name: 'portfolio__info',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Routine',
+				path: '/portfolio/routine',
+				element: <Routine />,
+				page_name: 'portfolio__routine',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Job Circular',
+				path: '/portfolio/job-circular',
+				element: <JobCircular />,
+				page_name: 'portfolio__job_circular',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

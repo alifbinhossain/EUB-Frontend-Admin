@@ -1,5 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import StatusButton from '@/components/buttons/status';
+import FilePreview from '@/components/others/file-preview';
+import DateTime from '@/components/ui/date-time';
+
 import { API_IMAGE_URL } from '@/lib/secret';
 
 import { categories as authoritiesCategories } from '../../authorities/utils';
@@ -12,9 +16,11 @@ import {
 	IDepartmentTableData,
 	IFacultyTableData,
 	IFinancialInfoTableData,
+	IInfoTableData,
+	IJobCircularTableData,
 	IOfficeEntryTableData,
 	IOfficeTableData,
-	IProgramTableData,
+	IRoutineTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
 
@@ -24,13 +30,11 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'faculty_name',
 		header: 'Faculty',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'category',
@@ -41,7 +45,7 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 ];
 
 //* Program Columns
-export const programColumns = (): ColumnDef<IProgramTableData>[] => [
+export const programColumns = (): ColumnDef<IInfoTableData>[] => [
 	{
 		accessorKey: 'id',
 		header: 'ID',
@@ -171,7 +175,120 @@ export const facultyColumns = (): ColumnDef<IFacultyTableData>[] => [
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+	},
+];
+
+// * Info Columns
+export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'page_name',
+		header: 'Page Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'is_global',
+		header: 'Global',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info.getValue() as number} />,
+	},
+	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+	},
+];
+
+// * Routine Columns
+export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'programs',
+		header: 'Programs',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'type',
+		header: 'Type',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+	},
+];
+
+// * Job Circular Columns
+export const jobCircularColumns = (): ColumnDef<IJobCircularTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'location',
+		header: 'Location',
+		enableColumnFilter: true,
+	},
+
+	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+	},
+
+	{
+		accessorKey: 'deadline',
+		header: 'Deadline',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime isTime={false} date={info.getValue() as Date} />,
 	},
 ];
 

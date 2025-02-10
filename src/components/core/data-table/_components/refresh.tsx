@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { IResponse } from '@/types';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
@@ -10,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface TableRefreshProps {
-	handleRefetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IResponse<unknown>, Error>>;
+	handleRefetch: (options?: RefetchOptions) => Promise<QueryObserverResult<unknown, Error>>;
 }
 const TableRefresh: React.FC<TableRefreshProps> = ({ handleRefetch }) => {
 	const [isFetching, setIsFetching] = useState(false);

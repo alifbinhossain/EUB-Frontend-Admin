@@ -1,6 +1,6 @@
 import { IToast } from '@/types';
 import { UseMutationResult } from '@tanstack/react-query';
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { Row } from '@tanstack/react-table';
 import { AxiosError } from 'axios';
 
 import {

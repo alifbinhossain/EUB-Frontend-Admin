@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { sectionColumns } from '../_config/columns';
-import { ISectionTableData } from '../_config/columns/columns.type';
-import { useWorkSections } from '../_config/query';
+import { routineColumns } from '../_config/columns';
+import { IRoutineTableData } from '../_config/columns/columns.type';
+import { useRoutine } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 
-const Section = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useWorkSections<ISectionTableData[]>();
+const Designation = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		useRoutine<IRoutineTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Work/section', url, 'work__section'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Routine', url, 'portfolio__routine'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,46 +25,27 @@ const Section = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ISectionTableData | null>(null);
-
-	const handleUpdate = (row: Row<ISectionTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IRoutineTableData | null>(null);
+	const handleUpdate = (row: Row<IRoutineTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
 
 	// Delete Modal state
-	// Single Delete Item
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	// Single Delete Handler
-	const handleDelete = (row: Row<ISectionTableData>) => {
+	const handleDelete = (row: Row<IRoutineTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.uuid,
 		});
 	};
 
-	// Delete All Item
-	const [deleteItems, setDeleteItems] = useState<{ id: string; name: string; checked: boolean }[] | null>(null);
-
-	// Delete All Row Handlers
-	const handleDeleteAll = (rows: Row<ISectionTableData>[]) => {
-		const selectedRows = rows.map((row) => row.original);
-
-		setDeleteItems(
-			selectedRows.map((row) => ({
-				id: row.uuid,
-				name: row.name,
-				checked: true,
-			}))
-		);
-	};
-
 	// Table Columns
-	const columns = sectionColumns();
+	const columns = routineColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -77,7 +58,6 @@ const Section = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				handleDeleteAll={handleDeleteAll}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate
@@ -89,6 +69,8 @@ const Section = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -100,18 +82,10 @@ const Section = () => {
 							deleteData,
 						}}
 					/>,
-					<DeleteAllModal
-						{...{
-							deleteItems,
-							setDeleteItems,
-							url,
-							deleteData,
-						}}
-					/>,
 				])}
 			</TableProvider>
 		</PageProvider>
 	);
 };
 
-export default Section;
+export default Designation;

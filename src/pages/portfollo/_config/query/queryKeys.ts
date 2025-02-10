@@ -37,3 +37,21 @@ export const departmentQK = {
 	department: () => [...departmentQK.all(), 'department'],
 	departmentByUUID: (uuid: string) => [...departmentQK.department(), uuid],
 };
+
+export const infoQK = {
+	all: () => ['info'],
+	info: () => [...infoQK.all(), 'info'],
+	infoByUUID: (uuid: string) => [...infoQK.info(), uuid],
+};
+
+export const routineQK = {
+	all: () => ['routine'],
+	routine: () => [...routineQK.all(), 'routine'],
+	routineByUUID: (uuid: string) => [...routineQK.routine(), uuid],
+};
+
+export const jobCircularQK = {
+	all: () => ['job-circular'],
+	jobCircular: () => [...jobCircularQK.all(), 'job-circular'],
+	jobCircularByUUID: (uuid: string) => [...jobCircularQK.jobCircular(), uuid],
+};

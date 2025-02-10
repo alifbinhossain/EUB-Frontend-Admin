@@ -11,8 +11,8 @@ const SuccessToast = (text: string) => toast.success(<ToastBody {...{ text }} />
 const WarningToast = (text: string) => toast.warn(<ToastBody {...{ text }} />);
 const ErrorToast = (text: string) => toast.error(<ToastBody {...{ text }} />);
 
-const ShowLocalToast = ({ type, message }: Omit<IToast, 'status'>) => {
-	switch (type) {
+const ShowLocalToast = ({ toastType, message }: Omit<IToast, 'status'>) => {
+	switch (toastType) {
 		case 'create':
 		case 'insert':
 			SuccessToast(message);
@@ -31,9 +31,9 @@ const ShowLocalToast = ({ type, message }: Omit<IToast, 'status'>) => {
 };
 
 const ShowToast = (toast: Omit<IToast, 'status'>) => {
-	const { type, message } = toast;
+	const { toastType, message } = toast;
 	ShowLocalToast({
-		type,
+		toastType,
 		message,
 	});
 };

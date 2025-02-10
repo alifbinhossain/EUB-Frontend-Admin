@@ -1,8 +1,6 @@
 import useTQuery from '@/hooks/useTQuery';
 
-import addUrlParams from '@/utils/routes/addUrlParams';
-
-import { departmentQK, facultyQK, portfolioQK } from './queryKeys';
+import { departmentQK, facultyQK, infoQK, jobCircularQK, portfolioQK, routineQK } from './queryKeys';
 
 //* Programs
 export const usePortfolioPrograms = <T>() =>
@@ -74,6 +72,54 @@ export const useFacultyByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: facultyQK.facultyByUUID(uuid),
 		url: `/portfolio/faculty/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? INFO
+// * ALL INFO
+export const useInfo = <T>() =>
+	useTQuery<T>({
+		queryKey: infoQK.info(),
+		url: `/portfolio/info`,
+	});
+
+// * INFO By UUID
+export const useInfoByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: infoQK.infoByUUID(uuid),
+		url: `/portfolio/info/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? ROUTINE
+// * ALL ROUTINE
+export const useRoutine = <T>() =>
+	useTQuery<T>({
+		queryKey: routineQK.routine(),
+		url: `/portfolio/routine`,
+	});
+
+// * ROUTINE By UUID
+export const useRoutineByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: routineQK.routineByUUID(uuid),
+		url: `/portfolio/routine/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? JOB CIRCULAR
+// * ALL JOB CIRCULAR
+export const useJobCircular = <T>() =>
+	useTQuery<T>({
+		queryKey: jobCircularQK.jobCircular(),
+		url: `/portfolio/job-circular`,
+	});
+
+// * JOB CIRCULAR By UUID
+export const useJobCircularByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: jobCircularQK.jobCircularByUUID(uuid),
+		url: `/portfolio/job-circular/${uuid}`,
 		enabled: !!uuid,
 	});
 

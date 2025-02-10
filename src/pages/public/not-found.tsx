@@ -7,7 +7,7 @@ import useAuth from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 
 type TTemplate = {
-	icon: JSX.Element;
+	icon: React.ReactNode;
 	title: string;
 	subtitle: string;
 	children?: React.ReactNode;
