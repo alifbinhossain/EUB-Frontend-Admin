@@ -9,7 +9,7 @@ export const categories = [
 	},
 	{ label: 'ICT Division', value: 'ict_division' },
 	{ label: 'CIAC', value: 'ciac' },
-	{ label: 'Program Coordination', value: 'program_coordinator' },
+	{ label: 'Program Coordination', value: 'program_coordination' },
 	{ label: 'Admission and Student Affairs', value: 'admission_and_student_affairs' },
 	{ label: 'Fiance and Accounts', value: 'finance_and_accounts' },
 	{ label: 'Faculty Development and Evaluation', value: 'faculty_development_and_evaluation' },

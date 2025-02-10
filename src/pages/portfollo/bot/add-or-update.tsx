@@ -58,7 +58,7 @@ const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `portfolio/bot/${updatedData?.uuid}`,
 				updatedData: {
 					...values,
 					updated_at: getDateTime(),

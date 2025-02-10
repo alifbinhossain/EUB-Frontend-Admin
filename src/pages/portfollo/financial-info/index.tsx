@@ -16,7 +16,10 @@ const TuitionFee = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		usePortfolioFinancialInformation<IFinancialInfoTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/TuitionFee', url, 'portfolio__tuition_fee'), [url]);
+	const pageInfo = useMemo(
+		() => new PageInfo('Portfolio/Financial Information', url, 'portfolio__financial_information'),
+		[url]
+	);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

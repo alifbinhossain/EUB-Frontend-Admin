@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { API_IMAGE_URL } from '@/lib/secret';
 
 import { categories as authoritiesCategories } from '../../authorities/utils';
-import { categories as botCategories } from '../../bot/utils';
+import { categories as botCategories, status as botStatus } from '../../bot/utils';
 import { categories as officeCategories } from '../../office/utills';
 import {
 	IAuthoritiesTableData,
@@ -200,6 +200,10 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		accessorKey: 'status',
 		header: 'Status',
 		enableColumnFilter: false,
+		cell: (info) => {
+			const category = botStatus.find((item) => item.value === info.getValue());
+			return <span className='capitalize'>{category?.label ?? ''}</span>;
+		},
 	},
 	{
 		accessorKey: 'description',

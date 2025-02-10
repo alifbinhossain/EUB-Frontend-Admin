@@ -12,5 +12,5 @@ export const status = [
 		value: 'chairman',
 	},
 	{ label: 'Member', value: 'member' },
-	{ label: 'member-secretary', value: 'secretary' },
+	{ label: 'Member Secretary', value: 'member_secretary' },
 ];

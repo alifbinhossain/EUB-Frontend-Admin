@@ -6,6 +6,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherPrograms } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -27,6 +28,7 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioProgramByUUID(updatedData?.uuid as string);
+	const { invalidateQuery: invalidateQueryProgram } = useOtherPrograms();
 
 	const categoryOptions = categories;
 
@@ -42,6 +44,7 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	useEffect(() => {
 		if (data && isUpdate) {
 			form.reset(data);
+			invalidateQueryProgram();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);

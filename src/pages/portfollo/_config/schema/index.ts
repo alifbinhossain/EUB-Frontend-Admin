@@ -127,7 +127,7 @@ export type IPortfolioDepartment = z.infer<typeof PORTFOLIO_DEPARTMENT_SCHEMA>;
 export const BOT_SCHEMA = z.object({
 	category: z.enum(['syndicate', 'academic_council']),
 	user_uuid: STRING_REQUIRED,
-	status: z.enum(['chairman', 'member', 'member-secretary']),
+	status: z.enum(['chairman', 'member', 'member_secretary']),
 	description: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
