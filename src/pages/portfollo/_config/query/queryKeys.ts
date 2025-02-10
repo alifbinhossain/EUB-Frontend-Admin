@@ -17,6 +17,13 @@ export const portfolioQK = {
 	//* bot
 	bot: () => [...portfolioQK.all(), 'bot'],
 	botByUUID: (uuid: string) => [...portfolioQK.bot(), uuid],
+	//* office
+	office: () => [...portfolioQK.all(), 'office'],
+	officeByUUID: (uuid: string) => [...portfolioQK.office(), uuid],
+
+	//* financial_information
+	financialInformation: () => [...portfolioQK.all(), 'financial_information'],
+	financialInformationByUUID: (uuid: string) => [...portfolioQK.financialInformation(), uuid],
 };
 
 export const facultyQK = {

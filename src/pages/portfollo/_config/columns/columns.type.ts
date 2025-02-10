@@ -121,3 +121,60 @@ export type IBotTableData = {
 	updated_at: string;
 	remarks: string;
 };
+
+//* office
+export type IOfficeEntryTableData = {
+	id: number;
+	office_uuid: string;
+	user_uuid: string;
+	remark: string;
+};
+export type IOfficeTableData = {
+	id: number;
+	uuid: string;
+	title: string;
+	image: any;
+	category:
+		| 'registrar'
+		| 'controller_of_examinations'
+		| 'ict_division'
+		| 'ciac'
+		| 'program_coordination'
+		| 'admission_and_student_affairs'
+		| 'finance_and_accounts'
+		| 'faculty_development_and_evaluation'
+		| 'planning_and_development'
+		| 'proctor'
+		| 'procurement_and_inventory'
+		| 'iqac'
+		| 'library';
+	office_entries: IOfficeEntryTableData[];
+	created_by_name: string;
+	created_at: string;
+	updated_at: string;
+	remarks: string;
+};
+
+//* Financial Info
+export type IFinancialInfoTableData = {
+	id: number;
+	uuid: string;
+	department_uuid: string;
+	total_credit: number;
+	total_cost: number;
+	admission_fee: number;
+	waiver_50: number;
+	waiver_55: number;
+	waiver_60: number;
+	waiver_65: number;
+	waiver_70: number;
+	waiver_75: number;
+	waiver_80: number;
+	waiver_85: number;
+	waiver_90: number;
+	waiver_95: number;
+	waiver_100: number;
+	remarks: string;
+	created_at: string;
+	updated_at: string;
+};
