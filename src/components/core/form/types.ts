@@ -130,6 +130,8 @@ export interface FormFileUploadProps extends InputProps {
 	disableLabel?: boolean;
 	options?: DropzoneOptions;
 	isUpdate?: boolean;
+	fileType?: 'image' | 'document' | 'all' | 'video' | 'audio';
+	errorText?: string;
 }
 
 // * form-date-picker

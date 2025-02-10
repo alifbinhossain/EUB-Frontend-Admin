@@ -1,5 +1,5 @@
 import { createContext, useLayoutEffect, useMemo, useState } from 'react';
-import { IResponse, ITableAdvanceFilter, ITableFacetedFilter, IToolbarOptions } from '@/types';
+import { ITableAdvanceFilter, ITableFacetedFilter, IToolbarOptions } from '@/types';
 import { RankingInfo } from '@tanstack/match-sorter-utils';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import {
@@ -56,7 +56,7 @@ interface ITableContext<TData> {
 	handleCreate?: () => void;
 	handleUpdate?: (row: Row<TData>) => void;
 	handleDelete?: (row: Row<TData>) => void;
-	handleRefetch?: (options?: RefetchOptions) => Promise<QueryObserverResult<IResponse<any>, Error>>;
+	handleRefetch?: (options?: RefetchOptions) => Promise<QueryObserverResult<any, Error>>;
 	handleDeleteAll?: (rows: Row<TData>[]) => void;
 	initialDateRange: [Date | string, Date | string];
 	globalFilterValue?: string;

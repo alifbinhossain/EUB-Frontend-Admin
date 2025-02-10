@@ -5,66 +5,47 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { orderColumns } from '../_config/columns';
-import { IOrderTableData } from '../_config/columns/columns.type';
-import { useWorkJobs } from '../_config/query';
+import { jobCircularColumns } from '../_config/columns';
+import { IJobCircularTableData } from '../_config/columns/columns.type';
+import { useJobCircular } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 
-const Box = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useWorkJobs<IOrderTableData[]>();
+const Designation = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		useJobCircular<IJobCircularTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Work/Order', url, 'work__order'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Job Circular', url, 'portfolio__job_circular'), [url]);
 
-	//* Add/Update Modal state
+	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
 	const handleCreate = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IOrderTableData | null>(null);
-
-	const handleUpdate = (row: Row<IOrderTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IJobCircularTableData | null>(null);
+	const handleUpdate = (row: Row<IJobCircularTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
 
-	//* Delete Modal state
-	//* Single Delete Item
+	// Delete Modal state
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	//* Single Delete Handler
-	const handleDelete = (row: Row<IOrderTableData>) => {
+	const handleDelete = (row: Row<IJobCircularTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.order_id,
+			name: row?.original?.uuid,
 		});
 	};
 
-	//* Delete All Item
-	const [deleteItems, setDeleteItems] = useState<{ id: string; name: string; checked: boolean }[] | null>(null);
-
-	//* Delete All Row Handlers
-	const handleDeleteAll = (rows: Row<IOrderTableData>[]) => {
-		const selectedRows = rows.map((row) => row.original);
-
-		setDeleteItems(
-			selectedRows.map((row) => ({
-				id: row.uuid,
-				name: row.order_id,
-				checked: true,
-			}))
-		);
-	};
-
-	//* Table Columns
-	const columns = orderColumns();
+	// Table Columns
+	const columns = jobCircularColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -77,7 +58,6 @@ const Box = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				handleDeleteAll={handleDeleteAll}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate
@@ -89,6 +69,8 @@ const Box = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -100,18 +82,10 @@ const Box = () => {
 							deleteData,
 						}}
 					/>,
-					<DeleteAllModal
-						{...{
-							deleteItems,
-							setDeleteItems,
-							url,
-							deleteData,
-						}}
-					/>,
 				])}
 			</TableProvider>
 		</PageProvider>
 	);
 };
 
-export default Box;
+export default Designation;

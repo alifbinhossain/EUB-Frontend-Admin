@@ -141,7 +141,7 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 				<FormField
 					control={form.control}
 					name='image'
-					render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
+					render={(props) => <CoreForm.FileUpload fileType='image' isUpdate={isUpdate} {...props} />}
 				/>
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</div>

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
+import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
+import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
 
 //* Authorities Schema
 export const AUTHORITIES_SCHEMA = z.object({
@@ -105,6 +106,77 @@ export const FACULTY_NULL: Partial<IFaculty> = {
 };
 
 export type IFaculty = z.infer<typeof FACULTY_SCHEMA>;
+
+//* Info Schema
+export const INFO_SCHEMA = z.object({
+	department_uuid: STRING_REQUIRED,
+	description: STRING_REQUIRED,
+	page_name: z.nativeEnum(PORTFOLIO_PAGE_NAME),
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(z.string()),
+	is_global: BOOLEAN_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const INFO_NULL: Partial<IInfo> = {
+	department_uuid: '',
+	description: '',
+	file: new File([''], 'filename') as File,
+	is_global: false,
+	remarks: null,
+};
+
+export type IInfo = z.infer<typeof INFO_SCHEMA>;
+
+//* Routine Schema
+export const ROUTINE_SCHEMA = z.object({
+	department_uuid: STRING_REQUIRED,
+	description: STRING_REQUIRED,
+	programs: z.nativeEnum(PORTFOLIO_PROGRAM_TYPE),
+	type: z.nativeEnum(PORTFOLIO_ROUTINE_TYPE),
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(z.string()),
+	remarks: STRING_NULLABLE,
+});
+
+export const ROUTINE_NULL: Partial<IRoutine> = {
+	department_uuid: '',
+	description: '',
+	file: new File([''], 'filename') as File,
+	remarks: null,
+};
+
+export type IRoutine = z.infer<typeof ROUTINE_SCHEMA>;
+
+//* Job Circular Schema
+export const JOB_CIRCULAR_SCHEMA = z.object({
+	title: STRING_REQUIRED,
+	faculty_uuid: STRING_REQUIRED,
+	category: STRING_REQUIRED,
+	location: STRING_REQUIRED,
+	deadline: STRING_REQUIRED,
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(z.string()),
+	remarks: STRING_NULLABLE,
+});
+
+export const JOB_CIRCULAR_NULL: Partial<IJobCircular> = {
+	title: '',
+	category: '',
+	faculty_uuid: '',
+	deadline: '',
+	location: '',
+	file: new File([''], 'filename') as File,
+	remarks: null,
+};
+
+export type IJobCircular = z.infer<typeof JOB_CIRCULAR_SCHEMA>;
 
 //* Department Schema
 export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({

@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { problemsColumns } from '../_config/columns';
-import { IProblemsTableData } from '../_config/columns/columns.type';
-import { useWorkProblems } from '../_config/query';
+import { infoColumns } from '../_config/columns';
+import { IInfoTableData } from '../_config/columns/columns.type';
+import { useInfo } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 
-const Problems = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useWorkProblems<IProblemsTableData[]>();
+const Designation = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		useInfo<IInfoTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Work/Problem', url, 'work__problem'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Info', url, 'portfolio__info'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,46 +25,27 @@ const Problems = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IProblemsTableData | null>(null);
-
-	const handleUpdate = (row: Row<IProblemsTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IInfoTableData | null>(null);
+	const handleUpdate = (row: Row<IInfoTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
 
 	// Delete Modal state
-	// Single Delete Item
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	// Single Delete Handler
-	const handleDelete = (row: Row<IProblemsTableData>) => {
+	const handleDelete = (row: Row<IInfoTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.page_name,
 		});
 	};
 
-	// Delete All Item
-	const [deleteItems, setDeleteItems] = useState<{ id: string; name: string; checked: boolean }[] | null>(null);
-
-	// Delete All Row Handlers
-	const handleDeleteAll = (rows: Row<IProblemsTableData>[]) => {
-		const selectedRows = rows.map((row) => row.original);
-
-		setDeleteItems(
-			selectedRows.map((row) => ({
-				id: row.uuid,
-				name: row.name,
-				checked: true,
-			}))
-		);
-	};
-
 	// Table Columns
-	const columns = problemsColumns();
+	const columns = infoColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -77,7 +58,6 @@ const Problems = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				handleDeleteAll={handleDeleteAll}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate
@@ -89,6 +69,8 @@ const Problems = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -100,18 +82,10 @@ const Problems = () => {
 							deleteData,
 						}}
 					/>,
-					<DeleteAllModal
-						{...{
-							deleteItems,
-							setDeleteItems,
-							url,
-							deleteData,
-						}}
-					/>,
 				])}
 			</TableProvider>
 		</PageProvider>
 	);
 };
 
-export default Problems;
+export default Designation;

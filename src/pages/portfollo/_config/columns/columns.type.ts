@@ -1,3 +1,5 @@
+import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
+
 //* Authorities
 export type IAuthoritiesTableData = {
 	id: number;
@@ -46,6 +48,46 @@ export type IProgramTableData = {
 	uuid: string;
 	name: string;
 	category: 'graduate' | 'undergraduate' | 'certificate';
+	remarks: string;
+};
+
+//* Info
+export type IInfoTableData = {
+	id: number;
+	uuid: string;
+	department_uuid: string;
+	department_name: string;
+	description: string;
+	page_name: PORTFOLIO_PAGE_NAME;
+	file: string;
+	is_global: boolean;
+	remarks: string;
+};
+
+//* Routine
+export type IRoutineTableData = {
+	id: number;
+	uuid: string;
+	department_uuid: string;
+	department_name: string;
+	programs: PORTFOLIO_PROGRAM_TYPE;
+	description: string;
+	type: PORTFOLIO_ROUTINE_TYPE;
+	file: string;
+	remarks: string;
+};
+
+//* Job Circular
+export type IJobCircularTableData = {
+	id: number;
+	uuid: string;
+	title: string;
+	faculty_uuid: string;
+	faculty_name: string;
+	category: string;
+	location: string;
+	file: string;
+	deadline: Date;
 	remarks: string;
 };
 

@@ -43,3 +43,10 @@ export const useOtherPrograms = <T>() =>
 		queryKey: otherQK.programs(),
 		url: `/other/portfolio/program/value/label`,
 	});
+
+// //* GET OTHER PORTFOLIO DEPARTMENTS
+export const useOtherPortfolioDepartments = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.portfolioDepartments(),
+		url: `/other/portfolio/department/value/label`,
+	});
