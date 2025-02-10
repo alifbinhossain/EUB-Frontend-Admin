@@ -17,6 +17,13 @@ export const portfolioQK = {
 	//* bot
 	bot: () => [...portfolioQK.all(), 'bot'],
 	botByUUID: (uuid: string) => [...portfolioQK.bot(), uuid],
+	//* office
+	office: () => [...portfolioQK.all(), 'office'],
+	officeByUUID: (uuid: string) => [...portfolioQK.office(), uuid],
+
+	//* financial_information
+	financialInformation: () => [...portfolioQK.all(), 'financial_information'],
+	financialInformationByUUID: (uuid: string) => [...portfolioQK.financialInformation(), uuid],
 
 	// * club
 	club: () => [...portfolioQK.all(), 'club'],
@@ -34,4 +41,22 @@ export const portfolioQK = {
 	news: () => [...portfolioQK.all(), 'news'],
 	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
 	newsDetails: (uuid: string) => [...portfolioQK.news(), 'details', uuid],
+};
+
+export const infoQK = {
+	all: () => ['info'],
+	info: () => [...infoQK.all(), 'info'],
+	infoByUUID: (uuid: string) => [...infoQK.info(), uuid],
+};
+
+export const routineQK = {
+	all: () => ['routine'],
+	routine: () => [...routineQK.all(), 'routine'],
+	routineByUUID: (uuid: string) => [...routineQK.routine(), uuid],
+};
+
+export const jobCircularQK = {
+	all: () => ['job-circular'],
+	jobCircular: () => [...jobCircularQK.all(), 'job-circular'],
+	jobCircularByUUID: (uuid: string) => [...jobCircularQK.jobCircular(), uuid],
 };

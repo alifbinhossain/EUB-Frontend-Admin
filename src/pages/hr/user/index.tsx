@@ -85,11 +85,11 @@ const User = () => {
 
 	// Status Handler
 	const handleStatus = async (row: Row<IUserTableData>) => {
-		const status = Number(row?.original?.status) === 1 ? 0 : 1;
+		const status = Number(row?.original?.status) === 1 ? false : true;
 		const updated_at = getDateTime();
 
-		await imageUpdateData.mutateAsync({
-			url: `/hr/user/status/${row?.original?.uuid}`,
+		await updateData.mutateAsync({
+			url: `/hr/users/status/${row?.original?.uuid}`,
 			updatedData: { status, updated_at },
 		});
 	};

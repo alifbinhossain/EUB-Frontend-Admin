@@ -49,8 +49,8 @@ const AddModal: React.FC<IAddModalProps> = ({
 
 				<Form {...form}>
 					<form encType='multipart/form-data' onSubmit={form.handleSubmit(onSubmit)} className='relative'>
-						<div className='space-y-3'>{children}</div>
-						<DialogFooter className='mt-6'>
+						<div className='space-y-4'>{children}</div>
+						<DialogFooter className='mt-10'>
 							<CoreForm.Submit className='w-full' title='Save' />
 						</DialogFooter>
 						<DevTool control={form.control} placement='top-left' />

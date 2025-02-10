@@ -1,8 +1,6 @@
 import useTQuery from '@/hooks/useTQuery';
 
-import addUrlParams from '@/utils/routes/addUrlParams';
-
-import { portfolioQK } from './queryKeys';
+import { infoQK, jobCircularQK, portfolioQK, routineQK } from './queryKeys';
 
 //* Programs
 export const usePortfolioPrograms = <T>() =>
@@ -77,6 +75,54 @@ export const useFacultyByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
+// ? INFO
+// * ALL INFO
+export const useInfo = <T>() =>
+	useTQuery<T>({
+		queryKey: infoQK.info(),
+		url: `/portfolio/info`,
+	});
+
+// * INFO By UUID
+export const useInfoByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: infoQK.infoByUUID(uuid),
+		url: `/portfolio/info/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? ROUTINE
+// * ALL ROUTINE
+export const useRoutine = <T>() =>
+	useTQuery<T>({
+		queryKey: routineQK.routine(),
+		url: `/portfolio/routine`,
+	});
+
+// * ROUTINE By UUID
+export const useRoutineByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: routineQK.routineByUUID(uuid),
+		url: `/portfolio/routine/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? JOB CIRCULAR
+// * ALL JOB CIRCULAR
+export const useJobCircular = <T>() =>
+	useTQuery<T>({
+		queryKey: jobCircularQK.jobCircular(),
+		url: `/portfolio/job-circular`,
+	});
+
+// * JOB CIRCULAR By UUID
+export const useJobCircularByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: jobCircularQK.jobCircularByUUID(uuid),
+		url: `/portfolio/job-circular/${uuid}`,
+		enabled: !!uuid,
+	});
+
 // ? DEPARTMENT
 // * ALL Department
 export const useDepartments = <T>() =>
@@ -97,7 +143,7 @@ export const useDepartmentsByUUID = <T>(uuid: string) =>
 export const usePortfolioBot = <T>() =>
 	useTQuery<T>({
 		queryKey: portfolioQK.bot(),
-		url: '/portfolio/bot',
+		url: '/portfolio/bot?is_admin=true',
 	});
 
 export const usePortfolioBotByUUID = <T>(uuid: string) =>
@@ -159,5 +205,32 @@ export const useNewsDetails = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: portfolioQK.newsDetails(uuid),
 		url: `portfolio/news-and-news-entry-details/by/news-uuid/${uuid}`,
+		enabled: !!uuid,
+	});
+
+//* Office
+export const usePortfolioOffice = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.office(),
+		url: '/portfolio/office',
+	});
+
+export const usePortfolioOfficeByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.officeByUUID(uuid),
+		url: `/portfolio/office-and-office-entry/details/by-office-uuid/${uuid}`,
+		enabled: !!uuid,
+	});
+//* Financial Information
+export const usePortfolioFinancialInformation = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.financialInformation(),
+		url: '/portfolio/financial-info',
+	});
+
+export const usePortfolioFinancialInformationByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.financialInformationByUUID(uuid),
+		url: `/portfolio/financial-info/${uuid}`,
 		enabled: !!uuid,
 	});

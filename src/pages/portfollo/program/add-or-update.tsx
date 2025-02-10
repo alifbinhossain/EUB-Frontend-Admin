@@ -6,12 +6,14 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherPrograms } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { usePortfolioProgramByUUID } from '../_config/query';
 import { IProgram, PROGRAM_NULL, PROGRAM_SCHEMA } from '../_config/schema';
 import { IProgramsAddOrUpdateProps } from '../_config/types';
+import { categories } from './utils';
 
 const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	url,
@@ -26,21 +28,16 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioProgramByUUID(updatedData?.uuid as string);
+	const { invalidateQuery: invalidateQueryProgram } = useOtherPrograms();
 
-	const categoryOptions = [
-		{
-			label: 'Graduate',
-			value: 'graduate',
-		},
-		{ label: 'Undergraduate', value: 'undergraduate' },
-		{ label: 'Certificate', value: 'certificate' },
-	];
+	const categoryOptions = categories;
 
 	const form = useRHF(PROGRAM_SCHEMA, PROGRAM_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
 		form.reset(PROGRAM_NULL);
+		invalidateQueryProgram();
 		setOpen((prev) => !prev);
 	};
 

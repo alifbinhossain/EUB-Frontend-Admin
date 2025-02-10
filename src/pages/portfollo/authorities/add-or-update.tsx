@@ -11,9 +11,10 @@ import { useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { usePortfolioAuthorityByUUID } from '../_config/query';
+import { usePortfolioAuthorities, usePortfolioAuthorityByUUID } from '../_config/query';
 import { AUTHORITIES_NULL, AUTHORITIES_SCHEMA, IAuthorities } from '../_config/schema';
 import { IAuthoritiesAddOrUpdateProps } from '../_config/types';
+import { categories } from './utils';
 
 const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 	url,
@@ -29,54 +30,16 @@ const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = usePortfolioAuthorityByUUID(updatedData?.uuid as string);
 	const { data: userOption } = useOtherUser<IFormSelectOption[]>();
-	const categoryOptions = [
-		{
-			label: 'Chancellor',
-			value: 'chancellor',
-		},
-		{
-			label: 'Chairman',
-			value: 'chairman',
-		},
-		{
-			label: 'Vice Chancellor',
-			value: 'vc',
-		},
-		{
-			label: 'Pro Vice Chancellor',
-			value: 'pro_vc',
-		},
-		{
-			label: 'Dean',
-			value: 'dean',
-		},
-		{
-			label: 'Treasurer',
-			value: 'treasurer',
-		},
-		{
-			label: 'Director Coordination',
-			value: 'director_coordination',
-		},
-		{
-			label: 'Registrar',
-			value: 'registrar',
-		},
-		{
-			label: 'Undergraduate',
-			value: 'undergraduate',
-		},
-		{
-			label: 'Certificate',
-			value: 'certificate',
-		},
-	];
+	const { invalidateQuery: invalidateAuthoritiesQuery } = usePortfolioAuthorities();
+
+	const categoryOptions = categories;
 
 	const form = useRHF(AUTHORITIES_SCHEMA, AUTHORITIES_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
 		form.reset(AUTHORITIES_NULL);
+		invalidateAuthoritiesQuery();
 		setOpen((prev) => !prev);
 	};
 

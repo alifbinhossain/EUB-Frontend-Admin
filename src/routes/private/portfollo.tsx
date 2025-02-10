@@ -12,6 +12,15 @@ const DepartmentTeachers = lazy(() => import('@/pages/portfollo/department-teach
 const News = lazy(() => import('@/pages/portfollo/news'));
 const NewsEntry = lazy(() => import('@/pages/portfollo/news/entry'));
 
+const Bot = lazy(() => import('@/pages/portfollo/bot'));
+const Office = lazy(() => import('@/pages/portfollo/office'));
+const OfficeDetails = lazy(() => import('@/pages/portfollo/office/details'));
+const OfficeEntry = lazy(() => import('@/pages/portfollo/office/add-or-update'));
+const FinancialInformation = lazy(() => import('@/pages/portfollo/financial-info'));
+const Info = lazy(() => import('@/pages/portfollo/info'));
+const Routine = lazy(() => import('@/pages/portfollo/routine'));
+const JobCircular = lazy(() => import('@/pages/portfollo/job-circular'));
+
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -95,6 +104,72 @@ const portfolioRoutes: IRoute[] = [
 				page_name: 'portfolio__news_entry_update',
 				actions: ['create', 'read', 'update', 'delete'],
 				hidden: true,
+			},
+			{
+				name: 'Bot',
+				path: '/portfolio/bot',
+				element: <Bot />,
+				page_name: 'portfolio__bot',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office',
+				path: '/portfolio/office',
+				element: <Office />,
+				page_name: 'portfolio__office',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Entry',
+				path: 'portfolio/office/create',
+				element: <OfficeEntry />,
+				hidden: true,
+				page_name: 'portfolio__office_create',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Details',
+				path: 'portfolio/office/:uuid/details',
+				element: <OfficeDetails />,
+				hidden: true,
+				page_name: 'portfolio__office_details',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Update',
+				path: 'portfolio/office/:uuid/update',
+				element: <OfficeEntry />,
+				hidden: true,
+				page_name: 'portfolio__office_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Financial Information',
+				path: 'portfolio/financial-information',
+				element: <FinancialInformation />,
+				page_name: 'portfolio__financial_information',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Info',
+				path: '/portfolio/info',
+				element: <Info />,
+				page_name: 'portfolio__info',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Routine',
+				path: '/portfolio/routine',
+				element: <Routine />,
+				page_name: 'portfolio__routine',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Job Circular',
+				path: '/portfolio/job-circular',
+				element: <JobCircular />,
+				page_name: 'portfolio__job_circular',
+				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],
 	},

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { IResponse } from '@/types';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { AxiosError } from 'axios';
 import useTable from '@/hooks/useTable';
@@ -40,7 +39,7 @@ const DeleteAllModal: React.FC<IDeleteAllModalProps> = ({ deleteItems, setDelete
 				await Promise.all(response);
 				onClose?.();
 			}
-		} catch (error: AxiosError<IResponse<any> | any> | any) {
+		} catch (error: AxiosError<any> | any) {
 			console.log({ error });
 		} finally {
 			setIsLoading(false);

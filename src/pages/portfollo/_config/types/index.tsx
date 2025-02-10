@@ -1,4 +1,4 @@
-import { IDefaultAddOrUpdateProps, IToast } from '@/types';
+import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps, IToast } from '@/types';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -10,8 +10,10 @@ import {
 	IDepartmentTableData,
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
+	IInfoTableData,
+	IJobCircularTableData,
 	INewsTableData,
-	IProgramTableData,
+	IRoutineTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
 
@@ -28,9 +30,25 @@ export interface IDepartmentAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 export interface IFacultyAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IFacultyTableData | null;
 }
+
+// * Info
+export interface IInfoAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IInfoTableData | null;
+}
+
+// * Routine
+export interface IRoutineAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IRoutineTableData | null;
+}
+
+// * Job Circular
+export interface IJobCircularAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IJobCircularTableData | null;
+}
+
 //* Programs
 export interface IProgramsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: IProgramTableData | null;
+	updatedData?: IInfoTableData | null;
 }
 
 //* Authorities
@@ -83,4 +101,8 @@ export interface INewsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 		},
 		any
 	>;
+}
+//* Financial Information
+export interface IFinancialInformationAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: any | null;
 }

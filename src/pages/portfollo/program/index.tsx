@@ -6,7 +6,7 @@ import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { programColumns } from '../_config/columns';
-import { IProgramTableData } from '../_config/columns/columns.type';
+import { IInfoTableData } from '../_config/columns/columns.type';
 import { usePortfolioPrograms } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
@@ -14,7 +14,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Program = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioPrograms<IProgramTableData[]>();
+		usePortfolioPrograms<IInfoTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('Portfolio/Program', url, 'portfolio__program'), [url]);
 
@@ -25,8 +25,8 @@ const Program = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IProgramTableData | null>(null);
-	const handleUpdate = (row: Row<IProgramTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IInfoTableData | null>(null);
+	const handleUpdate = (row: Row<IInfoTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,10 +37,10 @@ const Program = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IProgramTableData>) => {
+	const handleDelete = (row: Row<IInfoTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.uuid,
 		});
 	};
 
