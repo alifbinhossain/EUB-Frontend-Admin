@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
+import DateTime from '@/components/ui/date-time';
 
 import { API_IMAGE_URL } from '@/lib/secret';
 
@@ -12,6 +13,7 @@ import {
 	IDepartmentTableData,
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
+	INewsTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
@@ -256,6 +258,52 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 	{
 		accessorKey: 'journal',
 		header: 'Journal',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * News
+export const newsColumns = (): ColumnDef<INewsTableData>[] => [
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'subtitle',
+		header: 'Subtitle',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'content',
+		header: 'Content',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'cover_image',
+		header: 'Coven Image',
+		enableColumnFilter: true,
+		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+	},
+	{
+		accessorKey: 'published_date',
+		header: 'publish Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),
 	},

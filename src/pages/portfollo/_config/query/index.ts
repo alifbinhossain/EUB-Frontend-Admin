@@ -138,3 +138,19 @@ export const useDepartmentsTeachersByUUID = <T>(uuid: string) =>
 		url: `/portfolio/department-teachers/${uuid}`,
 		enabled: !!uuid,
 	});
+
+// ? NEWS
+// * ALL news
+export const useNews = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.news(),
+		url: `/portfolio/news?is_pagination=false`,
+	});
+
+// * News By UUID
+export const useNewsByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.newsByUUID(uuid),
+		url: `/portfolio/news/${uuid}`,
+		enabled: !!uuid,
+	});

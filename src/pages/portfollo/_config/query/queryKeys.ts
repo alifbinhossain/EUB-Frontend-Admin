@@ -30,4 +30,7 @@ export const portfolioQK = {
 	// * department-teacher
 	departmentTeachers: () => [...portfolioQK.all(), 'department-teacher'],
 	departmentTeachersByUUID: (uuid: string) => [...portfolioQK.departmentTeachers(), uuid],
+	// * News
+	news: () => [...portfolioQK.all(), 'news'],
+	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
 };

@@ -103,3 +103,16 @@ export type IDepartmentTeachersTableData = {
 	publication: string;
 	journal: string;
 };
+
+// * News
+export type INewsTableData = {
+	id: number;
+	uuid: string;
+	title: string;
+	subtitle: string;
+	description: string;
+	content: string;
+	cover_image: string;
+	published_date: string;
+	department_uuid: string;
+};

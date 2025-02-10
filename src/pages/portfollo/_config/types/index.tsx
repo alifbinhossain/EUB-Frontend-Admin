@@ -1,4 +1,6 @@
-import { IDefaultAddOrUpdateProps } from '@/types';
+import { IDefaultAddOrUpdateProps, IToast } from '@/types';
+import { UseMutationResult } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import {
 	IAuthoritiesTableData,
@@ -8,6 +10,7 @@ import {
 	IDepartmentTableData,
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
+	INewsTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
@@ -53,4 +56,31 @@ export interface IClubAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 // * Department-Teachers
 export interface IDepartmentTeachersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IDepartmentTeachersTableData | null;
+}
+
+// * News
+export interface INewsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: INewsTableData | null;
+	imagePostData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			newData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
+	imageUpdateData: UseMutationResult<
+		IToast,
+		AxiosError<IToast, any>,
+		{
+			url: string;
+			updatedData: any;
+			isOnCloseNeeded?: boolean;
+			onClose?: (() => void) | undefined;
+		},
+		any
+	>;
 }

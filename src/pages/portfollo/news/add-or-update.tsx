@@ -10,16 +10,13 @@ import { AddModal } from '@core/modal';
 import { useOtherDepartments, useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import Formdata from '@/utils/formdata';
 
-import { useDepartmentsTeachersByUUID } from '../_config/query';
-import {
-	IDepartmentTeachers,
-	PORTFOLIO_DEPARTMENT_TEACHER_NULL,
-	PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA,
-} from '../_config/schema';
-import { IDepartmentTeachersAddOrUpdateProps } from '../_config/types';
+import { useNewsByUUID } from '../_config/query';
+import { INews, NEWS_NULL, NEWS_SCHEMA } from '../_config/schema';
+import { INewsAddOrUpdateProps } from '../_config/types';
 
-const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<INewsAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -27,19 +24,20 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	setUpdatedData,
 	postData,
 	updateData,
+	imagePostData,
+	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
+	const { data } = useNewsByUUID(updatedData?.uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
-	const { data: users } = useOtherUser<IFormSelectOption[]>();
 
-	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
+	const form = useRHF(NEWS_SCHEMA, NEWS_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL);
+		form.reset(NEWS_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -52,27 +50,26 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IDepartmentTeachers) {
+	async function onSubmit(values: INews) {
+		const formData = Formdata<INews>(values);
+
 		if (isUpdate) {
+			formData.append('updated_at', getDateTime());
 			// UPDATE ITEM
-			updateData.mutateAsync({
+			imageUpdateData.mutateAsync({
 				url: `${url}/${updatedData?.uuid}`,
-				updatedData: {
-					...values,
-					updated_at: getDateTime(),
-				},
+				updatedData: formData,
 				onClose,
 			});
 		} else {
+			formData.append('created_at', getDateTime());
+			formData.append('created_by', user?.uuid || '');
+			formData.append('uuid', nanoid());
+
 			// ADD NEW ITEM
-			postData.mutateAsync({
+			imagePostData.mutateAsync({
 				url,
-				newData: {
-					...values,
-					created_at: getDateTime(),
-					created_by: user?.uuid,
-					uuid: nanoid(),
-				},
+				newData: formData,
 				onClose,
 			});
 		}
@@ -82,17 +79,12 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Department Teacher' : 'Add Department Teacher'}
+			title={isUpdate ? 'Update Club' : 'Add Club'}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField
-				control={form.control}
-				name='teacher_uuid'
-				render={(props) => (
-					<CoreForm.ReactSelect label='Teacher' placeholder='Select Teacher' options={users!} {...props} />
-				)}
-			/>
+			<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='subtitle' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
 				name='department_uuid'
@@ -105,11 +97,19 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					/>
 				)}
 			/>
-
-			<FormField control={form.control} name='education' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='publication' render={(props) => <CoreForm.Textarea {...props} />} />
-			<FormField control={form.control} name='journal' render={(props) => <CoreForm.Textarea {...props} />} />
+			<FormField
+				control={form.control}
+				name='published_date'
+				render={(props) => <CoreForm.DatePicker {...props} />}
+			/>
+			<FormField control={form.control} name='description' render={(props) => <CoreForm.Textarea {...props} />} />
+			<FormField control={form.control} name='content' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
+			<FormField
+				control={form.control}
+				name='cover_image'
+				render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
+			/>
 		</AddModal>
 	);
 };
