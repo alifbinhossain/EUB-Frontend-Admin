@@ -158,6 +158,7 @@ const AddOrUpdate = () => {
 	const handleAdd = () => {
 		append({
 			user_uuid: '',
+			remarks: '',
 		});
 	};
 
@@ -185,6 +186,7 @@ const AddOrUpdate = () => {
 		const field = form.watch('office_entries')[index];
 		append({
 			user_uuid: field.user_uuid,
+			remarks: field.remarks,
 		});
 	};
 
