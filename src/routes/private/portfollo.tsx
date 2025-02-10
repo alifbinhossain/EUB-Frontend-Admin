@@ -10,6 +10,8 @@ const Program = lazy(() => import('@/pages/portfollo/program'));
 const TuitionFee = lazy(() => import('@/pages/portfollo/tuittion-fee'));
 const DepartmentTeachers = lazy(() => import('@/pages/portfollo/department-teacher'));
 const News = lazy(() => import('@/pages/portfollo/news'));
+const NewsEntry = lazy(() => import('@/pages/portfollo/news/entry'));
+
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -70,12 +72,29 @@ const portfolioRoutes: IRoute[] = [
 				page_name: 'portfolio__department_teachers',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+			// ? NEWS
 			{
 				name: 'News',
 				path: '/portfolio/news',
 				element: <News />,
 				page_name: 'portfolio__news',
 				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'News Entry',
+				path: '/portfolio/news/entry',
+				element: <NewsEntry />,
+				page_name: 'portfolio__news_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+				hidden: true,
+			},
+			{
+				name: 'News Entry Update',
+				path: '/portfolio/news/entry/:uuid/update',
+				element: <NewsEntry />,
+				page_name: 'portfolio__news_entry_update',
+				actions: ['create', 'read', 'update', 'delete'],
+				hidden: true,
 			},
 		],
 	},

@@ -33,7 +33,7 @@ const AddOrUpdate: React.FC<INewsAddOrUpdateProps> = ({
 	const { data } = useNewsByUUID(updatedData?.uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 
-	const form = useRHF(NEWS_SCHEMA, NEWS_NULL);
+	const form = useRHF(NEWS_SCHEMA(isUpdate) as any, NEWS_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);

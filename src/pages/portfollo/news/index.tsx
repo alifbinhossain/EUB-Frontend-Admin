@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import { useNavigate } from 'react-router-dom';
 
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -13,6 +14,7 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
+	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
 		useNews<INewsTableData[]>();
 
@@ -22,13 +24,15 @@ const Designation = () => {
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
 	const handleCreate = () => {
-		setIsOpenAddModal(true);
+		// setIsOpenAddModal(true);
+		navigate('/portfolio/news/entry');
 	};
 
 	const [updatedData, setUpdatedData] = useState<INewsTableData | null>(null);
 	const handleUpdate = (row: Row<INewsTableData>) => {
-		setUpdatedData(row.original);
-		setIsOpenAddModal(true);
+		// setUpdatedData(row.original);
+		// setIsOpenAddModal(true);
+		navigate(`/portfolio/news/entry/${row.original.uuid}/update`);
 	};
 
 	// Delete Modal state
@@ -78,7 +82,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/news',
 							deleteData,
 						}}
 					/>,
