@@ -3,21 +3,28 @@ const otherQK = {
 
 	//* HR
 	hr: () => [...otherQK.all(), 'hr'],
+
 	//* Department
 	department: () => [...otherQK.all(), 'department'],
+
 	//* Designation
 	designation: () => [...otherQK.all(), 'designation'],
+
 	//* Faculty
 	faculty: () => [...otherQK.all(), 'faculty'],
+
 	//* Group
 	group: () => [...otherQK.all(), 'group'],
 
 	//* Brand
 	brand: () => [...otherQK.all(), 'brand'],
+
 	//* Model
 	model: () => [...otherQK.all(), 'model'],
+
 	//* Size
 	size: () => [...otherQK.all(), 'size'],
+
 	//* Category
 	category: () => [...otherQK.all(), 'category'],
 
@@ -35,6 +42,7 @@ const otherQK = {
 
 	//* purchase
 	purchase: () => [...otherQK.all(), 'purchase'],
+
 	//* Warehouse
 	warehouse: () => [...otherQK.all(), 'warehouse'],
 
@@ -46,17 +54,25 @@ const otherQK = {
 
 	//* Floor
 	floor: () => [...otherQK.all(), 'floor'],
+
 	//* Box
 	box: () => [...otherQK.all(), 'box'],
+
 	//* Problem
 	problem: () => [...otherQK.all(), 'problem'],
+
 	//*Section
 	section: () => [...otherQK.all(), 'section'],
+
 	//* User
 	user: () => [...otherQK.all(), 'user'],
 	userByQuery: (query: string) => [...otherQK.all(), 'byUserQuery', query],
+
 	//* Programs
 	programs: () => [...otherQK.all(), 'programs'],
+
+	//* Portfolio Department
+	portfolioDepartments: () => [...otherQK.all(), 'portfolio', 'departments'],
 };
 
 export default otherQK;

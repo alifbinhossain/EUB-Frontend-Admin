@@ -1,4 +1,4 @@
-import { IDefaultAddOrUpdateProps } from '@/types';
+import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
@@ -6,7 +6,9 @@ import {
 	ICertificateCourseFeeTableData,
 	IDepartmentTableData,
 	IFacultyTableData,
-	IProgramTableData,
+	IInfoTableData,
+	IJobCircularTableData,
+	IRoutineTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
 
@@ -23,9 +25,25 @@ export interface IDepartmentAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 export interface IFacultyAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IFacultyTableData | null;
 }
+
+// * Info
+export interface IInfoAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IInfoTableData | null;
+}
+
+// * Routine
+export interface IRoutineAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IRoutineTableData | null;
+}
+
+// * Job Circular
+export interface IJobCircularAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IJobCircularTableData | null;
+}
+
 //* Programs
 export interface IProgramsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: IProgramTableData | null;
+	updatedData?: IInfoTableData | null;
 }
 
 //* Authorities

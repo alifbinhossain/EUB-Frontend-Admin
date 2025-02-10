@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { programColumns } from '../_config/columns';
-import { IInfoTableData } from '../_config/columns/columns.type';
-import { usePortfolioPrograms } from '../_config/query';
+import { routineColumns } from '../_config/columns';
+import { IRoutineTableData } from '../_config/columns/columns.type';
+import { useRoutine } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Program = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioPrograms<IInfoTableData[]>();
+const Designation = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		useRoutine<IRoutineTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/Program', url, 'portfolio__program'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Routine', url, 'portfolio__routine'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +25,8 @@ const Program = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IInfoTableData | null>(null);
-	const handleUpdate = (row: Row<IInfoTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IRoutineTableData | null>(null);
+	const handleUpdate = (row: Row<IRoutineTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,15 +37,15 @@ const Program = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IInfoTableData>) => {
+	const handleDelete = (row: Row<IRoutineTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.uuid,
 		});
 	};
 
 	// Table Columns
-	const columns = programColumns();
+	const columns = routineColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -69,6 +69,8 @@ const Program = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -86,4 +88,4 @@ const Program = () => {
 	);
 };
 
-export default Program;
+export default Designation;

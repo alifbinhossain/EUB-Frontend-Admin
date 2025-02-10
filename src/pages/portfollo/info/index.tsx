@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { programColumns } from '../_config/columns';
+import { infoColumns } from '../_config/columns';
 import { IInfoTableData } from '../_config/columns/columns.type';
-import { usePortfolioPrograms } from '../_config/query';
+import { useInfo } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Program = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioPrograms<IInfoTableData[]>();
+const Designation = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		useInfo<IInfoTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/Program', url, 'portfolio__program'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Info', url, 'portfolio__info'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -40,12 +40,12 @@ const Program = () => {
 	const handleDelete = (row: Row<IInfoTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.page_name,
 		});
 	};
 
 	// Table Columns
-	const columns = programColumns();
+	const columns = infoColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -69,6 +69,8 @@ const Program = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -86,4 +88,4 @@ const Program = () => {
 	);
 };
 
-export default Program;
+export default Designation;
