@@ -8,7 +8,7 @@ import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
 import { PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
-import { useOtherPortfolioDepartments } from '@/lib/common-queries/other';
+import { useOtherDepartments } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import enumToOptions from '@/utils/enumToOptions';
@@ -32,7 +32,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = useRoutineByUUID(updatedData?.uuid as string);
 
-	const { data: departments } = useOtherPortfolioDepartments<IFormSelectOption[]>();
+	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 
 	const programs = enumToOptions(PORTFOLIO_PROGRAM_TYPE);
 	const types = enumToOptions(PORTFOLIO_ROUTINE_TYPE);

@@ -1,5 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import StatusButton from '@/components/buttons/status';
 import FilePreview from '@/components/others/file-preview';
 import DateTime from '@/components/ui/date-time';
 

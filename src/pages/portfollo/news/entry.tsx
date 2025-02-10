@@ -234,7 +234,7 @@ export default function NewsEntry() {
 								'entry', // TODO: Update field name
 								form
 									.getValues('entry') // TODO: Update field name
-									.filter((item) => item.uuid !== deleteItem?.id)
+									.filter((item: { uuid: string }) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}
