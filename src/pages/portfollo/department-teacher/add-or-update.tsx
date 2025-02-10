@@ -11,11 +11,15 @@ import { useOtherDepartments, useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useClubsByUUID } from '../_config/query';
-import { CLUB_NULL, CLUB_SCHEMA, IClub } from '../_config/schema';
-import { IClubAddOrUpdateProps } from '../_config/types';
+import { useDepartmentsTeachersByUUID } from '../_config/query';
+import {
+	IDepartmentTeachers,
+	PORTFOLIO_DEPARTMENT_TEACHER_NULL,
+	PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA,
+} from '../_config/schema';
+import { IDepartmentTeachersAddOrUpdateProps } from '../_config/types';
 
-const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -27,15 +31,15 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useClubsByUUID(updatedData?.uuid as string);
+	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 	const { data: users } = useOtherUser<IFormSelectOption[]>();
 
-	const form = useRHF(CLUB_SCHEMA, CLUB_NULL);
+	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(CLUB_NULL);
+		form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -48,7 +52,7 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IClub) {
+	async function onSubmit(values: IDepartmentTeachers) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -82,7 +86,13 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='teacher_uuid'
+				render={(props) => (
+					<CoreForm.ReactSelect label='Teacher' placeholder='Select Teacher' options={users!} {...props} />
+				)}
+			/>
 			<FormField
 				control={form.control}
 				name='department_uuid'
@@ -95,19 +105,10 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 					/>
 				)}
 			/>
-			<FormField
-				control={form.control}
-				name='president_uuid'
-				render={(props) => (
-					<CoreForm.ReactSelect
-						label='President'
-						placeholder='Select President'
-						options={users!}
-						{...props}
-					/>
-				)}
-			/>
-			<FormField control={form.control} name='message' render={(props) => <CoreForm.Textarea {...props} />} />
+
+			<FormField control={form.control} name='education' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='publication' render={(props) => <CoreForm.Textarea {...props} />} />
+			<FormField control={form.control} name='journal' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

@@ -1,11 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import StatusButton from '@/components/buttons/status';
+
+import { API_IMAGE_URL } from '@/lib/secret';
+
 import {
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
 	IClubTableData,
 	IDepartmentTableData,
+	IDepartmentTeachersTableData,
 	IFacultyTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
@@ -204,6 +209,53 @@ export const clubColumns = (): ColumnDef<IClubTableData>[] => [
 	{
 		accessorKey: 'message',
 		header: 'Message',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * Department-Teachers Columns
+export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableData>[] => [
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+
+	{
+		accessorKey: 'teacher_image',
+		header: 'Image',
+		enableColumnFilter: false,
+		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'department_head',
+		header: 'Department Head',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
+	},
+	{
+		accessorKey: 'education',
+		header: 'Education',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'publications',
+		header: 'Publications',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'journal',
+		header: 'Journal',
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),
 	},

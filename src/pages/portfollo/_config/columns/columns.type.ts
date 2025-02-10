@@ -89,3 +89,17 @@ export type IBotTableData = {
 	updated_at: string;
 	remarks: string;
 };
+
+// * Department-Teachers
+export type IDepartmentTeachersTableData = {
+	id: number;
+	uuid: string;
+	department_uuid: string;
+	teacher_uuid: string;
+	teacher_name: string;
+	teacher_image: string;
+	department_head: boolean;
+	education: string;
+	publication: string;
+	journal: string;
+};

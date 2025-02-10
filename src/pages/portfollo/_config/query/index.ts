@@ -122,3 +122,19 @@ export const useClubsByUUID = <T>(uuid: string) =>
 		url: `/portfolio/club/${uuid}`,
 		enabled: !!uuid,
 	});
+
+// ? DEPARTMENT-TEACHERS
+// * ALL Department-Teachers
+export const useDepartmentsTeachers = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.departmentTeachers(),
+		url: `/portfolio/department-teachers`,
+	});
+
+// * Department-Teachers By UUID
+export const useDepartmentsTeachersByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.departmentTeachersByUUID(uuid),
+		url: `/portfolio/department-teachers/${uuid}`,
+		enabled: !!uuid,
+	});
