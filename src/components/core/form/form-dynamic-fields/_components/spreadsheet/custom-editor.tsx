@@ -21,9 +21,9 @@ class CustomEditor extends BaseEditorComponent<ICustomEditorProps> {
 	constructor(props: BaseEditorComponent<ICustomEditorProps>['props']) {
 		super(props);
 
-		this.mainElementRef = createRef();
-		this.selectElementRef = createRef();
-		this.inputElementRef = createRef();
+		this.mainElementRef = createRef() as RefObject<HTMLDivElement>;
+		this.selectElementRef = createRef() as RefObject<HTMLSelectElement>;
+		this.inputElementRef = createRef() as RefObject<HTMLInputElement>;
 		this.state = {
 			value: '',
 		};

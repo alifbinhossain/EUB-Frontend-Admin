@@ -40,7 +40,7 @@ const Program = () => {
 	const handleDelete = (row: Row<IInfoTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.uuid,
 		});
 	};
 
