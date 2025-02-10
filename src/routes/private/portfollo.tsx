@@ -8,6 +8,10 @@ const Faculty = lazy(() => import('@/pages/portfollo/faculty'));
 const Program = lazy(() => import('@/pages/portfollo/program'));
 const TuitionFee = lazy(() => import('@/pages/portfollo/tuittion-fee'));
 const Bot = lazy(() => import('@/pages/portfollo/bot'));
+const Office = lazy(() => import('@/pages/portfollo/office'));
+const OfficeDetails = lazy(() => import('@/pages/portfollo/office/details'));
+const OfficeEntry = lazy(() => import('@/pages/portfollo/office/add-or-update'));
+const FinancialInformation = lazy(() => import('@/pages/portfollo/financial-info'));
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -59,6 +63,44 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/bot',
 				element: <Bot />,
 				page_name: 'portfolio__bot',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office',
+				path: '/portfolio/office',
+				element: <Office />,
+				page_name: 'portfolio__office',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Entry',
+				path: 'portfolio/office/create',
+				element: <OfficeEntry />,
+				hidden: true,
+				page_name: 'portfolio__office_create',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Details',
+				path: 'portfolio/office/:uuid/details',
+				element: <OfficeDetails />,
+				hidden: true,
+				page_name: 'portfolio__office_details',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Update',
+				path: 'portfolio/office/:uuid/update',
+				element: <OfficeEntry />,
+				hidden: true,
+				page_name: 'portfolio__office_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Financial Information',
+				path: 'portfolio/financial-information',
+				element: <FinancialInformation />,
+				page_name: 'portfolio__financial_information',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

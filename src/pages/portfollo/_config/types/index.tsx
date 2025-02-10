@@ -1,4 +1,4 @@
-import { IDefaultAddOrUpdateProps, IDefaultImageAddOrUpdateProps } from '@/types';
+import { IDefaultAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
@@ -41,4 +41,8 @@ export interface ICertificateCourseFeeAddOrUpdateProps extends IDefaultAddOrUpda
 //* Tuition Fee
 export interface ITuitionFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ITuitionFeeTableData | null;
+}
+//* Financial Information
+export interface IFinancialInformationAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: any | null;
 }

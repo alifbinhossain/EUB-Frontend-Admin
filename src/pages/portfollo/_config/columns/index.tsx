@@ -1,13 +1,19 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import { API_IMAGE_URL } from '@/lib/secret';
+
 import { categories as authoritiesCategories } from '../../authorities/utils';
 import { categories as botCategories } from '../../bot/utils';
+import { categories as officeCategories } from '../../office/utills';
 import {
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
 	IDepartmentTableData,
 	IFacultyTableData,
+	IFinancialInfoTableData,
+	IOfficeEntryTableData,
+	IOfficeTableData,
 	IProgramTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
@@ -194,5 +200,130 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: false,
+	},
+];
+
+//* Office
+export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const category = officeCategories.find((item) => item.value === info.getValue());
+			return <span className='capitalize'>{category?.label ?? ''}</span>;
+		},
+	},
+	{
+		accessorKey: 'image',
+		header: 'Image',
+		enableColumnFilter: false,
+		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+	},
+];
+//*Office Entry
+export const officeEntryColumns = (): ColumnDef<IOfficeEntryTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'user_name',
+		header: 'User',
+		enableColumnFilter: true,
+	},
+];
+//* Financial Information
+export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'total_credit',
+		header: 'Total Credit',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'total_cost',
+		header: 'Total Cost',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'admission_fee',
+		header: 'Admission Fee',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_50',
+		header: 'Waiver 50%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_55',
+		header: 'Waiver 55%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_60',
+		header: 'Waiver 60%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_65',
+		header: 'Waiver 65%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_70',
+		header: 'Waiver 70%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_75',
+		header: 'Waiver 75%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_80',
+		header: 'Waiver 80%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_85',
+		header: 'Waiver 85%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_90',
+		header: 'Waiver 90%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_95',
+		header: 'Waiver 95%',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'waiver_100',
+		header: 'Waiver 100%',
+		enableColumnFilter: true,
 	},
 ];

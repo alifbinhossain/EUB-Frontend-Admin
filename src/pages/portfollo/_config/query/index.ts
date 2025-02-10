@@ -106,3 +106,30 @@ export const usePortfolioBotByUUID = <T>(uuid: string) =>
 		url: `/portfolio/bot/${uuid}`,
 		enabled: !!uuid,
 	});
+
+//* Office
+export const usePortfolioOffice = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.office(),
+		url: '/portfolio/office',
+	});
+
+export const usePortfolioOfficeByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.officeByUUID(uuid),
+		url: `/portfolio/office/${uuid}`,
+		enabled: !!uuid,
+	});
+//* Financial Information
+export const usePortfolioFinancialInformation = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.financialInformation(),
+		url: '/portfolio/financial-info',
+	});
+
+export const usePortfolioFinancialInformationByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.financialInformationByUUID(uuid),
+		url: `/portfolio/financial-info/${uuid}`,
+		enabled: !!uuid,
+	});

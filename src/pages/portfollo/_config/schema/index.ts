@@ -125,19 +125,132 @@ export type IPortfolioDepartment = z.infer<typeof PORTFOLIO_DEPARTMENT_SCHEMA>;
 
 //* Bot Schema
 export const BOT_SCHEMA = z.object({
-	category: STRING_REQUIRED,
+	category: z.enum(['syndicate', 'academic_council']),
 	user_uuid: STRING_REQUIRED,
-	status: STRING_REQUIRED,
+	status: z.enum(['chairman', 'member', 'member-secretary']),
 	description: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 
 export const BOT_NULL: Partial<IBot> = {
-	category: '',
+	category: 'academic_council',
 	user_uuid: '',
-	status: '',
+	status: 'member',
 	description: '',
 	remarks: null,
 };
 
 export type IBot = z.infer<typeof BOT_SCHEMA>;
+
+//* Office Schema
+
+export const OFFICE_SCHEMA = z.object({
+	uuid: STRING_OPTIONAL,
+	title: STRING_REQUIRED,
+	category: z.enum([
+		'registrar',
+		'controller_of_examinations',
+		'ict_division',
+		'ciac',
+		'program_coordination',
+		'admission_and_student_affairs',
+		'finance_and_accounts',
+		'faculty_development_and_evaluation',
+		'planning_and_development',
+		'proctor',
+		'procurement_and_inventory',
+		'iqac',
+		'library',
+	]),
+	image: z.any(),
+	remarks: STRING_NULLABLE,
+	office_entry: z.array(
+		z.object({
+			uuid: STRING_OPTIONAL,
+			office_uuid: STRING_OPTIONAL,
+			user_uuid: STRING_REQUIRED,
+		})
+	),
+});
+
+export const OFFICE_NULL: Partial<IOffice> = {
+	uuid: '',
+	title: '',
+	category: undefined,
+	remarks: null,
+	office_entry: [
+		{
+			uuid: '',
+			office_uuid: '',
+			user_uuid: '',
+		},
+	],
+};
+
+export type IOffice = z.infer<typeof OFFICE_SCHEMA>;
+// {
+//     "id": 5,
+//     "uuid": "75uZ1xwFRIKozABzXlfSl",
+//     "department_uuid": "A8axDNMx9bISIVoIO6ldf",
+//     "department_name": "CSE",
+//     "total_credit": 0,
+//     "total_cost": 0,
+//     "admission_fee": 0,
+//     "waiver_50": 0,
+//     "waiver_55": 0,
+//     "waiver_60": 0,
+//     "waiver_65": 0,
+//     "waiver_70": 0,
+//     "waiver_75": 0,
+//     "waiver_80": 0,
+//     "waiver_85": 0,
+//     "waiver_90": 0,
+//     "waiver_95": 0,
+//     "waiver_100": 0,
+//     "created_by": "A8axDNMx9bISIVoIO6l6e",
+//     "created_by_name": "Admin",
+//     "created_at": "2025-02-10 19:05:06",
+//     "updated_at": "2025-02-10 19:05:06.109798",
+//     "remarks": null
+// }
+
+//* Financial Schema
+export const FINANCIAL_INFORMATION_SCHEMA = z.object({
+	department_uuid: STRING_REQUIRED,
+	total_credit: z.number().nullable(),
+	total_cost: z.number().nullable(),
+	admission_fee: z.number().nullable(),
+	waiver_50: z.number().nullable(),
+	waiver_55: z.number().nullable(),
+	waiver_60: z.number().nullable(),
+	waiver_65: z.number().nullable(),
+	waiver_70: z.number().nullable(),
+	waiver_75: z.number().nullable(),
+	waiver_80: z.number().nullable(),
+	waiver_85: z.number().nullable(),
+	waiver_90: z.number().nullable(),
+	waiver_95: z.number().nullable(),
+	waiver_100: z.number().nullable(),
+	remarks: STRING_NULLABLE,
+});
+
+export const FINANCIAL_INFORMATION_NULL: Partial<IPortfolioFinancialInformation> = {
+	department_uuid: '',
+	total_credit: 0,
+	total_cost: 0,
+	admission_fee: 0,
+	waiver_50: 0,
+	waiver_55: 0,
+	waiver_60: 0,
+	waiver_65: 0,
+	waiver_70: 0,
+	waiver_75: 0,
+	waiver_80: 0,
+	waiver_85: 0,
+	waiver_90: 0,
+	waiver_95: 0,
+	waiver_100: 0,
+	remarks: null,
+};
+
+export type IPortfolioFinancialInformation = z.infer<typeof FINANCIAL_INFORMATION_SCHEMA>;
