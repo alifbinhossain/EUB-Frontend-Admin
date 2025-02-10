@@ -7,7 +7,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherPortfolioDepartments } from '@/lib/common-queries/other';
+import { useOtherDepartments } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -32,7 +32,7 @@ const AddOrUpdate: React.FC<IFinancialInformationAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioFinancialInformationByUUID(updatedData?.uuid as string);
-	const { data: departmentOptions } = useOtherPortfolioDepartments<IFormSelectOption[]>();
+	const { data: departmentOptions } = useOtherDepartments<IFormSelectOption[]>();
 
 	const form = useRHF(FINANCIAL_INFORMATION_SCHEMA, FINANCIAL_INFORMATION_NULL);
 

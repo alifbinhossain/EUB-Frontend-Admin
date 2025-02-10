@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { boolean, z } from 'zod';
 
 import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
 import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
@@ -213,6 +213,93 @@ export const BOT_NULL: Partial<IBot> = {
 };
 
 export type IBot = z.infer<typeof BOT_SCHEMA>;
+
+// * Club Schema
+export const CLUB_SCHEMA = z.object({
+	name: STRING_REQUIRED,
+	department_uuid: STRING_REQUIRED,
+	president_uuid: STRING_REQUIRED,
+	message: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const CLUB_NULL: Partial<IClub> = {
+	name: '',
+	department_uuid: '',
+	president_uuid: '',
+	message: '',
+	remarks: null,
+};
+
+export type IClub = z.infer<typeof CLUB_SCHEMA>;
+
+// * Department-Teacher Schema
+export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
+	department_uuid: STRING_REQUIRED,
+	teacher_uuid: STRING_REQUIRED,
+	education: STRING_REQUIRED,
+	publication: STRING_REQUIRED,
+	journal: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
+	department_uuid: '',
+	teacher_uuid: '',
+	education: '',
+	publication: '',
+	journal: '',
+	remarks: null,
+};
+
+export type IDepartmentTeachers = z.infer<typeof PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA>;
+
+// * News
+export const NEWS_SCHEMA = (isUpdate: boolean) => {
+	const baseSchema = z.object({
+		title: STRING_REQUIRED,
+		subtitle: STRING_REQUIRED,
+		description: STRING_REQUIRED,
+		content: STRING_REQUIRED,
+		published_date: STRING_REQUIRED,
+		department_uuid: STRING_REQUIRED,
+		remarks: STRING_NULLABLE,
+	});
+
+	if (isUpdate) {
+		return baseSchema.extend({
+			cover_image: z.any(),
+			entry: z.array(
+				z.object({
+					uuid: STRING_OPTIONAL,
+					documents: z.any(),
+				})
+			),
+		});
+	}
+
+	return baseSchema.extend({
+		cover_image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+		entry: z.array(
+			z.object({
+				uuid: STRING_OPTIONAL,
+				documents: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+			})
+		),
+	});
+};
+
+export const NEWS_NULL: Partial<INews> = {
+	title: '',
+	subtitle: '',
+	description: '',
+	published_date: '',
+	content: '',
+	department_uuid: '',
+	remarks: null,
+};
+
+export type INews = z.infer<ReturnType<typeof NEWS_SCHEMA>>;
 
 //* Office Schema
 

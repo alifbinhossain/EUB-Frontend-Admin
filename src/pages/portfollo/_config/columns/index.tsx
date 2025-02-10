@@ -13,11 +13,14 @@ import {
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
+	IClubTableData,
 	IDepartmentTableData,
+	IDepartmentTeachersTableData,
 	IFacultyTableData,
 	IFinancialInfoTableData,
 	IInfoTableData,
 	IJobCircularTableData,
+	INewsTableData,
 	IOfficeEntryTableData,
 	IOfficeTableData,
 	IRoutineTableData,
@@ -326,6 +329,127 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: false,
+	},
+];
+
+// * Club Columns
+export const clubColumns = (): ColumnDef<IClubTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'president_name',
+		header: 'President',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'message',
+		header: 'Message',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * Department-Teachers Columns
+export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableData>[] => [
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+
+	{
+		accessorKey: 'teacher_image',
+		header: 'Image',
+		enableColumnFilter: false,
+		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'department_head',
+		header: 'Department Head',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
+	},
+	{
+		accessorKey: 'education',
+		header: 'Education',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'publications',
+		header: 'Publications',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'journal',
+		header: 'Journal',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+];
+
+// * News
+export const newsColumns = (): ColumnDef<INewsTableData>[] => [
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'subtitle',
+		header: 'Subtitle',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'content',
+		header: 'Content',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'cover_image',
+		header: 'Coven Image',
+		enableColumnFilter: true,
+		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+	},
+	{
+		accessorKey: 'published_date',
+		header: 'publish Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
 	},
 ];
 

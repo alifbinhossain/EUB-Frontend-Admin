@@ -18,8 +18,8 @@ const otherQK = {
 
 	//* Programs
 	programs: () => [...otherQK.all(), 'programs'],
-	//* Portfolio Department
-	portfolioDepartments: () => [...otherQK.all(), 'portfolio', 'departments'],
+	//* Departments
+	departments: () => [...otherQK.all(), 'departments'],
 };
 
 export default otherQK;

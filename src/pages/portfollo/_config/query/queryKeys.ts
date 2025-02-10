@@ -24,18 +24,23 @@ export const portfolioQK = {
 	//* financial_information
 	financialInformation: () => [...portfolioQK.all(), 'financial_information'],
 	financialInformationByUUID: (uuid: string) => [...portfolioQK.financialInformation(), uuid],
-};
 
-export const facultyQK = {
-	all: () => ['faculty'],
-	faculty: () => [...facultyQK.all(), 'faculty'],
-	facultyByUUID: (uuid: string) => [...facultyQK.faculty(), uuid],
-};
-
-export const departmentQK = {
-	all: () => ['department'],
-	department: () => [...departmentQK.all(), 'department'],
-	departmentByUUID: (uuid: string) => [...departmentQK.department(), uuid],
+	// * club
+	club: () => [...portfolioQK.all(), 'club'],
+	clubByUUID: (uuid: string) => [...portfolioQK.club(), uuid],
+	// * faculty
+	faculty: () => [...portfolioQK.all(), 'faculty'],
+	facultyByUUID: (uuid: string) => [...portfolioQK.faculty(), uuid],
+	// * department
+	department: () => [...portfolioQK.all(), 'department'],
+	departmentByUUID: (uuid: string) => [...portfolioQK.department(), uuid],
+	// * department-teacher
+	departmentTeachers: () => [...portfolioQK.all(), 'department-teacher'],
+	departmentTeachersByUUID: (uuid: string) => [...portfolioQK.departmentTeachers(), uuid],
+	// * News
+	news: () => [...portfolioQK.all(), 'news'],
+	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
+	newsDetails: (uuid: string) => [...portfolioQK.news(), 'details', uuid],
 };
 
 export const infoQK = {

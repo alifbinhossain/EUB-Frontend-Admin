@@ -37,13 +37,28 @@ type FieldJoinInputUnit = {
 	inputType?: string;
 };
 
+type FieldImage = {
+	type: 'image';
+	placeholder?: string;
+	isUpdate?: boolean;
+};
+
 export type FieldDef = {
 	header: string;
 	accessorKey: string;
 	className?: string;
 	isLoading?: boolean;
 	hidden?: boolean;
-} & (FieldText | FieldNumber | FieldSelect | FieldReadonly | FieldCustom | FieldJoinInputUnit | FieldTextArea);
+} & (
+	| FieldText
+	| FieldNumber
+	| FieldSelect
+	| FieldReadonly
+	| FieldCustom
+	| FieldJoinInputUnit
+	| FieldTextArea
+	| FieldImage
+);
 
 export interface DynamicFieldsProps {
 	title: string;

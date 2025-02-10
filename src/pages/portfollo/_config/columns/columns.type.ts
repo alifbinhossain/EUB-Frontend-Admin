@@ -107,6 +107,16 @@ export type IDepartmentTableData = {
 	category: string;
 };
 
+// * Club
+export type IClubTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	department_uuid: string;
+	president_uuid: string;
+	message: string;
+};
+
 //* bot
 export type IBotTableData = {
 	id: number;
@@ -120,6 +130,33 @@ export type IBotTableData = {
 	created_at: string;
 	updated_at: string;
 	remarks: string;
+};
+
+// * Department-Teachers
+export type IDepartmentTeachersTableData = {
+	id: number;
+	uuid: string;
+	department_uuid: string;
+	teacher_uuid: string;
+	teacher_name: string;
+	teacher_image: string;
+	department_head: boolean;
+	education: string;
+	publication: string;
+	journal: string;
+};
+
+// * News
+export type INewsTableData = {
+	id: number;
+	uuid: string;
+	title: string;
+	subtitle: string;
+	description: string;
+	content: string;
+	cover_image: string;
+	published_date: string;
+	department_uuid: string;
 };
 
 //* office

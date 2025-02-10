@@ -44,9 +44,9 @@ export const useOtherPrograms = <T>() =>
 		url: `/other/portfolio/program/value/label`,
 	});
 
-// //* GET OTHER PORTFOLIO DEPARTMENTS
-export const useOtherPortfolioDepartments = <T>() =>
+//* GET OTHER DEPARTMENTS
+export const useOtherDepartments = <T>() =>
 	useTQuery<T>({
-		queryKey: otherQK.portfolioDepartments(),
+		queryKey: otherQK.departments(),
 		url: `/other/portfolio/department/value/label`,
 	});
