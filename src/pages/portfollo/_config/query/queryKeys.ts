@@ -33,4 +33,5 @@ export const portfolioQK = {
 	// * News
 	news: () => [...portfolioQK.all(), 'news'],
 	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
+	newsDetails: (uuid: string) => [...portfolioQK.news(), 'details', uuid],
 };

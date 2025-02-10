@@ -154,3 +154,10 @@ export const useNewsByUUID = <T>(uuid: string) =>
 		url: `/portfolio/news/${uuid}`,
 		enabled: !!uuid,
 	});
+
+export const useNewsDetails = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.newsDetails(uuid),
+		url: `portfolio/news-and-news-entry-details/by/news-uuid/${uuid}`,
+		enabled: !!uuid,
+	});

@@ -194,17 +194,28 @@ export const NEWS_SCHEMA = (isUpdate: boolean) => {
 		published_date: STRING_REQUIRED,
 		department_uuid: STRING_REQUIRED,
 		remarks: STRING_NULLABLE,
-		multi_image: z.boolean().optional(),
 	});
 
 	if (isUpdate) {
 		return baseSchema.extend({
 			cover_image: z.any(),
+			entry: z.array(
+				z.object({
+					uuid: STRING_OPTIONAL,
+					documents: z.any(),
+				})
+			),
 		});
 	}
 
 	return baseSchema.extend({
 		cover_image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+		entry: z.array(
+			z.object({
+				uuid: STRING_OPTIONAL,
+				documents: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+			})
+		),
 	});
 };
 
@@ -216,7 +227,6 @@ export const NEWS_NULL: Partial<INews> = {
 	content: '',
 	department_uuid: '',
 	remarks: null,
-	multi_image: false,
 };
 
 export type INews = z.infer<ReturnType<typeof NEWS_SCHEMA>>;

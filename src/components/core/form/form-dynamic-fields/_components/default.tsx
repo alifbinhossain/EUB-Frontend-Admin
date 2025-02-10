@@ -132,6 +132,19 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															)}
 														/>
 													)}
+
+													{fieldDef.type === 'image' && (
+														<FormField
+															control={form.control}
+															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															render={(props) => (
+																<CoreForm.FileUpload
+																	isUpdate={fieldDef.isUpdate}
+																	{...props}
+																/>
+															)}
+														/>
+													)}
 												</TableCell>
 											);
 										}
