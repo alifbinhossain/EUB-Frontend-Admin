@@ -33,14 +33,14 @@ export type IAuthorities = z.infer<typeof AUTHORITIES_SCHEMA>;
 //* Certificate Course Fee Schema
 export const CERTIFICATE_COURSE_FEE_SCHEMA = z.object({
 	uuid: STRING_OPTIONAL,
-	programs_uuid: STRING_REQUIRED,
+	program_uuid: STRING_REQUIRED,
 	fee_per_course: z.number().default(0),
 	remarks: STRING_NULLABLE,
 });
 
 export const CERTIFICATE_COURSE_FEE_NULL: Partial<ICertificateCourseFee> = {
 	uuid: '',
-	programs_uuid: '',
+	program_uuid: '',
 	fee_per_course: 0,
 	remarks: '',
 };

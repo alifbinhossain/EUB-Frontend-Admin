@@ -37,6 +37,7 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	const onClose = () => {
 		setUpdatedData?.(null);
 		form.reset(PROGRAM_NULL);
+		invalidateQueryProgram();
 		setOpen((prev) => !prev);
 	};
 
@@ -44,7 +45,6 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	useEffect(() => {
 		if (data && isUpdate) {
 			form.reset(data);
-			invalidateQueryProgram();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
