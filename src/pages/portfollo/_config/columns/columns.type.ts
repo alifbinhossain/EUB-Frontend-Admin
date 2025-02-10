@@ -106,7 +106,7 @@ export type IOfficeTableData = {
 		| 'procurement_and_inventory'
 		| 'iqac'
 		| 'library';
-	office_entry: IOfficeEntryTableData[];
+	office_entries: IOfficeEntryTableData[];
 	created_by_name: string;
 	created_at: string;
 	updated_at: string;

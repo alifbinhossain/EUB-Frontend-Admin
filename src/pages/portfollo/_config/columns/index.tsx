@@ -67,6 +67,11 @@ export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'user_name',
+		header: 'User',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,

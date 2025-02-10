@@ -8,7 +8,7 @@ import { IOfficeTableData } from '../../_config/columns/columns.type';
 const EntryTable: React.FC<{ data: IOfficeTableData }> = ({ data }) => {
 	const columns = officeEntryColumns();
 
-	return <DataTableEntry title='Purchase Entry' columns={columns} data={data?.office_entry || []} />;
+	return <DataTableEntry title='Purchase Entry' columns={columns} data={data?.office_entries || []} />;
 };
 
 export default EntryTable;

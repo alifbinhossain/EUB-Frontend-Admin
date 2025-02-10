@@ -164,7 +164,7 @@ export const OFFICE_SCHEMA = z.object({
 	]),
 	image: z.any(),
 	remarks: STRING_NULLABLE,
-	office_entry: z.array(
+	office_entries: z.array(
 		z.object({
 			uuid: STRING_OPTIONAL,
 			office_uuid: STRING_OPTIONAL,
@@ -178,7 +178,7 @@ export const OFFICE_NULL: Partial<IOffice> = {
 	title: '',
 	category: undefined,
 	remarks: null,
-	office_entry: [
+	office_entries: [
 		{
 			uuid: '',
 			office_uuid: '',

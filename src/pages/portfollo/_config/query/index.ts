@@ -117,7 +117,7 @@ export const usePortfolioOffice = <T>() =>
 export const usePortfolioOfficeByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: portfolioQK.officeByUUID(uuid),
-		url: `/portfolio/office/${uuid}`,
+		url: `/portfolio/office-and-office-entry/details/by-office-uuid/${uuid}`,
 		enabled: !!uuid,
 	});
 //* Financial Information

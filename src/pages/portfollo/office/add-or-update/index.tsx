@@ -31,7 +31,7 @@ const AddOrUpdate = () => {
 
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
-		name: 'office_entry',
+		name: 'office_entries',
 	});
 
 	useEffect(() => {
@@ -50,7 +50,7 @@ const AddOrUpdate = () => {
 				...values,
 				updated_at: getDateTime(),
 			};
-			delete (office_data as { office_entry?: any })['office_entry'];
+			delete (office_data as { office_entries?: any })['office_entries'];
 			const formData = Formdata<IOffice>(office_data);
 			const test_promise = await imageUpdateData.mutateAsync({
 				url: `${officeUrl}/${uuid}`,
@@ -58,7 +58,7 @@ const AddOrUpdate = () => {
 				isOnCloseNeeded: false,
 			});
 
-			const office_entry_promise = values.office_entry.map((item) => {
+			const office_entries_promise = values.office_entries.map((item) => {
 				if (item.uuid === undefined) {
 					const newData = {
 						...item,
@@ -87,7 +87,7 @@ const AddOrUpdate = () => {
 			});
 
 			try {
-				await Promise.all([test_promise, ...office_entry_promise])
+				await Promise.all([test_promise, ...office_entries_promise])
 					.then(() => form.reset(OFFICE_NULL))
 					.then(() => {
 						invalidateTestDetails(); // TODO: Update invalidate query
@@ -115,8 +115,8 @@ const AddOrUpdate = () => {
 		const formData = Formdata<IOffice>(office_data);
 		// delete Office field from data to be sent
 
-		if ('office_entry' in office_data) {
-			delete (office_data as { office_entry?: any })['office_entry'];
+		if ('office_entries' in office_data) {
+			delete (office_data as { office_entries?: any })['office_entries'];
 		}
 
 		// TODO: Update url and variable name ⬇️
@@ -127,7 +127,7 @@ const AddOrUpdate = () => {
 		});
 
 		// Create Office entries
-		const office_entries = [...values.office_entry].map((item) => ({
+		const office_entries = [...values.office_entries].map((item) => ({
 			...item,
 			office_uuid: new_office_uuid,
 			uuid: nanoid(),
@@ -168,7 +168,7 @@ const AddOrUpdate = () => {
 
 	// Delete Handler
 	const handleRemove = (index: number) => {
-		const user: string = String(form.getValues('office_entry')[index].user_uuid);
+		const user: string = String(form.getValues('office_entries')[index].user_uuid);
 		if (fields[index].uuid) {
 			setDeleteItem({
 				id: fields[index].uuid,
@@ -182,7 +182,7 @@ const AddOrUpdate = () => {
 	// Copy Handler
 	const handleCopy = (index: number) => {
 		// TODO: Update fields ⬇️
-		const field = form.watch('office_entry')[index];
+		const field = form.watch('office_entries')[index];
 		append({
 			user_uuid: field.user_uuid,
 		});
@@ -198,7 +198,7 @@ const AddOrUpdate = () => {
 			<CoreForm.DynamicFields
 				title='Entry'
 				form={form}
-				fieldName='office_entry'
+				fieldName='office_entries'
 				fieldDefs={useGenerateFieldDefs({
 					copy: handleCopy,
 					remove: handleRemove,
@@ -217,8 +217,8 @@ const AddOrUpdate = () => {
 						deleteData,
 						onClose: () => {
 							form.setValue(
-								'office_entry',
-								form.getValues('office_entry').filter((item) => item.uuid !== deleteItem?.id)
+								'office_entries',
+								form.getValues('office_entries').filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}
