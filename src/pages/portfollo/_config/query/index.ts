@@ -97,7 +97,7 @@ export const useDepartmentsByUUID = <T>(uuid: string) =>
 export const usePortfolioBot = <T>() =>
 	useTQuery<T>({
 		queryKey: portfolioQK.bot(),
-		url: '/portfolio/bot',
+		url: '/portfolio/bot?is_admin=true',
 	});
 
 export const usePortfolioBotByUUID = <T>(uuid: string) =>

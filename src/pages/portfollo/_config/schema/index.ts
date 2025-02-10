@@ -129,7 +129,6 @@ export const BOT_SCHEMA = z.object({
 	user_uuid: STRING_REQUIRED,
 	status: STRING_REQUIRED,
 	description: STRING_REQUIRED,
-	file: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an file'),
 	remarks: STRING_NULLABLE,
 });
 
@@ -138,7 +137,6 @@ export const BOT_NULL: Partial<IBot> = {
 	user_uuid: '',
 	status: '',
 	description: '',
-	file: new File([''], 'filename') as File,
 	remarks: null,
 };
 

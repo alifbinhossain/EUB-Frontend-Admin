@@ -7,13 +7,14 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherDepartment } from '@/lib/common-queries/other';
+import { useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { usePortfolioBot, usePortfolioBotByUUID } from '../_config/query';
 import { BOT_NULL, BOT_SCHEMA, IBot } from '../_config/schema';
 import { IBotAddOrUpdateProps } from '../_config/types';
+import { categories, status } from './utils';
 
 const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 	url,
@@ -28,15 +29,19 @@ const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = usePortfolioBotByUUID(updatedData?.uuid as string);
-	const { invalidateQuery: invalidateUserQuery } = usePortfolioBot();
-	const { data: departmentData } = useOtherDepartment<IFormSelectOption[]>();
+	const { data: userOption } = useOtherUser<IFormSelectOption[]>();
+
+	const { invalidateQuery: invalidateBotQuery } = usePortfolioBot();
+
+	const categoryOption = categories;
+	const statusOption = status;
 
 	const form = useRHF(BOT_SCHEMA, BOT_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
 		form.reset(BOT_NULL);
-		invalidateUserQuery();
+		invalidateBotQuery();
 		setOpen((prev) => !prev);
 	};
 
@@ -83,19 +88,39 @@ const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='category' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
 				name='user_uuid'
 				render={(props) => (
+					<CoreForm.ReactSelect label='User' placeholder='Select user' options={userOption!} {...props} />
+				)}
+			/>
+			<FormField
+				control={form.control}
+				name='category'
+				render={(props) => (
 					<CoreForm.ReactSelect
-						label='Department'
-						placeholder='Select Department'
-						options={departmentData!}
+						label='category'
+						placeholder='Select category'
+						options={categoryOption!}
 						{...props}
 					/>
 				)}
 			/>
+			<FormField
+				control={form.control}
+				name='status'
+				render={(props) => (
+					<CoreForm.ReactSelect
+						label='status'
+						placeholder='Select status'
+						options={statusOption!}
+						{...props}
+					/>
+				)}
+			/>
+
+			<FormField control={form.control} name='description' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

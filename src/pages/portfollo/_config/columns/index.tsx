@@ -1,5 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import { categories as authoritiesCategories } from '../../authorities/utils';
+import { categories as botCategories } from '../../bot/utils';
 import {
 	IAuthoritiesTableData,
 	IBotTableData,
@@ -28,7 +30,7 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => <span className='capitalize'>{info?.getValue() as string}</span>,
 	},
 ];
 
@@ -38,13 +40,11 @@ export const programColumns = (): ColumnDef<IProgramTableData>[] => [
 		accessorKey: 'id',
 		header: 'ID',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'category',
@@ -56,52 +56,65 @@ export const programColumns = (): ColumnDef<IProgramTableData>[] => [
 //* Authorities Columns
 export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => {
+			const category = authoritiesCategories.find((item) => item.value === info.getValue());
+			return <span className='capitalize'>{category?.label ?? ''}</span>;
+		},
 	},
 	{
 		accessorKey: 'short_biography',
 		header: 'Short Biography',
 		enableColumnFilter: false,
-		cell: (info) => info.getValue(),
 	},
 ];
 //* Certificate Course Fee Columns
 export const certificateCourseFeeColumns = (): ColumnDef<ICertificateCourseFeeTableData>[] => [
 	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'program_name',
 		header: 'Program',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'fee_per_course',
 		header: 'Fee per Course',
 		enableColumnFilter: false,
-		cell: (info) => info.getValue(),
+		cell: (info) => info.getValue() || 0,
 	},
 ];
 //* Tuition Fee Columns
 export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'title',
 		header: 'Title',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'program_name',
 		header: 'Program',
 		enableColumnFilter: false,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'admission_fee',
 		header: 'Admission Fee',
 		enableColumnFilter: false,
-		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'tuition_fee_per_credit',
@@ -110,7 +123,7 @@ export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 		cell: (info) => info.getValue() || 0,
 	},
 	{
-		accessorKey: 'student_activity_fee_per_semester',
+		accessorKey: 'student_activity_fee',
 		header: 'Student Activity Fee per Semester',
 		enableColumnFilter: false,
 		cell: (info) => info.getValue() || 0,
@@ -161,7 +174,11 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 	{
 		accessorKey: 'category',
 		header: 'Category',
-		enableColumnFilter: false,
+		enableColumnFilter: true,
+		cell: (info) => {
+			const category = botCategories.find((item) => item.value === info.getValue());
+			return <span className='capitalize'>{category?.label ?? ''}</span>;
+		},
 	},
 	{
 		accessorKey: 'user_name',

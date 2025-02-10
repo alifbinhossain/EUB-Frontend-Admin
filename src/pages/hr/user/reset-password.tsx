@@ -1,6 +1,3 @@
-import { IResponse } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import useRHF from '@/hooks/useRHF';
 
 import { FormField } from '@/components/ui/form';
@@ -9,7 +6,6 @@ import { AddModal } from '@core/modal';
 
 import { getDateTime } from '@/utils';
 
-import { IResetPassword } from '../_config/columns/columns.type';
 import { IResetPasswordSchema, RESET_PASSWORD_NULL, RESET_PASSWORD_SCHEMA } from '../_config/schema';
 import { IResetPasswordProps } from '../_config/types';
 

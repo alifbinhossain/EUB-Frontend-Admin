@@ -12,6 +12,7 @@ import { getDateTime } from '@/utils';
 import { usePortfolioProgramByUUID } from '../_config/query';
 import { IProgram, PROGRAM_NULL, PROGRAM_SCHEMA } from '../_config/schema';
 import { IProgramsAddOrUpdateProps } from '../_config/types';
+import { categories } from './utils';
 
 const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	url,
@@ -27,14 +28,7 @@ const AddOrUpdate: React.FC<IProgramsAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = usePortfolioProgramByUUID(updatedData?.uuid as string);
 
-	const categoryOptions = [
-		{
-			label: 'Graduate',
-			value: 'graduate',
-		},
-		{ label: 'Undergraduate', value: 'undergraduate' },
-		{ label: 'Certificate', value: 'certificate' },
-	];
+	const categoryOptions = categories;
 
 	const form = useRHF(PROGRAM_SCHEMA, PROGRAM_NULL);
 

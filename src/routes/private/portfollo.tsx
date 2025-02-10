@@ -7,6 +7,7 @@ const Department = lazy(() => import('@/pages/portfollo/department'));
 const Faculty = lazy(() => import('@/pages/portfollo/faculty'));
 const Program = lazy(() => import('@/pages/portfollo/program'));
 const TuitionFee = lazy(() => import('@/pages/portfollo/tuittion-fee'));
+const Bot = lazy(() => import('@/pages/portfollo/bot'));
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -51,6 +52,13 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/tuition-fee',
 				element: <TuitionFee />,
 				page_name: 'portfolio__tuition_fee',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bot',
+				path: '/portfolio/bot',
+				element: <Bot />,
+				page_name: 'portfolio__bot',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

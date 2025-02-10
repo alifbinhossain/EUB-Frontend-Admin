@@ -13,10 +13,10 @@ import { usePortfolioBot } from '../_config/query';
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Designation = () => {
+const Bot = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = usePortfolioBot<IBotTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('HR/Designation', url, 'admin__user_designation'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Portfolio/Bot', url, 'portfolio__bot'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -72,7 +72,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/bot',
 							deleteData,
 						}}
 					/>,
@@ -82,4 +82,4 @@ const Designation = () => {
 	);
 };
 
-export default Designation;
+export default Bot;

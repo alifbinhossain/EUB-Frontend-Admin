@@ -1,4 +1,4 @@
-import { IDefaultAddOrUpdateProps } from '@/types';
+import { IDefaultAddOrUpdateProps, IDefaultImageAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
