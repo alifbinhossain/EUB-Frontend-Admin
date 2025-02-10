@@ -4,6 +4,7 @@ import {
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
+	IClubTableData,
 	IDepartmentTableData,
 	IFacultyTableData,
 	IProgramTableData,
@@ -177,5 +178,33 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: false,
+	},
+];
+
+// * Club Columns
+export const clubColumns = (): ColumnDef<IClubTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'president_name',
+		header: 'President',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'message',
+		header: 'Message',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
 	},
 ];

@@ -5,6 +5,7 @@ const Authorities = lazy(() => import('@/pages/portfollo/authorities'));
 const CertificatesCourseFee = lazy(() => import('@/pages/portfollo/certificate-course-fee'));
 const Department = lazy(() => import('@/pages/portfollo/department'));
 const Faculty = lazy(() => import('@/pages/portfollo/faculty'));
+const Club = lazy(() => import('@/pages/portfollo/club'));
 const Program = lazy(() => import('@/pages/portfollo/program'));
 const TuitionFee = lazy(() => import('@/pages/portfollo/tuittion-fee'));
 const portfolioRoutes: IRoute[] = [
@@ -51,6 +52,13 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/tuition-fee',
 				element: <TuitionFee />,
 				page_name: 'portfolio__tuition_fee',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Club',
+				path: '/portfolio/club',
+				element: <Club />,
+				page_name: 'portfolio__club',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

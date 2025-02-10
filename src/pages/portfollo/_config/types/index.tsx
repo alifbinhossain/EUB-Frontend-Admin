@@ -4,6 +4,7 @@ import {
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
+	IClubTableData,
 	IDepartmentTableData,
 	IFacultyTableData,
 	IProgramTableData,
@@ -41,4 +42,9 @@ export interface ICertificateCourseFeeAddOrUpdateProps extends IDefaultAddOrUpda
 //* Tuition Fee
 export interface ITuitionFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ITuitionFeeTableData | null;
+}
+
+// * Club
+export interface IClubAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IClubTableData | null;
 }

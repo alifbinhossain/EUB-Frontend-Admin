@@ -65,6 +65,16 @@ export type IDepartmentTableData = {
 	category: string;
 };
 
+// * Club
+export type IClubTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	department_uuid: string;
+	president_uuid: string;
+	message: string;
+};
+
 //* bot
 export type IBotTableData = {
 	id: number;

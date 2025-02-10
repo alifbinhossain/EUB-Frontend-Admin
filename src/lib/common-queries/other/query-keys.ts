@@ -57,6 +57,8 @@ const otherQK = {
 	userByQuery: (query: string) => [...otherQK.all(), 'byUserQuery', query],
 	//* Programs
 	programs: () => [...otherQK.all(), 'programs'],
+	//* Departments
+	departments: () => [...otherQK.all(), 'departments'],
 };
 
 export default otherQK;

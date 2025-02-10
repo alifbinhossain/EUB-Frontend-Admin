@@ -17,16 +17,14 @@ export const portfolioQK = {
 	//* bot
 	bot: () => [...portfolioQK.all(), 'bot'],
 	botByUUID: (uuid: string) => [...portfolioQK.bot(), uuid],
-};
 
-export const facultyQK = {
-	all: () => ['faculty'],
-	faculty: () => [...facultyQK.all(), 'faculty'],
-	facultyByUUID: (uuid: string) => [...facultyQK.faculty(), uuid],
-};
-
-export const departmentQK = {
-	all: () => ['department'],
-	department: () => [...departmentQK.all(), 'department'],
-	departmentByUUID: (uuid: string) => [...departmentQK.department(), uuid],
+	// * club
+	club: () => [...portfolioQK.all(), 'club'],
+	clubByUUID: (uuid: string) => [...portfolioQK.club(), uuid],
+	// * faculty
+	faculty: () => [...portfolioQK.all(), 'faculty'],
+	facultyByUUID: (uuid: string) => [...portfolioQK.faculty(), uuid],
+	// * department
+	department: () => [...portfolioQK.all(), 'department'],
+	departmentByUUID: (uuid: string) => [...portfolioQK.department(), uuid],
 };

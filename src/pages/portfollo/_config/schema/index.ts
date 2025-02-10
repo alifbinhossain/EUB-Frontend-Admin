@@ -143,3 +143,22 @@ export const BOT_NULL: Partial<IBot> = {
 };
 
 export type IBot = z.infer<typeof BOT_SCHEMA>;
+
+// * Club Schema
+export const CLUB_SCHEMA = z.object({
+	name: STRING_REQUIRED,
+	department_uuid: STRING_REQUIRED,
+	president_uuid: STRING_REQUIRED,
+	message: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const CLUB_NULL: Partial<IClub> = {
+	name: '',
+	department_uuid: '',
+	president_uuid: '',
+	message: '',
+	remarks: null,
+};
+
+export type IClub = z.infer<typeof CLUB_SCHEMA>;

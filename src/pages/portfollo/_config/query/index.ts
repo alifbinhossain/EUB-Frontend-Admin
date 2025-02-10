@@ -2,7 +2,7 @@ import useTQuery from '@/hooks/useTQuery';
 
 import addUrlParams from '@/utils/routes/addUrlParams';
 
-import { departmentQK, facultyQK, portfolioQK } from './queryKeys';
+import { portfolioQK } from './queryKeys';
 
 //* Programs
 export const usePortfolioPrograms = <T>() =>
@@ -65,14 +65,14 @@ export const usePortfolioTuitionFeeByUUID = <T>(uuid: string) =>
 // * ALL Faculty
 export const useFaculty = <T>() =>
 	useTQuery<T>({
-		queryKey: facultyQK.faculty(),
+		queryKey: portfolioQK.faculty(),
 		url: `/portfolio/faculty`,
 	});
 
 // * Faculty By UUID
 export const useFacultyByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
-		queryKey: facultyQK.facultyByUUID(uuid),
+		queryKey: portfolioQK.facultyByUUID(uuid),
 		url: `/portfolio/faculty/${uuid}`,
 		enabled: !!uuid,
 	});
@@ -81,14 +81,14 @@ export const useFacultyByUUID = <T>(uuid: string) =>
 // * ALL Department
 export const useDepartments = <T>() =>
 	useTQuery<T>({
-		queryKey: departmentQK.department(),
+		queryKey: portfolioQK.department(),
 		url: `/portfolio/department`,
 	});
 
 // * Department By UUID
 export const useDepartmentsByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
-		queryKey: departmentQK.departmentByUUID(uuid),
+		queryKey: portfolioQK.departmentByUUID(uuid),
 		url: `/portfolio/department/${uuid}`,
 		enabled: !!uuid,
 	});
@@ -104,5 +104,21 @@ export const usePortfolioBotByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: portfolioQK.botByUUID(uuid),
 		url: `/portfolio/bot/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// ? CLUB
+// * ALL Club
+export const useClubs = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.club(),
+		url: '/portfolio/club',
+	});
+
+// * Club By UUID
+export const useClubsByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.clubByUUID(uuid),
+		url: `/portfolio/club/${uuid}`,
 		enabled: !!uuid,
 	});
