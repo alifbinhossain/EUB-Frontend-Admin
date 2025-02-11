@@ -31,12 +31,4 @@ export const categories = [
 		label: 'Registrar',
 		value: 'registrar',
 	},
-	{
-		label: 'Undergraduate',
-		value: 'undergraduate',
-	},
-	{
-		label: 'Certificate',
-		value: 'certificate',
-	},
 ];
