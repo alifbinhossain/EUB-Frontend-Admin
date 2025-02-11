@@ -10,25 +10,19 @@ import { newsColumns } from '../_config/columns';
 import { INewsTableData } from '../_config/columns/columns.type';
 import { useNews } from '../_config/query';
 
-const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
 	const navigate = useNavigate();
-	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
-		useNews<INewsTableData[]>();
+	const { data, isLoading, url, deleteData, refetch } = useNews<INewsTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('News', url, 'portfolio__news'), [url]);
-
-	// Add/Update Modal state
-	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
 	const handleCreate = () => {
 		// setIsOpenAddModal(true);
 		navigate('/portfolio/news/entry');
 	};
 
-	const [updatedData, setUpdatedData] = useState<INewsTableData | null>(null);
 	const handleUpdate = (row: Row<INewsTableData>) => {
 		// setUpdatedData(row.original);
 		// setIsOpenAddModal(true);
@@ -64,20 +58,6 @@ const Designation = () => {
 				handleRefetch={refetch}
 			>
 				{renderSuspenseModals([
-					<AddOrUpdate
-						{...{
-							url,
-							open: isOpenAddModal,
-							setOpen: setIsOpenAddModal,
-							updatedData,
-							setUpdatedData,
-							postData,
-							updateData,
-							imagePostData,
-							imageUpdateData,
-						}}
-					/>,
-
 					<DeleteModal
 						{...{
 							deleteItem,

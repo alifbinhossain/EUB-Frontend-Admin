@@ -435,13 +435,13 @@ export const newsColumns = (): ColumnDef<INewsTableData>[] => [
 	},
 	{
 		accessorKey: 'cover_image',
-		header: 'Coven Image',
+		header: 'Cover Image',
 		enableColumnFilter: true,
 		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
 	},
 	{
 		accessorKey: 'published_date',
-		header: 'publish Date',
+		header: 'Published Date',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
