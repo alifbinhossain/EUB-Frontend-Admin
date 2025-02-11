@@ -507,6 +507,11 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'category',
+		header: 'Category',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'total_credit',
 		header: 'Total Credit',
 		enableColumnFilter: true,
