@@ -42,15 +42,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
 				day_hidden: 'invisible',
 				...classNames,
 			}}
-			// components={{
-
-			// 	Chevron({ ...props }) {
-			// 		return <ChevronRight className={cn('h-4 w-4', props.className)} aria-hidden='true' />;
-			// 	},
-
-			// 	// IconLeft: ({ ...props }) => <ChevronLeft className='h-4 w-4' />,
-			// 	// IconRight: ({ ...props }) => <ChevronRight className='h-4 w-4' />,
-			// }}
+			components={{
+				IconLeft: ({ ...props }) => <ChevronLeft className='h-4 w-4' />,
+				IconRight: ({ ...props }) => <ChevronRight className='h-4 w-4' />,
+			}}
 			{...props}
 		/>
 	);
