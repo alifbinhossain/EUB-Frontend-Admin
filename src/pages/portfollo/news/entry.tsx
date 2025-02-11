@@ -25,12 +25,10 @@ export default function NewsEntry() {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 
-	const { data, url, deleteData, imagePostData, imageUpdateData } = useNewsByUUID(uuid as string);
-	const { data: test } = useNewsDetails(uuid as string);
+	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails<INewsTableData[]>(uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 	const { invalidateQuery } = useNews<INewsTableData[]>();
 
-	console.log(test);
 	const form = useRHF(NEWS_SCHEMA(isUpdate) as any, NEWS_NULL);
 
 	const { fields, append, remove } = useFieldArray({
@@ -58,7 +56,7 @@ export default function NewsEntry() {
 			formData.append('updated_at', getDateTime());
 			// UPDATE ITEM
 			imageUpdateData.mutateAsync({
-				url: `${url}`,
+				url: `/portfolio/news/${uuid}`,
 				updatedData: formData,
 			});
 
@@ -66,12 +64,23 @@ export default function NewsEntry() {
 				.filter((entry) => entry.documents !== '')
 				.map((entry) => {
 					const updatedFormData = Formdata(entry);
-					updatedFormData.append('updated_at', getDateTime());
 
-					return imageUpdateData.mutateAsync({
-						url: `portfolio/news-entry/${entry.uuid}`,
-						updatedData: updatedFormData,
-					});
+					if (updatedFormData.get('uuid')) {
+						updatedFormData.append('updated_at', getDateTime());
+						return imageUpdateData.mutateAsync({
+							url: `portfolio/news-entry/${updatedFormData.get('uuid')}`,
+							updatedData: updatedFormData,
+						});
+					} else {
+						updatedFormData.append('created_at', getDateTime());
+						updatedFormData.append('created_by', user?.uuid || '');
+						updatedFormData.append('uuid', nanoid());
+						updatedFormData.append('news_uuid', uuid);
+						return imagePostData.mutateAsync({
+							url: `portfolio/news-entry`,
+							newData: updatedFormData,
+						});
+					}
 				});
 
 			Promise.all(entryUpdatePromise).then(() => {
@@ -131,9 +140,9 @@ export default function NewsEntry() {
 	} | null>(null);
 
 	const handleRemove = (index: number) => {
-		if (fields[index].id) {
+		if (fields[index].uuid) {
 			setDeleteItem({
-				id: fields[index].id, // TODO: Update field id
+				id: fields[index].uuid, // TODO: Update field id
 				name: fields[index].id, // TODO: Update field name
 			});
 		} else {
