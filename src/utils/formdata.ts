@@ -6,7 +6,7 @@ const Formdata = <T extends Record<string, any>>(data: T) => {
 		if (fileFields.includes(key)) {
 			if (typeof value !== 'string') formData.append(key, value || '');
 		} else {
-			formData.append(key, value || '');
+			formData.append(key, value === false ? false : value === null ? null : value || '');
 		}
 	});
 

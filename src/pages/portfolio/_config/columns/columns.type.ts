@@ -197,6 +197,8 @@ export type IFinancialInfoTableData = {
 	id: number;
 	uuid: string;
 	department_uuid: string;
+	department_name: string;
+	category: string;
 	total_credit: number;
 	total_cost: number;
 	admission_fee: number;
