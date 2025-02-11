@@ -1,4 +1,4 @@
-import { boolean, z } from 'zod';
+import { z } from 'zod';
 
 import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
 import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
@@ -255,39 +255,24 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 export type IDepartmentTeachers = z.infer<typeof PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA>;
 
 // * News
-export const NEWS_SCHEMA = (isUpdate: boolean) => {
-	const baseSchema = z.object({
-		title: STRING_REQUIRED,
-		subtitle: STRING_REQUIRED,
-		description: STRING_REQUIRED,
-		content: STRING_REQUIRED,
-		published_date: STRING_REQUIRED,
-		department_uuid: STRING_REQUIRED,
-		remarks: STRING_NULLABLE,
-	});
-
-	if (isUpdate) {
-		return baseSchema.extend({
-			cover_image: z.any(),
-			entry: z.array(
-				z.object({
-					uuid: STRING_OPTIONAL,
-					documents: z.any(),
-				})
+export const NEWS_SCHEMA = z.object({
+	title: STRING_REQUIRED,
+	subtitle: STRING_REQUIRED,
+	description: STRING_REQUIRED,
+	content: STRING_REQUIRED,
+	published_date: STRING_REQUIRED,
+	department_uuid: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+	cover_image: STRING_REQUIRED.or(z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')),
+	entry: z.array(
+		z.object({
+			uuid: STRING_OPTIONAL,
+			documents: STRING_REQUIRED.or(
+				z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')
 			),
-		});
-	}
-
-	return baseSchema.extend({
-		cover_image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
-		entry: z.array(
-			z.object({
-				uuid: STRING_OPTIONAL,
-				documents: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
-			})
-		),
-	});
-};
+		})
+	),
+});
 
 export const NEWS_NULL: Partial<INews> = {
 	title: '',
@@ -299,7 +284,7 @@ export const NEWS_NULL: Partial<INews> = {
 	remarks: null,
 };
 
-export type INews = z.infer<ReturnType<typeof NEWS_SCHEMA>>;
+export type INews = z.infer<typeof NEWS_SCHEMA>;
 
 //* Office Schema
 

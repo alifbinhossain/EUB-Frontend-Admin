@@ -1,25 +1,25 @@
 import { lazy } from 'react';
 import { IRoute } from '@/types';
 
-const Authorities = lazy(() => import('@/pages/portfollo/authorities'));
-const CertificatesCourseFee = lazy(() => import('@/pages/portfollo/certificate-course-fee'));
-const Department = lazy(() => import('@/pages/portfollo/department'));
-const Faculty = lazy(() => import('@/pages/portfollo/faculty'));
-const Club = lazy(() => import('@/pages/portfollo/club'));
-const Program = lazy(() => import('@/pages/portfollo/program'));
-const TuitionFee = lazy(() => import('@/pages/portfollo/tuittion-fee'));
-const DepartmentTeachers = lazy(() => import('@/pages/portfollo/department-teacher'));
-const News = lazy(() => import('@/pages/portfollo/news'));
-const NewsEntry = lazy(() => import('@/pages/portfollo/news/entry'));
+const Authorities = lazy(() => import('@/pages/portfolio/authorities'));
+const CertificatesCourseFee = lazy(() => import('@/pages/portfolio/certificate-course-fee'));
+const Department = lazy(() => import('@/pages/portfolio/department'));
+const Faculty = lazy(() => import('@/pages/portfolio/faculty'));
+const Club = lazy(() => import('@/pages/portfolio/club'));
+const Program = lazy(() => import('@/pages/portfolio/program'));
+const TuitionFee = lazy(() => import('@/pages/portfolio/tuition-fee'));
+const DepartmentTeachers = lazy(() => import('@/pages/portfolio/department-teacher'));
+const News = lazy(() => import('@/pages/portfolio/news'));
+const NewsEntry = lazy(() => import('@/pages/portfolio/news/entry'));
 
-const Bot = lazy(() => import('@/pages/portfollo/bot'));
-const Office = lazy(() => import('@/pages/portfollo/office'));
-const OfficeDetails = lazy(() => import('@/pages/portfollo/office/details'));
-const OfficeEntry = lazy(() => import('@/pages/portfollo/office/add-or-update'));
-const FinancialInformation = lazy(() => import('@/pages/portfollo/financial-info'));
-const Info = lazy(() => import('@/pages/portfollo/info'));
-const Routine = lazy(() => import('@/pages/portfollo/routine'));
-const JobCircular = lazy(() => import('@/pages/portfollo/job-circular'));
+const Bot = lazy(() => import('@/pages/portfolio/bot'));
+const Office = lazy(() => import('@/pages/portfolio/office'));
+const OfficeDetails = lazy(() => import('@/pages/portfolio/office/details'));
+const OfficeEntry = lazy(() => import('@/pages/portfolio/office/add-or-update'));
+const FinancialInformation = lazy(() => import('@/pages/portfolio/financial-info'));
+const Info = lazy(() => import('@/pages/portfolio/info'));
+const Routine = lazy(() => import('@/pages/portfolio/routine'));
+const JobCircular = lazy(() => import('@/pages/portfolio/job-circular'));
 
 const portfolioRoutes: IRoute[] = [
 	{

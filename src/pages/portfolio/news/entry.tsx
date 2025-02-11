@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -11,11 +11,10 @@ import CoreForm from '@core/form';
 
 import { useOtherDepartments } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
-import { getDateTime, PageInfo } from '@/utils';
+import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
 
-import { INewsTableData } from '../_config/columns/columns.type';
-import { useNews, useNewsByUUID, useNewsDetails } from '../_config/query';
+import { useNews, useNewsDetails } from '../_config/query';
 import { INews, NEWS_NULL, NEWS_SCHEMA } from '../_config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 
@@ -25,11 +24,11 @@ export default function NewsEntry() {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 
-	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails<INewsTableData[]>(uuid as string);
+	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails(uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
-	const { invalidateQuery } = useNews<INewsTableData[]>();
+	const { invalidateQuery } = useNews();
 
-	const form = useRHF(NEWS_SCHEMA(isUpdate) as any, NEWS_NULL);
+	const form = useRHF(NEWS_SCHEMA, NEWS_NULL);
 
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
@@ -120,11 +119,6 @@ export default function NewsEntry() {
 		}
 	}
 
-	const pageInfo = useMemo(
-		() => new PageInfo('News Entry', '/portfolio/news/entry', 'portfolio__news_entry'),
-		['/portfolio/news/entry']
-	);
-
 	const handleAdd = () => {
 		// TODO: Update field names
 
@@ -158,10 +152,6 @@ export default function NewsEntry() {
 			documents: field.documents,
 		});
 	};
-
-	useEffect(() => {
-		document.title = pageInfo.title;
-	});
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit News' : 'Add News'} form={form} onSubmit={onSubmit}>
@@ -219,7 +209,7 @@ export default function NewsEntry() {
 
 			<CoreForm.DynamicFields
 				viewAs='default'
-				title='Entry' // TODO: Update title
+				title='Carousel' // TODO: Update title
 				form={form}
 				fieldName='entry' // TODO: Update field name
 				// TODO: Go to _generateFieldDefs.tsx and update field name
@@ -243,7 +233,7 @@ export default function NewsEntry() {
 								'entry', // TODO: Update field name
 								form
 									.getValues('entry') // TODO: Update field name
-									.filter((item: { uuid: string }) => item.uuid !== deleteItem?.id)
+									.filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}
