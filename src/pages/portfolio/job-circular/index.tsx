@@ -51,6 +51,7 @@ const Designation = () => {
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
+				clientRedirectUrl='/career'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}

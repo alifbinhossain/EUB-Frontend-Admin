@@ -54,6 +54,7 @@ const TuitionFee = () => {
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
+				clientRedirectUrl='/financial-information'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
