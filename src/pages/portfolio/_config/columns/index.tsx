@@ -501,9 +501,15 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		header: 'ID',
 		enableColumnFilter: true,
 	},
+
 	{
 		accessorKey: 'department_name',
 		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty',
 		enableColumnFilter: true,
 	},
 	{
