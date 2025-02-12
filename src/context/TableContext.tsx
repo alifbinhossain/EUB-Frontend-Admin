@@ -50,6 +50,7 @@ declare module '@tanstack/react-table' {
 interface ITableContext<TData> {
 	title: string;
 	subtitle?: string;
+	clientRedirectUrl?: string;
 	isEntry?: boolean;
 	table: Table<TData>;
 	isLoading?: boolean;
@@ -78,6 +79,7 @@ export const TableContext = createContext({} as ITableContext<any>);
 interface ITableProviderProps<TData, TValue> {
 	title: string;
 	subtitle?: string;
+	clientRedirectUrl?: string;
 	isEntry?: boolean;
 	children?: React.ReactNode;
 	columns: ColumnDef<TData, TValue>[];
@@ -104,6 +106,7 @@ interface ITableProviderProps<TData, TValue> {
 function TableProvider<TData, TValue>({
 	title,
 	subtitle,
+	clientRedirectUrl,
 	isEntry = false,
 	children,
 	columns,
@@ -203,6 +206,7 @@ function TableProvider<TData, TValue>({
 		() => ({
 			title,
 			subtitle,
+			clientRedirectUrl,
 			isEntry,
 			isLoading,
 			table,
@@ -227,6 +231,7 @@ function TableProvider<TData, TValue>({
 		[
 			title,
 			subtitle,
+			clientRedirectUrl,
 			isEntry,
 			isLoading,
 			table,
