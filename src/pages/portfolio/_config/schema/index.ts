@@ -240,6 +240,9 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 	education: STRING_REQUIRED,
 	publication: STRING_REQUIRED,
 	journal: STRING_REQUIRED,
+	about: STRING_REQUIRED,
+	appointment_date: STRING_REQUIRED,
+	resign_date: STRING_NULLABLE,
 	remarks: STRING_NULLABLE,
 });
 
@@ -249,6 +252,9 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	education: '',
 	publication: '',
 	journal: '',
+	about: '',
+	appointment_date: '',
+	resign_date: null,
 	remarks: null,
 };
 

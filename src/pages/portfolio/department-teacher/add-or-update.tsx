@@ -85,28 +85,55 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			title={isUpdate ? 'Update Department Teacher' : 'Add Department Teacher'}
 			form={form}
 			onSubmit={onSubmit}
+			isSmall={true}
 		>
-			<FormField
-				control={form.control}
-				name='teacher_uuid'
-				render={(props) => (
-					<CoreForm.ReactSelect label='Teacher' placeholder='Select Teacher' options={users!} {...props} />
-				)}
-			/>
-			<FormField
-				control={form.control}
-				name='department_uuid'
-				render={(props) => (
-					<CoreForm.ReactSelect
-						label='Department'
-						placeholder='Select Department'
-						options={departments!}
-						{...props}
-					/>
-				)}
-			/>
+			<div className='flex gap-2'>
+				<FormField
+					control={form.control}
+					name='teacher_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Teacher'
+							placeholder='Select Teacher'
+							options={users!}
+							{...props}
+						/>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='department_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Department'
+							placeholder='Select Department'
+							options={departments!}
+							{...props}
+						/>
+					)}
+				/>
+			</div>
+			<div className='flex gap-2'>
+				<FormField
+					control={form.control}
+					name='appointment_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='resign_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+			</div>
+			<div className='flex gap-2'>
+				<FormField
+					control={form.control}
+					name='education'
+					render={(props) => <CoreForm.Textarea {...props} />}
+				/>
+				<FormField control={form.control} name='about' render={(props) => <CoreForm.Textarea {...props} />} />
+			</div>
 
-			<FormField control={form.control} name='education' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='publication' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='journal' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />

@@ -394,7 +394,25 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		cell: (info) => info.getValue(),
 	},
 	{
-		accessorKey: 'publications',
+		accessorKey: 'about',
+		header: 'About',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'appointment_date',
+		header: 'Appointment Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime isTime={false} date={info.getValue() as Date} />,
+	},
+	{
+		accessorKey: 'resign_date',
+		header: 'Resign Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime isTime={false} date={info.getValue() as Date} />,
+	},
+	{
+		accessorKey: 'publication',
 		header: 'Publications',
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),

@@ -31,7 +31,11 @@ const AddModal: React.FC<IAddModalProps> = ({
 				onInteractOutside={(e) => {
 					e.preventDefault();
 				}}
-				className={cn('max-h-[90vh] w-full overflow-auto bg-background', isSmall && 'sm:max-w-5xl', className)}
+				className={cn(
+					'max-h-[90vh] w-full cursor-default overflow-auto bg-background',
+					isSmall && 'sm:max-w-5xl',
+					className
+				)}
 			>
 				<DialogHeader>
 					<DialogTitle aria-label='Modal Title' aria-description='Modal Title' aria-describedby='Modal Title'>
