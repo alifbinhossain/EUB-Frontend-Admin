@@ -52,6 +52,7 @@ export function TableToolbar() {
 	const {
 		title,
 		subtitle,
+		clientRedirectUrl,
 		table,
 		toolbarOptions,
 		handleCreate,
@@ -202,6 +203,7 @@ export function TableToolbar() {
 					<TableTitle
 						title={title}
 						subtitle={subtitle}
+						clientRedirectUrl={clientRedirectUrl}
 						titleClassName={
 							'text-2xl font-semibold capitalize leading-tight text-primary-foreground md:text-3xl'
 						}
@@ -229,7 +231,7 @@ export function TableToolbar() {
 			<div
 				className={cn('mb-4 flex w-full flex-col justify-between gap-2 border-b pb-4 lg:flex-row lg:items-end')}
 			>
-				<TableTitle title={title} subtitle={subtitle} />
+				<TableTitle title={title} subtitle={subtitle} clientRedirectUrl={clientRedirectUrl} />
 				<DebouncedInput
 					icon={<SearchIcon className={cn('size-5 text-secondary/50')} />}
 					value={globalFilterValue ?? ''}

@@ -112,7 +112,7 @@ export const useRoutineByUUID = <T>(uuid: string) =>
 export const useJobCircular = <T>() =>
 	useTQuery<T>({
 		queryKey: jobCircularQK.jobCircular(),
-		url: `/portfolio/job-circular`,
+		url: `/portfolio/job-circular?is_pagination=false`,
 	});
 
 // * JOB CIRCULAR By UUID

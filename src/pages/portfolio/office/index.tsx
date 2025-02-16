@@ -45,6 +45,7 @@ const Office = () => {
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
+				clientRedirectUrl='/authorities/offices'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
