@@ -1,4 +1,5 @@
 import { EUB_LOGO } from '@/assets/images/base64';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 import { DEFAULT_FONT_SIZE, defaultStyle, PRIMARY_COLOR, styles } from './ui';
 
@@ -31,13 +32,17 @@ interface CustomPageConeStickerProps extends PageProps {
 //
 // PDF DEFAULTS
 //
-export const DEFAULT_A4_PAGE = ({ xMargin, headerHeight, footerHeight }: PageProps) => ({
-	pageSize: 'A4',
-	pageOrientation: 'portrait',
-	pageMargins: [xMargin, headerHeight, xMargin, footerHeight] as [number, number, number, number],
-	defaultStyle,
-	styles,
-});
+export function DEFAULT_A4_PAGE({ xMargin = 30, headerHeight = 0, footerHeight = 0 }): TDocumentDefinitions {
+	return {
+		pageSize: 'A4',
+		pageOrientation: 'portrait', // use a valid literal
+		pageMargins: [xMargin, headerHeight, xMargin, footerHeight],
+		content: [],
+		defaultStyle,
+
+		// ... other properties
+	};
+}
 
 export const DEFAULT_LETTER_PAGE = ({ xMargin, headerHeight, footerHeight }: PageProps) => ({
 	pageSize: 'LETTER',

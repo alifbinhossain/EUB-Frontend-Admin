@@ -23,7 +23,6 @@ export default function Index(data: IAdmissionTableData) {
 		}),
 
 		// * Page Header
-		header: {},
 		// * Page Footer
 		footer: (currentPage: number, pageCount: number) => ({
 			table: getPageFooter({ currentPage, pageCount }),
