@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusButton from '@/components/buttons/status';
 import { RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
+import { LinkOnly } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
 
 import { API_IMAGE_URL } from '@/lib/secret';
@@ -11,6 +12,7 @@ import { categories as authoritiesCategories } from '../../authorities/utils';
 import { categories as botCategories, status as botStatus } from '../../bot/utils';
 import { categories as officeCategories } from '../../office/utills';
 import {
+	IAdmissionTableData,
 	IAuthoritiesTableData,
 	IBotTableData,
 	ICertificateCourseFeeTableData,
@@ -520,6 +522,7 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		header: 'ID',
 		enableColumnFilter: true,
 	},
+
 	{
 		accessorKey: 'table_name',
 		header: 'Group',
@@ -528,6 +531,11 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 	{
 		accessorKey: 'department_name',
 		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'faculty_name',
+		header: 'Faculty',
 		enableColumnFilter: true,
 	},
 	{
@@ -605,4 +613,57 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		header: 'Waiver 100%',
 		enableColumnFilter: true,
 	},
+];
+
+//*Admission
+export const admissionColumns = (): ColumnDef<IAdmissionTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const uuid = info.row.original.uuid;
+			return <LinkOnly uri={`/portfolio/admission/${uuid}/details`} title={info.getValue() as string} />;
+		},
+	},
+
+	{ accessorKey: 'semester', header: 'Semester', enableColumnFilter: true },
+	{ accessorKey: 'program_name', header: 'Program Name', enableColumnFilter: true }, // Display program name
+	{ accessorKey: 'applicant_name', header: 'Applicant Name', enableColumnFilter: true },
+	{ accessorKey: 'father_name', header: 'Father Name', enableColumnFilter: true },
+	{ accessorKey: 'mother_name', header: 'Mother Name', enableColumnFilter: true },
+	{ accessorKey: 'local_guardian', header: 'Local Guardian', enableColumnFilter: true },
+	{
+		accessorKey: 'date_of_birth',
+		header: 'Date of Birth',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{ accessorKey: 'nationality', header: 'Nationality', enableColumnFilter: true },
+	{ accessorKey: 'blood_group', header: 'Blood Group', enableColumnFilter: true },
+	{ accessorKey: 'phone_number', header: 'Phone Number', enableColumnFilter: true },
+	{ accessorKey: 'email', header: 'Email', enableColumnFilter: true },
+	{ accessorKey: 'gender', header: 'Gender', enableColumnFilter: true },
+	{ accessorKey: 'marital_status', header: 'Marital Status', enableColumnFilter: true },
+	{ accessorKey: 'present_address', header: 'Present Address', enableColumnFilter: true },
+	{ accessorKey: 'village', header: 'Village', enableColumnFilter: true },
+	{ accessorKey: 'post_office', header: 'Post Office', enableColumnFilter: true },
+	{ accessorKey: 'thana', header: 'Thana', enableColumnFilter: true },
+	{ accessorKey: 'district', header: 'District', enableColumnFilter: true },
+	{ accessorKey: 'ssc_group', header: 'SSC Group', enableColumnFilter: true },
+	{ accessorKey: 'ssc_grade', header: 'SSC Grade', enableColumnFilter: true },
+	{ accessorKey: 'ssc_gpa', header: 'SSC GPA', enableColumnFilter: true },
+	{ accessorKey: 'ssc_board', header: 'SSC Board', enableColumnFilter: true },
+	{ accessorKey: 'ssc_passing_year', header: 'SSC Passing Year', enableColumnFilter: true },
+	{ accessorKey: 'ssc_institute', header: 'SSC Institute', enableColumnFilter: true },
+	{ accessorKey: 'hsc_group', header: 'HSC Group', enableColumnFilter: true },
+	{ accessorKey: 'hsc_grade', header: 'HSC Grade', enableColumnFilter: true },
+	{ accessorKey: 'hsc_gpa', header: 'HSC GPA', enableColumnFilter: true },
+	{ accessorKey: 'hsc_board', header: 'HSC Board', enableColumnFilter: true },
+	{ accessorKey: 'hsc_passing_year', header: 'HSC Passing Year', enableColumnFilter: true },
+	{ accessorKey: 'hsc_institute', header: 'HSC Institute', enableColumnFilter: true },
+	{ accessorKey: 'bsc_name', header: 'BSc Name', enableColumnFilter: true },
+	{ accessorKey: 'bsc_cgpa', header: 'BSc CGPA', enableColumnFilter: true },
+	{ accessorKey: 'bsc_passing_year', header: 'BSc Passing Year', enableColumnFilter: true },
+	{ accessorKey: 'bsc_institute', header: 'BSc Institute', enableColumnFilter: true },
 ];
