@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
+import { RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import DateTime from '@/components/ui/date-time';
 
@@ -415,7 +416,7 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'publication',
 		header: 'Publications',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => <RichTextModal title={'Publications'} content={info.getValue() as string} />,
 	},
 	{
 		accessorKey: 'journal',
