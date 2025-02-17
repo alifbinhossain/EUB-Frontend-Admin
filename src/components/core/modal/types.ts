@@ -71,3 +71,10 @@ export interface IAddModalProps {
 	className?: string;
 	isSmall?: boolean;
 }
+
+export interface IRichTextModalProps {
+	title: string;
+	content: string;
+	className?: string;
+	isSmall?: boolean;
+}

@@ -15,7 +15,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useClubs<IClubTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Club', url, 'portfolio__club'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Clubs', url, 'portfolio__club'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -50,6 +50,7 @@ const Designation = () => {
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
+				clientRedirectUrl='/clubs-societies'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}

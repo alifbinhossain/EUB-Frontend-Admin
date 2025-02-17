@@ -16,7 +16,7 @@ const Designation = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, refetch } = useNews<INewsTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('News', url, 'portfolio__news'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('News & Events', url, 'portfolio__news'), [url]);
 
 	const handleCreate = () => {
 		// setIsOpenAddModal(true);
@@ -49,6 +49,7 @@ const Designation = () => {
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
+				clientRedirectUrl='/news-events'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}

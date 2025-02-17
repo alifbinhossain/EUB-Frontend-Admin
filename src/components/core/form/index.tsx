@@ -1,33 +1,35 @@
-import FormAddEditWrapper from './add-edit-wrapper';
-import FormCheckbox from './checkbox';
-import FormDatePicker from './date-picker';
-import FormFileUpload from './file-upload';
-import FormDynamicFields from './form-dynamic-fields';
-import FormInput from './input';
-import FormJoinInputSelect from './join-input-select';
-import FormJoinInputUnit from './join-input-unit';
-import FormMultiSelect from './multi-select';
-import FormReactSelect from './react-select';
-import FormSection from './section';
-import FormSelect from './select';
-import FormSubmit from './submit';
-import FormTextarea from './textarea';
+import AddEditWrapper from './add-edit-wrapper';
+import Checkbox from './checkbox';
+import DatePicker from './date-picker';
+import FileUpload from './file-upload';
+import DynamicFields from './form-dynamic-fields';
+import Input from './input';
+import JoinInputSelect from './join-input-select';
+import JoinInputUnit from './join-input-unit';
+import MultiSelect from './multi-select';
+import ReactSelect from './react-select';
+import RichTextEditor from './rich-text-editor';
+import Section from './section';
+import Select from './select';
+import Submit from './submit';
+import Textarea from './textarea';
 
 const Form = {
-	Input: FormInput,
-	Textarea: FormTextarea,
-	DatePicker: FormDatePicker,
-	Checkbox: FormCheckbox,
-	Select: FormSelect,
-	MultiSelect: FormMultiSelect,
-	ReactSelect: FormReactSelect,
-	Submit: FormSubmit,
-	Section: FormSection,
-	JoinInputUnit: FormJoinInputUnit,
-	JoinInputSelect: FormJoinInputSelect,
-	DynamicFields: FormDynamicFields,
-	AddEditWrapper: FormAddEditWrapper,
-	FileUpload: FormFileUpload,
+	Input,
+	Textarea,
+	DatePicker,
+	Checkbox,
+	Select,
+	MultiSelect,
+	ReactSelect,
+	Submit,
+	Section,
+	JoinInputUnit,
+	JoinInputSelect,
+	DynamicFields,
+	AddEditWrapper,
+	FileUpload,
+	RichTextEditor,
 };
 
 export default Form;
