@@ -20,6 +20,9 @@ const FinancialInformation = lazy(() => import('@/pages/portfolio/financial-info
 const Info = lazy(() => import('@/pages/portfolio/info'));
 const Routine = lazy(() => import('@/pages/portfolio/routine'));
 const JobCircular = lazy(() => import('@/pages/portfolio/job-circular'));
+const Admission = lazy(() => import('@/pages/portfolio/admission'));
+const AdmissionEntry = lazy(() => import('@/pages/portfolio/admission/add-or-update'));
+const AdmissionDetails = lazy(() => import('@/pages/portfolio/admission/details'));
 
 const portfolioRoutes: IRoute[] = [
 	{
@@ -169,6 +172,37 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/job-circular',
 				element: <JobCircular />,
 				page_name: 'portfolio__job_circular',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Admission',
+				path: '/portfolio/admission',
+				element: <Admission />,
+				page_name: 'portfolio__admission',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Admission Entry',
+				path: 'portfolio/admission/create',
+				element: <AdmissionEntry />,
+				hidden: true,
+				page_name: 'portfolio__admission_create',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Admission Details',
+				path: 'portfolio/admission/:uuid/details',
+				element: <AdmissionDetails />,
+				hidden: true,
+				page_name: 'portfolio__admission_details',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Office Update',
+				path: 'portfolio/admission/:uuid/update',
+				element: <AdmissionEntry />,
+				hidden: true,
+				page_name: 'portfolio__admission_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

@@ -234,3 +234,16 @@ export const usePortfolioFinancialInformationByUUID = <T>(uuid: string) =>
 		url: `/portfolio/financial-info/${uuid}`,
 		enabled: !!uuid,
 	});
+//* Admission
+export const usePortfolioAdmission = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.admission(),
+		url: '/portfolio/online-admission',
+	});
+
+export const usePortfolioAdmissionByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.admissionByUUID(uuid),
+		url: `/portfolio/online-admission/${uuid}`,
+		enabled: !!uuid,
+	});
