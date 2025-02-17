@@ -350,7 +350,7 @@ export default function Index(data: IAdmissionTableData) {
 								alignment: 'left',
 							},
 							{
-								text: `b) Permanent Address(if Different)`,
+								text: `b) Permanent Address (if Different)`,
 							},
 						],
 						[
