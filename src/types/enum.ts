@@ -6,6 +6,7 @@ export enum PORTFOLIO_PAGE_NAME {
 	INFORMATION_ABOUT_PROVISIONAL_CERTIFICATES = 'information_about_provisional_certificates',
 	CLUBS_AND_SOCIETY = 'clubs_and_society',
 	ACADEMIC_INFORMATION_AND_POLICIES = 'academic_information_and_policies',
+	JOURNAL = 'journal',
 }
 
 // PROGRAM ENUM
