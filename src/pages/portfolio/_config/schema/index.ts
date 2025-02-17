@@ -236,6 +236,7 @@ export type IClub = z.infer<typeof CLUB_SCHEMA>;
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 	department_uuid: STRING_REQUIRED,
+	department_head: BOOLEAN_REQUIRED,
 	teacher_uuid: STRING_REQUIRED,
 	education: STRING_REQUIRED,
 	publication: STRING_REQUIRED,
@@ -248,6 +249,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	department_uuid: '',
+	department_head: false,
 	teacher_uuid: '',
 	education: '',
 	publication: '',
