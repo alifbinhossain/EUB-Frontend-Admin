@@ -1,14 +1,12 @@
 import { z } from 'zod';
 
-import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
 import {
-	BOOLEAN_OPTIONAL,
-	BOOLEAN_REQUIRED,
-	EMAIL_REQUIRED,
-	STRING_NULLABLE,
-	STRING_OPTIONAL,
-	STRING_REQUIRED,
-} from '@/utils/validators';
+	FINANCIAL_INFO_TABLE_TYPE,
+	PORTFOLIO_PAGE_NAME,
+	PORTFOLIO_PROGRAM_TYPE,
+	PORTFOLIO_ROUTINE_TYPE,
+} from '@/types/enum';
+import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
 
 //* Authorities Schema
 export const AUTHORITIES_SCHEMA = z.object({
@@ -353,9 +351,10 @@ export type IOffice = z.infer<typeof OFFICE_SCHEMA>;
 //* Financial Schema
 export const FINANCIAL_INFORMATION_SCHEMA = z.object({
 	department_uuid: STRING_REQUIRED,
+	table_name: z.nativeEnum(FINANCIAL_INFO_TABLE_TYPE),
 	total_credit: z.number().nullable(),
 	total_cost: z.number().nullable(),
-	admission_fee: z.number().nullable(),
+	total_waiver_amount: z.number().nullable(),
 	waiver_50: z.number().nullable(),
 	waiver_55: z.number().nullable(),
 	waiver_60: z.number().nullable(),
@@ -374,7 +373,8 @@ export const FINANCIAL_INFORMATION_NULL: Partial<IPortfolioFinancialInformation>
 	department_uuid: '',
 	total_credit: 0,
 	total_cost: 0,
-	admission_fee: 0,
+	total_waiver_amount: 0,
+	// admission_fee: 0,
 	waiver_50: 0,
 	waiver_55: 0,
 	waiver_60: 0,
