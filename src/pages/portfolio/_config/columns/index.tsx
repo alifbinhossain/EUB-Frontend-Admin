@@ -521,6 +521,11 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'table_name',
+		header: 'Group',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'department_name',
 		header: 'Department',
 		enableColumnFilter: true,

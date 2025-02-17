@@ -7,9 +7,11 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { FINANCIAL_INFO_TABLE_TYPE } from '@/types/enum';
 import { useOtherDepartments } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import enumToOptions from '@/utils/enumToOptions';
 
 import { usePortfolioFinancialInformationByUUID } from '../_config/query';
 import {
@@ -79,24 +81,40 @@ const AddOrUpdate: React.FC<IFinancialInformationAddOrUpdateProps> = ({
 
 	return (
 		<AddModal
+			isSmall
 			open={open}
 			setOpen={onClose}
 			title={isUpdate ? 'Update Financial Information' : 'Add Financial Information'}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField
-				control={form.control}
-				name='department_uuid'
-				render={(props) => (
-					<CoreForm.ReactSelect
-						label='Department'
-						placeholder='Select Department'
-						options={departmentOptions!}
-						{...props}
-					/>
-				)}
-			/>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='table_name'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Group'
+							placeholder='Select Group'
+							options={enumToOptions(FINANCIAL_INFO_TABLE_TYPE)}
+							{...props}
+						/>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name='department_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Department'
+							placeholder='Select Department'
+							options={departmentOptions!}
+							{...props}
+						/>
+					)}
+				/>
+			</div>
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
@@ -110,8 +128,8 @@ const AddOrUpdate: React.FC<IFinancialInformationAddOrUpdateProps> = ({
 				/>
 				<FormField
 					control={form.control}
-					name='admission_fee'
-					render={(props) => <CoreForm.Input type='number' label='Admission Fee' {...props} />}
+					name='total_waiver_amount'
+					render={(props) => <CoreForm.Input type='number' label='Total Waiver Amount' {...props} />}
 				/>
 				<FormField
 					control={form.control}
