@@ -6,7 +6,14 @@ import {
 	PORTFOLIO_PROGRAM_TYPE,
 	PORTFOLIO_ROUTINE_TYPE,
 } from '@/types/enum';
-import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
+import {
+	BOOLEAN_OPTIONAL,
+	BOOLEAN_REQUIRED,
+	EMAIL_REQUIRED,
+	STRING_NULLABLE,
+	STRING_OPTIONAL,
+	STRING_REQUIRED,
+} from '@/utils/validators';
 
 //* Authorities Schema
 export const AUTHORITIES_SCHEMA = z.object({
