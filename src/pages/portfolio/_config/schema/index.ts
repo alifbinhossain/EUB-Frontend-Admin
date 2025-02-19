@@ -9,7 +9,9 @@ import {
 import {
 	BOOLEAN_OPTIONAL,
 	BOOLEAN_REQUIRED,
+	DATE,
 	EMAIL_REQUIRED,
+	NUMBER_REQUIRED,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
 	STRING_REQUIRED,
@@ -582,3 +584,22 @@ export const PORTFOLIO_ADMISSION_NULL: Partial<IAdmissionForm> = {
 	bsc_institute: null,
 };
 export type IAdmissionForm = z.infer<typeof PORTFOLIO_ADMISSION_SCHEMA>;
+
+// * Offers Schema
+export const OFFERS_SCHEMA = z.object({
+	serial: NUMBER_REQUIRED,
+	title: STRING_REQUIRED,
+	subtitle: STRING_REQUIRED,
+	deadline: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const OFFERS_NULL: Partial<IOffers> = {
+	serial: 0,
+	title: '',
+	subtitle: '',
+	deadline: '',
+	remarks: null,
+};
+
+export type IOffers = z.infer<typeof OFFERS_SCHEMA>;

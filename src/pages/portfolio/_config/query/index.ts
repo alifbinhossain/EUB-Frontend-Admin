@@ -169,6 +169,22 @@ export const useClubsByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
+// ? OFFERS
+// * All offers
+export const useOffers = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.offers(),
+		url: '/portfolio/offer',
+	});
+
+// * Offers By UUID
+export const useOffersByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.offersByUUID(uuid),
+		url: `/portfolio/offer/${uuid}`,
+		enabled: !!uuid,
+	});
+
 // ? DEPARTMENT-TEACHERS
 // * ALL Department-Teachers
 export const useDepartmentsTeachers = <T>() =>

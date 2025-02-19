@@ -24,6 +24,7 @@ import {
 	IInfoTableData,
 	IJobCircularTableData,
 	INewsTableData,
+	IOffersTableData,
 	IOfficeEntryTableData,
 	IOfficeTableData,
 	IRoutineTableData,
@@ -666,4 +667,32 @@ export const admissionColumns = (): ColumnDef<IAdmissionTableData>[] => [
 	{ accessorKey: 'bsc_cgpa', header: 'BSc CGPA', enableColumnFilter: true },
 	{ accessorKey: 'bsc_passing_year', header: 'BSc Passing Year', enableColumnFilter: true },
 	{ accessorKey: 'bsc_institute', header: 'BSc Institute', enableColumnFilter: true },
+];
+
+// * Club Columns
+export const offersColumns = (): ColumnDef<IOffersTableData>[] => [
+	{
+		accessorKey: 'serial',
+		header: 'Serial',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'subtitle',
+		header: 'Subtitle',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'deadline',
+		header: 'Deadline',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
 ];
