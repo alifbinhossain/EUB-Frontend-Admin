@@ -23,6 +23,7 @@ const JobCircular = lazy(() => import('@/pages/portfolio/job-circular'));
 const Admission = lazy(() => import('@/pages/portfolio/admission'));
 const AdmissionEntry = lazy(() => import('@/pages/portfolio/admission/add-or-update'));
 const AdmissionDetails = lazy(() => import('@/pages/portfolio/admission/details'));
+const Offers = lazy(() => import('@/pages/portfolio/offers'));
 
 const portfolioRoutes: IRoute[] = [
 	{
@@ -203,6 +204,13 @@ const portfolioRoutes: IRoute[] = [
 				element: <AdmissionEntry />,
 				hidden: true,
 				page_name: 'portfolio__admission_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Offers',
+				path: '/portfolio/offers',
+				element: <Offers />,
+				page_name: 'portfolio__offers',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

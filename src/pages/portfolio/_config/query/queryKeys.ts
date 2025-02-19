@@ -28,6 +28,9 @@ export const portfolioQK = {
 	// * club
 	club: () => [...portfolioQK.all(), 'club'],
 	clubByUUID: (uuid: string) => [...portfolioQK.club(), uuid],
+	// * offers
+	offers: () => [...portfolioQK.all(), 'offers'],
+	offersByUUID: (uuid: string) => [...portfolioQK.offers(), uuid],
 	// * faculty
 	faculty: () => [...portfolioQK.all(), 'faculty'],
 	facultyByUUID: (uuid: string) => [...portfolioQK.faculty(), uuid],

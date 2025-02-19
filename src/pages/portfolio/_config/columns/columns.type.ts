@@ -282,3 +282,14 @@ export type IAdmissionTableData = {
 	created_at: string;
 	updated_at: string;
 };
+
+// * offers
+export type IOffersTableData = {
+	id: number;
+	uuid: string;
+	serial: number;
+	title: string;
+	subtitle: string;
+	deadline: string;
+	remarks: string;
+};

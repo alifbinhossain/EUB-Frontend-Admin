@@ -13,6 +13,7 @@ import {
 	IInfoTableData,
 	IJobCircularTableData,
 	INewsTableData,
+	IOffersTableData,
 	IRoutineTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
@@ -69,6 +70,11 @@ export interface ITuitionFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 // * Club
 export interface IClubAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IClubTableData | null;
+}
+
+// * Offers
+export interface IOffersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IOffersTableData | null;
 }
 
 // * Department-Teachers
