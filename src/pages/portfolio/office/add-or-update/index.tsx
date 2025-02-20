@@ -52,50 +52,52 @@ const AddOrUpdate = () => {
 			};
 			delete (office_data as { office_entries?: any })['office_entries'];
 			const formData = Formdata<IOffice>(office_data);
-			const test_promise = await imageUpdateData.mutateAsync({
-				url: `${officeUrl}/${uuid}`,
-				updatedData: formData,
-				isOnCloseNeeded: false,
-			});
 
-			const office_entries_promise = values.office_entries.map((item) => {
-				if (item.uuid === undefined) {
-					const newData = {
-						...item,
-						office_uuid: uuid,
-						created_at: getDateTime(),
-						created_by: user?.uuid,
-						uuid: nanoid(),
-					};
+			imageUpdateData
+				.mutateAsync({
+					url: `${officeUrl}/${uuid}`,
+					updatedData: formData,
+					isOnCloseNeeded: false,
+				})
+				.then(() => {
+					const office_entries_promise = values.office_entries.map((item) => {
+						if (item.uuid === undefined) {
+							const newData = {
+								...item,
+								office_uuid: uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
 
-					return postData.mutateAsync({
-						url: '/portfolio/office-entry',
-						newData: newData,
-						isOnCloseNeeded: false,
+							return postData.mutateAsync({
+								url: '/portfolio/office-entry',
+								newData: newData,
+								isOnCloseNeeded: false,
+							});
+						} else {
+							const updatedData = {
+								...item,
+								updated_at: getDateTime(),
+							};
+							return updateData.mutateAsync({
+								url: `/portfolio/office-entry/${item.uuid}`,
+								updatedData,
+								isOnCloseNeeded: false,
+							});
+						}
 					});
-				} else {
-					const updatedData = {
-						...item,
-						updated_at: getDateTime(),
-					};
-					return updateData.mutateAsync({
-						url: `/portfolio/office-entry/${item.uuid}`,
-						updatedData,
-						isOnCloseNeeded: false,
-					});
-				}
-			});
 
-			try {
-				await Promise.all([test_promise, ...office_entries_promise])
-					.then(() => form.reset(OFFICE_NULL))
-					.then(() => {
-						invalidateTestDetails(); // TODO: Update invalidate query
-						navigate(`/portfolio/office/${uuid}/details`);
-					});
-			} catch (err) {
-				console.error(`Error with Promise.all: ${err}`);
-			}
+					Promise.all([...office_entries_promise]);
+				})
+				.then(() => form.reset(OFFICE_NULL))
+				.then(() => {
+					invalidateTestDetails(); // TODO: Update invalidate query
+					navigate(`/portfolio/office/${uuid}/details`);
+				})
+				.catch((error) => {
+					console.error('Error updating Office:', error);
+				});
 
 			return;
 		}
@@ -120,39 +122,40 @@ const AddOrUpdate = () => {
 		}
 
 		// TODO: Update url and variable name ⬇️
-		const office_promise = await imagePostData.mutateAsync({
-			url: officeUrl,
-			newData: formData,
-			isOnCloseNeeded: false,
-		});
-
-		// Create Office entries
-		const office_entries = [...values.office_entries].map((item) => ({
-			...item,
-			office_uuid: new_office_uuid,
-			uuid: nanoid(),
-			created_at,
-			created_by,
-		}));
-
-		const office_entries_promise = office_entries.map((item) =>
-			postData.mutateAsync({
-				url: `/portfolio/office-entry`,
-				newData: item,
+		imagePostData
+			.mutateAsync({
+				url: officeUrl,
+				newData: formData,
 				isOnCloseNeeded: false,
 			})
-		);
+			.then(() => {
+				// Create Office entries
+				const office_entries = [...values.office_entries].map((item) => ({
+					...item,
+					office_uuid: new_office_uuid,
+					uuid: nanoid(),
+					created_at,
+					created_by,
+				}));
 
-		try {
-			await Promise.all([office_promise, ...office_entries_promise])
-				.then(() => form.reset(OFFICE_NULL))
-				.then(() => {
-					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/office/${new_office_uuid}/details`);
-				});
-		} catch (err) {
-			console.error(`Error with Promise.all: ${err}`);
-		}
+				const office_entries_promise = office_entries.map((item) =>
+					postData.mutateAsync({
+						url: `/portfolio/office-entry`,
+						newData: item,
+						isOnCloseNeeded: false,
+					})
+				);
+
+				Promise.all([...office_entries_promise]);
+			})
+			.then(() => form.reset(OFFICE_NULL))
+			.then(() => {
+				invalidateTestDetails(); // TODO: Update invalidate query
+				navigate(`/portfolio/office/${new_office_uuid}/details`);
+			})
+			.catch((error) => {
+				console.error('Error adding Office:', error);
+			});
 	}
 
 	const handleAdd = () => {
