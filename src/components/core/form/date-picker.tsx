@@ -54,8 +54,8 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 				</PopoverTrigger>
 				<PopoverContent className='w-auto p-0' align='start'>
 					<Calendar
-						initialFocus
 						{...calendarProps}
+						captionLayout={'dropdown'}
 						mode='single'
 						selected={new Date(field.value)}
 						onSelect={(date) => {
