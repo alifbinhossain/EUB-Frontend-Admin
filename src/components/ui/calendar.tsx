@@ -9,8 +9,6 @@ import { buttonVariants } from '@/components/ui/button';
 
 import { cn } from '@/lib/utils';
 
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './select';
-
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
@@ -19,7 +17,7 @@ function Calendar({
 	captionLayout,
 	showOutsideDays = true,
 	...props
-}: CalendarProps & { selected: Date }) {
+}: CalendarProps & { selected: Date | any }) {
 	return (
 		<DayPicker
 			showOutsideDays={showOutsideDays}
