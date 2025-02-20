@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 
@@ -20,6 +21,8 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 	disableLabel,
 	calendarProps,
 }) => {
+	const [open, setOpen] = useState(false);
+
 	return (
 		<FormItem className='space-y-1.5'>
 			{!disableLabel && (
@@ -32,7 +35,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 				</FormLabel>
 			)}
 
-			<Popover>
+			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<FormControl>
 						<Button
@@ -55,7 +58,10 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						{...calendarProps}
 						mode='single'
 						selected={new Date(field.value)}
-						onSelect={(date) => field.onChange(formatDate(date as Date))}
+						onSelect={(date) => {
+							field.onChange(formatDate(date as Date));
+							setOpen(false);
+						}}
 					/>
 				</PopoverContent>
 			</Popover>
