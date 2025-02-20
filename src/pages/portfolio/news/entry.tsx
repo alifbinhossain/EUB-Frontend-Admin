@@ -53,69 +53,82 @@ export default function NewsEntry() {
 
 		if (isUpdate) {
 			formData.append('updated_at', getDateTime());
+
 			// UPDATE ITEM
-			imageUpdateData.mutateAsync({
-				url: `/portfolio/news/${uuid}`,
-				updatedData: formData,
-			});
+			imageUpdateData
+				.mutateAsync({
+					url: `/portfolio/news/${uuid}`,
+					updatedData: formData,
+				})
+				.then(() => {
+					const entryUpdatePromise = values.entry
+						.filter((entry) => entry.documents !== '')
+						.map((entry) => {
+							const updatedFormData = Formdata(entry);
 
-			const entryUpdatePromise = values.entry
-				.filter((entry) => entry.documents !== '')
-				.map((entry) => {
-					const updatedFormData = Formdata(entry);
+							if (updatedFormData.get('uuid')) {
+								updatedFormData.append('updated_at', getDateTime());
+								return imageUpdateData.mutateAsync({
+									url: `portfolio/news-entry/${updatedFormData.get('uuid')}`,
+									updatedData: updatedFormData,
+								});
+							} else {
+								updatedFormData.append('created_at', getDateTime());
+								updatedFormData.append('created_by', user?.uuid || '');
+								updatedFormData.append('uuid', nanoid());
+								updatedFormData.append('news_uuid', uuid);
+								return imagePostData.mutateAsync({
+									url: `portfolio/news-entry`,
+									newData: updatedFormData,
+								});
+							}
+						});
 
-					if (updatedFormData.get('uuid')) {
-						updatedFormData.append('updated_at', getDateTime());
-						return imageUpdateData.mutateAsync({
-							url: `portfolio/news-entry/${updatedFormData.get('uuid')}`,
-							updatedData: updatedFormData,
-						});
-					} else {
-						updatedFormData.append('created_at', getDateTime());
-						updatedFormData.append('created_by', user?.uuid || '');
-						updatedFormData.append('uuid', nanoid());
-						updatedFormData.append('news_uuid', uuid);
-						return imagePostData.mutateAsync({
-							url: `portfolio/news-entry`,
-							newData: updatedFormData,
-						});
-					}
+					Promise.all(entryUpdatePromise);
+				})
+				.then(() => {
+					invalidateQuery();
+					navigate('/portfolio/news');
+				})
+				.catch((error) => {
+					console.error('Error updating news:', error);
 				});
-
-			Promise.all(entryUpdatePromise).then(() => {
-				invalidateQuery();
-				navigate('/portfolio/news');
-			});
 		} else {
 			formData.append('created_at', getDateTime());
 			formData.append('created_by', user?.uuid || '');
 			formData.append('uuid', nanoid());
 
 			// ADD NEW ITEM
-			const promise = imagePostData.mutateAsync({
-				url: '/portfolio/news',
-				newData: formData,
-			});
+			imagePostData
+				.mutateAsync({
+					url: '/portfolio/news',
+					newData: formData,
+				})
+				.then(() => {
+					const entryPromise = values.entry
+						.filter((entry) => entry.documents !== '')
+						.map((entry) => {
+							const entryFormData = Formdata(entry);
+							entryFormData.append('created_at', getDateTime());
+							entryFormData.append('created_by', user?.uuid || '');
+							entryFormData.append('uuid', nanoid());
+							entryFormData.append('news_uuid', formData.get('uuid') as string);
 
-			const entryPromise = values.entry
-				.filter((entry) => entry.documents !== '')
-				.map((entry) => {
-					const entryFormData = Formdata(entry);
-					entryFormData.append('created_at', getDateTime());
-					entryFormData.append('created_by', user?.uuid || '');
-					entryFormData.append('uuid', nanoid());
-					entryFormData.append('news_uuid', formData.get('uuid') as string);
+							return imagePostData.mutateAsync({
+								url: `portfolio/news-entry`,
+								newData: entryFormData,
+							});
+						});
 
-					return imagePostData.mutateAsync({
-						url: `portfolio/news-entry`,
-						newData: entryFormData,
-					});
+					Promise.all([...entryPromise]);
+				})
+				.then(() => {
+					invalidateQuery();
+					navigate('/portfolio/news');
+				})
+				.catch((error) => {
+					console.error('Error adding news:', error);
 				});
-
-			Promise.all([...entryPromise, promise]).then(() => {
-				invalidateQuery();
-				navigate('/portfolio/news');
-			});
 		}
 	}
 
