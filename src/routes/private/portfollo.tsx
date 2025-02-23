@@ -24,6 +24,8 @@ const JobCircular = lazy(() => import('@/pages/portfolio/job-circular'));
 const Offers = lazy(() => import('@/pages/portfolio/offers'));
 const Policy = lazy(() => import('@/pages/portfolio/policy'));
 
+const Tender = lazy(() => import('@/pages/portfolio/tender'));
+
 const portfolioRoutes: IRoute[] = [
 	{
 		name: 'Portfolio',
@@ -168,6 +170,13 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/policy',
 				element: <Policy />,
 				page_name: 'portfolio__policy',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Tender',
+				path: '/portfolio/tender',
+				element: <Tender />,
+				page_name: 'portfolio__tender',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

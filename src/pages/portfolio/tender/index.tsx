@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { policyColumns } from '../_config/columns';
-import { IPolicyTableData } from '../_config/columns/columns.type';
-import { usePortfolioPolicy } from '../_config/query';
+import { tenderColumns } from '../_config/columns';
+import { ITenderTableData } from '../_config/columns/columns.type';
+import { usePortfolioTender } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Policy = () => {
+const Tender = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
-		usePortfolioPolicy<IPolicyTableData[]>();
+		usePortfolioTender<ITenderTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Policy', url, 'portfolio__policy'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Tender', url, 'portfolio__tender'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +25,8 @@ const Policy = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IPolicyTableData | null>(null);
-	const handleUpdate = (row: Row<IPolicyTableData>) => {
+	const [updatedData, setUpdatedData] = useState<ITenderTableData | null>(null);
+	const handleUpdate = (row: Row<ITenderTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,15 +37,15 @@ const Policy = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IPolicyTableData>) => {
+	const handleDelete = (row: Row<ITenderTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.title,
 		});
 	};
 
 	// Table Columns
-	const columns = policyColumns();
+	const columns = tenderColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -78,7 +78,7 @@ const Policy = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url: '/portfolio/policy',
+							url: '/portfolio/tender',
 							deleteData,
 						}}
 					/>,
@@ -88,4 +88,4 @@ const Policy = () => {
 	);
 };
 
-export default Policy;
+export default Tender;

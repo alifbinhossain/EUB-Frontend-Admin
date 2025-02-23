@@ -51,6 +51,10 @@ export const portfolioQK = {
 	//* policy
 	policy: () => [...portfolioQK.all(), 'policy'],
 	policyByUUID: (uuid: string) => [...portfolioQK.policy(), uuid],
+
+	//* tender
+	tender: () => [...portfolioQK.all(), 'tender'],
+	tenderByUUID: (uuid: string) => [...portfolioQK.tender(), uuid],
 };
 
 export const infoQK = {

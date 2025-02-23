@@ -17,6 +17,7 @@ import {
 	IOffersTableData,
 	IPolicyTableData,
 	IRoutineTableData,
+	ITenderTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
 
@@ -117,4 +118,7 @@ export interface IFinancialInformationAddOrUpdateProps extends IDefaultAddOrUpda
 
 export interface IPolicyAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
 	updatedData?: IPolicyTableData | null;
+}
+export interface ITenderAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: ITenderTableData | null;
 }

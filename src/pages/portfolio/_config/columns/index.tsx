@@ -11,6 +11,7 @@ import { API_IMAGE_URL } from '@/lib/secret';
 import { categories as authoritiesCategories } from '../../authorities/utils';
 import { categories as botCategories, status as botStatus } from '../../bot/utils';
 import { categories as officeCategories } from '../../office/utills';
+import { tableNames } from '../../tender/utills';
 import {
 	IAdmissionTableData,
 	IAuthoritiesTableData,
@@ -29,6 +30,7 @@ import {
 	IOfficeTableData,
 	IPolicyTableData,
 	IRoutineTableData,
+	ITenderTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
 
@@ -765,6 +767,37 @@ export const policyColumns = (): ColumnDef<IPolicyTableData>[] => [
 		accessorKey: 'department',
 		header: 'Department',
 		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'published_date',
+		header: 'Published Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+	},
+];
+
+//* Tender
+export const tenderColumns = (): ColumnDef<ITenderTableData>[] => [
+	{
+		accessorKey: 'table_name',
+		header: 'Table Name',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const table_name = tableNames.find((item) => item.value === info.getValue());
+			return <span>{table_name?.label ?? ''}</span>;
+		},
+	},
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
 	},
 	{
 		accessorKey: 'published_date',

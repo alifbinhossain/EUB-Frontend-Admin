@@ -277,3 +277,16 @@ export const usePortfolioPolicyByUUID = <T>(uuid: string) =>
 		url: `/portfolio/policy/${uuid}`,
 		enabled: !!uuid,
 	});
+//* Tender
+export const usePortfolioTender = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.tender(),
+		url: '/portfolio/tender?is_pagination=false',
+	});
+
+export const usePortfolioTenderByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.tenderByUUID(uuid),
+		url: `/portfolio/tender/${uuid}`,
+		enabled: !!uuid,
+	});

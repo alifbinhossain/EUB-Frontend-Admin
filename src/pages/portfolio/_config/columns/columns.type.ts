@@ -304,3 +304,16 @@ export type IPolicyTableData = {
 	file?: string;
 	remarks: string;
 };
+
+//* Tender
+export type ITenderTableData = {
+	id: number;
+	uuid: string;
+	table_name: string;
+	code: string;
+	type: string;
+	title: string;
+	published_date: string;
+	file?: string;
+	remarks: string;
+};

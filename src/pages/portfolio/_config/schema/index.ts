@@ -1,3 +1,4 @@
+import { title } from 'process';
 import { z } from 'zod';
 
 import {
@@ -643,3 +644,29 @@ export const POLICY_NULL: Partial<IPolicy> = {
 };
 
 export type IPolicy = z.infer<typeof POLICY_SCHEMA>;
+
+//* Tender Schema
+export const TENDER_SCHEMA = z.object({
+	table_name: z.enum(['std_for_goods', 'std_for_works', 'safe', 'evaluation']),
+	code: STRING_REQUIRED,
+	type: STRING_REQUIRED,
+	title: STRING_REQUIRED,
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(STRING_REQUIRED),
+	published_date: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const TENDER_NULL: Partial<ITender> = {
+	table_name: undefined,
+	code: '',
+	type: '',
+	title: '',
+	file: new File([''], 'filename') as File,
+	published_date: '',
+	remarks: null,
+};
+
+export type ITender = z.infer<typeof TENDER_SCHEMA>;
