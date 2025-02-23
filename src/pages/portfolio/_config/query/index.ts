@@ -77,10 +77,10 @@ export const useFacultyByUUID = <T>(uuid: string) =>
 
 // ? INFO
 // * ALL INFO
-export const useInfo = <T>() =>
+export const useInfo = <T>(query: string) =>
 	useTQuery<T>({
-		queryKey: infoQK.info(),
-		url: `/portfolio/info`,
+		queryKey: infoQK.info(query),
+		url: query ? `/portfolio/info?access=${query}` : `/portfolio/info`,
 	});
 
 // * INFO By UUID
@@ -93,10 +93,10 @@ export const useInfoByUUID = <T>(uuid: string) =>
 
 // ? ROUTINE
 // * ALL ROUTINE
-export const useRoutine = <T>() =>
+export const useRoutine = <T>(query: string) =>
 	useTQuery<T>({
-		queryKey: routineQK.routine(),
-		url: `/portfolio/routine`,
+		queryKey: routineQK.routine(query),
+		url: query ? `/portfolio/routine?access=${query}` : `/portfolio/routine`,
 	});
 
 // * ROUTINE By UUID

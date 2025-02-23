@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -18,6 +19,15 @@ import { useRoutineByUUID } from '../_config/query';
 import { IRoutine, ROUTINE_NULL, ROUTINE_SCHEMA } from '../_config/schema';
 import { IRoutineAddOrUpdateProps } from '../_config/types';
 
+const getAccess = (hasAccess: string[]) => {
+	const exclude = ['create', 'read', 'update', 'delete'];
+
+	const access = hasAccess.filter((item) => !exclude.includes(item));
+
+	if (access.length === 0) return '';
+	else return access.join(',');
+};
+
 const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	url,
 	open,
@@ -28,11 +38,12 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
+	const hasAccess: string[] = useAccess('portfolio__routine') as string[];
 
 	const { user } = useAuth();
 	const { data } = useRoutineByUUID(updatedData?.uuid as string);
 
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
+	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
 
 	const programs = enumToOptions(PORTFOLIO_PROGRAM_TYPE);
 	const types = enumToOptions(PORTFOLIO_ROUTINE_TYPE);
@@ -123,6 +134,14 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
+
+					{form.watch('type') === 'notices' && (
+						<FormField
+							control={form.control}
+							name='is_global'
+							render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
+						/>
+					)}
 				</div>
 
 				<FormField

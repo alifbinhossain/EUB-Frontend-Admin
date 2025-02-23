@@ -45,8 +45,10 @@ export const useOtherPrograms = <T>() =>
 	});
 
 //* GET OTHER DEPARTMENTS
-export const useOtherDepartments = <T>() =>
+export const useOtherDepartments = <T>(query: string = '') =>
 	useTQuery<T>({
-		queryKey: otherQK.departments(),
-		url: `/other/portfolio/department/value/label`,
+		queryKey: otherQK.departments(query),
+		url: query
+			? `/other/portfolio/department/value/label?access=${query}`
+			: `/other/portfolio/department/value/label`,
 	});

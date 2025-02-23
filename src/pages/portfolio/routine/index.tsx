@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -12,9 +13,19 @@ import { useRoutine } from '../_config/query';
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
+const getAccess = (hasAccess: string[]) => {
+	const exclude = ['create', 'read', 'update', 'delete'];
+
+	const access = hasAccess.filter((item) => !exclude.includes(item));
+
+	if (access.length === 0) return '';
+	else return access.join(',');
+};
+
 const Designation = () => {
+	const hasAccess: string[] = useAccess('portfolio__routine') as string[];
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
-		useRoutine<IRoutineTableData[]>();
+		useRoutine<IRoutineTableData[]>(getAccess(hasAccess));
 
 	const pageInfo = useMemo(() => new PageInfo('Routine', url, 'portfolio__routine'), [url]);
 

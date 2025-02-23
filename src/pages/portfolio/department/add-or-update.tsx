@@ -83,6 +83,7 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 		>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='short_name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
 				name='faculty_uuid'
