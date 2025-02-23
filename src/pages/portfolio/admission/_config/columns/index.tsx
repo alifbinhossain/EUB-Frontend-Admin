@@ -192,6 +192,11 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 //*Admission
 export const admissionColumns = (): ColumnDef<IAdmissionTableData>[] => [
 	{
+		accessorKey: 'id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'applicant_name',
 		header: 'Applicant Name',
 		enableColumnFilter: true,
