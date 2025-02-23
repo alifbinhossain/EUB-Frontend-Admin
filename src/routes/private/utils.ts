@@ -17,7 +17,6 @@ export const DepartmentAccess = [
 	'ma-english',
 	'mgds-one-year',
 	'mss-economics',
-	'd-eee',
 ];
 
 export const InfoAccess = [

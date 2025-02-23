@@ -14,7 +14,7 @@ import { getDateTime } from '@/utils';
 import { useDepartmentsByUUID } from '../_config/query';
 import { IPortfolioDepartment, PORTFOLIO_DEPARTMENT_NULL, PORTFOLIO_DEPARTMENT_SCHEMA } from '../_config/schema';
 import { IDepartmentAddOrUpdateProps } from '../_config/types';
-import { categories } from './utils';
+import { categories, short_names } from './utils';
 
 const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 	url,
@@ -83,7 +83,18 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 		>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='short_name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='short_name'
+				render={(props) => (
+					<CoreForm.ReactSelect
+						label='Short Name'
+						placeholder='Select short name'
+						options={short_names!}
+						{...props}
+					/>
+				)}
+			/>
 			<FormField
 				control={form.control}
 				name='faculty_uuid'
