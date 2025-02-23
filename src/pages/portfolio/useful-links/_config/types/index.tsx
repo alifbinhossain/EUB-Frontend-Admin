@@ -1,6 +1,4 @@
-import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps, IToast } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps } from '@/types';
 
 import {
 	IClubTableData,
@@ -21,30 +19,8 @@ export interface IClubAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 }
 
 // * News
-export interface INewsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+export interface INewsAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
 	updatedData?: INewsTableData | null;
-	imagePostData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	imageUpdateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
 }
 
 export interface IPolicyAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
