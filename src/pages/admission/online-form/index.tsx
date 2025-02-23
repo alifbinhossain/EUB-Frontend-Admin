@@ -17,11 +17,11 @@ const Admission = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, refetch } = usePortfolioAdmission<IAdmissionTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/Admission', url, 'portfolio__admission'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Admission/Online Form', url, 'admission__online_form'), [url]);
 
-	const handleCreate = () => navigate('/portfolio/admission/create');
+	const handleCreate = () => navigate('/admission/online-form/create');
 	const handleUpdate = (row: Row<IAdmissionTableData>) => {
-		navigate(`/portfolio/admission/${row.original.uuid}/update`);
+		navigate(`/admission/online-form/${row.original.uuid}/update`);
 	};
 
 	// Delete Modal state

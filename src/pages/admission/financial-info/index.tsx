@@ -5,19 +5,19 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { certificateCourseFeeColumns } from '../_config/columns';
-import { ICertificateCourseFeeTableData } from '../_config/columns/columns.type';
-import { usePortfolioCertificateCourseFees } from '../_config/query';
+import { financialInformationColumns } from '../_config/columns';
+import { IFinancialInfoTableData } from '../_config/columns/columns.type';
+import { usePortfolioFinancialInformation } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const CertificatesCourseFee = () => {
+const TuitionFee = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioCertificateCourseFees<ICertificateCourseFeeTableData[]>();
+		usePortfolioFinancialInformation<IFinancialInfoTableData[]>();
 
 	const pageInfo = useMemo(
-		() => new PageInfo('Portfolio/CertificatesCourseFee', url, 'portfolio__certificates_course_fee'),
+		() => new PageInfo('Admission/Financial Information', url, 'admission__financial_information'),
 		[url]
 	);
 
@@ -28,8 +28,8 @@ const CertificatesCourseFee = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ICertificateCourseFeeTableData | null>(null);
-	const handleUpdate = (row: Row<ICertificateCourseFeeTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IFinancialInfoTableData | null>(null);
+	const handleUpdate = (row: Row<IFinancialInfoTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -40,21 +40,21 @@ const CertificatesCourseFee = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ICertificateCourseFeeTableData>) => {
+	const handleDelete = (row: Row<IFinancialInfoTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.programs_name,
+			name: row?.original?.department_uuid,
 		});
 	};
 
 	// Table Columns
-	const columns = certificateCourseFeeColumns();
+	const columns = financialInformationColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
-				clientRedirectUrl='/tuition-and-other-fees-structure#other-certificate-courses'
+				clientRedirectUrl='/financial-information'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
@@ -90,4 +90,4 @@ const CertificatesCourseFee = () => {
 	);
 };
 
-export default CertificatesCourseFee;
+export default TuitionFee;
