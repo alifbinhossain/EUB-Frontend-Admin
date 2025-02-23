@@ -13,8 +13,8 @@ export const portfolioQK = {
 	financialInformationByUUID: (uuid: string) => [...portfolioQK.financialInformation(), uuid],
 
 	// * club
-	club: () => [...portfolioQK.all(), 'club'],
-	clubByUUID: (uuid: string) => [...portfolioQK.club(), uuid],
+	club: (query: string = '') => [...portfolioQK.all(), 'club', ...(query ? [query] : [])],
+	clubByUUID: (uuid: string) => [...portfolioQK.all(), uuid],
 	// * offers
 	offers: () => [...portfolioQK.all(), 'offers'],
 	offersByUUID: (uuid: string) => [...portfolioQK.offers(), uuid],
@@ -28,7 +28,7 @@ export const portfolioQK = {
 	departmentTeachers: () => [...portfolioQK.all(), 'department-teacher'],
 	departmentTeachersByUUID: (uuid: string) => [...portfolioQK.departmentTeachers(), uuid],
 	// * News
-	news: () => [...portfolioQK.all(), 'news'],
+	news: (query: string = '') => [...portfolioQK.all(), 'news', ...(query ? [query] : [])],
 	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
 	newsDetails: (uuid: string) => [...portfolioQK.news(), 'details', uuid],
 	//* admission

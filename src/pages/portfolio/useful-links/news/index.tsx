@@ -2,8 +2,10 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
+import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
+import getAccess from '@/utils/getAccess';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { newsColumns } from '../_config/columns';
@@ -14,7 +16,8 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
 	const navigate = useNavigate();
-	const { data, isLoading, url, deleteData, refetch } = useNews<INewsTableData[]>();
+	const hasAccess: string[] = useAccess('portfolio__news') as string[];
+	const { data, isLoading, url, deleteData, refetch } = useNews<INewsTableData[]>(getAccess(hasAccess));
 
 	const pageInfo = useMemo(() => new PageInfo('News & Events', url, 'portfolio__news'), [url]);
 

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -10,6 +11,7 @@ import { AddModal } from '@core/modal';
 import { useOtherDepartments, useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import getAccess from '@/utils/getAccess';
 
 import { useDepartmentsTeachers, useDepartmentsTeachersByUUID } from '../_config/query';
 import {
@@ -29,10 +31,10 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	updateData,
 }) => {
 	const isUpdate = !!updatedData;
-
+	const hasAccess: string[] = useAccess('portfolio__department_teachers') as string[];
 	const { user } = useAuth();
 	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
+	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
 	const { data: users } = useOtherUser<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
 

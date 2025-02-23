@@ -1,8 +1,10 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
+import getAccess from '@/utils/getAccess';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { clubColumns } from '../_config/columns';
@@ -13,7 +15,10 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useClubs<IClubTableData[]>();
+	const hasAccess: string[] = useAccess('portfolio__club') as string[];
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useClubs<IClubTableData[]>(
+		getAccess(hasAccess)
+	);
 
 	const pageInfo = useMemo(() => new PageInfo('Clubs', url, 'portfolio__club'), [url]);
 

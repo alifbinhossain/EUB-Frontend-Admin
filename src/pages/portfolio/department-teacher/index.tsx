@@ -1,8 +1,10 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
+import getAccess from '@/utils/getAccess';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { departmentTeachersColumns } from '../_config/columns';
@@ -13,8 +15,10 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useDepartmentsTeachers<IDepartmentTeachersTableData[]>();
+	const hasAccess: string[] = useAccess('portfolio__department_teachers') as string[];
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useDepartmentsTeachers<
+		IDepartmentTeachersTableData[]
+	>(getAccess(hasAccess));
 
 	const pageInfo = useMemo(() => new PageInfo('Department Teachers', url, 'portfolio__department_teachers'), [url]);
 

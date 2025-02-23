@@ -71,7 +71,7 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/department-teacher',
 				element: <DepartmentTeachers />,
 				page_name: 'portfolio__department_teachers',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 			},
 			{
 				name: 'Bot',
@@ -197,7 +197,7 @@ const portfolioRoutes: IRoute[] = [
 						path: '/portfolio/news',
 						element: <News />,
 						page_name: 'portfolio__news',
-						actions: ['create', 'read', 'update', 'delete'],
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
 						name: 'News Entry',
@@ -220,7 +220,7 @@ const portfolioRoutes: IRoute[] = [
 						path: '/portfolio/club',
 						element: <Club />,
 						page_name: 'portfolio__club',
-						actions: ['create', 'read', 'update', 'delete'],
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
 						name: 'Tender',

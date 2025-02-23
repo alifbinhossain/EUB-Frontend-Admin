@@ -187,10 +187,10 @@ export const useOffersByUUID = <T>(uuid: string) =>
 
 // ? DEPARTMENT-TEACHERS
 // * ALL Department-Teachers
-export const useDepartmentsTeachers = <T>() =>
+export const useDepartmentsTeachers = <T>(query: string = '') =>
 	useTQuery<T>({
-		queryKey: portfolioQK.departmentTeachers(),
-		url: `/portfolio/department-teachers`,
+		queryKey: portfolioQK.departmentTeachers(query),
+		url: query ? `/portfolio/department-teachers?access=${query}` : `/portfolio/department-teachers`,
 	});
 
 // * Department-Teachers By UUID
