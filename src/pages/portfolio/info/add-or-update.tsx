@@ -32,8 +32,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = useInfoByUUID(updatedData?.uuid as string);
 
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
-
 	// * filtering pages
 	const originalOptions = enumToOptions(PORTFOLIO_PAGE_NAME);
 	const filteredOptions = originalOptions.filter((item) => hasAccess.includes(String(item.value)));
@@ -57,9 +55,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 	// Submit handler
 	async function onSubmit(values: IInfo) {
 		const formData = Formdata<IInfo>(values);
-		if (values.page_name !== 'notices') {
-			formData.delete('department_uuid');
-		}
 
 		if (isUpdate) {
 			formData.append('updated_at', getDateTime());
@@ -103,16 +98,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						render={(props) => <CoreForm.ReactSelect label='Page Name' options={page_names!} {...props} />}
 					/>
 
-					{form.watch('page_name') === 'notices' && (
-						<FormField
-							control={form.control}
-							name='department_uuid'
-							render={(props) => (
-								<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
-							)}
-						/>
-					)}
-
 					<FormField
 						control={form.control}
 						name='description'
@@ -124,14 +109,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
-
-					{form.watch('page_name') === 'notices' && (
-						<FormField
-							control={form.control}
-							name='is_global'
-							render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
-						/>
-					)}
 				</div>
 
 				<FormField

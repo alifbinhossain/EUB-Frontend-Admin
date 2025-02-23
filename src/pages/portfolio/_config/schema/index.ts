@@ -122,41 +122,19 @@ export const FACULTY_NULL: Partial<IFaculty> = {
 export type IFaculty = z.infer<typeof FACULTY_SCHEMA>;
 
 //* Info Schema
-export const INFO_SCHEMA = z
-	.object({
-		department_uuid: STRING_OPTIONAL,
-		description: STRING_REQUIRED,
-		page_name: z.nativeEnum(PORTFOLIO_PAGE_NAME),
-		is_global: BOOLEAN_OPTIONAL,
-		file: z
-			.instanceof(File)
-			.refine((file) => file?.size !== 0, 'Please upload an file')
-			.or(STRING_REQUIRED),
-		remarks: STRING_NULLABLE,
-	})
-	.superRefine((data, ctx) => {
-		if (data.page_name === 'notices') {
-			if (!data.department_uuid) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					message: 'Required',
-					path: ['department_uuid'], // <-- Where error appears in form
-				});
-			}
-			if (data.is_global === undefined) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					message: 'Required',
-					path: ['is_global'], // <-- Where error appears in form
-				});
-			}
-		}
-	});
+export const INFO_SCHEMA = z.object({
+	description: STRING_REQUIRED,
+	page_name: z.nativeEnum(PORTFOLIO_PAGE_NAME),
+
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(STRING_REQUIRED),
+	remarks: STRING_NULLABLE,
+});
 
 export const INFO_NULL: Partial<IInfo> = {
-	department_uuid: '',
 	description: '',
-	is_global: false,
 	file: new File([''], 'filename') as File,
 	remarks: null,
 };
@@ -169,6 +147,7 @@ export const ROUTINE_SCHEMA = z.object({
 	description: STRING_REQUIRED,
 	programs: z.nativeEnum(PORTFOLIO_PROGRAM_TYPE),
 	type: z.nativeEnum(PORTFOLIO_ROUTINE_TYPE),
+	is_global: BOOLEAN_OPTIONAL,
 	file: z
 		.instanceof(File)
 		.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -179,6 +158,7 @@ export const ROUTINE_SCHEMA = z.object({
 export const ROUTINE_NULL: Partial<IRoutine> = {
 	department_uuid: '',
 	description: '',
+	is_global: false,
 	file: new File([''], 'filename') as File,
 	remarks: null,
 };

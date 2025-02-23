@@ -55,12 +55,9 @@ export type IProgramTableData = {
 export type IInfoTableData = {
 	id: number;
 	uuid: string;
-	department_uuid: string;
-	department_name: string;
 	description: string;
 	page_name: PORTFOLIO_PAGE_NAME;
 	file: string;
-	is_global: boolean;
 	remarks: string;
 };
 
@@ -73,6 +70,7 @@ export type IRoutineTableData = {
 	programs: PORTFOLIO_PROGRAM_TYPE;
 	description: string;
 	type: PORTFOLIO_ROUTINE_TYPE;
+	is_global: boolean;
 	file: string;
 	remarks: string;
 };

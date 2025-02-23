@@ -123,6 +123,14 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
+
+					{form.watch('type') === 'notices' && (
+						<FormField
+							control={form.control}
+							name='is_global'
+							render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
+						/>
+					)}
 				</div>
 
 				<FormField

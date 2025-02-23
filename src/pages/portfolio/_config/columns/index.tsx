@@ -193,11 +193,6 @@ export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'department_name',
-		header: 'Department Name',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'page_name',
 		header: 'Page Name',
 		enableColumnFilter: true,
@@ -206,12 +201,6 @@ export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: true,
-	},
-	{
-		accessorKey: 'is_global',
-		header: 'Global',
-		enableColumnFilter: true,
-		cell: (info) => <StatusButton value={info.getValue() as number} />,
 	},
 	{
 		accessorKey: 'file',
@@ -247,6 +236,12 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'is_global',
+		header: 'Global',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info.getValue() as number} />,
 	},
 	{
 		accessorKey: 'file',
