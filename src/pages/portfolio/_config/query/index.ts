@@ -263,3 +263,17 @@ export const usePortfolioAdmissionByUUID = <T>(uuid: string) =>
 		url: `/portfolio/online-admission/${uuid}`,
 		enabled: !!uuid,
 	});
+
+//* Policy
+export const usePortfolioPolicy = <T>() =>
+	useTQuery<T>({
+		queryKey: portfolioQK.policy(),
+		url: '/portfolio/policy?is_pagination=false',
+	});
+
+export const usePortfolioPolicyByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.policyByUUID(uuid),
+		url: `/portfolio/policy/${uuid}`,
+		enabled: !!uuid,
+	});

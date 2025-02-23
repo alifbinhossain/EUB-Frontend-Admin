@@ -27,6 +27,7 @@ import {
 	IOffersTableData,
 	IOfficeEntryTableData,
 	IOfficeTableData,
+	IPolicyTableData,
 	IRoutineTableData,
 	ITuitionFeeTableData,
 } from './columns.type';
@@ -750,5 +751,31 @@ export const offersColumns = (): ColumnDef<IOffersTableData>[] => [
 		header: 'Deadline',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+];
+
+//* Policy Columns
+export const policyColumns = (): ColumnDef<IPolicyTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'department',
+		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'published_date',
+		header: 'Published Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
 	},
 ];

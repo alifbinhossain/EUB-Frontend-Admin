@@ -47,6 +47,10 @@ export const portfolioQK = {
 	//* admission
 	admission: () => [...portfolioQK.all(), 'admission'],
 	admissionByUUID: (uuid: string) => [...portfolioQK.admission(), uuid],
+
+	//* policy
+	policy: () => [...portfolioQK.all(), 'policy'],
+	policyByUUID: (uuid: string) => [...portfolioQK.policy(), uuid],
 };
 
 export const infoQK = {

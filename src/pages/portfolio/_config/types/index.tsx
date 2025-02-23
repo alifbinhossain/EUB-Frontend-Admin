@@ -10,10 +10,12 @@ import {
 	IDepartmentTableData,
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
+	IFinancialInfoTableData,
 	IInfoTableData,
 	IJobCircularTableData,
 	INewsTableData,
 	IOffersTableData,
+	IPolicyTableData,
 	IRoutineTableData,
 	ITuitionFeeTableData,
 } from '../columns/columns.type';
@@ -110,5 +112,9 @@ export interface INewsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 }
 //* Financial Information
 export interface IFinancialInformationAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: any | null;
+	updatedData?: IFinancialInfoTableData | null;
+}
+
+export interface IPolicyAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
+	updatedData?: IPolicyTableData | null;
 }

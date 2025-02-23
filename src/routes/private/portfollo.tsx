@@ -24,6 +24,7 @@ const Admission = lazy(() => import('@/pages/portfolio/admission'));
 const AdmissionEntry = lazy(() => import('@/pages/portfolio/admission/add-or-update'));
 const AdmissionDetails = lazy(() => import('@/pages/portfolio/admission/details'));
 const Offers = lazy(() => import('@/pages/portfolio/offers'));
+const Policy = lazy(() => import('@/pages/portfolio/policy'));
 
 const portfolioRoutes: IRoute[] = [
 	{
@@ -211,6 +212,13 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/offers',
 				element: <Offers />,
 				page_name: 'portfolio__offers',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Policy',
+				path: '/portfolio/policy',
+				element: <Policy />,
+				page_name: 'portfolio__policy',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

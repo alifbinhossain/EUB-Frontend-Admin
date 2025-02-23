@@ -621,3 +621,25 @@ export const OFFERS_NULL: Partial<IOffers> = {
 };
 
 export type IOffers = z.infer<typeof OFFERS_SCHEMA>;
+
+// * Policy Schema
+export const POLICY_SCHEMA = z.object({
+	name: STRING_REQUIRED,
+	department: STRING_REQUIRED,
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(STRING_REQUIRED),
+	published_date: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const POLICY_NULL: Partial<IPolicy> = {
+	name: '',
+	department: '',
+	file: new File([''], 'filename') as File,
+	published_date: '',
+	remarks: null,
+};
+
+export type IPolicy = z.infer<typeof POLICY_SCHEMA>;

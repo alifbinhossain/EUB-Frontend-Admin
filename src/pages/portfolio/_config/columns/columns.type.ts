@@ -293,3 +293,14 @@ export type IOffersTableData = {
 	deadline: string;
 	remarks: string;
 };
+
+//* Policy
+export type IPolicyTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	department_uuid: string;
+	published_date: string;
+	file?: string;
+	remarks: string;
+};
