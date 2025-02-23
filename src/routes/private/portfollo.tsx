@@ -110,6 +110,27 @@ const portfolioRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
+				name: 'Info',
+				path: '/portfolio/info',
+				element: <Info />,
+				page_name: 'portfolio__info',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Routine',
+				path: '/portfolio/routine',
+				element: <Routine />,
+				page_name: 'portfolio__routine',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Offers',
+				path: '/portfolio/offers',
+				element: <Offers />,
+				page_name: 'portfolio__offers',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
 				name: 'Admission',
 				children: [
 					{
@@ -221,27 +242,6 @@ const portfolioRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 				],
-			},
-			{
-				name: 'Info',
-				path: '/portfolio/info',
-				element: <Info />,
-				page_name: 'portfolio__info',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Routine',
-				path: '/portfolio/routine',
-				element: <Routine />,
-				page_name: 'portfolio__routine',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Offers',
-				path: '/portfolio/offers',
-				element: <Offers />,
-				page_name: 'portfolio__offers',
-				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],
 	},
