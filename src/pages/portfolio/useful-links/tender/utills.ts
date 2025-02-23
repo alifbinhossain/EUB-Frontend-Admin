@@ -4,6 +4,6 @@ export const tableNames = [
 		value: 'std_for_goods',
 	},
 	{ label: 'STD for Works ', value: 'std_for_works' },
-	{ label: 'Safe', value: 'safe' },
+	{ label: 'SAFE', value: 'safe' },
 	{ label: 'Evaluation', value: 'evaluation' },
 ];
