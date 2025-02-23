@@ -194,6 +194,7 @@ export type IJobCircular = z.infer<typeof JOB_CIRCULAR_SCHEMA>;
 //* Department Schema
 export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	short_name: STRING_REQUIRED,
 	faculty_uuid: STRING_REQUIRED,
 	category: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
@@ -201,6 +202,7 @@ export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 
 export const PORTFOLIO_DEPARTMENT_NULL: Partial<IPortfolioDepartment> = {
 	name: '',
+	short_name: '',
 	faculty_uuid: '',
 	category: '',
 	remarks: null,

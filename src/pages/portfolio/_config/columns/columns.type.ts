@@ -101,6 +101,7 @@ export type IDepartmentTableData = {
 	id: number;
 	uuid: string;
 	name: string;
+	short_name: string;
 	faculty_uuid: string;
 	category: string;
 };

@@ -39,6 +39,11 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'short_name',
+		header: 'Short Name',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'faculty_name',
 		header: 'Faculty',
 		enableColumnFilter: true,
