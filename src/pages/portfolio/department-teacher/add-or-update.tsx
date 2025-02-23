@@ -11,7 +11,7 @@ import { useOtherDepartments, useOtherUser } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useDepartmentsTeachersByUUID } from '../_config/query';
+import { useDepartmentsTeachers, useDepartmentsTeachersByUUID } from '../_config/query';
 import {
 	IDepartmentTeachers,
 	PORTFOLIO_DEPARTMENT_TEACHER_NULL,
@@ -34,6 +34,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 	const { data: users } = useOtherUser<IFormSelectOption[]>();
+	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
 
 	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 
@@ -41,6 +42,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		setUpdatedData?.(null);
 		form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 		setOpen((prev) => !prev);
+		invalidateTeachers();
 	};
 
 	// Reset form values when data is updated
@@ -93,7 +95,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 				render={(props) => <CoreForm.Checkbox {...props} />}
 			/>
 
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='grid grid-cols-3 gap-4'>
 				<FormField
 					control={form.control}
 					name='teacher_uuid'
@@ -118,6 +120,23 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 							{...props}
 						/>
 					)}
+				/>
+				<FormField
+					control={form.control}
+					name='teacher_designation'
+					render={(props) => <CoreForm.Input label='Designation' {...props} />}
+				/>
+			</div>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='teacher_email'
+					render={(props) => <CoreForm.Input label='Email' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='teacher_phone'
+					render={(props) => <CoreForm.Input label='Phone' {...props} />}
 				/>
 			</div>
 			<div className='grid grid-cols-2 gap-4'>

@@ -93,7 +93,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(OFFICE_NULL))
 				.then(() => {
 					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/office/${uuid}/details`);
+					navigate(`/portfolio/office`);
 				})
 				.catch((error) => {
 					console.error('Error updating Office:', error);
@@ -151,7 +151,7 @@ const AddOrUpdate = () => {
 			.then(() => form.reset(OFFICE_NULL))
 			.then(() => {
 				invalidateTestDetails(); // TODO: Update invalidate query
-				navigate(`/portfolio/office/${new_office_uuid}/details`);
+				navigate(`/portfolio/office`);
 			})
 			.catch((error) => {
 				console.error('Error adding Office:', error);
@@ -161,6 +161,9 @@ const AddOrUpdate = () => {
 	const handleAdd = () => {
 		append({
 			user_uuid: '',
+			designation: '',
+			user_phone: '',
+			user_email: '',
 			remarks: '',
 		});
 	};
@@ -189,6 +192,9 @@ const AddOrUpdate = () => {
 		const field = form.watch('office_entries')[index];
 		append({
 			user_uuid: field.user_uuid,
+			designation: field.designation,
+			user_phone: field.user_phone,
+			user_email: field.user_email,
 			remarks: field.remarks,
 		});
 	};

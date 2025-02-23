@@ -97,6 +97,11 @@ const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 			/>
 			<FormField
 				control={form.control}
+				name='user_designation'
+				render={(props) => <CoreForm.Input label='Designation' {...props} />}
+			/>
+			<FormField
+				control={form.control}
 				name='category'
 				render={(props) => (
 					<CoreForm.ReactSelect

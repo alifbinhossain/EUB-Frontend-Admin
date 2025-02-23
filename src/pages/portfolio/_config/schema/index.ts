@@ -213,6 +213,7 @@ export type IPortfolioDepartment = z.infer<typeof PORTFOLIO_DEPARTMENT_SCHEMA>;
 export const BOT_SCHEMA = z.object({
 	category: z.enum(['syndicate', 'academic_council']),
 	user_uuid: STRING_REQUIRED,
+	user_designation: STRING_REQUIRED,
 	status: z.enum(['chairman', 'member', 'member_secretary']),
 	description: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
@@ -221,6 +222,7 @@ export const BOT_SCHEMA = z.object({
 export const BOT_NULL: Partial<IBot> = {
 	category: 'academic_council',
 	user_uuid: '',
+	user_designation: '',
 	status: 'member',
 	description: '',
 	remarks: null,
@@ -233,6 +235,8 @@ export const CLUB_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	department_uuid: STRING_REQUIRED,
 	president_uuid: STRING_REQUIRED,
+	president_email: EMAIL_REQUIRED,
+	president_phone: STRING_REQUIRED,
 	message: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
@@ -241,6 +245,8 @@ export const CLUB_NULL: Partial<IClub> = {
 	name: '',
 	department_uuid: '',
 	president_uuid: '',
+	president_email: '',
+	president_phone: '',
 	message: '',
 	remarks: null,
 };
@@ -251,6 +257,9 @@ export type IClub = z.infer<typeof CLUB_SCHEMA>;
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 	department_uuid: STRING_REQUIRED,
 	department_head: BOOLEAN_REQUIRED,
+	teacher_email: STRING_REQUIRED,
+	teacher_phone: STRING_REQUIRED,
+	teacher_designation: STRING_REQUIRED,
 	teacher_uuid: STRING_REQUIRED,
 	education: STRING_REQUIRED,
 	publication: STRING_REQUIRED,
@@ -264,6 +273,9 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	department_uuid: '',
 	department_head: false,
+	teacher_email: '',
+	teacher_phone: '',
+	teacher_designation: '',
 	teacher_uuid: '',
 	education: '',
 	publication: '',
@@ -334,6 +346,9 @@ export const OFFICE_SCHEMA = z.object({
 		z.object({
 			uuid: STRING_OPTIONAL,
 			office_uuid: STRING_OPTIONAL,
+			user_email: EMAIL_REQUIRED,
+			user_phone: STRING_REQUIRED,
+			designation: STRING_REQUIRED,
 			user_uuid: STRING_REQUIRED,
 			remarks: STRING_NULLABLE,
 		})
@@ -349,6 +364,9 @@ export const OFFICE_NULL: Partial<IOffice> = {
 		{
 			uuid: '',
 			office_uuid: '',
+			user_email: '',
+			user_phone: '',
+			designation: '',
 			user_uuid: '',
 			remarks: '',
 		},

@@ -26,6 +26,24 @@ const useGenerateFieldDefs = ({ copy, remove }: IGenerateFieldDefsProps): FieldD
 			options: userOption || [],
 		},
 		{
+			header: 'Designation',
+			accessorKey: 'designation',
+			type: 'text',
+			placeholder: 'Designation',
+		},
+		{
+			header: 'Phone',
+			accessorKey: 'user_phone',
+			type: 'text',
+			placeholder: 'Phone',
+		},
+		{
+			header: 'Email',
+			accessorKey: 'user_email',
+			type: 'text',
+			placeholder: 'Email',
+		},
+		{
 			header: 'Remarks',
 			accessorKey: 'remarks',
 			type: 'textarea',

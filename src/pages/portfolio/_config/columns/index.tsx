@@ -321,6 +321,11 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		enableColumnFilter: false,
 	},
 	{
+		accessorKey: 'user_designation',
+		header: 'Designation',
+		enableColumnFilter: false,
+	},
+	{
 		accessorKey: 'status',
 		header: 'Status',
 		enableColumnFilter: false,
@@ -357,6 +362,18 @@ export const clubColumns = (): ColumnDef<IClubTableData>[] => [
 		cell: (info) => info.getValue(),
 	},
 	{
+		accessorKey: 'president_phone',
+		header: 'Phone',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'president_email',
+		header: 'Email',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
 		accessorKey: 'message',
 		header: 'Message',
 		enableColumnFilter: true,
@@ -372,13 +389,37 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),
 	},
-
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
 	{
 		accessorKey: 'teacher_image',
 		header: 'Image',
 		enableColumnFilter: false,
 		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
 	},
+	{
+		accessorKey: 'teacher_designation',
+		header: 'Designation',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'teacher_email',
+		header: 'Email',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'teacher_phone',
+		header: 'Phone',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+
 	{
 		accessorKey: 'teacher_name',
 		header: 'Teacher',
@@ -513,6 +554,21 @@ export const officeEntryColumns = (): ColumnDef<IOfficeEntryTableData>[] => [
 	{
 		accessorKey: 'user_name',
 		header: 'User',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'designation',
+		header: 'Designation',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'phone',
+		header: 'Phone',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'email',
+		header: 'Email',
 		enableColumnFilter: true,
 	},
 ];
