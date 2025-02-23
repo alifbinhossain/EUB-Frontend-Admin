@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { IAdmissionTableData } from '../../_config/columns/columns.type';
 import { usePortfolioAdmissionByUUID } from '../../_config/query'; // TODO: replace with details query
-import OrderSheetPdf from '../../../../components/pdf/application-form';
+import OrderSheetPdf from '../../../../../components/pdf/application-form';
 import Information from './information';
 
 const DetailsPage = () => {

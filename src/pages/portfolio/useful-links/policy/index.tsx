@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { tuitionFeeColumns } from '../_config/columns';
-import { ITuitionFeeTableData } from '../_config/columns/columns.type';
-import { usePortfolioTuitionFees } from '../_config/query';
+import { policyColumns } from '../_config/columns';
+import { IPolicyTableData } from '../_config/columns/columns.type';
+import { usePortfolioPolicy } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const TuitionFee = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioTuitionFees<ITuitionFeeTableData[]>();
+const Policy = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		usePortfolioPolicy<IPolicyTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/TuitionFee', url, 'portfolio__tuition_fee'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Policy', url, 'portfolio__policy'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +25,8 @@ const TuitionFee = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ITuitionFeeTableData | null>(null);
-	const handleUpdate = (row: Row<ITuitionFeeTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IPolicyTableData | null>(null);
+	const handleUpdate = (row: Row<IPolicyTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,21 +37,20 @@ const TuitionFee = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ITuitionFeeTableData>) => {
+	const handleDelete = (row: Row<IPolicyTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.title,
+			name: row?.original?.name,
 		});
 	};
 
 	// Table Columns
-	const columns = tuitionFeeColumns();
+	const columns = policyColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
-				clientRedirectUrl='/tuition-and-other-fees-structure'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
@@ -70,6 +69,8 @@ const TuitionFee = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -77,7 +78,7 @@ const TuitionFee = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/policy',
 							deleteData,
 						}}
 					/>,
@@ -87,4 +88,4 @@ const TuitionFee = () => {
 	);
 };
 
-export default TuitionFee;
+export default Policy;

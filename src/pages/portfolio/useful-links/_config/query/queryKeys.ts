@@ -1,18 +1,5 @@
 export const portfolioQK = {
-	all: () => ['portfolio'],
-	//* program
-	programs: () => [...portfolioQK.all(), 'programs'],
-	programByUUID: (uuid: string) => [...portfolioQK.programs(), uuid],
-	//* authorities
-	authorities: () => [...portfolioQK.all(), 'authorities'],
-	authorityByUUID: (uuid: string) => [...portfolioQK.authorities(), uuid],
-	// * certificate_course_fee
-	certificateCourseFees: () => [...portfolioQK.all(), 'certificate_course_fee'],
-	certificateCourseFeeByUUID: (uuid: string) => [...portfolioQK.certificateCourseFees(), uuid],
-
-	// * tuition_fees
-	tuitionFees: () => [...portfolioQK.all(), 'tuition_fee'],
-	tuitionFeeByUUID: (uuid: string) => [...portfolioQK.tuitionFees(), uuid],
+	all: () => ['portfolio-useful-links'],
 
 	//* bot
 	bot: () => [...portfolioQK.all(), 'bot'],
@@ -59,14 +46,14 @@ export const portfolioQK = {
 
 export const infoQK = {
 	all: () => ['info'],
-	info: (query: string) => [...infoQK.all(), 'info', ...(query ? [query] : [])],
-	infoByUUID: (uuid: string) => [...infoQK.all(), uuid],
+	info: () => [...infoQK.all(), 'info'],
+	infoByUUID: (uuid: string) => [...infoQK.info(), uuid],
 };
 
 export const routineQK = {
 	all: () => ['routine'],
-	routine: (query: string) => [...routineQK.all(), 'routine', ...(query ? [query] : [])],
-	routineByUUID: (uuid: string) => [...routineQK.all(), uuid],
+	routine: () => [...routineQK.all(), 'routine'],
+	routineByUUID: (uuid: string) => [...routineQK.routine(), uuid],
 };
 
 export const jobCircularQK = {

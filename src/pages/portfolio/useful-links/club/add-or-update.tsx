@@ -107,6 +107,16 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 					/>
 				)}
 			/>
+			<FormField
+				control={form.control}
+				name='president_email'
+				render={(props) => <CoreForm.Input label='Email' {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='president_phone'
+				render={(props) => <CoreForm.Input label='Phone' {...props} />}
+			/>
 			<FormField control={form.control} name='message' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>

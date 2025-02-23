@@ -1,10 +1,10 @@
 import { EUB_LOGO } from '@/assets/images/base64';
 import { checkBox, checkWithoutBox } from '@/assets/svg';
-import { IAdmissionTableData } from '@/pages/portfolio/_config/columns/columns.type';
+import { IAdmissionTableData } from '@/pages/portfolio/admission/_config/columns/columns.type';
 import { format } from 'date-fns';
 
 import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
-import { DEFAULT_A4_PAGE, getTable } from '@/components/pdf/utils';
+import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
 
 import pdfMake from '..';
 import { getPageFooter } from './utils';

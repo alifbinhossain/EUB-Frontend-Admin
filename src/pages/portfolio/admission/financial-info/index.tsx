@@ -17,7 +17,7 @@ const TuitionFee = () => {
 		usePortfolioFinancialInformation<IFinancialInfoTableData[]>();
 
 	const pageInfo = useMemo(
-		() => new PageInfo('Portfolio/Financial Information', url, 'portfolio__financial_information'),
+		() => new PageInfo('Admission/Financial Information', url, 'admission__financial_information'),
 		[url]
 	);
 

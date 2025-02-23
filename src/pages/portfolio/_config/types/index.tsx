@@ -1,21 +1,14 @@
-import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps, IToast } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
 	IBotTableData,
-	ICertificateCourseFeeTableData,
-	IClubTableData,
 	IDepartmentTableData,
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
 	IInfoTableData,
-	IJobCircularTableData,
-	INewsTableData,
 	IOffersTableData,
 	IRoutineTableData,
-	ITuitionFeeTableData,
 } from '../columns/columns.type';
 
 //* bot
@@ -42,11 +35,6 @@ export interface IRoutineAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
 	updatedData?: IRoutineTableData | null;
 }
 
-// * Job Circular
-export interface IJobCircularAddOrUpdateProps extends IDefaultFileAddOrUpdateProps {
-	updatedData?: IJobCircularTableData | null;
-}
-
 //* Programs
 export interface IProgramsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IInfoTableData | null;
@@ -57,21 +45,6 @@ export interface IAuthoritiesAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IAuthoritiesTableData | null;
 }
 
-//* Certificate Course Fee
-export interface ICertificateCourseFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: ICertificateCourseFeeTableData | null;
-}
-
-//* Tuition Fee
-export interface ITuitionFeeAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: ITuitionFeeTableData | null;
-}
-
-// * Club
-export interface IClubAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: IClubTableData | null;
-}
-
 // * Offers
 export interface IOffersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IOffersTableData | null;
@@ -80,35 +53,4 @@ export interface IOffersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 // * Department-Teachers
 export interface IDepartmentTeachersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IDepartmentTeachersTableData | null;
-}
-
-// * News
-export interface INewsAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: INewsTableData | null;
-	imagePostData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			newData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-	imageUpdateData: UseMutationResult<
-		IToast,
-		AxiosError<IToast, any>,
-		{
-			url: string;
-			updatedData: any;
-			isOnCloseNeeded?: boolean;
-			onClose?: (() => void) | undefined;
-		},
-		any
-	>;
-}
-//* Financial Information
-export interface IFinancialInformationAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: any | null;
 }

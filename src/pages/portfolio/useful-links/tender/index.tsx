@@ -5,21 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { certificateCourseFeeColumns } from '../_config/columns';
-import { ICertificateCourseFeeTableData } from '../_config/columns/columns.type';
-import { usePortfolioCertificateCourseFees } from '../_config/query';
+import { tenderColumns } from '../_config/columns';
+import { ITenderTableData } from '../_config/columns/columns.type';
+import { usePortfolioTender } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const CertificatesCourseFee = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		usePortfolioCertificateCourseFees<ICertificateCourseFeeTableData[]>();
+const Tender = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
+		usePortfolioTender<ITenderTableData[]>();
 
-	const pageInfo = useMemo(
-		() => new PageInfo('Portfolio/CertificatesCourseFee', url, 'portfolio__certificates_course_fee'),
-		[url]
-	);
+	const pageInfo = useMemo(() => new PageInfo('Tender', url, 'portfolio__tender'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -28,8 +25,8 @@ const CertificatesCourseFee = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ICertificateCourseFeeTableData | null>(null);
-	const handleUpdate = (row: Row<ICertificateCourseFeeTableData>) => {
+	const [updatedData, setUpdatedData] = useState<ITenderTableData | null>(null);
+	const handleUpdate = (row: Row<ITenderTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -40,21 +37,20 @@ const CertificatesCourseFee = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ICertificateCourseFeeTableData>) => {
+	const handleDelete = (row: Row<ITenderTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.programs_name,
+			name: row?.original?.title,
 		});
 	};
 
 	// Table Columns
-	const columns = certificateCourseFeeColumns();
+	const columns = tenderColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
 				title={pageInfo.getTitle()}
-				clientRedirectUrl='/tuition-and-other-fees-structure#other-certificate-courses'
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
@@ -73,6 +69,8 @@ const CertificatesCourseFee = () => {
 							setUpdatedData,
 							postData,
 							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 
@@ -80,7 +78,7 @@ const CertificatesCourseFee = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/tender',
 							deleteData,
 						}}
 					/>,
@@ -90,4 +88,4 @@ const CertificatesCourseFee = () => {
 	);
 };
 
-export default CertificatesCourseFee;
+export default Tender;
