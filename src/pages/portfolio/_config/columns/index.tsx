@@ -17,6 +17,7 @@ import {
 	IDepartmentTeachersTableData,
 	IFacultyTableData,
 	IInfoTableData,
+	IOffersTableData,
 	IOfficeEntryTableData,
 	IOfficeTableData,
 	IRoutineTableData,
@@ -354,5 +355,32 @@ export const officeEntryColumns = (): ColumnDef<IOfficeEntryTableData>[] => [
 		accessorKey: 'email',
 		header: 'Email',
 		enableColumnFilter: true,
+	},
+];
+// * Offers Columns
+export const offersColumns = (): ColumnDef<IOffersTableData>[] => [
+	{
+		accessorKey: 'serial',
+		header: 'Serial',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'title',
+		header: 'Title',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'subtitle',
+		header: 'Subtitle',
+		enableColumnFilter: true,
+		cell: (info) => info.getValue(),
+	},
+	{
+		accessorKey: 'deadline',
+		header: 'Deadline',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 ];

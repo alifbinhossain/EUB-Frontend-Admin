@@ -5,9 +5,9 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { tenderColumns } from '../../_config/columns';
-import { ITenderTableData } from '../../_config/columns/columns.type';
-import { usePortfolioTender } from '../../_config/query';
+import { tenderColumns } from '../_config/columns';
+import { ITenderTableData } from '../_config/columns/columns.type';
+import { usePortfolioTender } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));

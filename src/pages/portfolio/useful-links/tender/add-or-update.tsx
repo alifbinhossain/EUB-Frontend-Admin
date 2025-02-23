@@ -10,9 +10,9 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
 
+import { ITender, TENDER_NULL, TENDER_SCHEMA } from '../_config/schema';
+import { ITenderAddOrUpdateProps } from '../_config/types';
 import { usePortfolioTenderByUUID } from '../../_config/query';
-import { ITender, TENDER_NULL, TENDER_SCHEMA } from '../../_config/schema';
-import { ITenderAddOrUpdateProps } from '../../_config/types';
 import { tableNames } from './utills';
 
 const AddOrUpdate: React.FC<ITenderAddOrUpdateProps> = ({

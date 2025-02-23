@@ -203,3 +203,57 @@ export const OFFERS_NULL: Partial<IOffers> = {
 };
 
 export type IOffers = z.infer<typeof OFFERS_SCHEMA>;
+//* Office Schema
+
+export const OFFICE_SCHEMA = z.object({
+	uuid: STRING_OPTIONAL,
+	title: STRING_REQUIRED,
+	category: z.enum([
+		'registrar',
+		'controller_of_examinations',
+		'ict_division',
+		'ciac',
+		'program_coordination',
+		'admission_and_student_affairs',
+		'finance_and_accounts',
+		'faculty_development_and_evaluation',
+		'planning_and_development',
+		'proctor',
+		'procurement_and_inventory',
+		'iqac',
+		'library',
+	]),
+	image: z.any(),
+	remarks: STRING_NULLABLE,
+	office_entries: z.array(
+		z.object({
+			uuid: STRING_OPTIONAL,
+			office_uuid: STRING_OPTIONAL,
+			user_uuid: STRING_REQUIRED,
+			user_email: STRING_REQUIRED,
+			user_phone: STRING_REQUIRED,
+			designation: STRING_REQUIRED,
+			remarks: STRING_NULLABLE,
+		})
+	),
+});
+
+export const OFFICE_NULL: Partial<IOffice> = {
+	uuid: '',
+	title: '',
+	category: undefined,
+	remarks: null,
+	office_entries: [
+		{
+			uuid: '',
+			office_uuid: '',
+			designation: '',
+			user_email: '',
+			user_phone: '',
+			user_uuid: '',
+			remarks: '',
+		},
+	],
+};
+
+export type IOffice = z.infer<typeof OFFICE_SCHEMA>;
