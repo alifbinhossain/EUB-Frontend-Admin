@@ -77,10 +77,10 @@ export const useFacultyByUUID = <T>(uuid: string) =>
 
 // ? INFO
 // * ALL INFO
-export const useInfo = <T>() =>
+export const useInfo = <T>(query: string) =>
 	useTQuery<T>({
-		queryKey: infoQK.info(),
-		url: `/portfolio/info`,
+		queryKey: infoQK.info(query),
+		url: query ? `/portfolio/info?access=${query}` : `/portfolio/info`,
 	});
 
 // * INFO By UUID

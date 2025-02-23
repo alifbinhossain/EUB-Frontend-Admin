@@ -130,7 +130,7 @@ export const INFO_SCHEMA = z.object({
 		.instanceof(File)
 		.refine((file) => file?.size !== 0, 'Please upload an file')
 		.or(STRING_REQUIRED),
-	is_global: BOOLEAN_REQUIRED,
+	is_global: BOOLEAN_OPTIONAL,
 	remarks: STRING_NULLABLE,
 });
 

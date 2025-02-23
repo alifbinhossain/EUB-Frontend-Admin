@@ -1,6 +1,5 @@
 // PAGE ENUM
 export enum PORTFOLIO_PAGE_NAME {
-	NOTICES = 'notices',
 	ACADEMIC_CALENDAR = 'academic_calendar',
 	EXAMINATION_GUIDELINES = 'examination_guidelines',
 	INFORMATION_ABOUT_PROVISIONAL_CERTIFICATES = 'information_about_provisional_certificates',
@@ -17,6 +16,7 @@ export enum PORTFOLIO_PROGRAM_TYPE {
 
 // TYPE ENUM
 export enum PORTFOLIO_ROUTINE_TYPE {
+	NOTICES = 'notices',
 	CLASS_ROUTINE = 'class_routine',
 	EXAM_SCHEDULE = 'exam_schedule',
 }

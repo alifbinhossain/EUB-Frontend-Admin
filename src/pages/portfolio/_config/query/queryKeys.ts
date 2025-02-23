@@ -51,8 +51,8 @@ export const portfolioQK = {
 
 export const infoQK = {
 	all: () => ['info'],
-	info: () => [...infoQK.all(), 'info'],
-	infoByUUID: (uuid: string) => [...infoQK.info(), uuid],
+	info: (query: string) => [...infoQK.all(), 'info', ...(query ? [query] : [])],
+	infoByUUID: (uuid: string) => [...infoQK.all(), uuid],
 };
 
 export const routineQK = {

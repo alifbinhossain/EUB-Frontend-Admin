@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -28,13 +29,16 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
-
+	const hasAccess: string[] = useAccess('portfolio__info') as string[];
 	const { user } = useAuth();
 	const { data } = useInfoByUUID(updatedData?.uuid as string);
 
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
 
-	const page_names = enumToOptions(PORTFOLIO_PAGE_NAME);
+	// * filtering pages
+	const originalOptions = enumToOptions(PORTFOLIO_PAGE_NAME);
+	const filteredOptions = originalOptions.filter((item) => hasAccess.includes(String(item.value)));
+	const page_names = filteredOptions.length > 0 ? filteredOptions : originalOptions;
 
 	const form = useRHF(INFO_SCHEMA, INFO_NULL);
 
@@ -93,16 +97,16 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 				<div className='col-span-2 space-y-4'>
 					<FormField
 						control={form.control}
-						name='department_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
-						)}
+						name='page_name'
+						render={(props) => <CoreForm.ReactSelect label='Page Name' options={page_names!} {...props} />}
 					/>
 
 					<FormField
 						control={form.control}
-						name='page_name'
-						render={(props) => <CoreForm.ReactSelect label='Page Name' options={page_names!} {...props} />}
+						name='department_uuid'
+						render={(props) => (
+							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
+						)}
 					/>
 
 					<FormField

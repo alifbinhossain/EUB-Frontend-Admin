@@ -159,7 +159,20 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/info',
 				element: <Info />,
 				page_name: 'portfolio__info',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: [
+					'create',
+					'read',
+					'update',
+					'delete',
+
+					'notices',
+					'academic_calendar',
+					'examination_guidelines',
+					'information_about_provisional_certificates',
+					'clubs_and_society',
+					'academic_information_and_policies',
+					'journal',
+				],
 			},
 			{
 				name: 'Routine',
