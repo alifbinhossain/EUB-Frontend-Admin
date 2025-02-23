@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusButton from '@/components/buttons/status';
 import { RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
+import { LinkWithRedirect } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
 
 import { API_IMAGE_URL } from '@/lib/secret';
@@ -85,7 +86,7 @@ export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => {
 			const category = authoritiesCategories.find((item) => item.value === info.getValue());
-			return <span className='capitalize'>{category?.label ?? ''}</span>;
+			return <LinkWithRedirect uri={`/authorities/${category?.link}`} title={category?.label as string} />;
 		},
 	},
 	{
@@ -317,9 +318,12 @@ export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,
+
 		cell: (info) => {
 			const category = officeCategories.find((item) => item.value === info.getValue());
-			return <span className='capitalize'>{category?.label ?? ''}</span>;
+			return (
+				<LinkWithRedirect uri={`/authorities/offices/${category?.link}`} title={category?.label as string} />
+			);
 		},
 	},
 	{

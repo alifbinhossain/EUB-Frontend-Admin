@@ -192,18 +192,18 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 //*Admission
 export const admissionColumns = (): ColumnDef<IAdmissionTableData>[] => [
 	{
-		accessorKey: 'id',
-		header: 'ID',
+		accessorKey: 'applicant_name',
+		header: 'Applicant Name',
 		enableColumnFilter: true,
 		cell: (info) => {
 			const uuid = info.row.original.uuid;
-			return <LinkOnly uri={`/portfolio/admission/${uuid}/details`} title={info.getValue() as string} />;
+			return <LinkOnly uri={`/admission/online-form/${uuid}/details`} title={info.getValue() as string} />;
 		},
 	},
 
 	{ accessorKey: 'semester', header: 'Semester', enableColumnFilter: true },
 	{ accessorKey: 'program_name', header: 'Program Name', enableColumnFilter: true }, // Display program name
-	{ accessorKey: 'applicant_name', header: 'Applicant Name', enableColumnFilter: true },
+
 	{ accessorKey: 'father_name', header: 'Father Name', enableColumnFilter: true },
 	{ accessorKey: 'mother_name', header: 'Mother Name', enableColumnFilter: true },
 	{ accessorKey: 'local_guardian', header: 'Local Guardian', enableColumnFilter: true },
