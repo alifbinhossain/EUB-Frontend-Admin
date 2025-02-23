@@ -20,7 +20,6 @@ import { IInfo, INFO_NULL, INFO_SCHEMA } from '../_config/schema';
 import { IInfoAddOrUpdateProps } from '../_config/types';
 
 const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
-	url,
 	open,
 	setOpen,
 	updatedData,
@@ -58,13 +57,16 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 	// Submit handler
 	async function onSubmit(values: IInfo) {
 		const formData = Formdata<IInfo>(values);
+		if (values.page_name !== 'notices') {
+			formData.delete('department_uuid');
+		}
 
 		if (isUpdate) {
 			formData.append('updated_at', getDateTime());
 
 			// UPDATE ITEM
 			await imageUpdateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/info/${updatedData?.uuid}`,
 				updatedData: formData,
 				onClose,
 			});
@@ -77,7 +79,7 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 			formData.append('uuid', nanoid());
 
 			await imagePostData.mutateAsync({
-				url,
+				url: '/portfolio/info',
 				newData: formData,
 				onClose,
 			});
@@ -101,13 +103,15 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						render={(props) => <CoreForm.ReactSelect label='Page Name' options={page_names!} {...props} />}
 					/>
 
-					<FormField
-						control={form.control}
-						name='department_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
-						)}
-					/>
+					{form.watch('page_name') === 'notices' && (
+						<FormField
+							control={form.control}
+							name='department_uuid'
+							render={(props) => (
+								<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
+							)}
+						/>
+					)}
 
 					<FormField
 						control={form.control}
@@ -121,11 +125,13 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
 
-					<FormField
-						control={form.control}
-						name='is_global'
-						render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
-					/>
+					{form.watch('page_name') === 'notices' && (
+						<FormField
+							control={form.control}
+							name='is_global'
+							render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
+						/>
+					)}
 				</div>
 
 				<FormField
