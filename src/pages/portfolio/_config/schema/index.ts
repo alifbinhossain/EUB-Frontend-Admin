@@ -123,22 +123,19 @@ export type IFaculty = z.infer<typeof FACULTY_SCHEMA>;
 
 //* Info Schema
 export const INFO_SCHEMA = z.object({
-	department_uuid: STRING_REQUIRED,
 	description: STRING_REQUIRED,
 	page_name: z.nativeEnum(PORTFOLIO_PAGE_NAME),
+
 	file: z
 		.instanceof(File)
 		.refine((file) => file?.size !== 0, 'Please upload an file')
 		.or(STRING_REQUIRED),
-	is_global: BOOLEAN_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 
 export const INFO_NULL: Partial<IInfo> = {
-	department_uuid: '',
 	description: '',
 	file: new File([''], 'filename') as File,
-	is_global: false,
 	remarks: null,
 };
 
@@ -150,6 +147,7 @@ export const ROUTINE_SCHEMA = z.object({
 	description: STRING_REQUIRED,
 	programs: z.nativeEnum(PORTFOLIO_PROGRAM_TYPE),
 	type: z.nativeEnum(PORTFOLIO_ROUTINE_TYPE),
+	is_global: BOOLEAN_OPTIONAL,
 	file: z
 		.instanceof(File)
 		.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -160,6 +158,7 @@ export const ROUTINE_SCHEMA = z.object({
 export const ROUTINE_NULL: Partial<IRoutine> = {
 	department_uuid: '',
 	description: '',
+	is_global: false,
 	file: new File([''], 'filename') as File,
 	remarks: null,
 };
@@ -195,6 +194,7 @@ export type IJobCircular = z.infer<typeof JOB_CIRCULAR_SCHEMA>;
 //* Department Schema
 export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	short_name: STRING_REQUIRED,
 	faculty_uuid: STRING_REQUIRED,
 	category: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
@@ -202,6 +202,7 @@ export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 
 export const PORTFOLIO_DEPARTMENT_NULL: Partial<IPortfolioDepartment> = {
 	name: '',
+	short_name: '',
 	faculty_uuid: '',
 	category: '',
 	remarks: null,
@@ -365,15 +366,11 @@ export const FINANCIAL_INFORMATION_SCHEMA = z.object({
 	total_cost: z.number().nullable(),
 	total_waiver_amount: z.number().nullable(),
 	waiver_50: z.number().nullable(),
-	waiver_55: z.number().nullable(),
 	waiver_60: z.number().nullable(),
-	waiver_65: z.number().nullable(),
 	waiver_70: z.number().nullable(),
 	waiver_75: z.number().nullable(),
 	waiver_80: z.number().nullable(),
-	waiver_85: z.number().nullable(),
 	waiver_90: z.number().nullable(),
-	waiver_95: z.number().nullable(),
 	waiver_100: z.number().nullable(),
 	remarks: STRING_NULLABLE,
 });
@@ -385,15 +382,11 @@ export const FINANCIAL_INFORMATION_NULL: Partial<IPortfolioFinancialInformation>
 	total_waiver_amount: 0,
 	// admission_fee: 0,
 	waiver_50: 0,
-	waiver_55: 0,
 	waiver_60: 0,
-	waiver_65: 0,
 	waiver_70: 0,
 	waiver_75: 0,
 	waiver_80: 0,
-	waiver_85: 0,
 	waiver_90: 0,
-	waiver_95: 0,
 	waiver_100: 0,
 	remarks: null,
 };

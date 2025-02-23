@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 import { IRoute } from '@/types';
 
+import { DepartmentAccess, InfoAccess } from './utils';
+
 const Authorities = lazy(() => import('@/pages/portfolio/authorities'));
 const CertificatesCourseFee = lazy(() => import('@/pages/portfolio/certificate-course-fee'));
 const Department = lazy(() => import('@/pages/portfolio/department'));
@@ -159,14 +161,14 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/info',
 				element: <Info />,
 				page_name: 'portfolio__info',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
 			},
 			{
 				name: 'Routine',
 				path: '/portfolio/routine',
 				element: <Routine />,
 				page_name: 'portfolio__routine',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 			},
 			{
 				name: 'Job Circular',

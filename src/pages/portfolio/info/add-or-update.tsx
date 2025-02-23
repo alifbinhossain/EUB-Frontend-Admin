@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -19,7 +20,6 @@ import { IInfo, INFO_NULL, INFO_SCHEMA } from '../_config/schema';
 import { IInfoAddOrUpdateProps } from '../_config/types';
 
 const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
-	url,
 	open,
 	setOpen,
 	updatedData,
@@ -28,13 +28,14 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
-
+	const hasAccess: string[] = useAccess('portfolio__info') as string[];
 	const { user } = useAuth();
 	const { data } = useInfoByUUID(updatedData?.uuid as string);
 
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
-
-	const page_names = enumToOptions(PORTFOLIO_PAGE_NAME);
+	// * filtering pages
+	const originalOptions = enumToOptions(PORTFOLIO_PAGE_NAME);
+	const filteredOptions = originalOptions.filter((item) => hasAccess.includes(String(item.value)));
+	const page_names = filteredOptions.length > 0 ? filteredOptions : originalOptions;
 
 	const form = useRHF(INFO_SCHEMA, INFO_NULL);
 
@@ -60,7 +61,7 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 
 			// UPDATE ITEM
 			await imageUpdateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/info/${updatedData?.uuid}`,
 				updatedData: formData,
 				onClose,
 			});
@@ -73,7 +74,7 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 			formData.append('uuid', nanoid());
 
 			await imagePostData.mutateAsync({
-				url,
+				url: '/portfolio/info',
 				newData: formData,
 				onClose,
 			});
@@ -93,14 +94,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 				<div className='col-span-2 space-y-4'>
 					<FormField
 						control={form.control}
-						name='department_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
-						)}
-					/>
-
-					<FormField
-						control={form.control}
 						name='page_name'
 						render={(props) => <CoreForm.ReactSelect label='Page Name' options={page_names!} {...props} />}
 					/>
@@ -115,12 +108,6 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						control={form.control}
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
-					/>
-
-					<FormField
-						control={form.control}
-						name='is_global'
-						render={(props) => <CoreForm.Checkbox label='Global' {...props} />}
 					/>
 				</div>
 

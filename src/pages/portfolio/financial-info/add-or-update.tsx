@@ -138,18 +138,8 @@ const AddOrUpdate: React.FC<IFinancialInformationAddOrUpdateProps> = ({
 				/>
 				<FormField
 					control={form.control}
-					name='waiver_55'
-					render={(props) => <CoreForm.Input type='number' label='Waiver 55' {...props} />}
-				/>
-				<FormField
-					control={form.control}
 					name='waiver_60'
 					render={(props) => <CoreForm.Input type='number' label='Waiver 60' {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='waiver_65'
-					render={(props) => <CoreForm.Input type='number' label='Waiver 65' {...props} />}
 				/>
 				<FormField
 					control={form.control}
@@ -168,18 +158,8 @@ const AddOrUpdate: React.FC<IFinancialInformationAddOrUpdateProps> = ({
 				/>
 				<FormField
 					control={form.control}
-					name='waiver_85'
-					render={(props) => <CoreForm.Input type='number' label='Waiver 85' {...props} />}
-				/>
-				<FormField
-					control={form.control}
 					name='waiver_90'
 					render={(props) => <CoreForm.Input type='number' label='Waiver 90' {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='waiver_95'
-					render={(props) => <CoreForm.Input type='number' label='Waiver 95' {...props} />}
 				/>
 				<FormField
 					control={form.control}
