@@ -20,10 +20,10 @@ export const useJobCircularByUUID = <T>(uuid: string) =>
 
 // ? CLUB
 // * ALL Club
-export const useClubs = <T>() =>
+export const useClubs = <T>(query: string = '') =>
 	useTQuery<T>({
-		queryKey: portfolioQK.club(),
-		url: '/portfolio/club',
+		queryKey: portfolioQK.club(query),
+		url: query ? `/portfolio/club?access=${query}` : '/portfolio/club',
 	});
 
 // * Club By UUID
@@ -36,10 +36,10 @@ export const useClubsByUUID = <T>(uuid: string) =>
 
 // ? NEWS
 // * ALL news
-export const useNews = <T>() =>
+export const useNews = <T>(query: string = '') =>
 	useTQuery<T>({
-		queryKey: portfolioQK.news(),
-		url: `/portfolio/news?is_pagination=false`,
+		queryKey: portfolioQK.news(query),
+		url: query ? `/portfolio/news?is_pagination=false&access=${query}` : `/portfolio/news?is_pagination=false`,
 	});
 
 // * News By UUID

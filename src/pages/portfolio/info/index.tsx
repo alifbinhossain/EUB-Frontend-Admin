@@ -4,6 +4,7 @@ import { Row } from '@tanstack/react-table';
 import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
+import getAccess from '@/utils/getAccess';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { infoColumns } from '../_config/columns';
@@ -12,15 +13,6 @@ import { useInfo } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-
-const getAccess = (hasAccess: string[]) => {
-	const exclude = ['create', 'read', 'update', 'delete'];
-
-	const access = hasAccess.filter((item) => !exclude.includes(item));
-
-	if (access.length === 0) return '';
-	else return access.join(',');
-};
 
 const Designation = () => {
 	const hasAccess: string[] = useAccess('portfolio__info') as string[];

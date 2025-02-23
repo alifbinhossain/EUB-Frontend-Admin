@@ -14,19 +14,11 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import enumToOptions from '@/utils/enumToOptions';
 import Formdata from '@/utils/formdata';
+import getAccess from '@/utils/getAccess';
 
 import { useRoutineByUUID } from '../_config/query';
 import { IRoutine, ROUTINE_NULL, ROUTINE_SCHEMA } from '../_config/schema';
 import { IRoutineAddOrUpdateProps } from '../_config/types';
-
-const getAccess = (hasAccess: string[]) => {
-	const exclude = ['create', 'read', 'update', 'delete'];
-
-	const access = hasAccess.filter((item) => !exclude.includes(item));
-
-	if (access.length === 0) return '';
-	else return access.join(',');
-};
 
 const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	url,

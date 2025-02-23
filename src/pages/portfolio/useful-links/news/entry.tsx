@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -13,6 +14,7 @@ import { useOtherDepartments } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
+import getAccess from '@/utils/getAccess';
 
 import { useNews, useNewsDetails } from '../_config/query';
 import { INews, NEWS_NULL, NEWS_SCHEMA } from '../_config/schema';
@@ -23,9 +25,9 @@ export default function NewsEntry() {
 	const { user } = useAuth();
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
-
+	const hasAccess: string[] = useAccess('portfolio__news') as string[];
 	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails(uuid as string);
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>();
+	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
 	const { invalidateQuery } = useNews();
 
 	const form = useRHF(NEWS_SCHEMA, NEWS_NULL);
