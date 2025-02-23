@@ -93,10 +93,10 @@ export const useInfoByUUID = <T>(uuid: string) =>
 
 // ? ROUTINE
 // * ALL ROUTINE
-export const useRoutine = <T>() =>
+export const useRoutine = <T>(query: string) =>
 	useTQuery<T>({
-		queryKey: routineQK.routine(),
-		url: `/portfolio/routine`,
+		queryKey: routineQK.routine(query),
+		url: query ? `/portfolio/routine?access=${query}` : `/portfolio/routine`,
 	});
 
 // * ROUTINE By UUID

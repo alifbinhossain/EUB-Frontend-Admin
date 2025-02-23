@@ -57,8 +57,8 @@ export const infoQK = {
 
 export const routineQK = {
 	all: () => ['routine'],
-	routine: () => [...routineQK.all(), 'routine'],
-	routineByUUID: (uuid: string) => [...routineQK.routine(), uuid],
+	routine: (query: string) => [...routineQK.all(), 'routine', ...(query ? [query] : [])],
+	routineByUUID: (uuid: string) => [...routineQK.all(), uuid],
 };
 
 export const jobCircularQK = {
