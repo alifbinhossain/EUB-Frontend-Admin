@@ -23,8 +23,8 @@ export enum PORTFOLIO_ROUTINE_TYPE {
 
 // TABLE TYPE ENUM
 export enum FINANCIAL_INFO_TABLE_TYPE {
-	ENGINEERING_HSC = 'engineering_hsc',
-	ENGINEERING_DIPLOMA = 'engineering_diploma',
-	BBA = 'bba',
-	ARTS = 'arts',
+	ENGINEERING_HSC_GRADUATES = 'engineering_hsc',
+	ENGINEERING_DIPLOMA_GRADUATES = 'engineering_diploma',
+	BUSINESS_ADMINISTRATION = 'bba',
+	ARTS_AND_SOCIAL_SCIENCE = 'arts',
 }
