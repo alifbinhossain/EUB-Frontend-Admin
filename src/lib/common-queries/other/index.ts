@@ -45,7 +45,7 @@ export const useOtherPrograms = <T>() =>
 	});
 
 //* GET OTHER DEPARTMENTS
-export const useOtherDepartments = <T>(query: string) =>
+export const useOtherDepartments = <T>(query: string = '') =>
 	useTQuery<T>({
 		queryKey: otherQK.departments(query),
 		url: query
