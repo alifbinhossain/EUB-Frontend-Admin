@@ -26,6 +26,11 @@ export const useHrCanAccess = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
+export const useHrUsersWithAccess = <T>() =>
+	useTQuery<T>({
+		queryKey: hrQK.userWithAccess(),
+		url: '/other/hr/users-can-access/value/label',
+	});
 // * Department
 export const useHrDepartments = <T>() =>
 	useTQuery<T>({

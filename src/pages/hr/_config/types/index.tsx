@@ -150,3 +150,5 @@ export interface IDesignationAddOrUpdateProps {
 		any
 	>;
 }
+
+export type usersWithAccess = { value: string; label: string; can_access: string };
