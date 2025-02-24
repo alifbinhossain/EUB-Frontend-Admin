@@ -9,7 +9,8 @@ import DateTime from '@/components/ui/date-time';
 import { API_IMAGE_URL } from '@/lib/secret';
 
 import { categories as authoritiesCategories } from '../../authorities/utils';
-import { categories as botCategories, status as botStatus } from '../../bot/utils';
+import { categories as botCategories, status as botStatus } from '../../boardOfTrustees/utils';
+import { InfoLinks } from '../../info/utils';
 import { categories as officeCategories } from '../../office/utills';
 import {
 	IAuthoritiesTableData,
@@ -116,6 +117,10 @@ export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
 		accessorKey: 'page_name',
 		header: 'Page Name',
 		enableColumnFilter: true,
+		cell: (info) => {
+			const category = InfoLinks.find((item) => item.value === info.getValue());
+			return <LinkWithRedirect uri={`${category?.link}`} title={category?.label as string} />;
+		},
 	},
 	{
 		accessorKey: 'description',

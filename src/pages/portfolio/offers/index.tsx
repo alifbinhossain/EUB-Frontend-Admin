@@ -49,6 +49,11 @@ const Index: React.FC = () => {
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
+				defaultVisibleColumns={{
+					created_by_name: false,
+					created_at: false,
+					updated_at: false,
+				}}
 				title={pageInfo.getTitle()}
 				clientRedirectUrl='/clubs-societies'
 				columns={columns}

@@ -10,11 +10,11 @@ const Faculty = lazy(() => import('@/pages/portfolio/faculty'));
 const Club = lazy(() => import('@/pages/portfolio/useful-links/club'));
 const Program = lazy(() => import('@/pages/portfolio/program'));
 
-const DepartmentTeachers = lazy(() => import('@/pages/portfolio/department-teacher'));
+const Teachers = lazy(() => import('@/pages/portfolio/teacher'));
 const News = lazy(() => import('@/pages/portfolio/useful-links/news'));
 const NewsEntry = lazy(() => import('@/pages/portfolio/useful-links/news/entry'));
 
-const Bot = lazy(() => import('@/pages/portfolio/bot'));
+const BoardOfTrustees = lazy(() => import('@/pages/portfolio/boardOfTrustees'));
 const Office = lazy(() => import('@/pages/portfolio/office'));
 const OfficeDetails = lazy(() => import('@/pages/portfolio/office/details'));
 const OfficeEntry = lazy(() => import('@/pages/portfolio/office/add-or-update'));
@@ -60,27 +60,6 @@ const portfolioRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Department Teachers',
-				path: '/portfolio/department-teacher',
-				element: <DepartmentTeachers />,
-				page_name: 'portfolio__department_teachers',
-				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
-			},
-			{
-				name: 'Bot',
-				path: '/portfolio/bot',
-				element: <Bot />,
-				page_name: 'portfolio__bot',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Info',
-				path: '/portfolio/info',
-				element: <Info />,
-				page_name: 'portfolio__info',
-				actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
-			},
-			{
 				name: 'Routine',
 				path: '/portfolio/routine',
 				element: <Routine />,
@@ -93,6 +72,25 @@ const portfolioRoutes: IRoute[] = [
 				element: <Offers />,
 				page_name: 'portfolio__offers',
 				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Programs',
+				children: [
+					{
+						name: 'Teachers',
+						path: '/portfolio/teacher',
+						element: <Teachers />,
+						page_name: 'portfolio__teachers',
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
+					},
+					{
+						name: 'Info',
+						path: '/portfolio/info',
+						element: <Info />,
+						page_name: 'portfolio__info',
+						actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
+					},
+				],
 			},
 			{
 				name: 'Office and Authorities',
@@ -133,6 +131,13 @@ const portfolioRoutes: IRoute[] = [
 						element: <OfficeEntry />,
 						hidden: true,
 						page_name: 'portfolio__office_update',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
+						name: 'Board Of Trustees',
+						path: '/portfolio/bot',
+						element: <BoardOfTrustees />,
+						page_name: 'portfolio__bot',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 				],

@@ -31,7 +31,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	updateData,
 }) => {
 	const isUpdate = !!updatedData;
-	const hasAccess: string[] = useAccess('portfolio__department_teachers') as string[];
+	const hasAccess: string[] = useAccess('portfolio__teachers') as string[];
 	const { user } = useAuth();
 	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
@@ -86,7 +86,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Department Teacher' : 'Add Department Teacher'}
+			title={isUpdate ? 'Update Teacher' : 'Add Teacher'}
 			form={form}
 			onSubmit={onSubmit}
 			isSmall={true}
@@ -97,20 +97,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 				render={(props) => <CoreForm.Checkbox {...props} />}
 			/>
 
-			<div className='grid grid-cols-3 gap-4'>
-				<FormField
-					control={form.control}
-					name='teacher_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Teacher'
-							placeholder='Select Teacher'
-							options={users!}
-							{...props}
-						/>
-					)}
-				/>
-
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
 					name='department_uuid'
@@ -129,7 +116,19 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					render={(props) => <CoreForm.Input label='Designation' {...props} />}
 				/>
 			</div>
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='grid grid-cols-3 gap-4'>
+				<FormField
+					control={form.control}
+					name='teacher_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Teacher'
+							placeholder='Select Teacher'
+							options={users!}
+							{...props}
+						/>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name='teacher_email'

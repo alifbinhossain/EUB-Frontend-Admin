@@ -16,7 +16,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Bot = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = usePortfolioBot<IBotTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Portfolio/Bot', url, 'portfolio__bot'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Board Of Trustees', url, 'portfolio__bot'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -46,6 +46,11 @@ const Bot = () => {
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
+				defaultVisibleColumns={{
+					created_by_name: false,
+					created_at: false,
+					updated_at: false,
+				}}
 				title={pageInfo.getTitle()}
 				columns={columns}
 				data={data ?? []}
