@@ -60,20 +60,6 @@ const portfolioRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Teachers',
-				path: '/portfolio/teacher',
-				element: <Teachers />,
-				page_name: 'portfolio__teachers',
-				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
-			},
-			{
-				name: 'Info',
-				path: '/portfolio/info',
-				element: <Info />,
-				page_name: 'portfolio__info',
-				actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
-			},
-			{
 				name: 'Routine',
 				path: '/portfolio/routine',
 				element: <Routine />,
@@ -86,6 +72,25 @@ const portfolioRoutes: IRoute[] = [
 				element: <Offers />,
 				page_name: 'portfolio__offers',
 				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Programs',
+				children: [
+					{
+						name: 'Teachers',
+						path: '/portfolio/teacher',
+						element: <Teachers />,
+						page_name: 'portfolio__teachers',
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
+					},
+					{
+						name: 'Info',
+						path: '/portfolio/info',
+						element: <Info />,
+						page_name: 'portfolio__info',
+						actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
+					},
+				],
 			},
 			{
 				name: 'Office and Authorities',
