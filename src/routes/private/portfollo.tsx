@@ -14,7 +14,7 @@ const Teachers = lazy(() => import('@/pages/portfolio/teacher'));
 const News = lazy(() => import('@/pages/portfolio/useful-links/news'));
 const NewsEntry = lazy(() => import('@/pages/portfolio/useful-links/news/entry'));
 
-const Bot = lazy(() => import('@/pages/portfolio/bot'));
+const BoardOfTrustees = lazy(() => import('@/pages/portfolio/boardOfTrustees'));
 const Office = lazy(() => import('@/pages/portfolio/office'));
 const OfficeDetails = lazy(() => import('@/pages/portfolio/office/details'));
 const OfficeEntry = lazy(() => import('@/pages/portfolio/office/add-or-update'));
@@ -65,13 +65,6 @@ const portfolioRoutes: IRoute[] = [
 				element: <Teachers />,
 				page_name: 'portfolio__teachers',
 				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
-			},
-			{
-				name: 'Bot',
-				path: '/portfolio/bot',
-				element: <Bot />,
-				page_name: 'portfolio__bot',
-				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
 				name: 'Info',
@@ -133,6 +126,13 @@ const portfolioRoutes: IRoute[] = [
 						element: <OfficeEntry />,
 						hidden: true,
 						page_name: 'portfolio__office_update',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
+						name: 'Board Of Trustees',
+						path: '/portfolio/bot',
+						element: <BoardOfTrustees />,
+						page_name: 'portfolio__bot',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 				],

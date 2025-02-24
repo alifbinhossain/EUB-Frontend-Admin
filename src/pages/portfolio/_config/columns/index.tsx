@@ -9,7 +9,7 @@ import DateTime from '@/components/ui/date-time';
 import { API_IMAGE_URL } from '@/lib/secret';
 
 import { categories as authoritiesCategories } from '../../authorities/utils';
-import { categories as botCategories, status as botStatus } from '../../bot/utils';
+import { categories as botCategories, status as botStatus } from '../../boardOfTrustees/utils';
 import { categories as officeCategories } from '../../office/utills';
 import {
 	IAuthoritiesTableData,

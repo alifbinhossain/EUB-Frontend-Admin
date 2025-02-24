@@ -84,7 +84,7 @@ const AddOrUpdate: React.FC<IBotAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Bot' : 'Add Bot'}
+			title={isUpdate ? 'Update Trustee' : 'Add Trustee'}
 			form={form}
 			onSubmit={onSubmit}
 		>
