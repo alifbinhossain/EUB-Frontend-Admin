@@ -6,6 +6,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherDepartment } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -29,6 +30,7 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 	const { invalidateQuery: invalidateUsers } = useHrUsers({});
 	const { invalidateQuery: invalidateDesignations } = useHrDesignations();
 	const { data } = useHrDepartmentsByUUID<IDepartmentTableData>(updatedData?.uuid as string);
+	const { invalidateQuery: invalidateUserQuery } = useOtherDepartment();
 
 	const form = useRHF(DEPARTMENT_SCHEMA, DEPARTMENT_NULL);
 
@@ -37,6 +39,7 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 		form.reset(DEPARTMENT_NULL);
 		invalidateUsers();
 		invalidateDesignations();
+		invalidateUserQuery();
 		setOpen((prev) => !prev);
 	};
 
