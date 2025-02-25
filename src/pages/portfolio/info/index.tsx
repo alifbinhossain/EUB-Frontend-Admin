@@ -14,7 +14,7 @@ import { useInfo } from '../_config/query';
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Designation = () => {
+const Info = () => {
 	const hasAccess: string[] = useAccess('portfolio__info') as string[];
 
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } = useInfo<
@@ -98,4 +98,4 @@ const Designation = () => {
 	);
 };
 
-export default Designation;
+export default Info;
