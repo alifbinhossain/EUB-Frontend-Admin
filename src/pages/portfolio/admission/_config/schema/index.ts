@@ -13,14 +13,14 @@ import {
 //* Certificate Course Fee Schema
 export const CERTIFICATE_COURSE_FEE_SCHEMA = z.object({
 	uuid: STRING_OPTIONAL,
-	program_uuid: STRING_REQUIRED,
+	programs_uuid: STRING_REQUIRED,
 	fee_per_course: z.number().default(0),
 	remarks: STRING_NULLABLE,
 });
 
 export const CERTIFICATE_COURSE_FEE_NULL: Partial<ICertificateCourseFee> = {
 	uuid: '',
-	program_uuid: '',
+	programs_uuid: '',
 	fee_per_course: 0,
 	remarks: '',
 };

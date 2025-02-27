@@ -43,7 +43,7 @@ const Designation = () => {
 	const handleDelete = (row: Row<IRoutineTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.uuid,
+			name: 'Routine ' + row?.original?.department_name + ' ' + row?.original?.programs.toUpperCase(),
 		});
 	};
 

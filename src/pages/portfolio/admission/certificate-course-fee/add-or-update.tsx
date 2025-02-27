@@ -83,7 +83,7 @@ const AddOrUpdate: React.FC<ICertificateCourseFeeAddOrUpdateProps> = ({
 		>
 			<FormField
 				control={form.control}
-				name='program_uuid'
+				name='programs_uuid'
 				render={(props) => (
 					<CoreForm.ReactSelect
 						label='Program'
