@@ -162,7 +162,7 @@ const AddOrUpdate = () => {
 		append({
 			user_uuid: '',
 			designation: '',
-			user_phone: '',
+			user_phone: null,
 			user_email: '',
 			remarks: '',
 		});

@@ -1,4 +1,3 @@
-import { title } from 'process';
 import { z } from 'zod';
 
 import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
@@ -157,7 +156,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 	department_uuid: STRING_REQUIRED,
 	department_head: BOOLEAN_REQUIRED,
 	teacher_email: STRING_REQUIRED,
-	teacher_phone: STRING_REQUIRED,
+	teacher_phone: STRING_NULLABLE,
 	teacher_designation: STRING_REQUIRED,
 	teacher_uuid: STRING_REQUIRED,
 	education: STRING_REQUIRED,
@@ -173,7 +172,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	department_uuid: '',
 	department_head: false,
 	teacher_email: '',
-	teacher_phone: '',
+	teacher_phone: null,
 	teacher_designation: '',
 	teacher_uuid: '',
 	education: '',
@@ -238,7 +237,7 @@ export const OFFICE_SCHEMA = z.object({
 			office_uuid: STRING_OPTIONAL,
 			user_uuid: STRING_REQUIRED,
 			user_email: STRING_REQUIRED,
-			user_phone: STRING_REQUIRED,
+			user_phone: STRING_NULLABLE,
 			designation: STRING_REQUIRED,
 			remarks: STRING_NULLABLE,
 		})
@@ -256,7 +255,7 @@ export const OFFICE_NULL: Partial<IOffice> = {
 			office_uuid: '',
 			designation: '',
 			user_email: '',
-			user_phone: '',
+			user_phone: null,
 			user_uuid: '',
 			remarks: '',
 		},
