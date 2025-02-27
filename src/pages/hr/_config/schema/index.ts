@@ -3,7 +3,7 @@ import { z } from 'zod';
 import {
 	FORTUNE_ZIP_EMAIL_PATTERN,
 	PASSWORD,
-	PHONE_NUMBER_REQUIRED,
+	PHONE_NUMBER_NULLABLE,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
 	STRING_REQUIRED,
@@ -42,7 +42,7 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 		department_uuid: STRING_NULLABLE,
 		designation_uuid: STRING_NULLABLE,
 		email: FORTUNE_ZIP_EMAIL_PATTERN,
-		phone: PHONE_NUMBER_REQUIRED,
+		phone: PHONE_NUMBER_NULLABLE,
 		office: STRING_REQUIRED,
 		remarks: STRING_NULLABLE,
 	});

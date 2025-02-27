@@ -109,7 +109,7 @@ export type IOfficeTableData = {
 	id: number;
 	uuid: string;
 	title: string;
-	image: any;
+	image?: string;
 	category:
 		| 'registrar'
 		| 'controller_of_examinations'
