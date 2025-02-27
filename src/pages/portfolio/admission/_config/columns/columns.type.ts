@@ -3,7 +3,7 @@ export type ICertificateCourseFeeTableData = {
 	id: number;
 	uuid: string;
 	programs_uuid: string;
-	programs_name: string;
+	program_name: string;
 	fee_per_course: number;
 	remarks: string;
 };

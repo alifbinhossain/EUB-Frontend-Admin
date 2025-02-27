@@ -43,7 +43,7 @@ const CertificatesCourseFee = () => {
 	const handleDelete = (row: Row<ICertificateCourseFeeTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.programs_name,
+			name: row?.original?.program_name,
 		});
 	};
 
