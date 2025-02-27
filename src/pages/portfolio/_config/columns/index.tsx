@@ -381,6 +381,13 @@ export const offersColumns = (): ColumnDef<IOffersTableData>[] => [
 		cell: (info) => info.getValue(),
 	},
 	{
+		accessorKey: 'file',
+		header: 'File',
+		enableColumnFilter: true,
+		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+	},
+
+	{
 		accessorKey: 'subtitle',
 		header: 'Subtitle',
 		enableColumnFilter: true,
