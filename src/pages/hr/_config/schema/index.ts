@@ -97,7 +97,7 @@ export const USER_NULL: Partial<IUser> = {
 	email: '',
 	department_uuid: null,
 	designation_uuid: null,
-	phone: '',
+	phone: null,
 	remarks: null,
 	// image: new File([''], 'filename') as File,
 };
