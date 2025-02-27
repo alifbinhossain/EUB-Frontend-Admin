@@ -81,7 +81,7 @@ const AddOrUpdate: React.FC<ITuitionFeeAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
+			{/* <FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} /> */}
 			<FormField
 				control={form.control}
 				name='program_uuid'

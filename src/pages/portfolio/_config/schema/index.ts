@@ -191,6 +191,10 @@ export type IDepartmentTeachers = z.infer<typeof PORTFOLIO_DEPARTMENT_TEACHER_SC
 export const OFFERS_SCHEMA = z.object({
 	serial: NUMBER_REQUIRED,
 	title: STRING_REQUIRED,
+	file: z
+		.instanceof(File)
+		.refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(STRING_REQUIRED),
 	subtitle: STRING_REQUIRED,
 	deadline: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
@@ -199,6 +203,7 @@ export const OFFERS_SCHEMA = z.object({
 export const OFFERS_NULL: Partial<IOffers> = {
 	serial: 0,
 	title: '',
+	file: new File([''], 'filename') as File,
 	subtitle: '',
 	deadline: '',
 	remarks: null,

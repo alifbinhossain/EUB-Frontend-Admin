@@ -13,7 +13,8 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Index: React.FC = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useOffers<IOffersTableData[]>();
+	const { data, isLoading, url, deleteData, imagePostData, imageUpdateData, refetch } =
+		useOffers<IOffersTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('Offers', url, 'portfolio__offers'), [url]);
 
@@ -72,8 +73,8 @@ const Index: React.FC = () => {
 							setOpen: setIsOpenAddModal,
 							updatedData,
 							setUpdatedData,
-							postData,
-							updateData,
+							imagePostData,
+							imageUpdateData,
 						}}
 					/>,
 

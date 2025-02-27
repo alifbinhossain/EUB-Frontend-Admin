@@ -29,7 +29,6 @@ export type ICertificateCourseFee = z.infer<typeof CERTIFICATE_COURSE_FEE_SCHEMA
 
 export const TUITION_FEE_SCHEMA = z.object({
 	uuid: STRING_OPTIONAL,
-	title: STRING_REQUIRED,
 	program_uuid: STRING_REQUIRED,
 	admission_fee: z.number(),
 	tuition_fee_per_credit: z.number().nullable(),
@@ -43,7 +42,6 @@ export const TUITION_FEE_SCHEMA = z.object({
 
 export const TUITION_FEE_NULL: Partial<ITuitionFee> = {
 	uuid: '',
-	title: '',
 	program_uuid: '',
 	admission_fee: 0,
 	tuition_fee_per_credit: 0,

@@ -11,8 +11,9 @@ export type ICertificateCourseFeeTableData = {
 export type ITuitionFeeTableData = {
 	id: number;
 	uuid: string;
-	title: string;
+	// title: string;
 	program_uuid: string;
+	program_name: string;
 	admission_fee: number;
 	tuition_fee_per_credit: number;
 	student_activity_fee: number;

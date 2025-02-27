@@ -1,4 +1,4 @@
-import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps } from '@/types';
+import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps, IDefaultImageAddOrUpdateProps } from '@/types';
 
 import {
 	IAuthoritiesTableData,
@@ -46,7 +46,7 @@ export interface IAuthoritiesAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 }
 
 // * Offers
-export interface IOffersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+export interface IOffersAddOrUpdateProps extends IDefaultImageAddOrUpdateProps {
 	updatedData?: IOffersTableData | null;
 }
 
