@@ -40,7 +40,7 @@ const TuitionFee = () => {
 	const handleDelete = (row: Row<ITuitionFeeTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.title,
+			name: 'Tuition Fee of ' + row?.original?.program_name,
 		});
 	};
 

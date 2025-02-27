@@ -8,6 +8,7 @@ import { AddModal } from '@core/modal';
 
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import Formdata from '@/utils/formdata';
 
 import { useOffersByUUID } from '../_config/query';
 import { IOffers, OFFERS_NULL, OFFERS_SCHEMA } from '../_config/schema';
@@ -19,8 +20,8 @@ const AddOrUpdate: React.FC<IOffersAddOrUpdateProps> = ({
 	setOpen,
 	updatedData,
 	setUpdatedData,
-	postData,
-	updateData,
+	imagePostData,
+	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
 
@@ -45,9 +46,11 @@ const AddOrUpdate: React.FC<IOffersAddOrUpdateProps> = ({
 
 	// Submit handler
 	async function onSubmit(values: IOffers) {
+		const formData = Formdata<IOffers>(values);
 		if (isUpdate) {
+			formData.append('updated_at', getDateTime());
 			// UPDATE ITEM
-			updateData.mutateAsync({
+			imageUpdateData.mutateAsync({
 				url: `${url}/${updatedData?.uuid}`,
 				updatedData: {
 					...values,
@@ -57,7 +60,10 @@ const AddOrUpdate: React.FC<IOffersAddOrUpdateProps> = ({
 			});
 		} else {
 			// ADD NEW ITEM
-			postData.mutateAsync({
+			formData.append('created_at', getDateTime());
+			formData.append('created_by', user?.uuid || '');
+			formData.append('uuid', nanoid());
+			imagePostData.mutateAsync({
 				url,
 				newData: {
 					...values,
@@ -74,20 +80,53 @@ const AddOrUpdate: React.FC<IOffersAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Club' : 'Add Club'}
+			title={isUpdate ? 'Update Offers' : 'Add Offers'}
+			isSmall={true}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField
-				control={form.control}
-				name='serial'
-				render={(props) => <CoreForm.Input {...props} type='number' />}
-			/>
-			<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='subtitle' render={(props) => <CoreForm.Input {...props} />} />
+			<div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
+				<div className='col-span-2 space-y-4'>
+					<FormField
+						control={form.control}
+						name='serial'
+						render={(props) => <CoreForm.Input {...props} type='number' />}
+					/>
+					<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
+					<FormField
+						control={form.control}
+						name='subtitle'
+						render={(props) => <CoreForm.Input {...props} />}
+					/>
 
-			<FormField control={form.control} name='deadline' render={(props) => <CoreForm.DatePicker {...props} />} />
-			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
+					<FormField
+						control={form.control}
+						name='deadline'
+						render={(props) => <CoreForm.DatePicker {...props} />}
+					/>
+					<FormField
+						control={form.control}
+						name='remarks'
+						render={(props) => <CoreForm.Textarea {...props} />}
+					/>
+				</div>
+				<FormField
+					control={form.control}
+					name='file'
+					render={(props) => (
+						<CoreForm.FileUpload
+							label='File'
+							fileType='document'
+							errorText='File must be less than 10MB and of type pdf, doc, docx'
+							isUpdate={isUpdate}
+							options={{
+								maxSize: 10000000,
+							}}
+							{...props}
+						/>
+					)}
+				/>
+			</div>
 		</AddModal>
 	);
 };

@@ -36,11 +36,11 @@ export const tuitionFeeColumns = (): ColumnDef<ITuitionFeeTableData>[] => [
 		header: 'ID',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'title',
-		header: 'Title',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'title',
+	// 	header: 'Title',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'program_name',
 		header: 'Program',
