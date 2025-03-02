@@ -70,7 +70,7 @@ const Designation = () => {
 				{renderSuspenseModals([
 					<AddOrUpdate
 						{...{
-							url,
+							url: '/portfolio/routine',
 							open: isOpenAddModal,
 							setOpen: setIsOpenAddModal,
 							updatedData,

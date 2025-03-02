@@ -1,12 +1,18 @@
 import { z } from 'zod';
 
-import { PHONE_NUMBER_OPTIONAL, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
+import {
+	PHONE_NUMBER_OPTIONAL,
+	PHONE_NUMBER_REQUIRED,
+	STRING_NULLABLE,
+	STRING_OPTIONAL,
+	STRING_REQUIRED,
+} from '@/utils/validators';
 
 //* Visitor Schema
 export const PORTFOLIO_VISITOR_SCHEMA = z
 	.object({
 		name: STRING_REQUIRED,
-		mobile: PHONE_NUMBER_OPTIONAL,
+		mobile: STRING_REQUIRED,
 		category: STRING_REQUIRED.default('call_entry'),
 		status: STRING_REQUIRED.default('pending'),
 
@@ -30,13 +36,6 @@ export const PORTFOLIO_VISITOR_SCHEMA = z
 					code: z.ZodIssueCode.custom,
 				});
 			}
-			if (!data.from_where) {
-				ctx.addIssue({
-					path: ['from_where'],
-					message: 'Required',
-					code: z.ZodIssueCode.custom,
-				});
-			}
 		} else if (data.category === 'faq') {
 			if (!data.prev_institution) {
 				ctx.addIssue({
@@ -48,13 +47,6 @@ export const PORTFOLIO_VISITOR_SCHEMA = z
 			if (!data.department) {
 				ctx.addIssue({
 					path: ['department'],
-					message: 'Required',
-					code: z.ZodIssueCode.custom,
-				});
-			}
-			if (!data.through) {
-				ctx.addIssue({
-					path: ['through'],
 					message: 'Required',
 					code: z.ZodIssueCode.custom,
 				});

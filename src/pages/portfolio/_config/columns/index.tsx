@@ -31,6 +31,10 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
+		cell: (info) => {
+			const link = info.row.original.page_link;
+			return <LinkWithRedirect baseUrlNeeded={false} uri={link} title={info.getValue() as string} />;
+		},
 	},
 	{
 		accessorKey: 'short_name',
@@ -146,6 +150,10 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		accessorKey: 'department_name',
 		header: 'Department Name',
 		enableColumnFilter: true,
+		cell: (info) => {
+			const link = info.row.original.page_link;
+			return <LinkWithRedirect baseUrlNeeded={false} uri={link} title={info.getValue() as string} />;
+		},
 	},
 	{
 		accessorKey: 'programs',
@@ -189,7 +197,7 @@ export const botColumns = (): ColumnDef<IBotTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => {
 			const category = botCategories.find((item) => item.value === info.getValue());
-			return <span className='capitalize'>{category?.label ?? ''}</span>;
+			return <LinkWithRedirect uri={`${category?.link}`} title={category?.label as string} />;
 		},
 	},
 	{
@@ -224,7 +232,10 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'department_name',
 		header: 'Department',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => {
+			const link = info.row.original.page_link;
+			return <LinkWithRedirect baseUrlNeeded={false} uri={link} title={info.getValue() as string} />;
+		},
 	},
 	{
 		accessorKey: 'teacher_name',

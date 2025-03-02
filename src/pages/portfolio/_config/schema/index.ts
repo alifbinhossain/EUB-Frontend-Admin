@@ -1,3 +1,4 @@
+import { link } from 'fs';
 import { z } from 'zod';
 
 import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
@@ -114,18 +115,20 @@ export type IRoutine = z.infer<typeof ROUTINE_SCHEMA>;
 //* Department Schema
 export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	page_link: STRING_REQUIRED,
 	short_name: STRING_REQUIRED,
 	faculty_uuid: STRING_REQUIRED,
 	category: STRING_REQUIRED,
-	remarks: STRING_NULLABLE,
+	remarks: STRING_OPTIONAL,
 });
 
 export const PORTFOLIO_DEPARTMENT_NULL: Partial<IPortfolioDepartment> = {
 	name: '',
 	short_name: '',
+	page_link: '',
 	faculty_uuid: '',
 	category: '',
-	remarks: null,
+	remarks: '',
 };
 
 export type IPortfolioDepartment = z.infer<typeof PORTFOLIO_DEPARTMENT_SCHEMA>;

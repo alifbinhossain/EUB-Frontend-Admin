@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom';
 
 import { CLIENT_URL } from '@/lib/secret';
 
-import { buttonVariants } from '../ui/button';
-
 interface ILinkOnlyProps {
 	uri: string;
 	title: string;
+	baseUrlNeeded?: boolean;
 }
 
 export const LinkOnly = ({ uri, title }: ILinkOnlyProps) => {
@@ -16,10 +15,22 @@ export const LinkOnly = ({ uri, title }: ILinkOnlyProps) => {
 		</Link>
 	);
 };
-export const LinkWithRedirect = ({ title, uri }: ILinkOnlyProps) => {
-	return (
-		<Link target='_blank' className='font-medium text-foreground underline hover:text-accent' to={CLIENT_URL + uri}>
-			{title}
-		</Link>
-	);
+export const LinkWithRedirect = ({ title, uri, baseUrlNeeded = true }: ILinkOnlyProps) => {
+	if (baseUrlNeeded) {
+		return (
+			<Link
+				target='_blank'
+				className='font-medium text-foreground underline hover:text-accent'
+				to={CLIENT_URL + uri}
+			>
+				{title}
+			</Link>
+		);
+	} else {
+		return (
+			<Link target='_blank' className='font-medium text-foreground underline hover:text-accent' to={uri}>
+				{title}
+			</Link>
+		);
+	}
 };

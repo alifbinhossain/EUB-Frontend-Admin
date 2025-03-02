@@ -60,13 +60,6 @@ const portfolioRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Routine',
-				path: '/portfolio/routine',
-				element: <Routine />,
-				page_name: 'portfolio__routine',
-				actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
-			},
-			{
 				name: 'Offers',
 				path: '/portfolio/offers',
 				element: <Offers />,
@@ -89,6 +82,13 @@ const portfolioRoutes: IRoute[] = [
 						element: <Info />,
 						page_name: 'portfolio__info',
 						actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
+					},
+					{
+						name: 'Routine',
+						path: '/portfolio/routine',
+						element: <Routine />,
+						page_name: 'portfolio__routine',
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 				],
 			},
