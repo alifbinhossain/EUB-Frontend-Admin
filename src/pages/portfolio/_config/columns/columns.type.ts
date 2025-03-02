@@ -42,6 +42,8 @@ export type IInfoTableData = {
 export type IRoutineTableData = {
 	id: number;
 	uuid: string;
+	page_link: string;
+	faculty_name: string;
 	department_uuid: string;
 	department_name: string;
 	programs: PORTFOLIO_PROGRAM_TYPE;
@@ -63,6 +65,7 @@ export type IFacultyTableData = {
 export type IDepartmentTableData = {
 	id: number;
 	uuid: string;
+	page_link: string;
 	name: string;
 	short_name: string;
 	faculty_uuid: string;
@@ -88,6 +91,7 @@ export type IBotTableData = {
 export type IDepartmentTeachersTableData = {
 	id: number;
 	uuid: string;
+	page_link: string;
 	department_uuid: string;
 	teacher_uuid: string;
 	teacher_name: string;
