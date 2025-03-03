@@ -290,24 +290,37 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 export type IDepartmentTeachers = z.infer<typeof PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA>;
 
 // * News
-export const NEWS_SCHEMA = z.object({
-	title: STRING_REQUIRED,
-	subtitle: STRING_REQUIRED,
-	description: STRING_REQUIRED,
-	content: STRING_REQUIRED,
-	published_date: STRING_REQUIRED,
-	department_uuid: STRING_REQUIRED,
-	remarks: STRING_NULLABLE,
-	cover_image: STRING_REQUIRED.or(z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')),
-	entry: z.array(
-		z.object({
-			uuid: STRING_OPTIONAL,
-			documents: STRING_REQUIRED.or(
-				z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')
-			),
-		})
-	),
-});
+export const NEWS_SCHEMA = z
+	.object({
+		title: STRING_REQUIRED,
+		subtitle: STRING_REQUIRED,
+		description: STRING_REQUIRED,
+		content: STRING_REQUIRED,
+		published_date: STRING_REQUIRED,
+		department_uuid: STRING_OPTIONAL,
+		remarks: STRING_NULLABLE,
+		cover_image: STRING_REQUIRED.or(
+			z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')
+		),
+		is_global: BOOLEAN_REQUIRED,
+		entry: z.array(
+			z.object({
+				uuid: STRING_OPTIONAL,
+				documents: STRING_REQUIRED.or(
+					z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')
+				),
+			})
+		),
+	})
+	.superRefine((data, ctx) => {
+		if (!data.is_global && !data.department_uuid) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'Select a department',
+				path: ['department_uuid'],
+			});
+		}
+	});
 
 export const NEWS_NULL: Partial<INews> = {
 	title: '',
@@ -316,6 +329,7 @@ export const NEWS_NULL: Partial<INews> = {
 	published_date: '',
 	content: '',
 	department_uuid: '',
+	is_global: false,
 	remarks: null,
 };
 

@@ -25,6 +25,8 @@ export const AUTHORITIES_SCHEMA = z.object({
 		'director_coordination',
 		'registrar',
 	]),
+	phone: STRING_REQUIRED,
+	email: STRING_REQUIRED,
 	short_biography: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
@@ -33,6 +35,8 @@ export const AUTHORITIES_NULL: Partial<IAuthorities> = {
 	uuid: '',
 	user_uuid: '',
 	category: undefined,
+	phone: '',
+	email: '',
 	short_biography: '',
 	remarks: '',
 };
