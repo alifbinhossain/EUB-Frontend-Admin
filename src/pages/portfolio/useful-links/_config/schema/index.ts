@@ -297,12 +297,13 @@ export const NEWS_SCHEMA = z
 		description: STRING_REQUIRED,
 		content: STRING_REQUIRED,
 		published_date: STRING_REQUIRED,
+		is_global: BOOLEAN_REQUIRED,
 		department_uuid: STRING_OPTIONAL,
 		remarks: STRING_NULLABLE,
 		cover_image: STRING_REQUIRED.or(
 			z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image')
 		),
-		is_global: BOOLEAN_REQUIRED,
+
 		entry: z.array(
 			z.object({
 				uuid: STRING_OPTIONAL,
@@ -313,7 +314,7 @@ export const NEWS_SCHEMA = z
 		),
 	})
 	.superRefine((data, ctx) => {
-		if (!data.is_global && !data.department_uuid) {
+		if (!data.is_global && data.department_uuid === undefined) {
 			ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				message: 'Select a department',
@@ -328,7 +329,7 @@ export const NEWS_NULL: Partial<INews> = {
 	description: '',
 	published_date: '',
 	content: '',
-	department_uuid: '',
+	department_uuid: undefined,
 	is_global: false,
 	remarks: null,
 };
