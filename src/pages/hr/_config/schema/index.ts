@@ -88,27 +88,16 @@ export const AUTH_SCHEMA = (isUpdate: boolean) => {
 	});
 
 	if (isUpdate) {
-		return baseSchema
-			.extend({
-				pass: STRING_OPTIONAL,
-				repeatPass: STRING_OPTIONAL,
-			})
-			.superRefine((data, ctx) => {
-				if (data.pass !== data.repeatPass) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: 'Passwords do not match',
-						path: ['repeatPass'],
-					});
-				}
-			});
+		return baseSchema.extend({
+			pass: STRING_OPTIONAL,
+			repeatPass: STRING_OPTIONAL,
+		});
 	}
 
 	return baseSchema
 		.extend({
 			pass: PASSWORD,
 			repeatPass: PASSWORD,
-			image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
 		})
 		.superRefine((data, ctx) => {
 			if (data.pass !== data.repeatPass) {

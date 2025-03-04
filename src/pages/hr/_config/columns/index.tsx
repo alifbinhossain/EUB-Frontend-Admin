@@ -117,6 +117,11 @@ export function authColumns({
 			enableColumnFilter: false,
 			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
 		},
+		{
+			accessorKey: 'email',
+			header: 'Email',
+			enableColumnFilter: false,
+		},
 
 		{
 			accessorKey: 'reset_pass_actions',

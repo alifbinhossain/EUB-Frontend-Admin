@@ -31,6 +31,7 @@ const AddOrUpdate: React.FC<IAuthAddOrUpdateProps> = ({
 	const { data: userOptions } = useOtherUser<IFormSelectOption[]>();
 
 	const form = useRHF(AUTH_SCHEMA(isUpdate) as any, AUTH_NULL);
+	console.log(form.formState.errors);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
@@ -52,7 +53,7 @@ const AddOrUpdate: React.FC<IAuthAddOrUpdateProps> = ({
 			// UPDATE ITEM
 			await updateData.mutateAsync({
 				url: `${url}/${updatedData?.uuid}`,
-				updatedData: { ...values, updated_at: getDateTime() },
+				updatedData: { user_uuid: values.user_uuid, remarks: values.remarks, updated_at: getDateTime() },
 				onClose,
 			});
 

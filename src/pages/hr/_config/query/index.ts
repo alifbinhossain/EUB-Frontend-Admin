@@ -23,13 +23,13 @@ export const useHrUsersByUUID = <T>(uuid: string) =>
 export const useHrAuth = <T>(params: IParams) =>
 	useTQuery<T>({
 		queryKey: hrQK.auth(params),
-		url: addUrlParams('/hr/auth', params),
+		url: addUrlParams('/hr/auth-user', params),
 	});
 
 export const useHrAuthByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: hrQK.authByUUID(uuid),
-		url: `/hr/auth/${uuid}`,
+		url: `/hr/auth-user/${uuid}`,
 		enabled: !!uuid,
 	});
 

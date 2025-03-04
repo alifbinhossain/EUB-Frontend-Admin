@@ -153,7 +153,7 @@ const User = () => {
 							updatedData: updateResetPasswordData,
 							setUpdatedData: setUpdateResetPasswordData,
 							updateData,
-							url: `${url}/password/${updateResetPasswordData?.uuid}`,
+							url: `/hr/users/password/${updateResetPasswordData?.uuid}`,
 						}}
 					/>,
 					<PageAssign
@@ -163,7 +163,7 @@ const User = () => {
 							updatedData: updatePageAssignData,
 							setUpdatedData: setUpdatePageAssignData,
 							updateData,
-							url: `${url}/can-access/${updatePageAssignData?.uuid}`,
+							url: `/hr/users/can-access/${updatePageAssignData?.uuid}`,
 						}}
 					/>,
 				])}
