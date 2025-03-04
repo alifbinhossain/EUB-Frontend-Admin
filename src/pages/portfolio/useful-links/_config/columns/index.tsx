@@ -20,11 +20,6 @@ import {
 // * Job Circular Columns
 export const jobCircularColumns = (): ColumnDef<IJobCircularTableData>[] => [
 	{
-		accessorKey: 'id',
-		header: 'ID',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'title',
 		header: 'Title',
 		enableColumnFilter: true,

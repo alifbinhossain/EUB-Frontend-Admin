@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
+import { divide } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAccess from '@/hooks/useAccess';
@@ -170,7 +171,19 @@ export default function NewsEntry() {
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit News' : 'Add News'} form={form} onSubmit={onSubmit}>
-			<CoreForm.Section title='Information' className='flex flex-col'>
+			<CoreForm.Section
+				title='Information'
+				extraHeader={
+					<div className='flex items-center gap-2 text-gray-300'>
+						<FormField
+							control={form.control}
+							name='is_global'
+							render={(props) => <CoreForm.Checkbox label='Global' className='bg-slate-300' {...props} />}
+						/>
+					</div>
+				}
+				className='flex flex-col'
+			>
 				<div className='flex w-full gap-4'>
 					<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
 					<FormField

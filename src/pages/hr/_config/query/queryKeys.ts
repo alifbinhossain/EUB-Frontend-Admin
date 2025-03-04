@@ -13,8 +13,12 @@ export const hrQK = {
 
 	//* user
 	userDefault: () => [...hrQK.all(), 'user'],
-	user: ({ start_date, end_date, status }: IParams) => [...hrQK.userDefault(), start_date, end_date, status],
+	user: () => [...hrQK.userDefault()],
 	userByUUID: (uuid: string) => [...hrQK.userDefault(), uuid],
 	userCanAccess: (uuid: string) => [...hrQK.userDefault(), 'can-access', uuid],
 	userWithAccess: () => [...hrQK.userDefault(), 'users-with-access'],
+	//*auth
+	authDefault: () => [...hrQK.all(), 'auth'],
+	auth: ({ start_date, end_date, status }: IParams) => [...hrQK.all(), 'auth', start_date, end_date, status],
+	authByUUID: (uuid: string) => [...hrQK.authDefault(), uuid],
 };

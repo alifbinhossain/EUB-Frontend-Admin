@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { IRoute } from '@/types';
 
 const User = lazy(() => import('@/pages/hr/user'));
+const Auth = lazy(() => import('@/pages/hr/auth'));
 const Designation = lazy(() => import('@/pages/hr/designation'));
 const Department = lazy(() => import('@/pages/hr/department'));
 
@@ -14,6 +15,13 @@ const HrRoutes: IRoute[] = [
 				path: '/hr/user',
 				element: <User />,
 				page_name: 'admin__user',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Authentication',
+				path: '/hr/auth',
+				element: <Auth />,
+				page_name: 'admin__auth',
 				actions: [
 					'create',
 					'read',
