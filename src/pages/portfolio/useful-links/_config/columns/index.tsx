@@ -98,6 +98,12 @@ export const clubColumns = (): ColumnDef<IClubTableData>[] => [
 // * News
 export const newsColumns = (): ColumnDef<INewsTableData>[] => [
 	{
+		accessorKey: 'is_global',
+		header: 'Global',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
+	},
+	{
 		accessorKey: 'title',
 		header: 'Title',
 		enableColumnFilter: true,
