@@ -50,11 +50,48 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 	if (isUpdate) {
 		return baseSchema
 			.extend({
-				pass: STRING_OPTIONAL,
-				repeatPass: STRING_OPTIONAL,
 				// image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
 				image: z.any(),
 				// image: z.preprocess((value) => (Array.isArray(value) ? value : [value]), z.array(z.instanceof(File))),
+			})
+			.superRefine((data, ctx) => {
+				if (!data.image) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Please upload an image',
+						path: ['image'],
+					});
+				}
+			});
+	}
+
+	return baseSchema.extend({
+		image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+	});
+};
+
+export const USER_NULL: Partial<IUser> = {
+	name: '',
+	email: '',
+	department_uuid: null,
+	designation_uuid: null,
+	phone: null,
+	remarks: null,
+	// image: new File([''], 'filename') as File,
+};
+export type IUser = z.infer<ReturnType<typeof USER_SCHEMA>>;
+//* Auth Schema
+export const AUTH_SCHEMA = (isUpdate: boolean) => {
+	const baseSchema = z.object({
+		user_uuid: STRING_REQUIRED,
+		remarks: STRING_NULLABLE,
+	});
+
+	if (isUpdate) {
+		return baseSchema
+			.extend({
+				pass: STRING_OPTIONAL,
+				repeatPass: STRING_OPTIONAL,
 			})
 			.superRefine((data, ctx) => {
 				if (data.pass !== data.repeatPass) {
@@ -62,14 +99,6 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 						code: z.ZodIssueCode.custom,
 						message: 'Passwords do not match',
 						path: ['repeatPass'],
-					});
-				}
-
-				if (!data.image) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: 'Please upload an image',
-						path: ['image'],
 					});
 				}
 			});
@@ -92,17 +121,13 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 		});
 };
 
-export const USER_NULL: Partial<IUser> = {
-	name: '',
-	email: '',
-	department_uuid: null,
-	designation_uuid: null,
-	phone: null,
+export const AUTH_NULL: Partial<IAuth> = {
+	user_uuid: '',
 	remarks: null,
 	// image: new File([''], 'filename') as File,
 };
 
-export type IUser = z.infer<ReturnType<typeof USER_SCHEMA>>;
+export type IAuth = z.infer<ReturnType<typeof AUTH_SCHEMA>>;
 
 //* Reset Password Schema
 export const RESET_PASSWORD_SCHEMA = z

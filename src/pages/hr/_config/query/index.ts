@@ -6,16 +6,30 @@ import addUrlParams from '@/utils/routes/addUrlParams';
 import { hrQK } from './queryKeys';
 
 // * User
-export const useHrUsers = <T>(params: IParams) =>
+export const useHrUsers = <T>() =>
 	useTQuery<T>({
-		queryKey: hrQK.user(params),
-		url: addUrlParams('/hr/users', params),
+		queryKey: hrQK.user(),
+		url: '/hr/users',
 	});
 
 export const useHrUsersByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: hrQK.userByUUID(uuid),
 		url: `/hr/users/${uuid}`,
+		enabled: !!uuid,
+	});
+
+//* Auth
+export const useHrAuth = <T>(params: IParams) =>
+	useTQuery<T>({
+		queryKey: hrQK.auth(params),
+		url: addUrlParams('/hr/auth', params),
+	});
+
+export const useHrAuthByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: hrQK.authByUUID(uuid),
+		url: `/hr/auth/${uuid}`,
 		enabled: !!uuid,
 	});
 

@@ -68,8 +68,6 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 		formData.append('created_at', getDateTime());
 		formData.append('created_by', user?.uuid || '');
 		formData.append('uuid', nanoid());
-		formData.append('pass', values.pass || '');
-		formData.append('repeatPass', values.repeatPass || '');
 
 		await imagePostData.mutateAsync({
 			url,
@@ -123,20 +121,6 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
 			</div>
-			{!isUpdate && (
-				<div className='grid grid-cols-2 gap-4'>
-					<FormField
-						control={form.control}
-						name='pass'
-						render={(props) => <CoreForm.Input label='Password' type={'password'} {...props} />}
-					/>
-					<FormField
-						control={form.control}
-						name='repeatPass'
-						render={(props) => <CoreForm.Input label='Repeat Password' type={'password'} {...props} />}
-					/>
-				</div>
-			)}
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}

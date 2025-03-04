@@ -1,4 +1,4 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 import PageAssign from '@/components/buttons/page-assign';
 import ResetPassword from '@/components/buttons/reset-password';
@@ -30,7 +30,58 @@ export const designationColumns = (): ColumnDef<IDesignationTableData>[] => [
 ];
 
 // User Columns
-export function userColumns({
+export function userColumns(): ColumnDef<IUserTableData>[] {
+	return [
+		{
+			accessorKey: 'image',
+			header: 'Image',
+			enableColumnFilter: false,
+			cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+		},
+
+		{
+			accessorKey: 'name',
+			header: 'Name',
+			enableColumnFilter: false,
+			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
+		},
+		{
+			accessorKey: 'phone',
+			header: 'Phone',
+			enableColumnFilter: false,
+			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
+		},
+		{
+			accessorKey: 'email',
+			header: 'Email',
+			enableColumnFilter: false,
+			cell: (info) => info.getValue(),
+		},
+		{
+			accessorKey: 'office',
+			header: 'Office',
+			enableColumnFilter: false,
+			cell: (info) => info.getValue(),
+		},
+		{
+			accessorKey: 'department_name',
+			header: 'Department',
+			enableColumnFilter: false,
+			cell: (info) => {
+				const { department_name, designation_name } = info.row.original;
+
+				return (
+					<div className='flex flex-col'>
+						<span className='capitalize'>{department_name}</span>
+						<span className='text-xs capitalize text-gray-400'>{designation_name}</span>
+					</div>
+				);
+			},
+		},
+	];
+}
+
+export function authColumns({
 	pageAssignAccess,
 	resetPasswordAccess,
 	statusAccess,
@@ -65,39 +116,6 @@ export function userColumns({
 			header: 'Name',
 			enableColumnFilter: false,
 			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
-		},
-		{
-			accessorKey: 'phone',
-			header: 'Phone',
-			enableColumnFilter: false,
-			cell: (info) => <span className='capitalize'>{info.getValue<string>()}</span>,
-		},
-		{
-			accessorKey: 'email',
-			header: 'Email',
-			enableColumnFilter: false,
-			cell: (info) => info.getValue(),
-		},
-		{
-			accessorKey: 'office',
-			header: 'Email',
-			enableColumnFilter: false,
-			cell: (info) => info.getValue(),
-		},
-		{
-			accessorKey: 'department_name',
-			header: 'Department',
-			enableColumnFilter: false,
-			cell: (info) => {
-				const { department_name, designation_name } = info.row.original;
-
-				return (
-					<div className='flex flex-col'>
-						<span className='capitalize'>{department_name}</span>
-						<span className='text-xs capitalize text-gray-400'>{designation_name}</span>
-					</div>
-				);
-			},
 		},
 
 		{
