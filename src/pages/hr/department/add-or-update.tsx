@@ -27,7 +27,7 @@ const AddOrUpdate: React.FC<IDepartmentAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { invalidateQuery: invalidateUsers } = useHrUsers({});
+	const { invalidateQuery: invalidateUsers } = useHrUsers();
 	const { invalidateQuery: invalidateDesignations } = useHrDesignations();
 	const { data } = useHrDepartmentsByUUID<IDepartmentTableData>(updatedData?.uuid as string);
 	const { invalidateQuery: invalidateUserQuery } = useOtherDepartment();
