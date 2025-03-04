@@ -42,7 +42,7 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 		department_uuid: STRING_NULLABLE,
 		designation_uuid: STRING_NULLABLE,
 		email: FORTUNE_ZIP_EMAIL_PATTERN,
-		phone: PHONE_NUMBER_NULLABLE,
+		phone: STRING_NULLABLE,
 		office: STRING_REQUIRED,
 		remarks: STRING_NULLABLE,
 	});
@@ -75,7 +75,7 @@ export const USER_NULL: Partial<IUser> = {
 	email: '',
 	department_uuid: null,
 	designation_uuid: null,
-	phone: null,
+	phone: '',
 	remarks: null,
 	// image: new File([''], 'filename') as File,
 };
