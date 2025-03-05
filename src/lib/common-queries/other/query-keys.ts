@@ -23,6 +23,9 @@ const otherQK = {
 
 	//* Category
 	category: () => [...otherQK.all(), 'category'],
+
+	//* Sub Category
+	subCategory: () => [...otherQK.all(), 'subCategory'],
 };
 
 export default otherQK;

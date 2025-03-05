@@ -59,3 +59,10 @@ export const useOtherCategory = <T>() =>
 		queryKey: otherQK.category(),
 		url: `/other/procure/category/value/label`,
 	});
+
+// * GET OTHER SUB CATEGORY
+export const useOtherSubCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.subCategory(),
+		url: `/other/procure/sub-category/value/label`,
+	});

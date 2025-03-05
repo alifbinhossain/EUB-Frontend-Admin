@@ -4,8 +4,8 @@ export const type = [
 		value: 'items',
 	},
 	{
-		label: 'Services',
-		value: 'services',
+		label: 'Service',
+		value: 'service',
 	},
 	{
 		label: 'Range 1',
