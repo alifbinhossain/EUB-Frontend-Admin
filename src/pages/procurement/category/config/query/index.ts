@@ -1,18 +1,18 @@
 import useTQuery from '@/hooks/useTQuery';
 
-import { inquiryQK } from './queryKeys';
+import { categoryQK } from './queryKeys';
 
 // ? INQUIRY
 // * ALL Department
-export const useVisitor = <T>() =>
+export const useCategory = <T>() =>
 	useTQuery<T>({
-		queryKey: inquiryQK.visitor(),
-		url: `/inquire/visitor`,
+		queryKey: categoryQK.category(),
+		url: `/procure/category`,
 	});
 
-export const useVisitorByUUID = <T>(uuid: string) =>
+export const useCategoryByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
-		queryKey: inquiryQK.visitorByUUID(uuid),
-		url: `/inquire/visitor/${uuid}`,
+		queryKey: categoryQK.categoryByUUID(uuid),
+		url: `/procure/category/${uuid}`,
 		enabled: !!uuid,
 	});

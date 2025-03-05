@@ -20,6 +20,9 @@ const otherQK = {
 	programs: () => [...otherQK.all(), 'programs'],
 	//* Departments
 	departments: (query: string) => [...otherQK.all(), 'departments', ...(query ? [query] : [])],
+
+	//* Category
+	category: () => [...otherQK.all(), 'category'],
 };
 
 export default otherQK;

@@ -2,19 +2,21 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useCategoryByUUID } from './config/query';
-import { CATEGORY_NULL, CATEGORY_SCHEMA, ICategory } from './config/schema';
-import { ICategoryAddOrUpdateProps } from './config/types';
-import { names } from './utils';
+import { useSubCategoryByUUID } from './config/query';
+import { ISubCategory, SUB_CATEGORY_NULL, SUB_CATEGORY_SCHEMA } from './config/schema';
+import { ISubCategoryAddOrUpdateProps } from './config/types';
+import { type } from './utils';
 
-const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -26,13 +28,14 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useCategoryByUUID(updatedData?.uuid as string);
+	const { data } = useSubCategoryByUUID(updatedData?.uuid as string);
+	const { data: category } = useOtherCategory<IFormSelectOption[]>();
 
-	const form = useRHF(CATEGORY_SCHEMA, CATEGORY_NULL);
+	const form = useRHF(SUB_CATEGORY_SCHEMA, SUB_CATEGORY_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(CATEGORY_NULL);
+		form.reset(SUB_CATEGORY_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -44,8 +47,9 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
+	console.log(form.formState.errors);
 	// Submit handler
-	async function onSubmit(values: ICategory) {
+	async function onSubmit(values: ISubCategory) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -75,7 +79,7 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Categories' : 'Add Categories'}
+			title={isUpdate ? 'Update Department' : 'Add Department'}
 			form={form}
 			onSubmit={onSubmit}
 		>
@@ -84,17 +88,36 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 				name='index'
 				render={(props) => <CoreForm.Input {...props} type='number' />}
 			/>
+			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
-				name='name'
+				name='category_uuid'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Name' placeholder='Select names' options={names!} {...props} />
+					<CoreForm.ReactSelect
+						label='Category'
+						placeholder='Select category'
+						options={category!}
+						{...props}
+					/>
 				)}
 			/>
 			<FormField
 				control={form.control}
-				name='is_capital'
-				render={(props) => <CoreForm.Checkbox label='Is Capital' {...props} />}
+				name='type'
+				render={(props) => (
+					<CoreForm.ReactSelect label='Type' placeholder='Select type' options={type!} {...props} />
+				)}
+			/>
+
+			<FormField
+				control={form.control}
+				name='min_amount'
+				render={(props) => <CoreForm.Input {...props} type='number' />}
+			/>
+			<FormField
+				control={form.control}
+				name='min_quotation'
+				render={(props) => <CoreForm.Input {...props} type='number' />}
 			/>
 
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />

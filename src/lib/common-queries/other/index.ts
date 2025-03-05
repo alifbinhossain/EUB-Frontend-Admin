@@ -52,3 +52,10 @@ export const useOtherDepartments = <T>(query: string = '') =>
 			? `/other/portfolio/department/value/label?access=${query}`
 			: `/other/portfolio/department/value/label`,
 	});
+
+// * GET OTHER CATEGORY
+export const useOtherCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.category(),
+		url: `/other/procure/category/value/label`,
+	});

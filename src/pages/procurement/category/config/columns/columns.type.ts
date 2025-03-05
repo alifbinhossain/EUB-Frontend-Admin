@@ -1,6 +1,6 @@
 // * Visitor
 export type ICategoryTableData = {
-	id: number;
+	index: number;
 	uuid: string;
 	name: string;
 	is_capital: boolean;
