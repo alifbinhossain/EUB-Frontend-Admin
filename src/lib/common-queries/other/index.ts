@@ -66,3 +66,10 @@ export const useOtherSubCategory = <T>() =>
 		queryKey: otherQK.subCategory(),
 		url: `/other/procure/sub-category/value/label`,
 	});
+
+// * GET OTHER PURCHASE COST CENTER
+export const useOtherPurchaseCostCenter = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.purchaseCostCenter(),
+		url: `/other/procure/purchase-cost-center/value/label`,
+	});

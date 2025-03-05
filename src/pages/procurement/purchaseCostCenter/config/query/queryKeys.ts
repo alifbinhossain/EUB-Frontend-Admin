@@ -1,7 +1,7 @@
-export const purchaseCostCenter = {
-	all: () => ['subcategory'],
+export const purchaseCostCenterQK = {
+	all: () => ['purchase-cost-center'],
 
 	// * category
-	purchase: () => [...purchaseCostCenter.all(), 'subcategories'],
-	purchaseByUUID: (uuid: string) => [...purchaseCostCenter.purchase(), uuid],
+	purchase: () => [...purchaseCostCenterQK.all(), 'purchase-cost-centers'],
+	purchaseByUUID: (uuid: string) => [...purchaseCostCenterQK.purchase(), uuid],
 };

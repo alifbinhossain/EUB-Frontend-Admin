@@ -4,6 +4,7 @@ import { IRoute } from '@/types';
 const Category = lazy(() => import('@/pages/procurement/category'));
 const SubCategory = lazy(() => import('@/pages/procurement/subcategory'));
 const PurchaseCostCenter = lazy(() => import('@/pages/procurement/purchaseCostCenter'));
+const Item = lazy(() => import('@/pages/procurement/item'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -28,6 +29,13 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/purchase-cost-center',
 				element: <PurchaseCostCenter />,
 				page_name: 'procurement__purchase_cost_center',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item',
+				path: '/procurement/item',
+				element: <Item />,
+				page_name: 'procurement__item',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

@@ -7,16 +7,15 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherSubCategory } from '@/lib/common-queries/other';
+import { useOtherPurchaseCostCenter } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { usePurchaseCostCenterByUUID } from './config/query';
-import { IPurchaseCostCenter, PURCHASE_COST_CENTER_NULL, PURCHASE_COST_CENTER_SCHEMA } from './config/schema';
-import { IPurchaseCostCenterAddOrUpdateProps } from './config/types';
-import { type } from './utils';
+import { useItemByUUID } from './config/query';
+import { IItem, ITEM_NULL, ITEM_SCHEMA } from './config/schema';
+import { IItemAddOrUpdateProps } from './config/types';
 
-const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<IItemAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -28,14 +27,14 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = usePurchaseCostCenterByUUID(updatedData?.uuid as string);
-	const { data: subCategory } = useOtherSubCategory<IFormSelectOption[]>();
+	const { data } = useItemByUUID(updatedData?.uuid as string);
+	const { data: purchases } = useOtherPurchaseCostCenter<IFormSelectOption[]>();
 
-	const form = useRHF(PURCHASE_COST_CENTER_SCHEMA, PURCHASE_COST_CENTER_NULL);
+	const form = useRHF(ITEM_SCHEMA, ITEM_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(PURCHASE_COST_CENTER_NULL);
+		form.reset(ITEM_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -49,7 +48,7 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 
 	console.log(form.formState.errors);
 	// Submit handler
-	async function onSubmit(values: IPurchaseCostCenter) {
+	async function onSubmit(values: IItem) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -79,7 +78,7 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Purchase Cost Center' : 'Add Purchase Cost Center'}
+			title={isUpdate ? 'Update Item' : 'Add Item'}
 			form={form}
 			onSubmit={onSubmit}
 		>
@@ -91,31 +90,25 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
-				name='sub_category_uuid'
+				name='purchase_cost_center_uuid'
 				render={(props) => (
 					<CoreForm.ReactSelect
-						label='Sub Category'
-						placeholder='Select sub-category'
-						options={subCategory!}
+						label='Purchase Cost Center'
+						placeholder='Select purchase cost center'
+						options={purchases!}
 						{...props}
 					/>
 				)}
 			/>
 			<FormField
 				control={form.control}
-				name='from'
-				render={(props) => <CoreForm.DatePicker label='From' placeholder='Select from' {...props} />}
-			/>
-			<FormField
-				control={form.control}
-				name='to'
-				render={(props) => <CoreForm.DatePicker label='To' placeholder='Select to' {...props} />}
-			/>
-
-			<FormField
-				control={form.control}
-				name='budget'
+				name='vendor_price'
 				render={(props) => <CoreForm.Input {...props} type='number' />}
+			/>
+			<FormField
+				control={form.control}
+				name='price_validity'
+				render={(props) => <CoreForm.DatePicker label='To' placeholder='Select to' {...props} />}
 			/>
 
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />

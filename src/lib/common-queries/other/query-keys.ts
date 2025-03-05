@@ -26,6 +26,9 @@ const otherQK = {
 
 	//* Sub Category
 	subCategory: () => [...otherQK.all(), 'subCategory'],
+
+	//* Purchase Cost Center
+	purchaseCostCenter: () => [...otherQK.all(), 'purchaseCostCenter'],
 };
 
 export default otherQK;
