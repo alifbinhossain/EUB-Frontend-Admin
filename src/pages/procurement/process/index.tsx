@@ -15,7 +15,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Process = () => {
 	const { data, isLoading, url, deleteData, updateData, refetch } = useProcess<IProcessTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Category', url, 'procurement__process'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Procurement/Process', url, 'procurement__process'), [url]);
 	const pageAccess = useAccess(pageInfo.getTab() as string) as string[];
 	const itemsAccess = pageAccess.includes('click_items');
 	const serviceAccess = pageAccess.includes('click_service');
@@ -36,57 +36,57 @@ const Process = () => {
 		});
 	};
 	const handleItems = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.items ? false : true;
+		const items = row?.original?.items ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { items, updated_at },
 		});
 	};
 	const handleService = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.service ? false : true;
+		const service = row?.original?.service ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { service, updated_at },
 		});
 	};
 	const handleRange1 = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.range_1 ? false : true;
+		const range_1 = row?.original?.range_1 ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { range_1, updated_at },
 		});
 	};
 	const handleRange2 = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.range_2 ? false : true;
+		const range_2 = row?.original?.range_2 ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { range_2, updated_at },
 		});
 	};
 	const handleRange3 = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.range_3 ? false : true;
+		const range_3 = row?.original?.range_3 ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { range_3, updated_at },
 		});
 	};
 	const handleRange4 = async (row: Row<IProcessTableData>) => {
-		const status = row?.original?.range_4 ? false : true;
+		const range_4 = row?.original?.range_4 ? false : true;
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
 			url: `${url}/${row?.original?.uuid}`,
-			updatedData: { status, updated_at },
+			updatedData: { range_4, updated_at },
 		});
 	};
 	// Table Columns

@@ -63,7 +63,7 @@ export const processColumns = ({
 	},
 	{
 		accessorKey: 'service',
-		header: 'Status',
+		header: 'Service',
 		enableColumnFilter: false,
 		cell: (info) => {
 			return <Switch checked={Number(info.getValue()) === 1} onCheckedChange={() => handleService(info.row)} />;
