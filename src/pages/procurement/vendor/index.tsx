@@ -15,7 +15,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Vendor = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useVendor<IVendorTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Vendor', url, 'procurement__vendor'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Procurement/Vendor', url, 'procurement__vendor'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

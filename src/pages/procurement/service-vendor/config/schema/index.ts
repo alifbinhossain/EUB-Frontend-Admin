@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
+import { BOOLEAN_REQUIRED, STRING_NULLABLE, STRING_REQUIRED } from '@/utils/validators';
 
 //* Visitor Schema
 export const SERVICE_VENDOR_SCHEMA = z.object({

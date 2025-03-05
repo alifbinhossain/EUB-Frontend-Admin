@@ -1,8 +1,6 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 
 import { Switch } from '@/components/ui/switch';
-
-import { cn } from '@/lib/utils';
 
 import { IProcessTableData } from './columns.type';
 
@@ -21,12 +19,12 @@ export const processColumns = ({
 	range3Access,
 	range4Access,
 }: {
-	handleItems: (row: any) => void;
-	handleService: (row: any) => void;
-	handleRange1: (row: any) => void;
-	handleRange2: (row: any) => void;
-	handleRange3: (row: any) => void;
-	handleRange4: (row: any) => void;
+	handleItems: (row: Row<IProcessTableData>) => void;
+	handleService: (row: Row<IProcessTableData>) => void;
+	handleRange1: (row: Row<IProcessTableData>) => void;
+	handleRange2: (row: Row<IProcessTableData>) => void;
+	handleRange3: (row: Row<IProcessTableData>) => void;
+	handleRange4: (row: Row<IProcessTableData>) => void;
 	itemsAccess: boolean;
 	serviceAccess: boolean;
 	range1Access: boolean;

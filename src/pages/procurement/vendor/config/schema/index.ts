@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { STRING_NULLABLE, STRING_OPTIONAL, STRING_REQUIRED } from '@/utils/validators';
+import { STRING_NULLABLE, STRING_REQUIRED } from '@/utils/validators';
 
 //* Visitor Schema
 export const VENDOR_SCHEMA = z.object({
