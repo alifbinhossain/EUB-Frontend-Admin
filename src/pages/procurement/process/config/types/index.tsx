@@ -7,6 +7,6 @@ import '../columns/columns.type';
 import { IProcessTableData } from '../columns/columns.type';
 
 //* Visitor
-export interface IVisitorAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+export interface IProcessAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IProcessTableData | null;
 }
