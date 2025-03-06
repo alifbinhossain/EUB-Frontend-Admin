@@ -16,12 +16,8 @@ interface IGenerateFieldDefsProps {
 	isUpdate: boolean;
 }
 
-const useGenerateFieldDefs = ({ data, copy, remove, isUpdate }: IGenerateFieldDefsProps): FieldDef[] => {
+const useGenerateFieldDefs = ({ data, copy, remove }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
-
-	const filteredVendors = vendorList?.filter(
-		(item) => !data.vendors.map((vendor) => vendor.vendor_uuid).includes(item.value as string)
-	);
 
 	return [
 		{
@@ -30,6 +26,8 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate }: IGenerateFieldDe
 			type: 'select',
 			placeholder: 'Select Vendor',
 			options: vendorList || [],
+			unique: true,
+			excludeOptions: data.vendors.map((vendor) => vendor.vendor_uuid) || [],
 		},
 		{
 			header: 'Active',

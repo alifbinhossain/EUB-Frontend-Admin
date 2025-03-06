@@ -136,6 +136,8 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 																	options={fieldDef.options}
 																	placeholder={fieldDef.placeholder}
 																	disableLabel
+																	unique={fieldDef.unique}
+																	excludeOptions={fieldDef.excludeOptions}
 																	{...props}
 																/>
 															)}

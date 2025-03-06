@@ -209,7 +209,9 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='price_validity'
-					render={(props) => <CoreForm.DatePicker label='To' placeholder='Select to' {...props} />}
+					render={(props) => (
+						<CoreForm.DatePicker label='Price Validity' placeholder='Select to' {...props} />
+					)}
 				/>
 
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />

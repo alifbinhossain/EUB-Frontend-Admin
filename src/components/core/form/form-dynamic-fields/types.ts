@@ -28,6 +28,8 @@ type FieldSelect = {
 	type: 'select';
 	placeholder?: string;
 	options: IFormSelectOption[];
+	excludeOptions?: string[];
+	unique?: boolean;
 };
 
 type FieldJoinInputUnit = {

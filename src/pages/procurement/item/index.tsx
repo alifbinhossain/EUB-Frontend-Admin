@@ -10,7 +10,6 @@ import { itemColumns } from './config/columns';
 import { IItemTableData } from './config/columns/columns.type';
 import { useItem } from './config/query';
 
-const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
@@ -64,18 +63,6 @@ const Designation = () => {
 				handleRefetch={refetch}
 			>
 				{renderSuspenseModals([
-					<AddOrUpdate
-						{...{
-							url,
-							open: isOpenAddModal,
-							setOpen: setIsOpenAddModal,
-							updatedData,
-							setUpdatedData,
-							postData,
-							updateData,
-						}}
-					/>,
-
 					<DeleteModal
 						{...{
 							deleteItem,

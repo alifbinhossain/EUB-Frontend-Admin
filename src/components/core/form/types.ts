@@ -54,6 +54,8 @@ export interface FormReactSelectProps {
 	placeholder?: string;
 	optional?: boolean;
 	options: IFormSelectOption[];
+	unique?: boolean;
+	excludeOptions?: string[];
 	isDisabled?: boolean;
 	disableLabel?: boolean;
 	isMulti?: boolean;
