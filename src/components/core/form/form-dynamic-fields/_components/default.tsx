@@ -88,6 +88,15 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															)}
 														/>
 													)}
+													{fieldDef.type === 'checkbox' && (
+														<FormField
+															control={form.control}
+															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															render={(props) => (
+																<CoreForm.Checkbox disableLabel {...props} />
+															)}
+														/>
+													)}
 
 													{fieldDef.type === 'number' && (
 														<FormField

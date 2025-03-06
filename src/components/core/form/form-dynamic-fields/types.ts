@@ -43,6 +43,12 @@ type FieldImage = {
 	isUpdate?: boolean;
 };
 
+type FieldCheckbox = {
+	type: 'checkbox';
+	placeholder?: string;
+	isUpdate?: boolean;
+};
+
 export type FieldDef = {
 	header: string;
 	accessorKey: string;
@@ -58,6 +64,7 @@ export type FieldDef = {
 	| FieldJoinInputUnit
 	| FieldTextArea
 	| FieldImage
+	| FieldCheckbox
 );
 
 export interface DynamicFieldsProps {

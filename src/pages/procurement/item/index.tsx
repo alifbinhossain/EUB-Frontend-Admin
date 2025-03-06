@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import { useNavigate } from 'react-router-dom';
 
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -13,6 +14,7 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
+	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
@@ -21,13 +23,16 @@ const Designation = () => {
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
 	const handleCreate = () => {
-		setIsOpenAddModal(true);
+		// setIsOpenAddModal(true);
+		navigate('/procurement/item/create');
 	};
 
 	const [updatedData, setUpdatedData] = useState<IItemTableData | null>(null);
 	const handleUpdate = (row: Row<IItemTableData>) => {
-		setUpdatedData(row.original);
-		setIsOpenAddModal(true);
+		// setUpdatedData(row.original);
+		// setIsOpenAddModal(true);
+
+		navigate(`/procurement/item/${row.original.uuid}/update`);
 	};
 
 	// Delete Modal state

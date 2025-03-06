@@ -5,6 +5,7 @@ const Category = lazy(() => import('@/pages/procurement/category'));
 const SubCategory = lazy(() => import('@/pages/procurement/subcategory'));
 const PurchaseCostCenter = lazy(() => import('@/pages/procurement/purchaseCostCenter'));
 const Item = lazy(() => import('@/pages/procurement/item'));
+const ItemEntry = lazy(() => import('@/pages/procurement/item/entry'));
 const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const GeneralNote = lazy(() => import('@/pages/procurement/general-note'));
@@ -39,6 +40,22 @@ const procurementRoutes: IRoute[] = [
 				name: 'Item',
 				path: '/procurement/item',
 				element: <Item />,
+				page_name: 'procurement__item',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Entry',
+				path: '/procurement/item/create',
+				element: <ItemEntry />,
+				hidden: true,
+				page_name: 'procurement__item',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Update',
+				path: '/procurement/item/:uuid/update',
+				element: <ItemEntry />,
+				hidden: true,
 				page_name: 'procurement__item',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
