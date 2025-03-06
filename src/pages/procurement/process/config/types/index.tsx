@@ -4,9 +4,9 @@ import { AxiosError } from 'axios';
 
 import '../columns/columns.type';
 
-import { IVisitorTableData } from '../columns/columns.type';
+import { IProcessTableData } from '../columns/columns.type';
 
 //* Visitor
-export interface IVisitorAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: IVisitorTableData | null;
+export interface IProcessAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IProcessTableData | null;
 }
