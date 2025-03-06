@@ -52,3 +52,24 @@ export const useOtherDepartments = <T>(query: string = '') =>
 			? `/other/portfolio/department/value/label?access=${query}`
 			: `/other/portfolio/department/value/label`,
 	});
+
+// * GET OTHER CATEGORY
+export const useOtherCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.category(),
+		url: `/other/procure/category/value/label`,
+	});
+
+// * GET OTHER SUB CATEGORY
+export const useOtherSubCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.subCategory(),
+		url: `/other/procure/sub-category/value/label`,
+	});
+
+// * GET OTHER PURCHASE COST CENTER
+export const useOtherPurchaseCostCenter = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.purchaseCostCenter(),
+		url: `/other/procure/purchase-cost-center/value/label`,
+	});

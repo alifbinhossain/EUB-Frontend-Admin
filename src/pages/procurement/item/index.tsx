@@ -5,17 +5,17 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { categoryColumns } from './config/columns';
-import { ICategoryTableData } from './config/columns/columns.type';
-import { useCategory } from './config/query';
+import { itemColumns } from './config/columns';
+import { IItemTableData } from './config/columns/columns.type';
+import { useItem } from './config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useCategory<ICategoryTableData[]>();
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Category', url, 'procurement__category'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -24,8 +24,8 @@ const Designation = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ICategoryTableData | null>(null);
-	const handleUpdate = (row: Row<ICategoryTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IItemTableData | null>(null);
+	const handleUpdate = (row: Row<IItemTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -36,7 +36,7 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ICategoryTableData>) => {
+	const handleDelete = (row: Row<IItemTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
@@ -44,7 +44,7 @@ const Designation = () => {
 	};
 
 	// Table Columns
-	const columns = categoryColumns();
+	const columns = itemColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

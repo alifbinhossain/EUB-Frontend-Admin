@@ -4,9 +4,9 @@ import { AxiosError } from 'axios';
 
 import '../columns/columns.type';
 
-import { ICategoryTableData } from '../columns/columns.type';
+import { ISubCategoryTableData } from '../columns/columns.type';
 
-//* Category
-export interface ICategoryAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: ICategoryTableData | null;
+//* Visitor
+export interface ISubCategoryAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: ISubCategoryTableData | null;
 }

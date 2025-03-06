@@ -5,17 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { categoryColumns } from './config/columns';
-import { ICategoryTableData } from './config/columns/columns.type';
-import { useCategory } from './config/query';
+import { subCategoryColumns } from './config/columns';
+import { ISubCategoryTableData } from './config/columns/columns.type';
+import { useSubCategory } from './config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useCategory<ICategoryTableData[]>();
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
+		useSubCategory<ISubCategoryTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Category', url, 'procurement__category'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Sub-Category', url, 'procurement__subcategory'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -24,8 +25,8 @@ const Designation = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ICategoryTableData | null>(null);
-	const handleUpdate = (row: Row<ICategoryTableData>) => {
+	const [updatedData, setUpdatedData] = useState<ISubCategoryTableData | null>(null);
+	const handleUpdate = (row: Row<ISubCategoryTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -36,7 +37,7 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ICategoryTableData>) => {
+	const handleDelete = (row: Row<ISubCategoryTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
@@ -44,7 +45,7 @@ const Designation = () => {
 	};
 
 	// Table Columns
-	const columns = categoryColumns();
+	const columns = subCategoryColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

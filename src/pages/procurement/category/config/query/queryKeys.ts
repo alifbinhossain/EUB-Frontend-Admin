@@ -1,7 +1,7 @@
-export const inquiryQK = {
-	all: () => ['inquiry'],
+export const categoryQK = {
+	all: () => ['category'],
 
-	// * visitor
-	visitor: () => [...inquiryQK.all(), 'visitor'],
-	visitorByUUID: (uuid: string) => [...inquiryQK.visitor(), uuid],
+	// * category
+	category: () => [...categoryQK.all(), 'categories'],
+	categoryByUUID: (uuid: string) => [...categoryQK.category(), uuid],
 };
