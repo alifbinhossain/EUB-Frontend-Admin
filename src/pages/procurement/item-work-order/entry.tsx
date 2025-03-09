@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -171,6 +172,11 @@ const Entry = () => {
 				created_by: user?.uuid,
 				uuid: nanoid(),
 			};
+
+			if (item_work_order_entry.filter((entry) => entry.quantity > 0).length === 0) {
+				toast.warning('please add at least one item entry');
+				return;
+			}
 
 			postData
 				.mutateAsync({
