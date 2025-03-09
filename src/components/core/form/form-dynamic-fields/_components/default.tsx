@@ -82,6 +82,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 																<CoreForm.Input
 																	type={'text'}
 																	disableLabel
+																	disabled={fieldDef.disabled}
 																	placeholder={fieldDef.placeholder}
 																	{...props}
 																/>
@@ -106,6 +107,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 																<CoreForm.Input
 																	type='number'
 																	disableLabel
+																	disabled={fieldDef.disabled}
 																	placeholder={fieldDef.placeholder}
 																	{...props}
 																/>

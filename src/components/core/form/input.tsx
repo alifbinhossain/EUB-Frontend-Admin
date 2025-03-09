@@ -45,6 +45,7 @@ const FormInput: React.FC<FormInputProps> = ({
 						className={cn(className)}
 						placeholder={placeholder}
 						icon={icon}
+						disabled={disabled}
 						{...field}
 						value={field.value === null ? '' : field.value}
 						onBlur={(e) => {

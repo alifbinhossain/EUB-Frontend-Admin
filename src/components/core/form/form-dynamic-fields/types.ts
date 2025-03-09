@@ -14,6 +14,7 @@ type FieldText = {
 	type: 'text';
 	// inputType?: 'text' | 'number';
 	placeholder?: string;
+	disabled?: boolean;
 };
 type FieldTextArea = {
 	type: 'textarea';
@@ -22,6 +23,7 @@ type FieldTextArea = {
 type FieldNumber = {
 	type: 'number';
 	placeholder?: string;
+	disabled?: boolean;
 };
 
 type FieldSelect = {
