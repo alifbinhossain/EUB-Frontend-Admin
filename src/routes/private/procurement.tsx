@@ -5,10 +5,13 @@ const Category = lazy(() => import('@/pages/procurement/category'));
 const SubCategory = lazy(() => import('@/pages/procurement/subcategory'));
 const PurchaseCostCenter = lazy(() => import('@/pages/procurement/purchaseCostCenter'));
 const Item = lazy(() => import('@/pages/procurement/item'));
+const ItemEntry = lazy(() => import('@/pages/procurement/item/entry'));
 const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const GeneralNote = lazy(() => import('@/pages/procurement/general-note'));
 const ServiceVendor = lazy(() => import('@/pages/procurement/service-vendor'));
+const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
+const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -40,6 +43,22 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/item',
 				element: <Item />,
 				page_name: 'procurement__item',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Entry',
+				path: '/procurement/item/create',
+				element: <ItemEntry />,
+				hidden: true,
+				page_name: 'procurement__item_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Update',
+				path: '/procurement/item/:uuid/update',
+				element: <ItemEntry />,
+				hidden: true,
+				page_name: 'procurement__item_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
@@ -77,6 +96,29 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/service-vendor',
 				element: <ServiceVendor />,
 				page_name: 'procurement__service_vendor',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Work Order',
+				path: '/procurement/item-work-order',
+				element: <ItemWorkOrder />,
+				page_name: 'procurement__item_work_order',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Work Order Entry',
+				path: '/procurement/item-work-order/create',
+				element: <ItemWorkOrderEntry />,
+				hidden: true,
+				page_name: 'procurement__item_work_order_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item Work Order Update',
+				path: '/procurement/item-work-order/:uuid/update',
+				element: <ItemWorkOrderEntry />,
+				hidden: true,
+				page_name: 'procurement__item_work_order_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 		],

@@ -6,32 +6,25 @@ import { useNavigate } from 'react-router-dom';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { itemColumns } from './config/columns';
-import { IItemTableData } from './config/columns/columns.type';
-import { useItem } from './config/query';
+import { itemWorkOrderEntryColumns } from './config/columns';
+import { IItemWorkOrderTableData } from './config/columns/columns.type';
+import { useItemWordOrder } from './config/query';
 
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
 	const navigate = useNavigate();
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>();
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
+		useItemWordOrder<IItemWorkOrderTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
-
-	// Add/Update Modal state
-	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+	const pageInfo = useMemo(() => new PageInfo('Item Work Order', url, 'procurement__item_work_order'), [url]);
 
 	const handleCreate = () => {
-		// setIsOpenAddModal(true);
-		navigate('/procurement/item/create');
+		navigate('/procurement/item-work-order/create');
 	};
 
-	const [updatedData, setUpdatedData] = useState<IItemTableData | null>(null);
-	const handleUpdate = (row: Row<IItemTableData>) => {
-		// setUpdatedData(row.original);
-		// setIsOpenAddModal(true);
-
-		navigate(`/procurement/item/${row.original.uuid}/update`);
+	const handleUpdate = (row: Row<IItemWorkOrderTableData>) => {
+		navigate(`/procurement/item-work-order/${row.original.uuid}/update`);
 	};
 
 	// Delete Modal state
@@ -40,15 +33,15 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IItemTableData>) => {
+	const handleDelete = (row: Row<IItemWorkOrderTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.uuid,
 		});
 	};
 
 	// Table Columns
-	const columns = itemColumns();
+	const columns = itemWorkOrderEntryColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

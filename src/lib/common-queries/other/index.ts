@@ -73,3 +73,10 @@ export const useOtherPurchaseCostCenter = <T>() =>
 		queryKey: otherQK.purchaseCostCenter(),
 		url: `/other/procure/purchase-cost-center/value/label`,
 	});
+
+// * GET OTHER VENDOR
+export const useOtherVendor = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.vendor(),
+		url: `/other/procure/vendor/value/label`,
+	});
