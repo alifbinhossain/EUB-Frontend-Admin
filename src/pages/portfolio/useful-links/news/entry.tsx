@@ -237,9 +237,9 @@ export default function NewsEntry() {
 
 			<CoreForm.DynamicFields
 				viewAs='default'
-				title='Carousel' // TODO: Update title
+				title='Vendors' // TODO: Update title
 				form={form}
-				fieldName='entry' // TODO: Update field name
+				fieldName='vendors' // TODO: Update field name
 				// TODO: Go to _generateFieldDefs.tsx and update field name
 				fieldDefs={useGenerateFieldDefs({
 					copy: handleCopy,

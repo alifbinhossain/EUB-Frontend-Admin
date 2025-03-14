@@ -39,43 +39,35 @@ export type IDesignation = z.infer<typeof DESIGNATION_SCHEMA>;
 export const USER_SCHEMA = (isUpdate: boolean) => {
 	const baseSchema = z.object({
 		name: STRING_REQUIRED,
-		department_uuid: STRING_NULLABLE,
-		designation_uuid: STRING_NULLABLE,
+		department_uuid: STRING_REQUIRED,
+		designation_uuid: STRING_REQUIRED,
 		email: FORTUNE_ZIP_EMAIL_PATTERN,
-		phone: PHONE_NUMBER_NULLABLE,
-		office: STRING_REQUIRED,
+		phone: STRING_NULLABLE,
+		office: STRING_OPTIONAL,
 		remarks: STRING_NULLABLE,
 	});
 
 	if (isUpdate) {
-		return baseSchema
-			.extend({
-				// image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
-				image: z.any(),
-				// image: z.preprocess((value) => (Array.isArray(value) ? value : [value]), z.array(z.instanceof(File))),
-			})
-			.superRefine((data, ctx) => {
-				if (!data.image) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: 'Please upload an image',
-						path: ['image'],
-					});
-				}
-			});
+		return baseSchema.extend({
+			// image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+			image: STRING_NULLABLE,
+			// image: z.preprocess((value) => (Array.isArray(value) ? value : [value]), z.array(z.instanceof(File))),
+		});
 	}
 
 	return baseSchema.extend({
-		image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
+		image: z.string().nullable(),
 	});
 };
 
 export const USER_NULL: Partial<IUser> = {
 	name: '',
 	email: '',
-	department_uuid: null,
-	designation_uuid: null,
-	phone: null,
+	department_uuid: '',
+	designation_uuid: '',
+	office: undefined,
+	image: null,
+	phone: '',
 	remarks: null,
 	// image: new File([''], 'filename') as File,
 };

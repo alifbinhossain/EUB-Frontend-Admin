@@ -11,6 +11,8 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 	placeholder = 'Select an option',
 	optional = false,
 	options,
+	unique = false,
+	excludeOptions,
 	isDisabled = false,
 	disableLabel,
 	isMulti = false,
@@ -28,7 +30,13 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 			<FormControl>
 				<ReactSelect
 					isMulti={isMulti}
-					options={options}
+					options={
+						unique
+							? options.filter(
+									(item: IFormSelectOption) => !excludeOptions?.includes(item.value as string)
+								)
+							: options
+					}
 					isDisabled={isDisabled}
 					placeholder={placeholder}
 					menuPortalTarget={menuPortalTarget}

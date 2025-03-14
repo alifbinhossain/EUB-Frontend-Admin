@@ -243,7 +243,7 @@ export const OFFICE_SCHEMA = z.object({
 			uuid: STRING_OPTIONAL,
 			office_uuid: STRING_OPTIONAL,
 			user_uuid: STRING_REQUIRED,
-			user_email: STRING_REQUIRED,
+			user_email: STRING_OPTIONAL,
 			user_phone: STRING_NULLABLE,
 			designation: STRING_REQUIRED,
 			remarks: STRING_NULLABLE,
