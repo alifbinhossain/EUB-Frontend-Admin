@@ -60,7 +60,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/department-teachers/${updatedData?.uuid}`,
 				updatedData: {
 					...values,
 					updated_at: getDateTime(),
@@ -70,7 +70,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
-				url,
+				url: '/portfolio/department-teachers',
 				newData: {
 					...values,
 					created_at: getDateTime(),
