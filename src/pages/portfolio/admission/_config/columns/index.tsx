@@ -137,21 +137,21 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		header: 'Waiver 50%',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'waiver_55',
-		header: 'Waiver 55%',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'waiver_55',
+	// 	header: 'Waiver 55%',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'waiver_60',
 		header: 'Waiver 60%',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'waiver_65',
-		header: 'Waiver 65%',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'waiver_65',
+	// 	header: 'Waiver 65%',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'waiver_70',
 		header: 'Waiver 70%',
@@ -167,21 +167,21 @@ export const financialInformationColumns = (): ColumnDef<IFinancialInfoTableData
 		header: 'Waiver 80%',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'waiver_85',
-		header: 'Waiver 85%',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'waiver_85',
+	// 	header: 'Waiver 85%',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'waiver_90',
 		header: 'Waiver 90%',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'waiver_95',
-		header: 'Waiver 95%',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'waiver_95',
+	// 	header: 'Waiver 95%',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'waiver_100',
 		header: 'Waiver 100%',
