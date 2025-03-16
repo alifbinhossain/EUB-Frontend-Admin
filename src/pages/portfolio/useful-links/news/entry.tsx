@@ -29,7 +29,7 @@ export default function NewsEntry() {
 	const hasAccess: string[] = useAccess('portfolio__news') as string[];
 	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails(uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
-	const { invalidateQuery } = useNews();
+	const { invalidateQuery } = useNews(getAccess(hasAccess));
 
 	const form = useRHF(NEWS_SCHEMA, NEWS_NULL);
 
