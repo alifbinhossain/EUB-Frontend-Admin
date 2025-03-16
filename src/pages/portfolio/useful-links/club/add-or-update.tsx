@@ -54,7 +54,7 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/club/${updatedData?.uuid}`,
 				updatedData: {
 					...values,
 					updated_at: getDateTime(),
@@ -64,7 +64,7 @@ const AddOrUpdate: React.FC<IClubAddOrUpdateProps> = ({
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
-				url,
+				url: '/portfolio/club',
 				newData: {
 					...values,
 					created_at: getDateTime(),

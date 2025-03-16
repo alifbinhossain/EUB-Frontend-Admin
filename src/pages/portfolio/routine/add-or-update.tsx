@@ -64,7 +64,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 
 			// UPDATE ITEM
 			await imageUpdateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/routine/${updatedData?.uuid}`,
 				updatedData: formData,
 				onClose,
 			});
@@ -77,7 +77,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 			formData.append('uuid', nanoid());
 
 			await imagePostData.mutateAsync({
-				url,
+				url: '/portfolio/routine',
 				newData: formData,
 				onClose,
 			});
