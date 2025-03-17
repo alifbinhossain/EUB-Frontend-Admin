@@ -1,16 +1,28 @@
-import { Copy, Trash2 } from 'lucide-react';
+import { Copy, Edit, Trash2 } from 'lucide-react';
 
 import { Button } from '../ui/button';
 
 interface FieldActionButtonProps {
 	handleCopy?: (index: number) => void;
+	handleEdit?: (index: number) => void;
 	handleRemove?: (index: number) => void;
 	index: number;
 }
 
-const FieldActionButton = ({ handleCopy, handleRemove, index }: FieldActionButtonProps) => {
+const FieldActionButton = ({ handleEdit, handleCopy, handleRemove, index }: FieldActionButtonProps) => {
 	return (
 		<div className='flex items-center'>
+			{handleEdit && (
+				<Button
+					className='rounded-full'
+					onClick={() => handleEdit(index)}
+					type='button'
+					size={'icon'}
+					variant={'ghost'}
+				>
+					<Edit className='size-4' />
+				</Button>
+			)}
 			{handleCopy && (
 				<Button
 					className='rounded-full'
