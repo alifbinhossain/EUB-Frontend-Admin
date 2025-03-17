@@ -1,6 +1,5 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
-import { useSortable } from '@dnd-kit/sortable';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,19 +38,9 @@ const Office = () => {
 			name: row?.original?.uuid,
 		});
 	};
-	const RowDragHandleCell = ({ rowId }: { rowId: string }) => {
-		const { attributes, listeners } = useSortable({
-			id: rowId,
-		});
-		return (
-			// Alternatively, you could set these attributes on the rows themselves
-			<button {...attributes} {...listeners}>
-				🟰
-			</button>
-		);
-	};
+
 	// Table Columns
-	const columns = officeColumns(RowDragHandleCell);
+	const columns = officeColumns();
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider

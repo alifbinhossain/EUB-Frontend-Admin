@@ -329,15 +329,7 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 ];
 
 //* Office
-export const officeColumns = (RowDragHandleCell: any): ColumnDef<IOfficeTableData>[] => [
-	{
-		id: 'drag',
-		header: '',
-		cell: () => <span>⋮⋮</span>,
-		size: 40,
-		enableSorting: false,
-		enableResizing: false,
-	},
+export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 	{
 		accessorKey: 'id',
 		header: 'ID',
