@@ -30,13 +30,13 @@ export type ICertificateCourseFee = z.infer<typeof CERTIFICATE_COURSE_FEE_SCHEMA
 export const TUITION_FEE_SCHEMA = z.object({
 	uuid: STRING_OPTIONAL,
 	program_uuid: STRING_REQUIRED,
-	admission_fee: z.number(),
-	tuition_fee_per_credit: z.number().nullable(),
-	student_activity_fee: z.number().nullable(),
-	library_fee_per_semester: z.number().nullable(),
-	computer_lab_fee_per_semester: z.number().nullable(),
-	science_lab_fee_per_semester: z.number().nullable(),
-	studio_lab_fee: z.number().default(0),
+	admission_fee: z.number().min(1, { message: 'Value must be greater than 0' }),
+	tuition_fee_per_credit: z.number().min(1, { message: 'Value must be greater than 0' }),
+	student_activity_fee: z.number().min(1, { message: 'Value must be greater than 0' }),
+	library_fee_per_semester: z.number().min(1, { message: 'Value must be greater than 0' }),
+	computer_lab_fee_per_semester: z.number().min(1, { message: 'Value must be greater than 0' }),
+	science_lab_fee_per_semester: z.number().min(1, { message: 'Value must be greater than 0' }),
+	studio_lab_fee: z.number().min(1, { message: 'Value must be greater than 0' }),
 	remarks: STRING_NULLABLE,
 });
 

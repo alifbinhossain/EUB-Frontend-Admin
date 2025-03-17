@@ -236,14 +236,14 @@ export const OFFICE_SCHEMA = z.object({
 		'iqac',
 		'library',
 	]),
-	image: z.any(),
+	image: z.any().refine((file) => file !== null && file !== undefined, 'Image is required'),
 	remarks: STRING_NULLABLE,
 	office_entries: z.array(
 		z.object({
 			uuid: STRING_OPTIONAL,
 			office_uuid: STRING_OPTIONAL,
 			user_uuid: STRING_REQUIRED,
-			user_email: STRING_OPTIONAL,
+			user_email: STRING_REQUIRED,
 			user_phone: STRING_NULLABLE,
 			designation: STRING_REQUIRED,
 			remarks: STRING_NULLABLE,

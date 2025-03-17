@@ -96,7 +96,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(PORTFOLIO_ADMISSION_NULL))
 				.then(() => {
 					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/admission/${new_admission_uuid}/details`);
+					navigate(`/admission/online-form/${new_admission_uuid}/details`);
 				});
 		} catch (err) {
 			console.error(`Error with Promise.all: ${err}`);
