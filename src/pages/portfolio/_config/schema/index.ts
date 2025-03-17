@@ -237,7 +237,7 @@ export const OFFICE_SCHEMA = z.object({
 		'iqac',
 		'library',
 	]),
-	image: z.any(),
+	image: z.any().refine((file) => file !== null && file !== undefined, 'Image is required'),
 	remarks: STRING_NULLABLE,
 	office_entries: z
 		.array(
