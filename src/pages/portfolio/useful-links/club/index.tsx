@@ -86,7 +86,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/club',
 							deleteData,
 						}}
 					/>,

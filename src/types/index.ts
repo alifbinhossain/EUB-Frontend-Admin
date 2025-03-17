@@ -33,6 +33,7 @@ export type IStartEndDateProps = {
 
 export type IUser = {
 	uuid: string;
+	auth_user_uuid: string;
 	name: string;
 	department: string;
 };

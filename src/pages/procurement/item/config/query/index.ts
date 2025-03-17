@@ -15,3 +15,10 @@ export const useItemByUUID = <T>(uuid: string) =>
 		url: `/procure/item/${uuid}`,
 		enabled: !!uuid,
 	});
+
+export const useItemAndVendorByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: itemQK.itemAndVendorByUUID(uuid),
+		url: `/procure/item-details/by/item-uuid/${uuid}`,
+		enabled: !!uuid,
+	});

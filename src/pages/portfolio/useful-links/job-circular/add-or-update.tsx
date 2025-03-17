@@ -56,7 +56,7 @@ const AddOrUpdate: React.FC<IJobCircularAddOrUpdateProps> = ({
 
 			// UPDATE ITEM
 			await imageUpdateData.mutateAsync({
-				url: `${url}/${updatedData?.uuid}`,
+				url: `/portfolio/job-circular/${updatedData?.uuid}`,
 				updatedData: formData,
 				onClose,
 			});
@@ -69,7 +69,7 @@ const AddOrUpdate: React.FC<IJobCircularAddOrUpdateProps> = ({
 			formData.append('uuid', nanoid());
 
 			await imagePostData.mutateAsync({
-				url,
+				url: '/portfolio/job-circular',
 				newData: formData,
 				onClose,
 			});

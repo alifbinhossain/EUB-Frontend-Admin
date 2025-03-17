@@ -57,6 +57,8 @@ export interface IDeleteModalProps {
 		},
 		void
 	>;
+	invalidateQuery?: () => Promise<void>;
+	invalidateQueries?: Array<() => Promise<void>>;
 	onClose?: () => void;
 }
 

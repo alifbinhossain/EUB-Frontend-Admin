@@ -14,6 +14,7 @@ type FieldText = {
 	type: 'text';
 	// inputType?: 'text' | 'number';
 	placeholder?: string;
+	disabled?: boolean;
 };
 type FieldTextArea = {
 	type: 'textarea';
@@ -22,12 +23,15 @@ type FieldTextArea = {
 type FieldNumber = {
 	type: 'number';
 	placeholder?: string;
+	disabled?: boolean;
 };
 
 type FieldSelect = {
 	type: 'select';
 	placeholder?: string;
 	options: IFormSelectOption[];
+	excludeOptions?: string[];
+	unique?: boolean;
 };
 
 type FieldJoinInputUnit = {
@@ -39,6 +43,12 @@ type FieldJoinInputUnit = {
 
 type FieldImage = {
 	type: 'image';
+	placeholder?: string;
+	isUpdate?: boolean;
+};
+
+type FieldCheckbox = {
+	type: 'checkbox';
 	placeholder?: string;
 	isUpdate?: boolean;
 };
@@ -58,6 +68,7 @@ export type FieldDef = {
 	| FieldJoinInputUnit
 	| FieldTextArea
 	| FieldImage
+	| FieldCheckbox
 );
 
 export interface DynamicFieldsProps {

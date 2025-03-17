@@ -50,13 +50,19 @@ export const USER_SCHEMA = (isUpdate: boolean) => {
 	if (isUpdate) {
 		return baseSchema.extend({
 			// image: z.instanceof(File).refine((file) => file?.size !== 0, 'Please upload an image'),
-			image: STRING_NULLABLE,
+			image: z
+				.instanceof(File)
+				.refine((file) => file?.size !== 0, 'Please upload an image')
+				.or(STRING_NULLABLE),
 			// image: z.preprocess((value) => (Array.isArray(value) ? value : [value]), z.array(z.instanceof(File))),
 		});
 	}
 
 	return baseSchema.extend({
-		image: z.string().nullable(),
+		image: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an image')
+			.or(STRING_NULLABLE),
 	});
 };
 

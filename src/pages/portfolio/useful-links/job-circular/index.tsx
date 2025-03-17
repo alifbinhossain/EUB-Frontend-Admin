@@ -84,7 +84,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/portfolio/job-circular',
 							deleteData,
 						}}
 					/>,

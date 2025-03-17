@@ -1,5 +1,3 @@
-import { link } from 'fs';
-
 export const categories = [
 	{
 		label: 'Registrar',
@@ -19,7 +17,7 @@ export const categories = [
 		value: 'admission_and_student_affairs',
 		link: '/admission_and_student_affairs',
 	},
-	{ label: 'Fiance and Accounts', value: 'finance_and_accounts', link: '/finance_and_accounts' },
+	{ label: 'Finance and Accounts', value: 'finance_and_accounts', link: '/finance_and_accounts' },
 	{
 		label: 'Faculty Development and Evaluation',
 		value: 'faculty_development_and_evaluation',

@@ -344,7 +344,6 @@ export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,
-
 		cell: (info) => {
 			const category = officeCategories.find((item) => item.value === info.getValue());
 			return (
