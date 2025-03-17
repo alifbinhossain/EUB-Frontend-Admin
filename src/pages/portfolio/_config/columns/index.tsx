@@ -331,8 +331,8 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 //* Office
 export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 	{
-		accessorKey: 'id',
-		header: 'ID',
+		accessorKey: 'index',
+		header: 'Index',
 		enableColumnFilter: true,
 	},
 	{
