@@ -431,7 +431,6 @@ const AddOrUpdate = () => {
 						const transferData = { ...c };
 						return (
 							<Card
-								uuid={c.uuid}
 								isEditing={isEditing}
 								setEditing={setEditing}
 								key={c.uuid}
@@ -443,13 +442,6 @@ const AddOrUpdate = () => {
 								form={form}
 								fieldDefs={fliedDefs}
 								defaultCard={TRANSFER_NULL}
-								id={0}
-								office_uuid={''}
-								designation_uuid={''}
-								user_phone={''}
-								user_email={''}
-								user_uuid={''}
-								remarks={''}
 							/>
 						);
 					})}

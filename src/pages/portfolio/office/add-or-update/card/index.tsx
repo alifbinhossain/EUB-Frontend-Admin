@@ -23,7 +23,9 @@ export const Card = ({
 	fieldDefs,
 	form,
 	updateData,
-}: ICard & {
+}: {
+	index: number;
+	handleDragStart?: (e: React.DragEvent<HTMLDivElement>, card: ICard) => void;
 	handleDeleteCard: (uuid: string) => void;
 	handleSaveCard: (newCard: ICard) => void;
 } & { form: any } & { fieldDefs: any } & { updateData: any; defaultCard: any } & {
