@@ -143,12 +143,7 @@ function TableProvider<TData, TValue>({
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(defaultVisibleColumns);
 
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const [sorting, setSorting] = useState<SortingState>([
-		{
-			id: 'created_at',
-			desc: true,
-		},
-	]);
+	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const [globalFilter, setGlobalFilter] = useState('');
 

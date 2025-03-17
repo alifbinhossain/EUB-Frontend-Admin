@@ -1,38 +1,19 @@
-import { useFormContext } from 'react-hook-form';
-
-import { FormField } from '@/components/ui/form';
-import CoreForm from '@core/form';
-
-import { IOffice } from '../../_config/schema';
-import { categories } from '../utills';
-
-const Header = ({ isUpdate }: { isUpdate: boolean }) => {
-	const form = useFormContext<IOffice>();
-	const categoryOptions = categories;
-
+interface IProps {
+	fliedDefs: any;
+	title?: string;
+	handleAdd?: () => void;
+	className?: string;
+	children?: React.ReactNode;
+}
+export const Header: React.FC<IProps> = ({ fliedDefs }) => {
 	return (
-		<CoreForm.Section title={`Information`}>
-			<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField
-				control={form.control}
-				name='category'
-				render={(props) => (
-					<CoreForm.ReactSelect
-						label='Category'
-						placeholder='Select Category'
-						options={categoryOptions!}
-						{...props}
-					/>
-				)}
-			/>
-			<FormField
-				control={form.control}
-				name='image'
-				render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
-			/>
-			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
-		</CoreForm.Section>
+		<div className='flex items-center bg-primary/5 p-2'>
+			<span className='text-sm font-semibold'>ID&emsp;</span>
+			{fliedDefs.map((field: any) => (
+				<span key={field.accessorKey} className='flex-1 text-sm font-semibold'>
+					{field.header}
+				</span>
+			))}
+		</div>
 	);
 };
-
-export default Header;
