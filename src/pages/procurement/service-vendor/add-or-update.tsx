@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -26,6 +28,7 @@ const AddOrUpdate: React.FC<IServiceVendorAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useServiceVendorByUUID(updatedData?.uuid as string);
+	const { data: vendors } = useOtherVendor<IFormSelectOption[]>();
 
 	const form = useRHF(SERVICE_VENDOR_SCHEMA, SERVICE_VENDOR_NULL);
 
@@ -90,7 +93,7 @@ const AddOrUpdate: React.FC<IServiceVendorAddOrUpdateProps> = ({
 				control={form.control}
 				name='vendor_uuid'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Vendor' placeholder='Select Vendor' options={[]} {...props} />
+					<CoreForm.ReactSelect label='Vendor' placeholder='Select Vendor' options={vendors!} {...props} />
 				)}
 			/>
 
