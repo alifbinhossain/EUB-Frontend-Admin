@@ -14,10 +14,9 @@ interface IGenerateFieldDefsProps {
 	remove: (index: number) => void;
 	watch?: UseFormWatch<IService>; // TODO: Update Schema Type
 	isUpdate: boolean;
-	isNew: boolean;
 }
 
-const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, isNew }: IGenerateFieldDefsProps): FieldDef[] => {
+const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, watch }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 	return [
 		{
@@ -27,17 +26,20 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, isNew }: IGenerate
 			options: vendorList || [],
 			unique: true,
 			// excludeOptions: data.quotations.map((vendor) => vendor.vendor_uuid) || [],
+			disabled: watch ? !watch('is_quotation') : true,
 		},
 		{
 			header: 'Quantity',
 			accessorKey: 'quantity',
 			type: 'number',
+			disabled: watch ? !watch('is_quotation') : true,
 		},
 
 		{
 			header: 'Received',
 			accessorKey: 'is_received',
 			type: 'checkbox',
+			disabled: true,
 		},
 
 		{

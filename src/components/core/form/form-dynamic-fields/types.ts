@@ -19,6 +19,7 @@ type FieldText = {
 type FieldTextArea = {
 	type: 'textarea';
 	placeholder?: string;
+	disabled?: boolean;
 };
 type FieldNumber = {
 	type: 'number';
@@ -32,6 +33,7 @@ type FieldSelect = {
 	options: IFormSelectOption[];
 	excludeOptions?: string[];
 	unique?: boolean;
+	disabled?: boolean;
 };
 
 type FieldJoinInputUnit = {
@@ -51,6 +53,7 @@ type FieldCheckbox = {
 	type: 'checkbox';
 	placeholder?: string;
 	isUpdate?: boolean;
+	disabled?: boolean;
 };
 
 export type FieldDef = {

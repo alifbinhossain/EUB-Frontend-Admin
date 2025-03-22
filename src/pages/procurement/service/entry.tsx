@@ -284,7 +284,7 @@ const Entry = () => {
 					copy: handleCopyQuotations,
 					remove: handleRemoveQuotations,
 					isUpdate,
-					isNew: false,
+					watch: form.watch,
 				})}
 				fields={quotationFields}
 				handleAdd={handleAddQuotations}
@@ -304,7 +304,13 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='cs_remarks'
-					render={(props) => <CoreForm.Textarea label='Cs Remarks' {...props} />}
+					render={(props) => (
+						<CoreForm.Textarea
+							label='Cs Remarks'
+							disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
+							{...props}
+						/>
+					)}
 				/>
 			</CoreForm.Section>
 
@@ -324,7 +330,15 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='monthly_meeting_remarks'
-					render={(props) => <CoreForm.Textarea label='Monthly Meeting Remarks' {...props} />}
+					render={(props) => (
+						<CoreForm.Textarea
+							label='Monthly Meeting Remarks'
+							disabled={
+								!(form.watch('is_monthly_meeting') && form.watch('is_cs') && form.watch('is_quotation'))
+							}
+							{...props}
+						/>
+					)}
 				/>
 			</CoreForm.Section>
 
@@ -344,7 +358,20 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='work_order_remarks'
-					render={(props) => <CoreForm.Textarea label='Work Order Remarks' {...props} />}
+					render={(props) => (
+						<CoreForm.Textarea
+							label='Work Order Remarks'
+							disabled={
+								!(
+									form.watch('is_work_order') &&
+									form.watch('is_monthly_meeting') &&
+									form.watch('is_cs') &&
+									form.watch('is_quotation')
+								)
+							}
+							{...props}
+						/>
+					)}
 				/>
 			</CoreForm.Section>
 
@@ -364,7 +391,21 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='delivery_statement_remarks'
-					render={(props) => <CoreForm.Textarea label='Delivery Statement Remarks' {...props} />}
+					render={(props) => (
+						<CoreForm.Textarea
+							label='Delivery Statement Remarks'
+							disabled={
+								!(
+									form.watch('is_delivery_statement') &&
+									form.watch('is_work_order') &&
+									form.watch('is_monthly_meeting') &&
+									form.watch('is_cs') &&
+									form.watch('is_quotation')
+								)
+							}
+							{...props}
+						/>
+					)}
 				/>
 			</CoreForm.Section>
 

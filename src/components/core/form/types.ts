@@ -16,6 +16,7 @@ export interface FormTextareaProps extends TextareaProps {
 	placeholder?: string;
 	optional?: boolean;
 	disableLabel?: boolean;
+	disabled?: boolean;
 }
 
 // * form-select
