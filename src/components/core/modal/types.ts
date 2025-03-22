@@ -37,11 +37,13 @@ export interface IDeleteAllModalProps {
 
 export interface IDeleteModalProps {
 	deleteItem: {
+		type?: string;
 		id: string | null;
 		name: string | null;
 	} | null;
 	setDeleteItem: React.Dispatch<
 		React.SetStateAction<{
+			type?: string;
 			id: string;
 			name: string;
 		} | null>
