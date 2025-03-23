@@ -11,7 +11,7 @@ export const useService = <T>() =>
 export const useQuotations = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: serviceQK.quotations(uuid),
-		url: `/procure/service-vendors/${uuid}`,
+		url: `/procure/service-vendor/${uuid}`,
 		enabled: !!uuid,
 	});
 
@@ -25,6 +25,6 @@ export const useGeneralNotes = <T>(uuid: string) =>
 export const useServiceDetails = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: serviceQK.serviceDetails(uuid),
-		url: `procure/item-work-order-details/by/work-order-uuid/${uuid}`,
+		url: `procure/service/${uuid}`,
 		enabled: !!uuid,
 	});

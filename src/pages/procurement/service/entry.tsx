@@ -66,6 +66,7 @@ const Entry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
+	console.log(form.formState.errors);
 	// Submit handler
 	async function onSubmit(values: IService) {
 		if (isUpdate) {
@@ -79,7 +80,7 @@ const Entry = () => {
 
 			updateData
 				.mutateAsync({
-					url: `/procure/item-work-order/${uuid}`, // !! NEED TO Replace URL
+					url: `/procure/service/${uuid}`,
 					updatedData: itemUpdatedData,
 				})
 				.then(() => {
@@ -92,7 +93,7 @@ const Entry = () => {
 									updated_at: getDateTime(),
 								};
 								return updateData.mutateAsync({
-									url: `/procure/item-work-order-entry/${entry.uuid}`, // !! NEED TO Replace URL
+									url: `/procure/service-vendor/${entry.uuid}`,
 									updatedData: entryUpdateData,
 								});
 							} else {
@@ -104,7 +105,7 @@ const Entry = () => {
 									service_uuid: uuid,
 								};
 								return postData.mutateAsync({
-									url: `/procure/item-work-order-entry`, // !! NEED TO Replace URL
+									url: `/procure/service-vendor`,
 									newData: entryData,
 								});
 							}
@@ -122,7 +123,7 @@ const Entry = () => {
 									updated_at: getDateTime(),
 								};
 								return updateData.mutateAsync({
-									url: `/procure/item-work-order-entry/${entry.uuid}`, // !! NEED TO Replace URL
+									url: `/procure/general-note/${entry.uuid}`,
 									updatedData: entryUpdateData,
 								});
 							} else {
@@ -134,7 +135,7 @@ const Entry = () => {
 									service_uuid: uuid,
 								};
 								return postData.mutateAsync({
-									url: `/procure/item-work-order-entry`, // !! NEED TO Replace URL
+									url: `/procure/general-note`,
 									newData: entryData,
 								});
 							}
@@ -161,15 +162,10 @@ const Entry = () => {
 				uuid: nanoid(),
 			};
 
-			// if (quotations.length === 0) {
-			// 	toast.warning('please add at least one item entry');
-			// 	return;
-			// }
-
 			console.log('Main', itemData);
 			console.log('Quotations', quotations);
 			console.log('GN', general_notes);
-			return;
+
 			postData
 				.mutateAsync({
 					url: '/procure/service',
@@ -187,7 +183,7 @@ const Entry = () => {
 								uuid: nanoid(),
 							};
 							return postData.mutateAsync({
-								url: `/procure/service-vendors`,
+								url: `/procure/service-vendor`,
 								newData: entryData,
 							});
 						});
@@ -237,7 +233,6 @@ const Entry = () => {
 	// * ADD GENERAL NOTES
 	const handleAddGeneralNotes = () => {
 		appendGeneralNotes({
-			vendor_uuid: '',
 			description: '',
 			amount: 0,
 		});
@@ -290,7 +285,6 @@ const Entry = () => {
 	const handleCopyGeneralNotes = (index: number) => {
 		const field = form.watch('general_notes')[index];
 		appendGeneralNotes({
-			vendor_uuid: field.vendor_uuid,
 			amount: field.amount,
 			description: field.description,
 		});
@@ -344,7 +338,7 @@ const Entry = () => {
 					watch: form.watch,
 				})}
 				fields={quotationFields}
-				handleAdd={handleAddQuotations}
+				{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
 			/>
 
 			<CoreForm.Section
@@ -505,10 +499,7 @@ const Entry = () => {
 					{...{
 						deleteItem,
 						setDeleteItem,
-						url:
-							deleteItem?.type === 'quotations'
-								? `/procure/quotations`
-								: `/procure/item-work-order-entry`,
+						url: deleteItem?.type === 'quotations' ? `/procure/service-vendor` : `/procure/general-note`,
 						deleteData,
 						invalidateQuery: invalidateServiceDetails,
 						// invalidateQueries: [

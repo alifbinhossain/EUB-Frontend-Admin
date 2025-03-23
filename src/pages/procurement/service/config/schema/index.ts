@@ -38,7 +38,7 @@ export const SERVICE_SCHEMA = z
 
 		is_work_order: BOOLEAN_REQUIRED.default(false),
 		work_order_remarks: STRING_NULLABLE,
-		vendor_uuid: STRING_OPTIONAL,
+		vendor_uuid: STRING_OPTIONAL.nullable(),
 
 		is_delivery_statement: BOOLEAN_REQUIRED.default(false),
 		delivery_statement_remarks: STRING_NULLABLE,
@@ -47,12 +47,11 @@ export const SERVICE_SCHEMA = z
 			z
 				.object({
 					uuid: STRING_OPTIONAL,
-					vendor_uuid: STRING_OPTIONAL,
 					service_uuid: STRING_OPTIONAL,
 					description: STRING_OPTIONAL,
 					amount: NUMBER_REQUIRED.default(0),
 				})
-				.refine((note) => !note.vendor_uuid || (note.vendor_uuid && note.description), {
+				.refine((note) => note.description, {
 					message: 'Required',
 					path: ['description'],
 				})
@@ -97,7 +96,7 @@ export const SERVICE_NULL: Partial<IService> = {
 
 	is_work_order: false,
 	work_order_remarks: '',
-	vendor_uuid: '',
+	vendor_uuid: null,
 
 	is_delivery_statement: false,
 	delivery_statement_remarks: '',
