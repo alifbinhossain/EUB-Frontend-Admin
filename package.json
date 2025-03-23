@@ -11,7 +11,8 @@
 		"lint:fix": "eslint . --fix",
 		"prettier:write": "prettier . --write",
 		"prepare": "husky",
-		"precommit": "lint-staged --allow-empty"
+		"precommit": "lint-staged --allow-empty",
+		"deploy": "git pull && npm run build"
 	},
 	"dependencies": {
 		"@handsontable/react": "^15.0.0",
