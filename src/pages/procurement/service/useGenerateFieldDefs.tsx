@@ -29,8 +29,8 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, watch }: IGenerate
 			disabled: watch ? !watch('is_quotation') : true,
 		},
 		{
-			header: 'Quantity',
-			accessorKey: 'quantity',
+			header: 'Amount',
+			accessorKey: 'amount',
 			type: 'number',
 			disabled: watch ? !watch('is_quotation') : true,
 		},

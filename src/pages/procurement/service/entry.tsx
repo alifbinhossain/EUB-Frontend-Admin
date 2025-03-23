@@ -14,8 +14,8 @@ import { useOtherSubCategory, useOtherVendor } from '@/lib/common-queries/other'
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { IItemTableData, IServiceTableData } from './config/columns/columns.type';
-import { useItemByVendor, useItemWorkOrderAndEntry, useService } from './config/query';
+import { IServiceTableData } from './config/columns/columns.type';
+import { useService, useServiceDetails } from './config/query';
 import { IService, SERVICE_NULL, SERVICE_SCHEMA } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 import useGenerateGeneralNotes from './useGenerateGeneralNotes';
@@ -31,12 +31,12 @@ const Entry = () => {
 		updateData,
 		postData,
 		deleteData,
-		invalidateQuery: invalidateQueryWorkOrderAndEntry,
-	} = useItemWorkOrderAndEntry(uuid as string);
+		invalidateQuery: invalidateServiceDetails,
+	} = useServiceDetails(uuid as string);
 
 	const { invalidateQuery } = useService<IServiceTableData[]>();
-	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 	const { data: subCategoryList } = useOtherSubCategory<IFormSelectOption[]>();
+	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 
 	const form = useRHF(SERVICE_SCHEMA, SERVICE_NULL);
 
@@ -68,112 +68,159 @@ const Entry = () => {
 
 	// Submit handler
 	async function onSubmit(values: IService) {
-		// if (isUpdate) {
-		// 	// UPDATE ITEM
-		// 	const { item_work_order_entry, new_item_work_order_entry, ...rest } = values;
-		// 	const itemUpdatedData = {
-		// 		...rest,
-		// 		updated_at: getDateTime(),
-		// 	};
-		// 	updateData
-		// 		.mutateAsync({
-		// 			url: `/procure/item-work-order/${uuid}`,
-		// 			updatedData: itemUpdatedData,
-		// 		})
-		// 		.then(() => {
-		// 			const entryUpdatePromise = item_work_order_entry.map((entry) => {
-		// 				if (entry.uuid) {
-		// 					const entryUpdateData = {
-		// 						...entry,
-		// 						updatedData: itemUpdatedData,
-		// 					};
-		// 					return updateData.mutateAsync({
-		// 						url: `/procure/item-work-order-entry/${entry.uuid}`,
-		// 						updatedData: entryUpdateData,
-		// 					});
-		// 				} else {
-		// 					const entryData = {
-		// 						...entry,
-		// 						created_at: getDateTime(),
-		// 						created_by: user?.uuid,
-		// 						uuid: nanoid(),
-		// 						item_uuid: uuid,
-		// 					};
-		// 					return postData.mutateAsync({
-		// 						url: `/procure/item-work-order-entry`,
-		// 						newData: entryData,
-		// 					});
-		// 				}
-		// 			});
-		// 			const newEntryUpdatePromise = new_item_work_order_entry
-		// 				.filter((entry) => entry.quantity > 0)
-		// 				.map((entry) => {
-		// 					const entryData = {
-		// 						...entry,
-		// 						created_at: getDateTime(),
-		// 						created_by: user?.uuid,
-		// 						uuid: nanoid(),
-		// 						item_work_order_uuid: uuid,
-		// 					};
-		// 					return postData.mutateAsync({
-		// 						url: `/procure/item-work-order-entry`,
-		// 						newData: entryData,
-		// 					});
-		// 				});
-		// 			Promise.all([...entryUpdatePromise, ...newEntryUpdatePromise]);
-		// 		})
-		// 		.then(() => {
-		// 			invalidateQuery();
-		// 			invalidateQueryWorkOrderAndEntry();
-		// 			navigate('/procurement/item-work-order');
-		// 		})
-		// 		.catch((error) => {
-		// 			console.error('Error updating news:', error);
-		// 		});
-		// } else {
-		// 	// ADD NEW ITEM
-		// 	const { item_work_order_entry, ...rest } = values;
-		// 	const itemData = {
-		// 		...rest,
-		// 		created_at: getDateTime(),
-		// 		created_by: user?.uuid,
-		// 		uuid: nanoid(),
-		// 	};
-		// 	if (item_work_order_entry.filter((entry) => entry.quantity > 0).length === 0) {
-		// 		toast.warning('please add at least one item entry');
-		// 		return;
-		// 	}
-		// 	postData
-		// 		.mutateAsync({
-		// 			url: '/procure/item-work-order',
-		// 			newData: itemData,
-		// 		})
-		// 		.then(() => {
-		// 			const entryPromise = item_work_order_entry
-		// 				.filter((entry) => entry.quantity > 0)
-		// 				.map((entry) => {
-		// 					const entryData = {
-		// 						...entry,
-		// 						item_work_order_uuid: itemData.uuid,
-		// 						created_at: getDateTime(),
-		// 						created_by: user?.uuid,
-		// 						uuid: nanoid(),
-		// 					};
-		// 					return postData.mutateAsync({
-		// 						url: `/procure/item-work-order-entry`,
-		// 						newData: entryData,
-		// 					});
-		// 				});
-		// 			Promise.all([...entryPromise]);
-		// 		})
-		// 		.then(() => {
-		// 			invalidateQuery();
-		// 			navigate('/procurement/item-work-order');
-		// 		})
-		// 		.catch((error) => {
-		// 			console.error('Error adding news:', error);
-		// 		});
-		// }
+		if (isUpdate) {
+			// UPDATE ITEM
+			const { quotations, general_notes, ...rest } = values;
+
+			const itemUpdatedData = {
+				...rest,
+				updated_at: getDateTime(),
+			};
+
+			updateData
+				.mutateAsync({
+					url: `/procure/item-work-order/${uuid}`, // !! NEED TO Replace URL
+					updatedData: itemUpdatedData,
+				})
+				.then(() => {
+					// * UPDATE FOR QUOTATIONS
+					if (quotations.length > 0) {
+						const quotationsUpdatePromise = quotations.map((entry) => {
+							if (entry.uuid) {
+								const entryUpdateData = {
+									...entry,
+									updated_at: getDateTime(),
+								};
+								return updateData.mutateAsync({
+									url: `/procure/item-work-order-entry/${entry.uuid}`, // !! NEED TO Replace URL
+									updatedData: entryUpdateData,
+								});
+							} else {
+								const entryData = {
+									...entry,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+									service_uuid: uuid,
+								};
+								return postData.mutateAsync({
+									url: `/procure/item-work-order-entry`, // !! NEED TO Replace URL
+									newData: entryData,
+								});
+							}
+						});
+
+						Promise.all([...quotationsUpdatePromise]);
+					}
+
+					// * UPDATE FOR GENERAL NOTES
+					if (general_notes.length > 0) {
+						const generalNotesUpdatePromise = general_notes.map((entry) => {
+							if (entry.uuid) {
+								const entryUpdateData = {
+									...entry,
+									updated_at: getDateTime(),
+								};
+								return updateData.mutateAsync({
+									url: `/procure/item-work-order-entry/${entry.uuid}`, // !! NEED TO Replace URL
+									updatedData: entryUpdateData,
+								});
+							} else {
+								const entryData = {
+									...entry,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+									service_uuid: uuid,
+								};
+								return postData.mutateAsync({
+									url: `/procure/item-work-order-entry`, // !! NEED TO Replace URL
+									newData: entryData,
+								});
+							}
+						});
+						Promise.all([...generalNotesUpdatePromise]);
+					}
+				})
+				.then(() => {
+					invalidateQuery();
+					invalidateServiceDetails();
+					navigate('/procurement/service');
+				})
+				.catch((error) => {
+					console.error('Error updating news:', error);
+				});
+		} else {
+			// ADD NEW ITEM
+			const { quotations, general_notes, ...rest } = values;
+
+			const itemData = {
+				...rest,
+				created_at: getDateTime(),
+				created_by: user?.uuid,
+				uuid: nanoid(),
+			};
+
+			// if (quotations.length === 0) {
+			// 	toast.warning('please add at least one item entry');
+			// 	return;
+			// }
+
+			console.log('Main', itemData);
+			console.log('Quotations', quotations);
+			console.log('GN', general_notes);
+			return;
+			postData
+				.mutateAsync({
+					url: '/procure/service',
+					newData: itemData,
+				})
+				.then(() => {
+					// * ENTRY FOR QUOTATIONS
+					if (quotations.length > 0) {
+						const quotationsPromise = quotations.map((entry) => {
+							const entryData = {
+								...entry,
+								service_uuid: itemData.uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
+							return postData.mutateAsync({
+								url: `/procure/service-vendors`,
+								newData: entryData,
+							});
+						});
+						Promise.all([...quotationsPromise]);
+					}
+
+					// * ENTRY FOR GENERAL NOTES
+					if (general_notes.length > 0) {
+						const generalNotesPromise = general_notes.map((entry) => {
+							const entryData = {
+								...entry,
+								service_uuid: itemData.uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
+							return postData.mutateAsync({
+								url: `/procure/general-note`,
+								newData: entryData,
+							});
+						});
+						Promise.all([...generalNotesPromise]);
+					}
+				})
+				.then(() => {
+					invalidateQuery();
+					invalidateServiceDetails();
+					navigate('/procurement/service');
+				})
+				.catch((error) => {
+					console.error('Error adding news:', error);
+				});
+		}
 	}
 
 	// ? Dynamic Form
@@ -251,7 +298,17 @@ const Entry = () => {
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Service' : 'Add Service'} form={form} onSubmit={onSubmit}>
-			<CoreForm.Section title={`Main`} className='grid gap-4 lg:grid-cols-2'>
+			<CoreForm.Section
+				title={`Main`}
+				className='grid gap-4 lg:grid-cols-2'
+				extraHeader={
+					<FormField
+						control={form.control}
+						name='done'
+						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+					/>
+				}
+			>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField
 					control={form.control}
@@ -357,6 +414,25 @@ const Entry = () => {
 			>
 				<FormField
 					control={form.control}
+					name='vendor_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Vendor'
+							options={vendorList!}
+							isDisabled={
+								!(
+									form.watch('is_work_order') &&
+									form.watch('is_monthly_meeting') &&
+									form.watch('is_cs') &&
+									form.watch('is_quotation')
+								)
+							}
+							{...props}
+						/>
+					)}
+				/>
+				<FormField
+					control={form.control}
 					name='work_order_remarks'
 					render={(props) => (
 						<CoreForm.Textarea
@@ -434,11 +510,11 @@ const Entry = () => {
 								? `/procure/quotations`
 								: `/procure/item-work-order-entry`,
 						deleteData,
-						// invalidateQuery: invalidateQueryWorkOrderAndEntry,
+						invalidateQuery: invalidateServiceDetails,
 						// invalidateQueries: [
 						// 	invalidateQuery,
 						// 	invalidateQueryItemByVendor,
-						// 	invalidateQueryWorkOrderAndEntry,
+						// 	invalidateServiceDetails,
 						// ],
 						// onClose: () => {
 						// 	form.setValue(

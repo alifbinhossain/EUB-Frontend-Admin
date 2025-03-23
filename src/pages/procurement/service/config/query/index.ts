@@ -8,24 +8,23 @@ export const useService = <T>() =>
 		url: `/procure/service`,
 	});
 
-export const useItemWordOrderByUUID = <T>(uuid: string) =>
+export const useQuotations = <T>(uuid: string) =>
 	useTQuery<T>({
-		queryKey: serviceQK.itemWorkOrderByUUID(uuid),
-		url: `/procure/item-work-order/${uuid}`,
+		queryKey: serviceQK.quotations(uuid),
+		url: `/procure/service-vendors/${uuid}`,
 		enabled: !!uuid,
 	});
 
-export const useItemWorkOrderAndEntry = <T>(uuid: string) =>
+export const useGeneralNotes = <T>(uuid: string) =>
 	useTQuery<T>({
-		queryKey: serviceQK.itemWorkOrderAndEntry(uuid),
+		queryKey: serviceQK.generalNotes(uuid),
+		url: `/procure/general-note/${uuid}`,
+		enabled: !!uuid,
+	});
+
+export const useServiceDetails = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: serviceQK.serviceDetails(uuid),
 		url: `procure/item-work-order-details/by/work-order-uuid/${uuid}`,
-		enabled: !!uuid,
-	});
-
-// Item by Vendor
-export const useItemByVendor = <T>(uuid: string) =>
-	useTQuery<T>({
-		queryKey: serviceQK.itemByVendor(uuid),
-		url: `/procure/item/by/vendor-uuid/${uuid}`,
 		enabled: !!uuid,
 	});

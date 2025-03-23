@@ -38,6 +38,7 @@ export const SERVICE_SCHEMA = z
 
 		is_work_order: BOOLEAN_REQUIRED.default(false),
 		work_order_remarks: STRING_NULLABLE,
+		vendor_uuid: STRING_OPTIONAL,
 
 		is_delivery_statement: BOOLEAN_REQUIRED.default(false),
 		delivery_statement_remarks: STRING_NULLABLE,
@@ -47,6 +48,7 @@ export const SERVICE_SCHEMA = z
 				.object({
 					uuid: STRING_OPTIONAL,
 					vendor_uuid: STRING_OPTIONAL,
+					service_uuid: STRING_OPTIONAL,
 					description: STRING_OPTIONAL,
 					amount: NUMBER_REQUIRED.default(0),
 				})
@@ -78,13 +80,13 @@ export const SERVICE_NULL: Partial<IService> = {
 
 	is_quotation: false,
 	quotations: [
-		{
-			uuid: '',
-			vendor_uuid: '',
-			service_uuid: '',
-			amount: 0,
-			is_selected: false,
-		},
+		// {
+		// 	uuid: '',
+		// 	vendor_uuid: '',
+		// 	service_uuid: '',
+		// 	amount: 0,
+		// 	is_selected: false,
+		// },
 	],
 
 	is_cs: false,
@@ -95,17 +97,18 @@ export const SERVICE_NULL: Partial<IService> = {
 
 	is_work_order: false,
 	work_order_remarks: '',
+	vendor_uuid: '',
 
 	is_delivery_statement: false,
 	delivery_statement_remarks: '',
 
 	general_notes: [
-		{
-			uuid: '',
-			vendor_uuid: '',
-			description: '',
-			amount: 0,
-		},
+		// {
+		// 	uuid: '',
+		// 	vendor_uuid: '',
+		// 	description: '',
+		// 	amount: 0,
+		// },
 	],
 };
 
