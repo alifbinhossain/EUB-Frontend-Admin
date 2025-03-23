@@ -12,6 +12,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
 	optional = false,
 	className,
 	disableLabel,
+	disabled = false,
 }) => {
 	return (
 		<FormItem className='w-full space-y-1.5'>
@@ -26,6 +27,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
 					placeholder={placeholder}
 					{...field}
 					value={field.value === null ? '' : field.value}
+					disabled={disabled}
 				/>
 			</FormControl>
 			<FormMessage />

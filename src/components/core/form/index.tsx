@@ -12,6 +12,7 @@ import RichTextEditor from './rich-text-editor';
 import Section from './section';
 import Select from './select';
 import Submit from './submit';
+import Switch from './switch';
 import Textarea from './textarea';
 
 const Form = {
@@ -30,6 +31,7 @@ const Form = {
 	AddEditWrapper,
 	FileUpload,
 	RichTextEditor,
+	Switch,
 };
 
 export default Form;

@@ -16,6 +16,7 @@ export interface FormTextareaProps extends TextareaProps {
 	placeholder?: string;
 	optional?: boolean;
 	disableLabel?: boolean;
+	disabled?: boolean;
 }
 
 // * form-select
@@ -153,6 +154,20 @@ export interface FormDatePickerProps {
 
 // * form-checkbox
 export interface FormCheckboxProps extends CheckboxProps {
+	field: ControllerRenderProps<any, any>;
+	fieldState: ControllerFieldState;
+	formState: UseFormStateReturn<any>;
+	label?: string;
+	placeholder?: string;
+	optional?: boolean;
+	icon?: React.ReactNode;
+	disableLabel?: boolean;
+	labelClassName?: string;
+	isBoxed?: boolean;
+}
+
+// * form-switch
+export interface FormSwitchProps extends CheckboxProps {
 	field: ControllerRenderProps<any, any>;
 	fieldState: ControllerFieldState;
 	formState: UseFormStateReturn<any>;
