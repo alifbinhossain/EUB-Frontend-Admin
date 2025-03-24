@@ -62,6 +62,10 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 							field.onChange(formatDate(date as Date));
 							setOpen(false);
 						}}
+						onMonthChange={(date) => {
+							field.onChange(formatDate(date as Date));
+						}}
+						month={field.value ? new Date(field.value) : undefined}
 					/>
 				</PopoverContent>
 			</Popover>
