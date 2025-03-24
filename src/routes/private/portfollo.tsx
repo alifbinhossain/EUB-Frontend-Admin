@@ -231,7 +231,7 @@ const portfolioRoutes: IRoute[] = [
 						path: '/portfolio/club',
 						element: <Club />,
 						page_name: 'portfolio__club',
-						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
+						actions: ['create', 'read', 'update', 'delete', 'extra-curricular-club', ...DepartmentAccess],
 					},
 					{
 						name: 'Tender',
