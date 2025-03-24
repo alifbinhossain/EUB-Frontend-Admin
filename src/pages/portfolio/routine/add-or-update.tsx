@@ -102,18 +102,18 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
 						)}
 					/>
-
-					<FormField
-						control={form.control}
-						name='programs'
-						render={(props) => <CoreForm.ReactSelect label='Programs' options={programs!} {...props} />}
-					/>
-
 					<FormField
 						control={form.control}
 						name='type'
 						render={(props) => <CoreForm.ReactSelect label='Type' options={types!} {...props} />}
 					/>
+					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) !== PORTFOLIO_ROUTINE_TYPE.NOTICES && (
+						<FormField
+							control={form.control}
+							name='programs'
+							render={(props) => <CoreForm.ReactSelect label='Programs' options={programs!} {...props} />}
+						/>
+					)}
 
 					<FormField
 						control={form.control}
@@ -127,7 +127,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
 
-					{form.watch('type') === 'notices' && (
+					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) === PORTFOLIO_ROUTINE_TYPE.NOTICES && (
 						<FormField
 							control={form.control}
 							name='is_global'

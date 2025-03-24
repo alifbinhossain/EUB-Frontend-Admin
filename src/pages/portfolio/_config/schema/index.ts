@@ -93,18 +93,26 @@ export const INFO_NULL: Partial<IInfo> = {
 export type IInfo = z.infer<typeof INFO_SCHEMA>;
 
 //* Routine Schema
-export const ROUTINE_SCHEMA = z.object({
-	department_uuid: STRING_REQUIRED,
-	description: STRING_REQUIRED,
-	programs: z.nativeEnum(PORTFOLIO_PROGRAM_TYPE),
-	type: z.nativeEnum(PORTFOLIO_ROUTINE_TYPE),
-	is_global: BOOLEAN_OPTIONAL,
-	file: z
-		.instanceof(File)
-		.refine((file) => file?.size !== 0, 'Please upload an file')
-		.or(STRING_REQUIRED),
-	remarks: STRING_NULLABLE,
-});
+export const ROUTINE_SCHEMA = z
+	.object({
+		department_uuid: STRING_REQUIRED,
+		description: STRING_REQUIRED,
+		type: z.nativeEnum(PORTFOLIO_ROUTINE_TYPE),
+		programs: z.nativeEnum(PORTFOLIO_PROGRAM_TYPE).optional(),
+		is_global: BOOLEAN_OPTIONAL,
+		file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_REQUIRED),
+		remarks: STRING_NULLABLE,
+	})
+	.refine(
+		(data) => data.type === 'notices', // Only valid if type is NOT 'notices'
+		{
+			message: 'Required',
+			path: ['programs'], // Error message will be shown on the 'type' field
+		}
+	);
 
 export const ROUTINE_NULL: Partial<IRoutine> = {
 	department_uuid: '',
