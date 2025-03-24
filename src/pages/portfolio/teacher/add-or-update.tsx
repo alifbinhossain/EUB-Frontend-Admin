@@ -152,21 +152,18 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					render={(props) => <CoreForm.DatePicker {...props} />}
 				/>
 			</div>
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField
-					control={form.control}
-					name='education'
-					render={(props) => <CoreForm.Textarea {...props} />}
-				/>
-				<FormField control={form.control} name='about' render={(props) => <CoreForm.Textarea {...props} />} />
-			</div>
+			<FormField
+				control={form.control}
+				name='education'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
+			<FormField control={form.control} name='about' render={(props) => <CoreForm.RichTextEditor {...props} />} />
 
 			<FormField
 				control={form.control}
 				name='publication'
 				render={(props) => <CoreForm.RichTextEditor {...props} />}
 			/>
-			<FormField control={form.control} name='journal' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);
