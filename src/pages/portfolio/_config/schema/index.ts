@@ -117,6 +117,7 @@ export const ROUTINE_SCHEMA = z
 export const ROUTINE_NULL: Partial<IRoutine> = {
 	department_uuid: '',
 	description: '',
+	programs: PORTFOLIO_PROGRAM_TYPE.NONE,
 	is_global: false,
 	file: new File([''], 'filename') as File,
 	remarks: null,

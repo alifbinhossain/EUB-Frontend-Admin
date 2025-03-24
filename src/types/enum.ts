@@ -13,6 +13,7 @@ export enum PORTFOLIO_PAGE_NAME {
 export enum PORTFOLIO_PROGRAM_TYPE {
 	EVENING = 'evening',
 	REGULAR = 'regular',
+	NONE = 'none',
 }
 
 // TYPE ENUM
