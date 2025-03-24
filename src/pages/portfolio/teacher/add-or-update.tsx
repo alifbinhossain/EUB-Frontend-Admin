@@ -94,8 +94,15 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			<FormField
 				control={form.control}
 				name='department_head'
-				render={(props) => <CoreForm.Checkbox {...props} />}
+				render={(props) => <CoreForm.Switch {...props} />}
 			/>
+			{form.watch('department_head') && (
+				<FormField
+					control={form.control}
+					name='department_head_message'
+					render={(props) => <CoreForm.RichTextEditor label='Message' {...props} />}
+				/>
+			)}
 
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
@@ -110,6 +117,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 						/>
 					)}
 				/>
+
 				<FormField
 					control={form.control}
 					name='teacher_designation'
