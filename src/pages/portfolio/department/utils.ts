@@ -2,6 +2,7 @@ export const categories = [
 	{ label: 'Undergraduate', value: 'undergraduate' },
 	{ label: 'Graduate', value: 'graduate' },
 	{ label: 'Certificate', value: 'certificate' },
+	{ label: 'None', value: 'none' },
 ];
 
 export const short_names = [
@@ -23,4 +24,5 @@ export const short_names = [
 	{ label: 'MA English', value: 'ma-english' },
 	{ label: 'MGDS One Year', value: 'mgds-one-year' },
 	{ label: 'MSS Economics', value: 'mss-economics' },
+	{ label: 'Extra Curricular Club', value: 'extra-curricular-club' },
 ];
