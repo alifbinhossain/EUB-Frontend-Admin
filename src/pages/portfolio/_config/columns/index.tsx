@@ -1,9 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
-import { RichTextModal } from '@/components/core/modal';
+import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
+import { ContentModal, RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import { LinkWithRedirect } from '@/components/others/link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import DateTime from '@/components/ui/date-time';
 
 import { API_IMAGE_URL } from '@/lib/secret';
@@ -257,7 +259,7 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'teacher_image',
 		header: 'Image',
 		enableColumnFilter: false,
-		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+		cell: (info) => <ColumnAvatar src={info.getValue() as string} alt={info.row.original.teacher_name} />,
 	},
 	{
 		accessorKey: 'teacher_designation',
@@ -294,13 +296,17 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'education',
 		header: 'Education',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => (
+			<RichTextModal title={`${info.row.original.teacher_name}`} content={info.getValue() as string} />
+		),
 	},
 	{
 		accessorKey: 'about',
 		header: 'About',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => (
+			<RichTextModal title={`About ${info.row.original.teacher_name}`} content={info.getValue() as string} />
+		),
 	},
 	{
 		accessorKey: 'appointment_date',
@@ -324,7 +330,7 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'journal',
 		header: 'Journal',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => <ContentModal title={`Journal`} content={info.getValue() as string} />,
 	},
 ];
 
@@ -355,7 +361,13 @@ export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 		accessorKey: 'image',
 		header: 'Image',
 		enableColumnFilter: false,
-		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+		cell: (info) => (
+			<ColumnAvatar
+				className='object-contain object-center'
+				src={info.getValue() as string}
+				alt={info.row.original.title}
+			/>
+		),
 	},
 ];
 //*Office Entry

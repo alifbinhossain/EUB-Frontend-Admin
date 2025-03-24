@@ -1,4 +1,3 @@
-import { link } from 'fs';
 import { z } from 'zod';
 
 import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } from '@/types/enum';
@@ -168,7 +167,6 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 	teacher_uuid: STRING_REQUIRED,
 	education: STRING_REQUIRED,
 	publication: STRING_REQUIRED,
-	journal: STRING_REQUIRED,
 	about: STRING_REQUIRED,
 	appointment_date: STRING_REQUIRED,
 	resign_date: STRING_NULLABLE,
