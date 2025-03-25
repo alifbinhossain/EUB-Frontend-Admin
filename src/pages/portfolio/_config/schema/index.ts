@@ -200,7 +200,6 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	teacher_uuid: '',
 	education: '',
 	publication: '',
-	journal: '',
 	about: '',
 	appointment_date: '',
 	resign_date: null,
