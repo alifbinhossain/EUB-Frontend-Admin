@@ -62,6 +62,7 @@ export interface FormReactSelectProps {
 	isMulti?: boolean;
 	menuPortalTarget?: any;
 	valueType?: 'string' | 'number';
+	onChange?: (option?: any, field?: any) => void;
 }
 
 // * form-multi-select

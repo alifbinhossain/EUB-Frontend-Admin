@@ -18,6 +18,7 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 	isMulti = false,
 	menuPortalTarget,
 	valueType = 'string',
+	onChange = () => {},
 }) => {
 	return (
 		<FormItem className='w-full space-y-1.5'>
@@ -82,6 +83,8 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 						} else {
 							field.onChange(option.value);
 						}
+
+						onChange(option, field);
 					}}
 				/>
 			</FormControl>

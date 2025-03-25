@@ -19,17 +19,8 @@ export const ITEM_WORD_ORDER_SCHEMA = z.object({
 	item_work_order_entry: z.array(
 		z.object({
 			uuid: STRING_OPTIONAL,
-			item_uuid: STRING_OPTIONAL,
-			quantity: NUMBER_REQUIRED,
-			unit_price: NUMBER_OPTIONAL,
-			is_received: BOOLEAN_REQUIRED.default(false),
-		})
-	),
-	new_item_work_order_entry: z.array(
-		z.object({
-			uuid: STRING_OPTIONAL,
-			item_uuid: STRING_OPTIONAL,
-			quantity: NUMBER_REQUIRED.default(0),
+			item_uuid: STRING_REQUIRED,
+			quantity: NUMBER_REQUIRED.min(1, 'Must be greater than 0'),
 			unit_price: NUMBER_OPTIONAL,
 			is_received: BOOLEAN_REQUIRED.default(false),
 		})
@@ -41,15 +32,6 @@ export const ITEM_WORD_ORDER_NULL: Partial<IItemWorkOrder> = {
 	status: '',
 	remarks: '',
 	item_work_order_entry: [
-		{
-			uuid: '',
-			item_uuid: '',
-			quantity: 0,
-			unit_price: 0,
-			is_received: false,
-		},
-	],
-	new_item_work_order_entry: [
 		{
 			uuid: '',
 			item_uuid: '',

@@ -34,6 +34,7 @@ type FieldSelect = {
 	excludeOptions?: string[];
 	unique?: boolean;
 	disabled?: boolean;
+	onChange?: (option?: any, field?: any) => void;
 };
 
 type FieldJoinInputUnit = {
