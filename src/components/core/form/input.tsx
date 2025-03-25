@@ -49,7 +49,7 @@ const FormInput: React.FC<FormInputProps> = ({
 						{...field}
 						value={field.value === null ? '' : field.value}
 						onBlur={(e) => {
-							field.onChange(+e.target.value);
+							field.onChange(e.target.value === '' ? null : +e.target.value);
 						}}
 					/>
 				) : (

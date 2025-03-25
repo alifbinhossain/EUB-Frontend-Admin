@@ -124,6 +124,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					render={(props) => <CoreForm.Input label='Designation' {...props} />}
 				/>
 			</div>
+
 			<div className='grid grid-cols-3 gap-4'>
 				<FormField
 					control={form.control}
@@ -148,6 +149,20 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					render={(props) => <CoreForm.Input label='Phone' {...props} />}
 				/>
 			</div>
+
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='index'
+					render={(props) => <CoreForm.Input type='number' label='Index' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='teacher_initial'
+					render={(props) => <CoreForm.Input label='Initial' {...props} />}
+				/>
+			</div>
+
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}

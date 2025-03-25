@@ -169,6 +169,8 @@ export type IBot = z.infer<typeof BOT_SCHEMA>;
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	.object({
+		index: NUMBER_REQUIRED.nullable(),
+		teacher_initial: STRING_OPTIONAL,
 		department_uuid: STRING_REQUIRED,
 		department_head: BOOLEAN_REQUIRED,
 		teacher_email: STRING_REQUIRED,
@@ -183,15 +185,21 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 		remarks: STRING_NULLABLE,
 		department_head_message: STRING_NULLABLE,
 	})
-	.refine(
-		(data) => data.department_head, // Only valid if department_head is true
-		{
-			message: 'Required',
-			path: ['department_head_message'], // Error message will be shown on the 'department_head' field
+	.superRefine((data, ctx) => {
+		if (data.department_head) {
+			if (!data.department_head_message) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: 'Please fill department head message',
+					path: ['department_head_message'],
+				});
+			}
 		}
-	);
+	});
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
+	index: null,
+	teacher_initial: '',
 	department_uuid: '',
 	department_head: false,
 	teacher_email: '',
