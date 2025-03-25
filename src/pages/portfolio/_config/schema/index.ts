@@ -167,20 +167,29 @@ export const BOT_NULL: Partial<IBot> = {
 export type IBot = z.infer<typeof BOT_SCHEMA>;
 
 // * Department-Teacher Schema
-export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
-	department_uuid: STRING_REQUIRED,
-	department_head: BOOLEAN_REQUIRED,
-	teacher_email: STRING_REQUIRED,
-	teacher_phone: STRING_NULLABLE,
-	teacher_designation: STRING_REQUIRED,
-	teacher_uuid: STRING_REQUIRED,
-	education: STRING_REQUIRED,
-	publication: STRING_REQUIRED,
-	about: STRING_REQUIRED,
-	appointment_date: STRING_REQUIRED,
-	resign_date: STRING_NULLABLE,
-	remarks: STRING_NULLABLE,
-});
+export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
+	.object({
+		department_uuid: STRING_REQUIRED,
+		department_head: BOOLEAN_REQUIRED,
+		teacher_email: STRING_REQUIRED,
+		teacher_phone: STRING_NULLABLE,
+		teacher_designation: STRING_REQUIRED,
+		teacher_uuid: STRING_REQUIRED,
+		education: STRING_REQUIRED,
+		publication: STRING_REQUIRED,
+		about: STRING_REQUIRED,
+		appointment_date: STRING_REQUIRED,
+		resign_date: STRING_NULLABLE,
+		remarks: STRING_NULLABLE,
+		department_head_message: STRING_NULLABLE,
+	})
+	.refine(
+		(data) => data.department_head, // Only valid if department_head is true
+		{
+			message: 'Required',
+			path: ['department_head_message'], // Error message will be shown on the 'department_head' field
+		}
+	);
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	department_uuid: '',
