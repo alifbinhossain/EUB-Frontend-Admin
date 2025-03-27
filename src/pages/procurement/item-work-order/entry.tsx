@@ -14,8 +14,10 @@ import { useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { IItemTableData, IItemWorkOrderTableData } from './config/columns/columns.type';
-import { useItemByVendor, useItemWordOrder, useItemWorkOrderAndEntry } from './config/query';
+import { IItemTableData } from '../item/config/columns/columns.type';
+import { useItem } from '../item/config/query';
+import { IItemWorkOrderTableData } from './config/columns/columns.type';
+import { useItemWordOrder, useItemWorkOrderAndEntry } from './config/query';
 import { IItemWorkOrder, ITEM_WORD_ORDER_NULL, ITEM_WORD_ORDER_SCHEMA } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 import { status } from './utils';
@@ -34,6 +36,7 @@ const Entry = () => {
 		invalidateQuery: invalidateQueryWorkOrderAndEntry,
 	} = useItemWorkOrderAndEntry(uuid as string);
 
+	const { invalidateQuery: invalidateQueryItem } = useItem<IItemTableData[]>();
 	const { invalidateQuery } = useItemWordOrder<IItemWorkOrderTableData[]>();
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 
@@ -98,6 +101,7 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateQueryItem();
 					invalidateQueryWorkOrderAndEntry();
 					navigate('/procurement/item-work-order');
 				})
@@ -144,6 +148,8 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateQueryItem();
+					invalidateQueryWorkOrderAndEntry();
 					navigate('/procurement/item-work-order');
 				})
 				.catch((error) => {
@@ -249,7 +255,7 @@ const Entry = () => {
 						url: `/procure/item-work-order-entry`,
 						deleteData,
 						invalidateQuery: invalidateQueryWorkOrderAndEntry,
-						invalidateQueries: [invalidateQuery, invalidateQueryWorkOrderAndEntry],
+						invalidateQueries: [invalidateQuery, invalidateQueryWorkOrderAndEntry, invalidateQueryItem],
 						onClose: () => {
 							form.setValue(
 								'item_work_order_entry',

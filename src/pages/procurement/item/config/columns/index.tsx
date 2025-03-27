@@ -35,4 +35,9 @@ export const itemColumns = (): ColumnDef<IItemTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
+	{
+		accessorKey: 'quantity',
+		header: 'Quantity',
+		enableColumnFilter: true,
+	},
 ];
