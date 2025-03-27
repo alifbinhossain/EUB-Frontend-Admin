@@ -18,6 +18,29 @@ const procurementRoutes: IRoute[] = [
 		name: 'Procurement',
 		children: [
 			{
+				name: 'Service',
+				path: '/procurement/service',
+				element: <Service />,
+				page_name: 'procurement__service',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Service Entry',
+				path: '/procurement/service/create',
+				element: <ServiceEntry />,
+				hidden: true,
+				page_name: 'procurement__service_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Service Update',
+				path: '/procurement/service/:uuid/update',
+				element: <ServiceEntry />,
+				hidden: true,
+				page_name: 'procurement__service_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
 				name: 'Item Work Order',
 				path: '/procurement/item-work-order',
 				element: <ItemWorkOrder />,
@@ -84,29 +107,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__category',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-			{
-				name: 'Service',
-				path: '/procurement/service',
-				element: <Service />,
-				page_name: 'procurement__service',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Service Entry',
-				path: '/procurement/service/create',
-				element: <ServiceEntry />,
-				hidden: true,
-				page_name: 'procurement__service_entry',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Service Update',
-				path: '/procurement/service/:uuid/update',
-				element: <ServiceEntry />,
-				hidden: true,
-				page_name: 'procurement__service_update',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
+
 			{
 				name: 'Vendor',
 				path: '/procurement/vendor',

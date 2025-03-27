@@ -24,9 +24,9 @@ export const useItemWorkOrderAndEntry = <T>(uuid: string) =>
 	});
 
 // Item by Vendor
-export const useItemByVendor = <T>(uuid: string) =>
+export const useItemByVendor = <T>(uuid: string, query?: string) =>
 	useTQuery<T>({
-		queryKey: itemWordOrderQK.itemByVendor(uuid),
-		url: `/procure/item/by/vendor-uuid/${uuid}`,
+		queryKey: itemWordOrderQK.itemByVendor(uuid, query),
+		url: query ? `/procure/item/by/vendor-uuid/${uuid}?${query}` : `/procure/item/by/vendor-uuid/${uuid}`,
 		enabled: !!uuid,
 	});

@@ -26,7 +26,7 @@ const useGenerateFieldDefs = ({
 	set,
 	data,
 }: IGenerateFieldDefsProps): FieldDef[] => {
-	const { data: itemData } = useItemByVendor<IFormSelectOption[]>(watch('vendor_uuid') as string);
+	const { data: itemData } = useItemByVendor<IFormSelectOption[]>(watch('vendor_uuid') as string, 'is_active=true');
 
 	return [
 		{
