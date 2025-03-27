@@ -38,18 +38,10 @@ const Entry = () => {
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 
 	const form = useRHF(ITEM_WORD_ORDER_SCHEMA, ITEM_WORD_ORDER_NULL);
-	const { fields, remove } = useFieldArray({
+	const { fields, remove, append } = useFieldArray({
 		control: form.control,
 		name: 'item_work_order_entry',
 	});
-	const { fields: newFields } = useFieldArray({
-		control: form.control,
-		name: 'new_item_work_order_entry',
-	});
-
-	const { data: itemData, invalidateQuery: invalidateQueryItemByVendor } = useItemByVendor<IItemTableData[]>(
-		form.watch('vendor_uuid') as string
-	);
 
 	// Reset form values when data is updated
 	useEffect(() => {
@@ -60,45 +52,11 @@ const Entry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
-	// Set item_work_order_entry when itemData is updated
-	useEffect(() => {
-		if (itemData && !isUpdate) {
-			const item_work_order_entry = itemData.map((item) => ({
-				item_uuid: item.item_uuid,
-				name: item.name,
-				quantity: 0,
-				item_work_order_uuid: '',
-				unit_price: item.vendor_price,
-				is_received: false,
-			}));
-
-			form.setValue('item_work_order_entry', item_work_order_entry);
-		}
-
-		if (itemData && isUpdate) {
-			const new_item_work_order_entry = itemData
-				.filter(
-					(entry) =>
-						!form.getValues('item_work_order_entry').find((item) => item.item_uuid === entry.item_uuid)
-				)
-				.map((entry) => ({
-					item_uuid: entry?.item_uuid,
-					name: entry?.name,
-					quantity: 0,
-					item_work_order_uuid: '',
-					unit_price: entry?.vendor_price,
-					is_received: false,
-				}));
-			form.setValue('new_item_work_order_entry', new_item_work_order_entry);
-			console.log(form.getValues());
-		}
-	}, [itemData]);
-
 	// Submit handler
 	async function onSubmit(values: IItemWorkOrder) {
 		if (isUpdate) {
 			// UPDATE ITEM
-			const { item_work_order_entry, new_item_work_order_entry, ...rest } = values;
+			const { item_work_order_entry, ...rest } = values;
 			const itemUpdatedData = {
 				...rest,
 				updated_at: getDateTime(),
@@ -123,10 +81,10 @@ const Entry = () => {
 						} else {
 							const entryData = {
 								...entry,
+								item_work_order_uuid: uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
-								item_uuid: uuid,
 							};
 
 							return postData.mutateAsync({
@@ -136,24 +94,7 @@ const Entry = () => {
 						}
 					});
 
-					const newEntryUpdatePromise = new_item_work_order_entry
-						.filter((entry) => entry.quantity > 0)
-						.map((entry) => {
-							const entryData = {
-								...entry,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-								item_work_order_uuid: uuid,
-							};
-
-							return postData.mutateAsync({
-								url: `/procure/item-work-order-entry`,
-								newData: entryData,
-							});
-						});
-
-					Promise.all([...entryUpdatePromise, ...newEntryUpdatePromise]);
+					Promise.all([...entryUpdatePromise]);
 				})
 				.then(() => {
 					invalidateQuery();
@@ -184,22 +125,20 @@ const Entry = () => {
 					newData: itemData,
 				})
 				.then(() => {
-					const entryPromise = item_work_order_entry
-						.filter((entry) => entry.quantity > 0)
-						.map((entry) => {
-							const entryData = {
-								...entry,
-								item_work_order_uuid: itemData.uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
+					const entryPromise = item_work_order_entry.map((entry) => {
+						const entryData = {
+							...entry,
+							item_work_order_uuid: itemData.uuid,
+							created_at: getDateTime(),
+							created_by: user?.uuid,
+							uuid: nanoid(),
+						};
 
-							return postData.mutateAsync({
-								url: `/procure/item-work-order-entry`,
-								newData: entryData,
-							});
+						return postData.mutateAsync({
+							url: `/procure/item-work-order-entry`,
+							newData: entryData,
 						});
+					});
 
 					Promise.all([...entryPromise]);
 				})
@@ -212,6 +151,14 @@ const Entry = () => {
 				});
 		}
 	}
+
+	const handleAdd = () => {
+		append({
+			item_uuid: '',
+			quantity: 0,
+			is_received: false,
+		});
+	};
 
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
@@ -229,12 +176,15 @@ const Entry = () => {
 		}
 	};
 
-	// of conditional dynamic fields we need to generate fieldDefs in a variable
-	const fieldDefs = useGenerateFieldDefs({
-		remove: handleRemove,
-		isUpdate,
-		isNew: true,
-	});
+	// Copy Handler
+	const handleCopy = (index: number) => {
+		const field = form.watch('item_work_order_entry')[index];
+		append({
+			item_uuid: field.item_uuid,
+			quantity: field.quantity,
+			is_received: field.is_received,
+		});
+	};
 
 	return (
 		<CoreForm.AddEditWrapper
@@ -273,26 +223,24 @@ const Entry = () => {
 
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>
+
 			<CoreForm.DynamicFields
 				title='Item Work Order Entry'
 				form={form}
 				fieldName='item_work_order_entry'
 				fieldDefs={useGenerateFieldDefs({
+					watch: form.watch,
+					set: form.setValue,
 					remove: handleRemove,
+					copy: handleCopy,
 					isUpdate,
 					isNew: false,
+					data: form.getValues(),
 				})}
 				fields={fields}
+				handleAdd={handleAdd}
 			/>
-			{isUpdate && (
-				<CoreForm.DynamicFields
-					title='New Item Work Order Entry'
-					form={form}
-					fieldName='new_item_work_order_entry'
-					fieldDefs={fieldDefs}
-					fields={newFields}
-				/>
-			)}
+
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{
@@ -301,11 +249,7 @@ const Entry = () => {
 						url: `/procure/item-work-order-entry`,
 						deleteData,
 						invalidateQuery: invalidateQueryWorkOrderAndEntry,
-						invalidateQueries: [
-							invalidateQuery,
-							invalidateQueryItemByVendor,
-							invalidateQueryWorkOrderAndEntry,
-						],
+						invalidateQueries: [invalidateQuery, invalidateQueryWorkOrderAndEntry],
 						onClose: () => {
 							form.setValue(
 								'item_work_order_entry',
