@@ -60,6 +60,21 @@ export type IFacultyTableData = {
 	uuid: string;
 	name: string;
 };
+// * Department-Teachers
+export type IDepartmentTeachersTableData = {
+	id: number;
+	uuid: string;
+	page_link: string;
+	department_uuid: string;
+	teacher_uuid: string;
+	teacher_name: string;
+	teacher_email: string;
+	teacher_image: string;
+	department_head: boolean;
+	education: string;
+	publication: string;
+	journal: string;
+};
 
 // * Department
 export type IDepartmentTableData = {
@@ -70,6 +85,8 @@ export type IDepartmentTableData = {
 	short_name: string;
 	faculty_uuid: string;
 	category: string;
+
+	department_teaches: IDepartmentTeachersTableData[];
 };
 
 //* bot
@@ -85,21 +102,6 @@ export type IBotTableData = {
 	created_at: string;
 	updated_at: string;
 	remarks: string;
-};
-
-// * Department-Teachers
-export type IDepartmentTeachersTableData = {
-	id: number;
-	uuid: string;
-	page_link: string;
-	department_uuid: string;
-	teacher_uuid: string;
-	teacher_name: string;
-	teacher_image: string;
-	department_head: boolean;
-	education: string;
-	publication: string;
-	journal: string;
 };
 
 //* office

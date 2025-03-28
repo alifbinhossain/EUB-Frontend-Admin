@@ -30,6 +30,11 @@ import {
 // * Department
 export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 	{
+		accessorKey: 'index',
+		header: 'Index',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,

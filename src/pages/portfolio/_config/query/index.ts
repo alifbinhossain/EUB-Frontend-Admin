@@ -125,10 +125,10 @@ export const useJobCircularByUUID = <T>(uuid: string) =>
 
 // ? DEPARTMENT
 // * ALL Department
-export const useDepartments = <T>() =>
+export const useDepartments = <T>(query: string = '') =>
 	useTQuery<T>({
-		queryKey: portfolioQK.department(),
-		url: `/portfolio/department`,
+		queryKey: portfolioQK.department(query),
+		url: query ? `/portfolio/department?access=${query}` : `/portfolio/department`,
 	});
 
 // * Department By UUID
@@ -197,7 +197,7 @@ export const useDepartmentsTeachers = <T>(query: string = '') =>
 export const useDepartmentsTeachersByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: portfolioQK.departmentTeachersByUUID(uuid),
-		url: `/portfolio/department-teachers/${uuid}`,
+		url: `/portfolio/department-and-department-teachers/details/by/department-uuid/${uuid}`,
 		enabled: !!uuid,
 	});
 
