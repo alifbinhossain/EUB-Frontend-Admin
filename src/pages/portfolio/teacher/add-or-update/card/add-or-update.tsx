@@ -31,7 +31,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		setOpen((prev) => !prev);
 		invalidateTeachers();
 	};
-	console.log('updatedData', isUpdate);
+	console.log('errors', form.formState.errors);
 	// Reset form values when data is updated
 	useEffect(() => {
 		if (updatedData && isUpdate) {

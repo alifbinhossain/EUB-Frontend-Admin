@@ -206,7 +206,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 		appointment_date: STRING_REQUIRED,
 		resign_date: STRING_NULLABLE,
 		remarks: STRING_NULLABLE,
-		department_head_message: STRING_OPTIONAL,
+		department_head_message: STRING_NULLABLE,
 	})
 	.superRefine((data, ctx) => {
 		if (data.department_head) {
@@ -224,7 +224,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	teacher_initial: '',
 	department_uuid: '',
 	department_head: false,
-	department_head_message: '',
+	department_head_message: null,
 	teacher_email: '',
 	teacher_phone: null,
 	teacher_designation: '',

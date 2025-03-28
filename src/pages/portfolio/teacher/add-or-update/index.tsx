@@ -122,7 +122,7 @@ const AddOrUpdate = () => {
 	};
 
 	const getNearestIndicator = (e: any, indicators: any) => {
-		const DISTANCE_OFFSET = 50;
+		const DISTANCE_OFFSET = 100;
 
 		const el = indicators.reduce(
 			(closest: any, child: any) => {
@@ -155,11 +155,14 @@ const AddOrUpdate = () => {
 	};
 
 	const handleDeleteCard = (uuid: string) => {
-		setDeleteItem({
-			id: uuid,
-			name: uuid,
-		});
-		setCards((prevCards) => prevCards.filter((card) => card.uuid !== uuid));
+		if (department_teaches?.some((el: any) => el.uuid === uuid)) {
+			setDeleteItem({
+				id: uuid,
+				name: uuid,
+			});
+		} else {
+			setCards((prevCards) => prevCards.filter((card) => card.uuid !== uuid));
+		}
 	};
 
 	const handleSaveCard = (newCard: ICard) => {
@@ -215,7 +218,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL))
 				.then(() => {
 					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/office`);
+					navigate(`/portfolio/teacher`);
 				})
 				.catch((error) => {
 					console.error('Error updating Office:', error);
@@ -257,7 +260,7 @@ const AddOrUpdate = () => {
 			.then(() => form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL))
 			.then(() => {
 				invalidateTestDetails(); // TODO: Update invalidate query
-				navigate(`/portfolio/department`);
+				navigate(`/portfolio/teacher`);
 			})
 			.catch((error) => {
 				console.error('Error adding Office:', error);
@@ -382,7 +385,7 @@ const AddOrUpdate = () => {
 				onDragLeave={handleDragLeave}
 				className={`flex flex-col transition-colors ${active ? 'bg-secondary/5' : 'bg-neutral-800/0'}`}
 			>
-				<DynamicFieldContainer title={'Office Entries'} handleAdd={handleCreate}>
+				<DynamicFieldContainer title={`Department of ${data?.name} Teacher Entries `} handleAdd={handleCreate}>
 					<Header fliedDefs={fliedDefs} />
 					{cards?.map((c, index) => {
 						const transferData = { ...c };
@@ -405,8 +408,8 @@ const AddOrUpdate = () => {
 							/>
 						);
 					})}
-					<div data-column='sections' data-before='-1' style={{ opacity: 0, height: '10px' }} />
-					<div className='flex gap-2'>
+					<div data-column='sections' data-before='-1' style={{ opacity: 0, height: '30px' }} />
+					<div className=''>
 						<m.button
 							layout
 							onClick={handleSaveAll}
