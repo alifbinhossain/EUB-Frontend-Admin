@@ -10,34 +10,34 @@ const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
 const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
-const Service = lazy(() => import('@/pages/procurement/service'));
-const ServiceEntry = lazy(() => import('@/pages/procurement/service/entry'));
+const Capital = lazy(() => import('@/pages/procurement/capital'));
+const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
 
 const procurementRoutes: IRoute[] = [
 	{
 		name: 'Procurement',
 		children: [
 			{
-				name: 'Service',
-				path: '/procurement/service',
-				element: <Service />,
-				page_name: 'procurement__service',
+				name: 'Capital',
+				path: '/procurement/capital',
+				element: <Capital />,
+				page_name: 'procurement__capital',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Service Entry',
-				path: '/procurement/service/create',
-				element: <ServiceEntry />,
+				name: 'Capital Entry',
+				path: '/procurement/capital/create',
+				element: <CapitalEntry />,
 				hidden: true,
-				page_name: 'procurement__service_entry',
+				page_name: 'procurement__capital_entry',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Service Update',
-				path: '/procurement/service/:uuid/update',
-				element: <ServiceEntry />,
+				name: 'Capital Update',
+				path: '/procurement/capital/:uuid/update',
+				element: <CapitalEntry />,
 				hidden: true,
-				page_name: 'procurement__service_update',
+				page_name: 'procurement__capital_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
