@@ -269,6 +269,12 @@ const AddOrUpdate = () => {
 
 	const fliedDefs = [
 		{
+			header: 'Status',
+			accessorKey: 'status',
+			type: 'Checkbox',
+			view: 'status',
+		},
+		{
 			header: 'Department Head',
 			accessorKey: 'department_head',
 			type: 'Checkbox',
@@ -307,11 +313,6 @@ const AddOrUpdate = () => {
 			accessorKey: 'resign_date',
 			type: 'date',
 			view: 'Date',
-		},
-		{
-			header: 'Remarks',
-			accessorKey: 'remarks',
-			type: 'textarea',
 		},
 	];
 

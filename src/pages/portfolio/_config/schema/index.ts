@@ -196,6 +196,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 		teacher_initial: STRING_OPTIONAL,
 		department_uuid: STRING_OPTIONAL,
 		department_head: BOOLEAN_REQUIRED,
+		status: BOOLEAN_REQUIRED,
 		teacher_email: STRING_REQUIRED,
 		teacher_phone: STRING_NULLABLE,
 		teacher_designation: STRING_REQUIRED,
@@ -223,6 +224,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	teacher_initial: '',
 	department_uuid: '',
+	status: false,
 	department_head: false,
 	department_head_message: null,
 	teacher_email: '',

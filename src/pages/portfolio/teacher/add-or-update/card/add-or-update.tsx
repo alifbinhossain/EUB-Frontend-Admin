@@ -31,7 +31,6 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		setOpen((prev) => !prev);
 		invalidateTeachers();
 	};
-	console.log('errors', form.formState.errors);
 	// Reset form values when data is updated
 	useEffect(() => {
 		if (updatedData && isUpdate) {
@@ -49,11 +48,14 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 			isSmall={true}
 		>
-			<FormField
-				control={form.control}
-				name='department_head'
-				render={(props) => <CoreForm.Switch {...props} />}
-			/>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='department_head'
+					render={(props) => <CoreForm.Switch {...props} />}
+				/>
+				<FormField control={form.control} name='status' render={(props) => <CoreForm.Switch {...props} />} />
+			</div>
 			{form.watch('department_head') && (
 				<FormField
 					control={form.control}

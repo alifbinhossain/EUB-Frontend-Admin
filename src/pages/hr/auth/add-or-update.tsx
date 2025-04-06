@@ -31,7 +31,6 @@ const AddOrUpdate: React.FC<IAuthAddOrUpdateProps> = ({
 	const { data: userOptions } = useOtherUser<IFormSelectOption[]>();
 
 	const form = useRHF(AUTH_SCHEMA(isUpdate) as any, AUTH_NULL);
-	console.log(form.formState.errors);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
