@@ -1,5 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import StatusButton from '@/components/buttons/status';
+import DateTime from '@/components/ui/date-time';
+
 import { IServiceTableData } from './columns.type';
 
 // * Service
@@ -15,7 +18,7 @@ export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'sub_category',
+		accessorKey: 'sub_category_name',
 		header: 'Sub Category',
 		enableColumnFilter: true,
 	},
@@ -38,16 +41,19 @@ export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 		accessorKey: 'start_date',
 		header: 'Start Date',
 		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 	{
 		accessorKey: 'end_date',
 		header: 'End Date',
 		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 	{
 		accessorKey: 'next_due_date',
 		header: 'Next Due Date',
 		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 	{
 		accessorKey: 'cost_per_service',
@@ -68,5 +74,6 @@ export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 		accessorKey: 'approval_required',
 		header: 'Approval Required',
 		enableColumnFilter: false,
+		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
 	},
 ];
