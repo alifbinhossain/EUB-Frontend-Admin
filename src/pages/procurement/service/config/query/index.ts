@@ -25,6 +25,6 @@ export const useGeneralNotes = <T>(uuid: string) =>
 export const useServiceDetails = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: serviceQK.serviceDetails(uuid),
-		url: `procure/service/${uuid}`,
+		url: `procure/service-details/${uuid}`,
 		enabled: !!uuid,
 	});

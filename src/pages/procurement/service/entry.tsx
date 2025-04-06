@@ -17,8 +17,8 @@ import { getDateTime } from '@/utils';
 import { IServiceTableData } from './config/columns/columns.type';
 import { useService, useServiceDetails } from './config/query';
 import { IService, SERVICE_NULL, SERVICE_SCHEMA } from './config/schema';
-import useGenerateFieldDefs from './useGenerateFieldDefs';
-import useGenerateGeneralNotes from './useGenerateGeneralNotes';
+import useServicePayment from './useGenerateServiePayment';
+import { frequency, payment_terms, status } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -41,20 +41,12 @@ const Entry = () => {
 	const form = useRHF(SERVICE_SCHEMA, SERVICE_NULL);
 
 	const {
-		fields: quotationFields,
-		append: appendQuotation,
-		remove: removeQuotation,
-	} = useFieldArray({
-		control: form.control,
-		name: 'quotations',
-	});
-	const {
 		fields: generalNotesFields,
 		append: appendGeneralNotes,
 		remove: removeGeneralNotes,
 	} = useFieldArray({
 		control: form.control,
-		name: 'general_notes',
+		name: 'service_payment',
 	});
 
 	// Reset form values when data is updated
@@ -70,30 +62,28 @@ const Entry = () => {
 	// Submit handler
 	async function onSubmit(values: IService) {
 		if (isUpdate) {
-			// UPDATE ITEM
-			const { quotations, general_notes, ...rest } = values;
-
+			// * UPDATE ITEM
+			const { service_payment, ...rest } = values;
 			const itemUpdatedData = {
 				...rest,
 				updated_at: getDateTime(),
 			};
-
 			updateData
 				.mutateAsync({
 					url: `/procure/service/${uuid}`,
 					updatedData: itemUpdatedData,
 				})
 				.then(() => {
-					// * UPDATE FOR QUOTATIONS
-					if (quotations.length > 0) {
-						const quotationsUpdatePromise = quotations.map((entry) => {
+					// * UPDATE FOR SERVICE PAYMENT
+					if (service_payment.length > 0) {
+						const servicePaymentUpdatePromise = service_payment.map((entry) => {
 							if (entry.uuid) {
 								const entryUpdateData = {
 									...entry,
 									updated_at: getDateTime(),
 								};
 								return updateData.mutateAsync({
-									url: `/procure/service-vendor/${entry.uuid}`,
+									url: `/procure/service-payment/${entry.uuid}`,
 									updatedData: entryUpdateData,
 								});
 							} else {
@@ -105,42 +95,12 @@ const Entry = () => {
 									service_uuid: uuid,
 								};
 								return postData.mutateAsync({
-									url: `/procure/service-vendor`,
+									url: `/procure/service-payment`,
 									newData: entryData,
 								});
 							}
 						});
-
-						Promise.all([...quotationsUpdatePromise]);
-					}
-
-					// * UPDATE FOR GENERAL NOTES
-					if (general_notes.length > 0) {
-						const generalNotesUpdatePromise = general_notes.map((entry) => {
-							if (entry.uuid) {
-								const entryUpdateData = {
-									...entry,
-									updated_at: getDateTime(),
-								};
-								return updateData.mutateAsync({
-									url: `/procure/general-note/${entry.uuid}`,
-									updatedData: entryUpdateData,
-								});
-							} else {
-								const entryData = {
-									...entry,
-									created_at: getDateTime(),
-									created_by: user?.uuid,
-									uuid: nanoid(),
-									service_uuid: uuid,
-								};
-								return postData.mutateAsync({
-									url: `/procure/general-note`,
-									newData: entryData,
-								});
-							}
-						});
-						Promise.all([...generalNotesUpdatePromise]);
+						Promise.all([...servicePaymentUpdatePromise]);
 					}
 				})
 				.then(() => {
@@ -153,7 +113,7 @@ const Entry = () => {
 				});
 		} else {
 			// ADD NEW ITEM
-			const { quotations, general_notes, ...rest } = values;
+			const { service_payment, ...rest } = values;
 
 			const itemData = {
 				...rest,
@@ -163,8 +123,7 @@ const Entry = () => {
 			};
 
 			console.log('Main', itemData);
-			console.log('Quotations', quotations);
-			console.log('GN', general_notes);
+			console.log('service_payment', service_payment);
 
 			postData
 				.mutateAsync({
@@ -172,9 +131,9 @@ const Entry = () => {
 					newData: itemData,
 				})
 				.then(() => {
-					// * ENTRY FOR QUOTATIONS
-					if (quotations.length > 0) {
-						const quotationsPromise = quotations.map((entry) => {
+					// * ENTRY FOR SERVICE PAYMENT
+					if (service_payment.length > 0) {
+						const servicePaymentPromise = service_payment.map((entry) => {
 							const entryData = {
 								...entry,
 								service_uuid: itemData.uuid,
@@ -183,29 +142,11 @@ const Entry = () => {
 								uuid: nanoid(),
 							};
 							return postData.mutateAsync({
-								url: `/procure/service-vendor`,
+								url: `/procure/service-payment`,
 								newData: entryData,
 							});
 						});
-						Promise.all([...quotationsPromise]);
-					}
-
-					// * ENTRY FOR GENERAL NOTES
-					if (general_notes.length > 0) {
-						const generalNotesPromise = general_notes.map((entry) => {
-							const entryData = {
-								...entry,
-								service_uuid: itemData.uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
-							return postData.mutateAsync({
-								url: `/procure/general-note`,
-								newData: entryData,
-							});
-						});
-						Promise.all([...generalNotesPromise]);
+						Promise.all([...servicePaymentPromise]);
 					}
 				})
 				.then(() => {
@@ -221,20 +162,12 @@ const Entry = () => {
 
 	// ? Dynamic Form
 
-	// * ADD QUOTATIONS
-	const handleAddQuotations = () => {
-		appendQuotation({
-			vendor_uuid: '',
-			amount: 0,
-			is_selected: false,
-		});
-	};
-
 	// * ADD GENERAL NOTES
 	const handleAddGeneralNotes = () => {
 		appendGeneralNotes({
-			description: '',
+			service_uuid: '',
 			amount: 0,
+			payment_date: '',
 		});
 	};
 
@@ -244,19 +177,6 @@ const Entry = () => {
 		id: string;
 		name: string;
 	} | null>(null);
-
-	// * REMOVE QUOTATIONS
-	const handleRemoveQuotations = (index: number) => {
-		if (quotationFields[index].uuid) {
-			setDeleteItem({
-				type: 'quotations',
-				id: quotationFields[index].uuid,
-				name: quotationFields[index].id,
-			});
-		} else {
-			removeQuotation(index);
-		}
-	};
 
 	// * REMOVE GENERAL NOTES
 	const handleRemoveGeneralNotes = (index: number) => {
@@ -271,35 +191,28 @@ const Entry = () => {
 		}
 	};
 
-	// * COPY QUOTATIONS
-	const handleCopyQuotations = (index: number) => {
-		const field = form.watch('quotations')[index];
-		appendQuotation({
-			vendor_uuid: field.vendor_uuid,
-			amount: field.amount,
-			is_selected: field.is_selected,
-		});
-	};
-
 	// * COPY GENERAL NOTES
 	const handleCopyGeneralNotes = (index: number) => {
-		const field = form.watch('general_notes')[index];
+		const field = form.watch('service_payment')[index];
 		appendGeneralNotes({
 			amount: field.amount,
-			description: field.description,
+			service_uuid: field.service_uuid,
+			payment_date: field.payment_date,
 		});
 	};
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Service' : 'Add Service'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section
-				title={`Main`}
-				className='grid gap-4 lg:grid-cols-2'
+				title={`Service`}
+				className='grid gap-4 lg:grid-cols-3'
 				extraHeader={
 					<FormField
 						control={form.control}
-						name='done'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+						name='approval_required'
+						render={(props) => (
+							<CoreForm.Switch label='Approval Req.' labelClassName='text-slate-100' {...props} />
+						)}
 					/>
 				}
 			>
@@ -309,181 +222,98 @@ const Entry = () => {
 					name='sub_category_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='Status'
-							placeholder='Select status'
+							label='Sub Category'
+							placeholder='Select sub-category'
 							menuPortalTarget={document.body}
 							options={subCategoryList!}
 							{...props}
 						/>
 					)}
 				/>
-			</CoreForm.Section>
-
-			<CoreForm.DynamicFields
-				title='Quotations'
-				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_quotation'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
-					/>
-				}
-				form={form}
-				fieldName='quotations'
-				fieldDefs={useGenerateFieldDefs({
-					data: form.getValues(),
-					copy: handleCopyQuotations,
-					remove: handleRemoveQuotations,
-					isUpdate,
-					watch: form.watch,
-				})}
-				fields={quotationFields}
-				{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
-			/>
-
-			<CoreForm.Section
-				title={`Cs`}
-				className='grid gap-4 lg:grid-cols-1'
-				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_cs'
-						render={(props) => <CoreForm.Switch label='Cs' labelClassName='text-slate-100' {...props} />}
-					/>
-				}
-			>
-				<FormField
-					control={form.control}
-					name='cs_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Cs Remarks'
-							disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
-							{...props}
-						/>
-					)}
-				/>
-			</CoreForm.Section>
-
-			<CoreForm.Section
-				title={`Monthly Meeting`}
-				className='grid gap-4 lg:grid-cols-1'
-				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_monthly_meeting'
-						render={(props) => (
-							<CoreForm.Switch label='Monthly Meeting' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
-				}
-			>
-				<FormField
-					control={form.control}
-					name='monthly_meeting_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Monthly Meeting Remarks'
-							disabled={
-								!(form.watch('is_monthly_meeting') && form.watch('is_cs') && form.watch('is_quotation'))
-							}
-							{...props}
-						/>
-					)}
-				/>
-			</CoreForm.Section>
-
-			<CoreForm.Section
-				title={`Work Order`}
-				className='grid gap-4 lg:grid-cols-1'
-				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_work_order'
-						render={(props) => (
-							<CoreForm.Switch label='Work Order' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
-				}
-			>
 				<FormField
 					control={form.control}
 					name='vendor_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
 							label='Vendor'
+							placeholder='Select vendor'
+							menuPortalTarget={document.body}
 							options={vendorList!}
-							isDisabled={
-								!(
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
 							{...props}
 						/>
 					)}
 				/>
 				<FormField
 					control={form.control}
-					name='work_order_remarks'
+					name='frequency'
 					render={(props) => (
-						<CoreForm.Textarea
-							label='Work Order Remarks'
-							disabled={
-								!(
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
+						<CoreForm.ReactSelect
+							label='Frequency'
+							placeholder='Select frequency'
+							menuPortalTarget={document.body}
+							options={frequency!}
 							{...props}
 						/>
 					)}
 				/>
-			</CoreForm.Section>
-
-			<CoreForm.Section
-				title={`Delivery Statement`}
-				className='grid gap-4 lg:grid-cols-1'
-				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_delivery_statement'
-						render={(props) => (
-							<CoreForm.Switch label='Delivery Statement' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
-				}
-			>
 				<FormField
 					control={form.control}
-					name='delivery_statement_remarks'
+					name='status'
 					render={(props) => (
-						<CoreForm.Textarea
-							label='Delivery Statement Remarks'
-							disabled={
-								!(
-									form.watch('is_delivery_statement') &&
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
+						<CoreForm.ReactSelect
+							label='Status'
+							placeholder='Select status'
+							menuPortalTarget={document.body}
+							options={status!}
 							{...props}
 						/>
 					)}
+				/>
+				<FormField
+					control={form.control}
+					name='payment_terms'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Payment Terms'
+							placeholder='Select payment-terms'
+							menuPortalTarget={document.body}
+							options={payment_terms!}
+							{...props}
+						/>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='start_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='end_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='next_due_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='cost_per_service'
+					render={(props) => <CoreForm.Input type='number' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='description'
+					render={(props) => <CoreForm.Textarea className='col-span-2' {...props} />}
 				/>
 			</CoreForm.Section>
 
 			<CoreForm.DynamicFields
-				title='General Notes'
+				title='Service Payment'
 				form={form}
-				fieldName='general_notes'
-				fieldDefs={useGenerateGeneralNotes({
+				fieldName='service_payment'
+				fieldDefs={useServicePayment({
 					data: form.getValues(),
 					copy: handleCopyGeneralNotes,
 					remove: handleRemoveGeneralNotes,
@@ -499,20 +329,9 @@ const Entry = () => {
 					{...{
 						deleteItem,
 						setDeleteItem,
-						url: deleteItem?.type === 'quotations' ? `/procure/service-vendor` : `/procure/general-note`,
+						url: `/procure/service-payment`,
 						deleteData,
 						invalidateQuery: invalidateServiceDetails,
-						// invalidateQueries: [
-						// 	invalidateQuery,
-						// 	invalidateQueryItemByVendor,
-						// 	invalidateServiceDetails,
-						// ],
-						// onClose: () => {
-						// 	form.setValue(
-						// 		'item_work_order_entry',
-						// 		form.getValues('item_work_order_entry').filter((item) => item.uuid !== deleteItem?.id)
-						// 	);
-						// },
 					}}
 				/>
 			</Suspense>

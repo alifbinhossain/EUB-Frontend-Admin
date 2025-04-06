@@ -103,6 +103,20 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 														/>
 													)}
 
+													{fieldDef.type === 'date' && (
+														<FormField
+															control={form.control}
+															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															render={(props) => (
+																<CoreForm.DatePicker
+																	disableLabel
+																	// disabled={fieldDef.disabled}
+																	{...props}
+																/>
+															)}
+														/>
+													)}
+
 													{fieldDef.type === 'number' && (
 														<FormField
 															control={form.control}

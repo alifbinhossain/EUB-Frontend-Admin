@@ -14,17 +14,17 @@ interface IGenerateFieldDefsProps {
 	isNew: boolean;
 }
 
-const useGenerateGeneralNotes = ({ data, copy, remove, isUpdate, isNew }: IGenerateFieldDefsProps): FieldDef[] => {
+const useServicePayment = ({ data, copy, remove, isUpdate, isNew }: IGenerateFieldDefsProps): FieldDef[] => {
 	return [
-		{
-			header: 'Description',
-			accessorKey: 'description',
-			type: 'textarea',
-		},
 		{
 			header: 'Amount',
 			accessorKey: 'amount',
 			type: 'number',
+		},
+		{
+			header: 'Payment Date',
+			accessorKey: 'payment_date',
+			type: 'date',
 		},
 		{
 			header: 'Actions',
@@ -37,4 +37,4 @@ const useGenerateGeneralNotes = ({ data, copy, remove, isUpdate, isNew }: IGener
 	];
 };
 
-export default useGenerateGeneralNotes;
+export default useServicePayment;
