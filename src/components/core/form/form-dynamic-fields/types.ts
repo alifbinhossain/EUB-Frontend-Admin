@@ -57,6 +57,13 @@ type FieldCheckbox = {
 	disabled?: boolean;
 };
 
+type FieldDate = {
+	type: 'date';
+	placeholder?: string;
+	isUpdate?: boolean;
+	disabled?: boolean;
+};
+
 export type FieldDef = {
 	header: string;
 	accessorKey: string;
@@ -73,6 +80,7 @@ export type FieldDef = {
 	| FieldTextArea
 	| FieldImage
 	| FieldCheckbox
+	| FieldDate
 );
 
 export interface DynamicFieldsProps {

@@ -6,13 +6,13 @@ import { FieldDef } from '@core/form/form-dynamic-fields/types';
 
 import { useOtherVendor } from '@/lib/common-queries/other';
 
-import { IService } from './config/schema';
+import { ICapital } from './config/schema';
 
 interface IGenerateFieldDefsProps {
-	data: IService;
+	data: ICapital;
 	copy: (index: number) => void;
 	remove: (index: number) => void;
-	watch?: UseFormWatch<IService>; // TODO: Update Schema Type
+	watch?: UseFormWatch<ICapital>; // TODO: Update Schema Type
 	isUpdate: boolean;
 }
 
@@ -25,7 +25,9 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, watch }: IGenerate
 			type: 'select',
 			options: vendorList || [],
 			unique: true,
-			// excludeOptions: data.quotations.map((vendor) => vendor.vendor_uuid) || [],
+			excludeOptions:
+				data.quotations.map((item) => item.vendor_uuid).filter((uuid): uuid is string => uuid !== undefined) ||
+				[],
 			disabled: watch ? !watch('is_quotation') : true,
 		},
 		{

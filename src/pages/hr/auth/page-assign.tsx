@@ -116,7 +116,7 @@ const PageAssign: React.FC<IPageAssignProps> = ({ url, open, setOpen, updatedDat
 
 	// * Reset access from selected user access
 	useEffect(() => {
-		if (user === undefined || user?.['can_access'] === null) {
+		if (!user || user?.['can_access'] === null) {
 			form.reset(PAGE_ASSIGN_NULL);
 			return;
 		}
