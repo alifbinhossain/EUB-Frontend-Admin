@@ -126,16 +126,39 @@ export type IRoutine = z.infer<typeof ROUTINE_SCHEMA>;
 
 //* Department Schema
 export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
+	index: NUMBER_REQUIRED,
 	name: STRING_REQUIRED,
 	page_link: STRING_REQUIRED,
 	short_name: STRING_REQUIRED,
 	faculty_uuid: STRING_REQUIRED,
 	category: STRING_REQUIRED,
 	remarks: STRING_OPTIONAL,
+	department_teaches: z
+		.array(
+			z.object({
+				uuid: STRING_OPTIONAL,
+				department_uuid: STRING_OPTIONAL,
+				department_head: BOOLEAN_REQUIRED,
+				teacher_email: STRING_REQUIRED,
+				teacher_phone: STRING_NULLABLE,
+				teacher_designation: STRING_REQUIRED,
+				teacher_uuid: STRING_REQUIRED,
+				education: STRING_REQUIRED,
+				publication: STRING_REQUIRED,
+				journal: STRING_REQUIRED,
+				about: STRING_REQUIRED,
+				appointment_date: STRING_REQUIRED,
+				teacher_initials: STRING_OPTIONAL,
+				resign_date: STRING_NULLABLE,
+				remarks: STRING_NULLABLE,
+			})
+		)
+		.optional(),
 });
 
 export const PORTFOLIO_DEPARTMENT_NULL: Partial<IPortfolioDepartment> = {
 	name: '',
+	index: undefined,
 	short_name: '',
 	page_link: '',
 	faculty_uuid: '',
@@ -169,10 +192,11 @@ export type IBot = z.infer<typeof BOT_SCHEMA>;
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	.object({
-		index: NUMBER_REQUIRED.nullable(),
+		uuid: STRING_OPTIONAL,
 		teacher_initial: STRING_OPTIONAL,
-		department_uuid: STRING_REQUIRED,
+		department_uuid: STRING_OPTIONAL,
 		department_head: BOOLEAN_REQUIRED,
+		status: BOOLEAN_REQUIRED,
 		teacher_email: STRING_REQUIRED,
 		teacher_phone: STRING_NULLABLE,
 		teacher_designation: STRING_REQUIRED,
@@ -198,10 +222,11 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	});
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
-	index: null,
 	teacher_initial: '',
 	department_uuid: '',
+	status: false,
 	department_head: false,
+	department_head_message: null,
 	teacher_email: '',
 	teacher_phone: null,
 	teacher_designation: '',

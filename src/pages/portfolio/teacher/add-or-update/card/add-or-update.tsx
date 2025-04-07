@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import useAccess from '@/hooks/useAccess';
-import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
@@ -8,33 +6,20 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherDepartments, useOtherUser } from '@/lib/common-queries/other';
-import nanoid from '@/lib/nanoid';
-import { getDateTime } from '@/utils';
-import getAccess from '@/utils/getAccess';
+import { useOtherUser } from '@/lib/common-queries/other';
 
-import { useDepartmentsTeachers, useDepartmentsTeachersByUUID } from '../_config/query';
-import {
-	IDepartmentTeachers,
-	PORTFOLIO_DEPARTMENT_TEACHER_NULL,
-	PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA,
-} from '../_config/schema';
-import { IDepartmentTeachersAddOrUpdateProps } from '../_config/types';
+import { useDepartmentsTeachers } from '../../../_config/query';
+import { PORTFOLIO_DEPARTMENT_TEACHER_NULL, PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA } from '../../../_config/schema';
+import { IDepartmentTeachersAddOrUpdateProps } from '../../../_config/types';
 
 const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
-	url,
+	isUpdate = true,
 	open,
 	setOpen,
+	onSubmit,
 	updatedData,
 	setUpdatedData,
-	postData,
-	updateData,
 }) => {
-	const isUpdate = !!updatedData;
-	const hasAccess: string[] = useAccess('portfolio__teachers') as string[];
-	const { user } = useAuth();
-	const { data } = useDepartmentsTeachersByUUID(updatedData?.uuid as string);
-	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
 	const { data: users } = useOtherUser<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
 
@@ -46,41 +31,13 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		setOpen((prev) => !prev);
 		invalidateTeachers();
 	};
-
 	// Reset form values when data is updated
 	useEffect(() => {
-		if (data && isUpdate) {
-			form.reset(data);
+		if (updatedData && isUpdate) {
+			form.reset(updatedData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isUpdate]);
-
-	// Submit handler
-	async function onSubmit(values: IDepartmentTeachers) {
-		if (isUpdate) {
-			// UPDATE ITEM
-			updateData.mutateAsync({
-				url: `/portfolio/department-teachers/${updatedData?.uuid}`,
-				updatedData: {
-					...values,
-					updated_at: getDateTime(),
-				},
-				onClose,
-			});
-		} else {
-			// ADD NEW ITEM
-			postData.mutateAsync({
-				url: '/portfolio/department-teachers',
-				newData: {
-					...values,
-					created_at: getDateTime(),
-					created_by: user?.uuid,
-					uuid: nanoid(),
-				},
-				onClose,
-			});
-		}
-	}
+	}, [updatedData, isUpdate]);
 
 	return (
 		<AddModal
@@ -91,11 +48,14 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 			isSmall={true}
 		>
-			<FormField
-				control={form.control}
-				name='department_head'
-				render={(props) => <CoreForm.Switch {...props} />}
-			/>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='department_head'
+					render={(props) => <CoreForm.Switch {...props} />}
+				/>
+				<FormField control={form.control} name='status' render={(props) => <CoreForm.Switch {...props} />} />
+			</div>
 			{form.watch('department_head') && (
 				<FormField
 					control={form.control}
@@ -107,21 +67,13 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
-					name='department_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Department'
-							placeholder='Select Department'
-							options={departments!}
-							{...props}
-						/>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
 					name='teacher_designation'
 					render={(props) => <CoreForm.Input label='Designation' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='teacher_initial'
+					render={(props) => <CoreForm.Input label='Initial' {...props} />}
 				/>
 			</div>
 
@@ -149,20 +101,6 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 					render={(props) => <CoreForm.Input label='Phone' {...props} />}
 				/>
 			</div>
-
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField
-					control={form.control}
-					name='index'
-					render={(props) => <CoreForm.Input type='number' label='Index' {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='teacher_initial'
-					render={(props) => <CoreForm.Input label='Initial' {...props} />}
-				/>
-			</div>
-
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}

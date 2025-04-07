@@ -256,15 +256,16 @@ export type IClub = z.infer<typeof CLUB_SCHEMA>;
 
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
-	department_uuid: STRING_REQUIRED,
+	uuid: STRING_OPTIONAL,
+	department_uuid: STRING_OPTIONAL,
 	department_head: BOOLEAN_REQUIRED,
 	teacher_email: STRING_REQUIRED,
 	teacher_phone: STRING_NULLABLE,
 	teacher_designation: STRING_REQUIRED,
 	teacher_uuid: STRING_REQUIRED,
+	teacher_initial: STRING_OPTIONAL,
 	education: STRING_REQUIRED,
 	publication: STRING_REQUIRED,
-	journal: STRING_REQUIRED,
 	about: STRING_REQUIRED,
 	appointment_date: STRING_REQUIRED,
 	resign_date: STRING_NULLABLE,
@@ -272,6 +273,7 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z.object({
 });
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
+	uuid: '',
 	department_uuid: '',
 	department_head: false,
 	teacher_email: '',
@@ -280,7 +282,6 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	teacher_uuid: '',
 	education: '',
 	publication: '',
-	journal: '',
 	about: '',
 	appointment_date: '',
 	resign_date: null,

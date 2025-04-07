@@ -1,55 +1,37 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import { useNavigate } from 'react-router-dom';
 import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
 import getAccess from '@/utils/getAccess';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { departmentTeachersColumns } from '../_config/columns';
-import { IDepartmentTeachersTableData } from '../_config/columns/columns.type';
-import { useDepartmentsTeachers } from '../_config/query';
+import { departmentColumns } from '../_config/columns';
+import { IDepartmentTableData } from '../_config/columns/columns.type';
+import { useDepartments } from '../_config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
+	const navigate = useNavigate();
 	const hasAccess: string[] = useAccess('portfolio__teachers') as string[];
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useDepartmentsTeachers<
-		IDepartmentTeachersTableData[]
-	>(getAccess(hasAccess));
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useDepartments<IDepartmentTableData[]>(
+		getAccess(hasAccess)
+	);
 
 	const pageInfo = useMemo(() => new PageInfo('Teachers', url, 'portfolio__teachers'), [url]);
 
 	// Add/Update Modal state
-	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
-
-	const handleCreate = () => {
-		setIsOpenAddModal(true);
-	};
-
-	const [updatedData, setUpdatedData] = useState<IDepartmentTeachersTableData | null>(null);
-	const handleUpdate = (row: Row<IDepartmentTeachersTableData>) => {
-		setUpdatedData(row.original);
-		setIsOpenAddModal(true);
-	};
-
-	// Delete Modal state
-	const [deleteItem, setDeleteItem] = useState<{
-		id: string;
-		name: string;
-	} | null>(null);
-
-	const handleDelete = (row: Row<IDepartmentTeachersTableData>) => {
-		setDeleteItem({
-			id: row?.original?.uuid,
-			name: row?.original?.teacher_name,
-		});
+	const handleCreate = () => navigate('/portfolio/office/create');
+	const handleUpdate = (row: Row<IDepartmentTableData>) => {
+		navigate(`/portfolio/teacher/${row.original.uuid}/update`);
 	};
 
 	// Table Columns
-	const columns = departmentTeachersColumns();
+	const columns = departmentColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -65,32 +47,8 @@ const Designation = () => {
 				isLoading={isLoading}
 				handleCreate={handleCreate}
 				handleUpdate={handleUpdate}
-				handleDelete={handleDelete}
 				handleRefetch={refetch}
-			>
-				{renderSuspenseModals([
-					<AddOrUpdate
-						{...{
-							url,
-							open: isOpenAddModal,
-							setOpen: setIsOpenAddModal,
-							updatedData,
-							setUpdatedData,
-							postData,
-							updateData,
-						}}
-					/>,
-
-					<DeleteModal
-						{...{
-							deleteItem,
-							setDeleteItem,
-							url: '/portfolio/department-teachers',
-							deleteData,
-						}}
-					/>,
-				])}
-			</TableProvider>
+			></TableProvider>
 		</PageProvider>
 	);
 };
