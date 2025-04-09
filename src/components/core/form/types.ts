@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckboxProps } from '@radix-ui/react-checkbox';
+import { DayPickerProps } from 'react-day-picker';
 import { DropzoneOptions } from 'react-dropzone';
 import { ControllerFieldState, ControllerRenderProps, UseFormReturn, UseFormStateReturn } from 'react-hook-form';
 
@@ -150,7 +151,7 @@ export interface FormDatePickerProps {
 	icon?: React.ReactNode;
 	disableLabel?: boolean;
 	className?: string;
-	calendarProps?: CalendarProps;
+	calendarProps?: DayPickerProps;
 }
 
 // * form-checkbox

@@ -57,7 +57,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						{...calendarProps}
 						captionLayout={'dropdown'}
 						mode='single'
-						selected={new Date(field.value)}
+						selected={field.value ? new Date(field.value) : new Date()}
 						onSelect={(date) => {
 							field.onChange(formatDate(date as Date));
 							setOpen(false);
@@ -66,6 +66,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 							field.onChange(formatDate(date as Date));
 						}}
 						month={field.value ? new Date(field.value) : undefined}
+						endMonth={new Date(2050, 11)}
 					/>
 				</PopoverContent>
 			</Popover>

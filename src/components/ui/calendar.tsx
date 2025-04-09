@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { getMonth, getYear } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, DayPickerProps } from 'react-day-picker';
 
 import { buttonVariants } from '@/components/ui/button';
 
@@ -17,7 +17,7 @@ function Calendar({
 	captionLayout,
 	showOutsideDays = true,
 	...props
-}: CalendarProps & { selected: Date | any }) {
+}: DayPickerProps & { selected: Date | any }) {
 	return (
 		<DayPicker
 			showOutsideDays={showOutsideDays}
@@ -79,7 +79,6 @@ function Calendar({
 
 				YearsDropdown: ({ onChange, options }) => {
 					const currentMonth = getYear(new Date(props.selected));
-
 					return (
 						<select defaultValue={currentMonth} onChange={onChange}>
 							{options?.map((e, index) => (
