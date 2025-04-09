@@ -6,6 +6,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -27,6 +28,7 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useCategoryByUUID(updatedData?.uuid as string);
+	const { invalidateQuery: invalidateQueryCategory } = useOtherCategory();
 
 	const form = useRHF(CATEGORY_SCHEMA, CATEGORY_NULL);
 
@@ -56,6 +58,7 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryCategory();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -68,6 +71,7 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryCategory();
 		}
 	}
 

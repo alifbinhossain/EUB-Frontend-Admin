@@ -7,7 +7,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherCategory } from '@/lib/common-queries/other';
+import { useOtherCategory, useOtherSubCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -30,6 +30,7 @@ const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = useSubCategoryByUUID(updatedData?.uuid as string);
 	const { data: category } = useOtherCategory<IFormSelectOption[]>();
+	const { invalidateQuery: invalidateQuerySubCategory } = useOtherSubCategory();
 
 	const form = useRHF(SUB_CATEGORY_SCHEMA, SUB_CATEGORY_NULL);
 
@@ -47,7 +48,6 @@ const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
-	console.log(form.formState.errors);
 	// Submit handler
 	async function onSubmit(values: ISubCategory) {
 		if (isUpdate) {
@@ -60,6 +60,7 @@ const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQuerySubCategory();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -72,6 +73,7 @@ const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQuerySubCategory();
 		}
 	}
 

@@ -6,6 +6,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
+import { useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -26,6 +27,7 @@ const AddOrUpdate: React.FC<IVendorAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useVendorByUUID(updatedData?.uuid as string);
+	const { invalidateQuery: invalidateQueryVendor } = useOtherVendor();
 
 	const form = useRHF(VENDOR_SCHEMA, VENDOR_NULL);
 
@@ -55,6 +57,7 @@ const AddOrUpdate: React.FC<IVendorAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryVendor();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -67,6 +70,7 @@ const AddOrUpdate: React.FC<IVendorAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryVendor();
 		}
 	}
 
