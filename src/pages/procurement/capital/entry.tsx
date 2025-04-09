@@ -309,8 +309,8 @@ const Entry = () => {
 					name='sub_category_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='Status'
-							placeholder='Select status'
+							label='Sub Category'
+							placeholder='Select sub category'
 							menuPortalTarget={document.body}
 							options={subCategoryList!}
 							{...props}
@@ -412,7 +412,13 @@ const Entry = () => {
 					render={(props) => (
 						<CoreForm.ReactSelect
 							label='Vendor'
-							options={vendorList!}
+							options={
+								vendorList?.filter((item) =>
+									form
+										.getValues('quotations')
+										.some((quotation) => quotation.vendor_uuid === item.value)
+								) || []
+							}
 							isDisabled={
 								!(
 									form.watch('is_work_order') &&

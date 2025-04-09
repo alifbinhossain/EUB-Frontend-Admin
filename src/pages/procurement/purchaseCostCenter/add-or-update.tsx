@@ -7,7 +7,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherSubCategory } from '@/lib/common-queries/other';
+import { useOtherPurchaseCostCenter, useOtherSubCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -30,6 +30,7 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 	const { user } = useAuth();
 	const { data } = usePurchaseCostCenterByUUID(updatedData?.uuid as string);
 	const { data: subCategory } = useOtherSubCategory<IFormSelectOption[]>();
+	const { invalidateQuery: invalidateQueryPurchaseCostCenter } = useOtherPurchaseCostCenter();
 
 	const form = useRHF(PURCHASE_COST_CENTER_SCHEMA, PURCHASE_COST_CENTER_NULL);
 
@@ -60,6 +61,7 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryPurchaseCostCenter();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -72,6 +74,7 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
+			invalidateQueryPurchaseCostCenter();
 		}
 	}
 
