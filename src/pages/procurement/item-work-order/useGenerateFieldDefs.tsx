@@ -2,7 +2,12 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 import FieldActionButton from '@/components/buttons/field-action';
 import { IFormSelectOption } from '@/components/core/form/types';
+import DateTime from '@/components/ui/date-time';
+import { FormField } from '@/components/ui/form';
+import CoreForm from '@core/form';
 import { FieldDef } from '@core/form/form-dynamic-fields/types';
+
+import { getDateTime } from '@/utils';
 
 import { useItemByVendor } from './config/query';
 import { IItemWorkOrder } from './config/schema';
@@ -15,6 +20,7 @@ interface IGenerateFieldDefsProps {
 	isUpdate: boolean;
 	isNew: boolean;
 	data: IItemWorkOrder;
+	form: any;
 }
 
 const useGenerateFieldDefs = ({
@@ -25,6 +31,7 @@ const useGenerateFieldDefs = ({
 	watch,
 	set,
 	data,
+	form,
 }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: itemData } = useItemByVendor<IFormSelectOption[]>(watch('vendor_uuid') as string, 'is_active=true');
 
@@ -55,9 +62,48 @@ const useGenerateFieldDefs = ({
 		{
 			header: 'Received',
 			accessorKey: 'is_received',
-			type: 'checkbox',
+			type: 'custom',
+			component: (index: number) => {
+				return (
+					<FormField
+						control={form.control}
+						name={`item_work_order_entry.${index}.is_received`}
+						render={(props) => (
+							<CoreForm.Checkbox
+								label='Received'
+								onCheckedChange={() => {
+									if (!watch(`item_work_order_entry.${index}.is_received`)) {
+										set(`item_work_order_entry.${index}.is_received`, true);
+										set(`item_work_order_entry.${index}.received_date`, getDateTime());
+									} else {
+										set(`item_work_order_entry.${index}.is_received`, false);
+										set(`item_work_order_entry.${index}.received_date`, undefined);
+									}
+								}}
+								{...props}
+							/>
+						)}
+					/>
+				);
+			},
 		},
-
+		{
+			header: 'Received Date',
+			accessorKey: 'received_date',
+			type: 'custom',
+			component: (index: number) => {
+				return (
+					<DateTime
+						date={
+							watch(`item_work_order_entry.${index}.received_date`)
+								? new Date(watch(`item_work_order_entry.${index}.received_date`) as string)
+								: undefined
+						}
+						isTime={false}
+					/>
+				);
+			},
+		},
 		{
 			header: 'Actions',
 			accessorKey: 'actions',
