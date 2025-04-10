@@ -80,10 +80,35 @@ const AddOrUpdate: React.FC<IVendorAddOrUpdateProps> = ({
 			setOpen={onClose}
 			title={isUpdate ? 'Update Vendor' : 'Add Vendor'}
 			form={form}
+			isSmall={true}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+			<div className='grid grid-cols-3 gap-4'>
+				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField
+					control={form.control}
+					name='product_type'
+					render={(props) => <CoreForm.Input {...props} />}
+				/>
+			</div>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField control={form.control} name='address' render={(props) => <CoreForm.Textarea {...props} />} />
+				<FormField control={form.control} name='purpose' render={(props) => <CoreForm.Textarea {...props} />} />
+			</div>
+			<div className='grid grid-cols-2 gap-4'>
+				<FormField
+					control={form.control}
+					name='starting_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='ending_date'
+					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+			</div>
+
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

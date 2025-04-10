@@ -10,6 +10,7 @@ const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
 const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
+const Form = lazy(() => import('@/pages/procurement/form'));
 const Capital = lazy(() => import('@/pages/procurement/capital'));
 const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
 const Service = lazy(() => import('@/pages/procurement/service'));
@@ -109,6 +110,13 @@ const procurementRoutes: IRoute[] = [
 				element: <ItemEntry />,
 				hidden: true,
 				page_name: 'procurement__item_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Form',
+				path: '/procurement/form',
+				element: <Form />,
+				page_name: 'procurement__form',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{

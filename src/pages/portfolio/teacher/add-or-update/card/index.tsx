@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fi } from 'date-fns/locale';
 import { motion as m } from 'framer-motion';
 
 import FieldActionButton from '@/components/buttons/field-action';

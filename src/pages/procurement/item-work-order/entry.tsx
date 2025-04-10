@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
+import { get } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -13,6 +14,7 @@ import { DeleteModal } from '@core/modal';
 import { useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import { formatDate } from '@/utils/formatDate';
 
 import { IItemTableData } from '../item/config/columns/columns.type';
 import { useItem } from '../item/config/query';
@@ -71,10 +73,22 @@ const Entry = () => {
 					updatedData: itemUpdatedData,
 				})
 				.then(() => {
-					const entryUpdatePromise = item_work_order_entry.map((entry) => {
+					const entryUpdatePromise = item_work_order_entry.map((entry, index) => {
 						if (entry.uuid) {
 							const entryUpdateData = {
 								...entry,
+								received_date:
+									form.watch(`item_work_order_entry.${index}.received_date`) !==
+									(data as IItemWorkOrder)?.item_work_order_entry[index]?.received_date
+										? form.watch(`item_work_order_entry.${index}.is_received`)
+											? getDateTime()
+											: undefined
+										: formatDate(
+												new Date(
+													(data as IItemWorkOrder)?.item_work_order_entry[index]
+														?.received_date as string
+												)
+											),
 								updatedData: itemUpdatedData,
 							};
 							return updateData.mutateAsync({
@@ -84,6 +98,9 @@ const Entry = () => {
 						} else {
 							const entryData = {
 								...entry,
+								received_date: form.watch(`item_work_order_entry.${index}.is_received`)
+									? getDateTime()
+									: undefined,
 								item_work_order_uuid: uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
@@ -129,9 +146,12 @@ const Entry = () => {
 					newData: itemData,
 				})
 				.then(() => {
-					const entryPromise = item_work_order_entry.map((entry) => {
+					const entryPromise = item_work_order_entry.map((entry, index) => {
 						const entryData = {
 							...entry,
+							received_date: form.watch(`item_work_order_entry.${index}.is_received`)
+								? getDateTime()
+								: undefined,
 							item_work_order_uuid: itemData.uuid,
 							created_at: getDateTime(),
 							created_by: user?.uuid,
@@ -242,6 +262,7 @@ const Entry = () => {
 					isUpdate,
 					isNew: false,
 					data: form.getValues(),
+					form: form,
 				})}
 				fields={fields}
 				handleAdd={handleAdd}
