@@ -13,6 +13,11 @@ export const featureColumns = (): ColumnDef<IFeatureTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => <StatusButton value={info.getValue() as number} />,
 	},
+	{
+		accessorKey: 'index',
+		header: 'Index',
+		enableColumnFilter: true,
+	},
 
 	{
 		accessorKey: 'file',
