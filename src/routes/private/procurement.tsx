@@ -124,13 +124,6 @@ const procurementRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Internal Cost Center',
-				path: '/procurement/internal-cost-center',
-				element: <InternalCostCenter />,
-				page_name: 'procurement__internal_cost_center',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
 				name: 'Requisition',
 				path: '/procurement/requisition',
 				element: <Requisition />,
@@ -157,6 +150,13 @@ const procurementRoutes: IRoute[] = [
 			{
 				name: 'Library',
 				children: [
+					{
+						name: 'Internal Cost Center',
+						path: '/procurement/internal-cost-center',
+						element: <InternalCostCenter />,
+						page_name: 'procurement__internal_cost_center',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
 					{
 						name: 'Purchase Cost Center',
 						path: '/procurement/purchase-cost-center',
