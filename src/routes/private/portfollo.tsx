@@ -34,6 +34,7 @@ const FinancialInformation = lazy(() => import('@/pages/portfolio/admission/fina
 const Admission = lazy(() => import('@/pages/portfolio/admission/online-form'));
 const AdmissionDetails = lazy(() => import('@/pages/portfolio/admission/online-form/details'));
 const AdmissionEntry = lazy(() => import('@/pages/portfolio/admission/online-form/add-or-update'));
+const Feature = lazy(() => import('@/pages/portfolio/feature/index'));
 
 const portfolioRoutes: IRoute[] = [
 	{
@@ -72,6 +73,13 @@ const portfolioRoutes: IRoute[] = [
 				path: '/portfolio/offers',
 				element: <Offers />,
 				page_name: 'portfolio__offers',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Feature',
+				path: '/portfolio/feature',
+				element: <Feature />,
+				page_name: 'portfolio__feature',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
