@@ -32,6 +32,11 @@ const otherQK = {
 
 	//* Vendor
 	vendor: () => [...otherQK.all(), 'vendor'],
+
+	//* Internal Cost Center
+	internalCostCenter: () => [...otherQK.all(), 'internalCostCenter'],
+	//* Item
+	item: () => [...otherQK.all(), 'item'],
 };
 
 export default otherQK;
