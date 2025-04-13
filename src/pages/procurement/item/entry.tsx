@@ -183,11 +183,6 @@ const Entry = () => {
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Item' : 'Add Item'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section title={`Items`}>
-				<FormField
-					control={form.control}
-					name='index'
-					render={(props) => <CoreForm.Input {...props} type='number' />}
-				/>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField
 					control={form.control}
