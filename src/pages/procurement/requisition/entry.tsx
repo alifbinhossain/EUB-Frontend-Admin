@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
+import { divide } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -7,17 +8,17 @@ import useRHF from '@/hooks/useRHF';
 import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
-import { AddModal, DeleteModal } from '@core/modal';
+import { DeleteModal } from '@core/modal';
 
-import { useOtherPurchaseCostCenter } from '@/lib/common-queries/other';
+import { useOtherInternalCostCenter } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { IItemTableData } from './config/columns/columns.type';
-import { useItem, useItemAndVendorByUUID } from './config/query';
-import { IItem, ITEM_NULL, ITEM_SCHEMA } from './config/schema';
-import { IItemAddOrUpdateProps } from './config/types';
+import { IRequisitionTableData } from './config/columns/columns.type';
+import { useRequisition, useRequisitionAndItemByUUID } from './config/query';
+import { IRequisition, REQUISITION_NULL, REQUISITION_SCHEMA } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
+import { departments } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -30,15 +31,16 @@ const Entry = () => {
 		updateData,
 		postData,
 		deleteData,
-		invalidateQuery: invalidateQueryItem,
-	} = useItemAndVendorByUUID(uuid as string);
-	const { invalidateQuery } = useItem<IItemTableData[]>();
-	const { data: purchases } = useOtherPurchaseCostCenter<IFormSelectOption[]>();
+		invalidateQuery: invalidateQueryRequisition,
+	} = useRequisitionAndItemByUUID(uuid as string);
+	const { invalidateQuery } = useRequisition<IRequisitionTableData[]>();
+	const { data: internalCostCenter, invalidateQuery: invalidateQueryInternalCostCenter } =
+		useOtherInternalCostCenter<IFormSelectOption[]>();
 
-	const form = useRHF(ITEM_SCHEMA, ITEM_NULL);
+	const form = useRHF(REQUISITION_SCHEMA, REQUISITION_NULL);
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
-		name: 'vendors',
+		name: 'item_requisition',
 	});
 
 	// Reset form values when data is updated
@@ -50,10 +52,10 @@ const Entry = () => {
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IItem) {
+	async function onSubmit(values: IRequisition) {
 		if (isUpdate) {
 			// UPDATE ITEM
-			const { vendors, ...rest } = values;
+			const { item_requisition, ...rest } = values;
 			const itemUpdatedData = {
 				...rest,
 				updated_at: getDateTime(),
@@ -61,18 +63,18 @@ const Entry = () => {
 
 			updateData
 				.mutateAsync({
-					url: `/procure/item/${uuid}`,
+					url: `/procure/requisition/${uuid}`,
 					updatedData: itemUpdatedData,
 				})
 				.then(() => {
-					const entryUpdatePromise = vendors.map((entry) => {
+					const entryUpdatePromise = item_requisition.map((entry) => {
 						if (entry.uuid) {
 							const entryUpdateData = {
 								...entry,
 								updatedData: itemUpdatedData,
 							};
 							return updateData.mutateAsync({
-								url: `/procure/item-vendor/${entry.uuid}`,
+								url: `/procure/item-requisition/${entry.uuid}`,
 								updatedData: entryUpdateData,
 							});
 						} else {
@@ -81,11 +83,11 @@ const Entry = () => {
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
-								item_uuid: uuid,
+								requisition_uuid: uuid,
 							};
 
 							return postData.mutateAsync({
-								url: `/procure/item-vendor`,
+								url: `/procure/item-requisition`,
 								newData: entryData,
 							});
 						}
@@ -95,15 +97,16 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
-					invalidateQueryItem();
-					navigate('/procurement/item');
+					invalidateQueryRequisition();
+					invalidateQueryInternalCostCenter();
+					navigate('/procurement/requisition');
 				})
 				.catch((error) => {
 					console.error('Error updating news:', error);
 				});
 		} else {
 			// ADD NEW ITEM
-			const { vendors, ...rest } = values;
+			const { item_requisition, ...rest } = values;
 			const itemData = {
 				...rest,
 				created_at: getDateTime(),
@@ -113,21 +116,21 @@ const Entry = () => {
 
 			postData
 				.mutateAsync({
-					url: '/procure/item',
+					url: '/procure/requisition',
 					newData: itemData,
 				})
 				.then(() => {
-					const entryPromise = vendors.map((entry) => {
+					const entryPromise = item_requisition.map((entry) => {
 						const entryData = {
 							...entry,
 							created_at: getDateTime(),
 							created_by: user?.uuid,
 							uuid: nanoid(),
-							item_uuid: itemData.uuid,
+							requisition_uuid: itemData.uuid,
 						};
 
 						return postData.mutateAsync({
-							url: `/procure/item-vendor`,
+							url: `/procure/item-requisition`,
 							newData: entryData,
 						});
 					});
@@ -136,7 +139,9 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
-					navigate('/procurement/item');
+					invalidateQueryRequisition();
+					invalidateQueryInternalCostCenter();
+					navigate('/procurement/requisition');
 				})
 				.catch((error) => {
 					console.error('Error adding news:', error);
@@ -148,9 +153,10 @@ const Entry = () => {
 		// TODO: Update field names
 
 		append({
-			// image: new File([''], 'filename'),
-			vendor_uuid: '',
-			is_active: false,
+			item_uuid: '',
+			req_quantity: 0,
+			provided_quantity: 0,
+			remarks: '',
 		});
 	};
 
@@ -173,48 +179,69 @@ const Entry = () => {
 	// Copy Handler
 	const handleCopy = (index: number) => {
 		// TODO: Update fields ⬇️
-		const field = form.watch('vendors')[index];
+		const field = form.watch('item_requisition')[index];
 		append({
-			vendor_uuid: field.vendor_uuid,
-			is_active: field.is_active,
+			item_uuid: field.item_uuid,
+			req_quantity: field.req_quantity,
+			provided_quantity: field.provided_quantity,
+			remarks: field.remarks,
 		});
 	};
 
 	return (
-		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Item' : 'Add Item'} form={form} onSubmit={onSubmit}>
-			<CoreForm.Section title={`Items`}>
-				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+		<CoreForm.AddEditWrapper
+			title={isUpdate ? 'Edit Requisition' : 'Add Requisition'}
+			form={form}
+			onSubmit={onSubmit}
+		>
+			<CoreForm.Section
+				title={`Requisition`}
+				extraHeader={
+					<div className='flex gap-4 text-white'>
+						<FormField
+							control={form.control}
+							name='is_received'
+							render={(props) => <CoreForm.Switch label='Received' {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='received_date'
+							render={(props) => <CoreForm.DatePicker placeholder='Received Date' {...props} />}
+						/>
+					</div>
+				}
+			>
 				<FormField
 					control={form.control}
-					name='purchase_cost_center_uuid'
+					name='internal_cost_center_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='Purchase Cost Center'
-							placeholder='Select purchase cost center'
-							options={purchases!}
+							label='Internal Cost Center'
+							placeholder='Select Internal Cost Center'
+							options={internalCostCenter!}
 							{...props}
 						/>
 					)}
 				/>
+
 				<FormField
 					control={form.control}
-					name='vendor_price'
-					render={(props) => <CoreForm.Input {...props} type='number' />}
-				/>
-				<FormField
-					control={form.control}
-					name='price_validity'
+					name='department'
 					render={(props) => (
-						<CoreForm.DatePicker label='Price Validity' placeholder='Select to' {...props} />
+						<CoreForm.ReactSelect
+							label='Department'
+							placeholder='Select Department'
+							options={departments}
+							{...props}
+						/>
 					)}
 				/>
-
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>
 			<CoreForm.DynamicFields
-				title='Vendors'
+				title='Item Requisition'
 				form={form}
-				fieldName='vendors'
+				fieldName='item_requisition'
 				fieldDefs={useGenerateFieldDefs({
 					data: form.getValues(),
 					copy: handleCopy,
@@ -229,13 +256,13 @@ const Entry = () => {
 					{...{
 						deleteItem,
 						setDeleteItem,
-						url: `/procure/item-vendor`, // TODO: Update url
+						url: `/procure/item-requisition`, // TODO: Update url
 						deleteData,
 						onClose: () => {
 							form.setValue(
-								'vendors', // TODO: Update field name
+								'item_requisition', // TODO: Update field name
 								form
-									.getValues('vendors') // TODO: Update field name
+									.getValues('item_requisition') // TODO: Update field name
 									.filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},

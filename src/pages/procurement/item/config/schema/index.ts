@@ -12,7 +12,6 @@ import {
 
 // Item Schema
 export const ITEM_SCHEMA = z.object({
-	index: NUMBER_REQUIRED,
 	name: STRING_REQUIRED,
 	purchase_cost_center_uuid: STRING_REQUIRED,
 	vendor_price: NUMBER_REQUIRED.min(1, 'Vendor Price must be greater than 0'),
@@ -24,7 +23,6 @@ export const ITEM_SCHEMA = z.object({
 });
 
 export const ITEM_NULL: Partial<IItem> = {
-	index: 0,
 	name: '',
 	purchase_cost_center_uuid: '',
 	vendor_price: 0,

@@ -80,3 +80,16 @@ export const useOtherVendor = <T>() =>
 		queryKey: otherQK.vendor(),
 		url: `/other/procure/vendor/value/label`,
 	});
+
+// * GET OTHER INTERNAL COST CENTER
+export const useOtherInternalCostCenter = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.internalCostCenter(),
+		url: `/other/procure/internal-cost-center/value/label`,
+	});
+// * GET OTHER ITEM
+export const useOtherItem = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.item(),
+		url: `/other/procure/item/value/label`,
+	});

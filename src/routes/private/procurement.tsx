@@ -15,6 +15,9 @@ const Capital = lazy(() => import('@/pages/procurement/capital'));
 const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
 const Service = lazy(() => import('@/pages/procurement/service'));
 const ServiceEntry = lazy(() => import('@/pages/procurement/service/entry'));
+const InternalCostCenter = lazy(() => import('@/pages/procurement/internal-cost-center'));
+const Requisition = lazy(() => import('@/pages/procurement/requisition'));
+const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -112,6 +115,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+
 			{
 				name: 'Form',
 				path: '/procurement/form',
@@ -120,8 +124,39 @@ const procurementRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
+				name: 'Requisition',
+				path: '/procurement/requisition',
+				element: <Requisition />,
+				page_name: 'procurement__requisition',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Requisition Entry',
+				path: '/procurement/requisition/create',
+				element: <RequisitionEntry />,
+				hidden: true,
+				page_name: 'procurement__requisition_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Requisition Update',
+				path: '/procurement/requisition/:uuid/update',
+				element: <RequisitionEntry />,
+				hidden: true,
+				page_name: 'procurement__requisition_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+
+			{
 				name: 'Library',
 				children: [
+					{
+						name: 'Internal Cost Center',
+						path: '/procurement/internal-cost-center',
+						element: <InternalCostCenter />,
+						page_name: 'procurement__internal_cost_center',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
 					{
 						name: 'Purchase Cost Center',
 						path: '/procurement/purchase-cost-center',
