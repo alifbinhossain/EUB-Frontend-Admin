@@ -15,6 +15,7 @@ export const ITEM_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	purchase_cost_center_uuid: STRING_REQUIRED,
 	vendor_price: NUMBER_REQUIRED.min(1, 'Vendor Price must be greater than 0'),
+	unit: STRING_REQUIRED,
 	price_validity: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 	vendors: z.array(
@@ -26,6 +27,7 @@ export const ITEM_NULL: Partial<IItem> = {
 	name: '',
 	purchase_cost_center_uuid: '',
 	vendor_price: 0,
+	unit: '',
 	price_validity: '',
 	remarks: '',
 	vendors: [

@@ -14,9 +14,11 @@ interface IGenerateFieldDefsProps {
 	remove: (index: number) => void;
 	watch?: UseFormWatch<IRequisition>; // TODO: Update Schema Type
 	isUpdate: boolean;
+	request?: boolean;
+	provider?: boolean;
 }
 
-const useGenerateFieldDefs = ({ data, copy, remove }: IGenerateFieldDefsProps): FieldDef[] => {
+const useGenerateFieldDefs = ({ data, copy, remove, request, provider }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: itemList } = useOtherItem<IFormSelectOption[]>();
 
 	return [
@@ -28,16 +30,19 @@ const useGenerateFieldDefs = ({ data, copy, remove }: IGenerateFieldDefsProps): 
 			options: itemList || [],
 			unique: true,
 			excludeOptions: data.item_requisition.map((item) => item.item_uuid) || [],
+			disabled: provider,
 		},
 		{
 			header: 'Request Quantity',
 			accessorKey: 'req_quantity',
 			type: 'number',
+			disabled: provider,
 		},
 		{
 			header: 'Provided Quantity',
 			accessorKey: 'provided_quantity',
 			type: 'number',
+			disabled: request,
 		},
 		{
 			header: 'Remarks',

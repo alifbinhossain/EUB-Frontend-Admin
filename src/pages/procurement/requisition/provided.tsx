@@ -6,7 +6,6 @@ import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
-import DateTime from '@/components/ui/date-time';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
@@ -14,7 +13,6 @@ import { DeleteModal } from '@core/modal';
 import { useOtherInternalCostCenter } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
-import { formatDate, formatDateTable } from '@/utils/formatDate';
 
 import { IRequisitionTableData } from './config/columns/columns.type';
 import { useRequisition, useRequisitionAndItemByUUID } from './config/query';
@@ -196,32 +194,7 @@ const Entry = () => {
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<CoreForm.Section
-				title={`Requisition`}
-				extraHeader={
-					<div className='flex gap-4 text-white'>
-						<FormField
-							control={form.control}
-							name='is_received'
-							render={(props) => (
-								<CoreForm.Switch
-									label='Received'
-									onCheckedChange={(value: boolean) => {
-										form.setValue('is_received', value);
-										if (value) {
-											form.setValue('received_date', getDateTime(), { shouldDirty: true });
-										} else {
-											form.setValue('received_date', undefined, { shouldDirty: true });
-											form.setValue('is_received', false, { shouldDirty: true });
-										}
-									}}
-									{...props}
-								/>
-							)}
-						/>
-					</div>
-				}
-			>
+			<CoreForm.Section title={`Requisition`}>
 				<FormField
 					control={form.control}
 					name='internal_cost_center_uuid'
@@ -230,6 +203,7 @@ const Entry = () => {
 							label='Internal Cost Center'
 							placeholder='Select Internal Cost Center'
 							options={internalCostCenter!}
+							isDisabled={true}
 							{...props}
 						/>
 					)}
@@ -243,14 +217,10 @@ const Entry = () => {
 							label='Department'
 							placeholder='Select Department'
 							options={departments}
+							isDisabled={true}
 							{...props}
 						/>
 					)}
-				/>
-				<FormField
-					control={form.control}
-					name='received_date'
-					render={(props) => <CoreForm.DatePicker disabled={true} placeholder='Received Date' {...props} />}
 				/>
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>
@@ -263,7 +233,7 @@ const Entry = () => {
 					copy: handleCopy,
 					remove: handleRemove,
 					isUpdate,
-					request: true,
+					provider: true,
 				})}
 				handleAdd={handleAdd}
 				fields={fields}

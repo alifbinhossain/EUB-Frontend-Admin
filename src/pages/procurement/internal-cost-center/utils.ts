@@ -3,5 +3,5 @@ export const types = [
 	{ label: 'Admission', value: 'admission' },
 	{ label: 'Exam Control', value: 'exam-control' },
 	{ label: 'Fed', value: 'fed' },
-	{ label: 'purchase_committee', value: 'purchase_committee' },
+	{ label: 'Purchase Committee', value: 'purchase_committee' },
 ];

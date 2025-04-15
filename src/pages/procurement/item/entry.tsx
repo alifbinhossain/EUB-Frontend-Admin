@@ -201,6 +201,7 @@ const Entry = () => {
 					name='vendor_price'
 					render={(props) => <CoreForm.Input {...props} type='number' />}
 				/>
+				<FormField control={form.control} name='unit' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField
 					control={form.control}
 					name='price_validity'

@@ -2,8 +2,10 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
+import useAccess from '@/hooks/useAccess';
+import useAuth from '@/hooks/useAuth';
 
-import { PageInfo } from '@/utils';
+import { getDateTime, PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { requisitionColumns } from './config/columns';
@@ -14,8 +16,18 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Requisition = () => {
 	const navigate = useNavigate();
-	const { data, isLoading, url, deleteData, refetch } = useRequisition<IRequisitionTableData[]>();
-
+	const { user } = useAuth();
+	const pageAccess = useAccess('procurement__requisition') as string[];
+	const providedAccess = pageAccess.includes('click_provided');
+	const receivedAccess = pageAccess.includes('click_received');
+	const overrideReceivedAccess = pageAccess.includes('click_received_override');
+	const updateAccess = pageAccess.includes('update');
+	const deleteAccess = pageAccess.includes('delete');
+	const showAll = pageAccess.includes('show_all');
+	const { data, isLoading, url, deleteData, refetch, updateData } = useRequisition<IRequisitionTableData[]>(
+		showAll,
+		user?.uuid
+	);
 	const pageInfo = useMemo(() => new PageInfo('Requisition', url, 'procurement__requisition'), [url]);
 
 	// Add/Update Modal state
@@ -26,6 +38,9 @@ const Requisition = () => {
 
 	const handleUpdate = (row: Row<IRequisitionTableData>) => {
 		navigate(`/procurement/requisition/${row.original.uuid}/update`);
+	};
+	const handleProvided = (row: Row<IRequisitionTableData>) => {
+		navigate(`/procurement/requisition/${row.original.uuid}/provided`);
 	};
 
 	// Delete Modal state
@@ -40,9 +55,26 @@ const Requisition = () => {
 			name: row?.original?.internal_cost_center_name,
 		});
 	};
+	const handleReceived = async (row: Row<IRequisitionTableData>) => {
+		const is_received = row?.original?.is_received ? false : true;
+		const updated_at = getDateTime();
+
+		await updateData.mutateAsync({
+			url: `/procure/requisition/${row?.original?.uuid}`,
+			updatedData: { is_received, updated_at },
+		});
+	};
 
 	// Table Columns
-	const columns = requisitionColumns();
+	const columns = requisitionColumns(
+		updateAccess,
+		deleteAccess,
+		overrideReceivedAccess,
+		receivedAccess,
+		handleReceived,
+		providedAccess,
+		handleProvided
+	);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -55,13 +87,14 @@ const Requisition = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				enableDefaultColumns={false}
 			>
 				{renderSuspenseModals([
 					<DeleteModal
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/procure/requisition',
 							deleteData,
 						}}
 					/>,
