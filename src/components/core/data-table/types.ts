@@ -8,13 +8,18 @@ interface TStartEndDate {
 	end_date: Date | string | undefined;
 }
 
-export type TTableExportCSV = TStartEndDate;
+export type TTableExportCSV = TStartEndDate & {
+	isEntry?: boolean;
+	title: string;
+	table: Table<any>;
+};
 
 export type TTableDateRange<T> = TStartEndDate & {
 	table: Table<T>;
 	onUpdate: (({ range }: { range: DateRange }) => void) | undefined;
 	onClear?: () => void;
 	isClear?: boolean;
+	isSSR?: boolean;
 };
 
 export interface IDataTableEntryProps<TData, TValue> {
@@ -30,6 +35,7 @@ interface TDefaultColumn<TData, TValue> {
 
 export interface TableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
 	column: Column<TData, TValue>;
+	isSSR?: boolean;
 }
 
 export type IFilterProps<TData, TValue> = TDefaultColumn<TData, TValue> & {

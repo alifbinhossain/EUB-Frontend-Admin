@@ -18,7 +18,7 @@ interface TableViewOptionsProps<TData> {
 export function TableViewOptions<TData>({ table }: TableViewOptionsProps<TData>) {
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger>
 				<Button aria-label='Column Options' variant='gradient' size='sm' className='hidden lg:flex'>
 					<Columns2 className='size-4' />
 					Column

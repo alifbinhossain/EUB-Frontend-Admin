@@ -24,7 +24,7 @@ export function TableFacetedFilter<TData, TValue>({ column, title, options }: Ta
 
 	return (
 		<Popover>
-			<PopoverTrigger asChild>
+			<PopoverTrigger>
 				<Button aria-label={title} variant='gradient' size='sm' className='h-8 border-dashed'>
 					<PlusCircledIcon className='mr-2 h-4 w-4' />
 					{title}

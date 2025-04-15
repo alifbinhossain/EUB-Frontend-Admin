@@ -3,5 +3,6 @@ import LayoutProvider from './LayoutContext';
 import PageProvider from './PageContext';
 import SidebarProvider from './SidebarContext';
 import TableProvider from './TableContext';
+import TableFilterProvider from './TableFilterContext';
 
-export { AuthProvider, SidebarProvider, LayoutProvider, PageProvider, TableProvider };
+export { AuthProvider, LayoutProvider, PageProvider, SidebarProvider, TableFilterProvider, TableProvider };

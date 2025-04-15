@@ -56,7 +56,7 @@ const Admission = () => {
 				handleCreate={handleCreate}
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
-				handleRefetch={refetch}
+				// handleRefetch={refetch}
 				// TODO: Update facetedFilters (OPTIONAL)
 				facetedFilters={type1FacetedFilters}
 			>

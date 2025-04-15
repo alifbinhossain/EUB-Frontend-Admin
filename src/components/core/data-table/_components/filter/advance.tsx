@@ -18,7 +18,7 @@ interface IProps {
 const TableAdvanceFilters = ({ filters }: IProps) => {
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger>
 				<Button aria-label='Switch Options' variant='gradient' size='sm' className='hidden lg:flex'>
 					<Filter className='size-4' />
 					Advanced

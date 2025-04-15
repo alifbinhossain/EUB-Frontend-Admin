@@ -85,6 +85,37 @@ export type IDeleteModal = {
 	name: string;
 } | null;
 
+export type IPaginationQuery = {
+	page: string;
+	limit: string;
+	orderby: 'asc' | 'desc';
+	sort: string;
+	q: string;
+	start_date: string | undefined;
+	end_date: string | undefined;
+	[key: string]: string | number | undefined;
+};
+
+export type IPagination = {
+	total_record: number;
+	current_page: number;
+	total_page: number;
+	next_page: number | null;
+	prev_page: number | null;
+};
+export type IResponse<T> = {
+	toast: IToast;
+	data: T;
+	pagination: IPagination;
+};
+export type ITableFilterOptionSSR<T> = {
+	accessor: keyof T;
+	label: string;
+	type: 'select' | 'checkbox' | 'radio' | 'date-range' | 'date' | 'text';
+	apiUrl?: string;
+	isPinned?: boolean;
+};
+
 export interface IDefaultAddOrUpdateProps {
 	url: string;
 	open: boolean;

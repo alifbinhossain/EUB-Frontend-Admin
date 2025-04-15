@@ -1,22 +1,22 @@
 import { flexRender } from '@tanstack/react-table';
-import useTable from '@/hooks/useTable';
+import useTableSSR from '@/hooks/useTableSSR';
 
+import { TableColumnHeader } from '@/components/core/data-table/_components/column-header';
+import TableSkeleton from '@/components/core/data-table/_components/skeleton';
+import { getCommonPinningStyles } from '@/components/core/data-table/_helpers/getCommonPinningStyle';
 import { TableBody, TableCell, Table as TableComponent, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { cn } from '@/lib/utils';
 
-import { TableColumnHeader } from './_components/column-header';
 import { TablePagination } from './_components/pagination';
-import TableSkeleton from './_components/skeleton';
-import { TableToolbar } from './_components/toolbar';
-import { getCommonPinningStyles } from './_helpers/getCommonPinningStyle';
+import Toolbar from './_components/toolbar';
 
-function DataTable() {
-	const { table, isLoading, isEntry } = useTable();
+const DataTableSSR = () => {
+	const { table, isEntry, isLoading } = useTableSSR();
 
 	return (
 		<div className='flex h-full flex-col'>
-			<TableToolbar />
+			<Toolbar />
 			<div
 				className={cn(
 					'relative max-h-fit flex-1 overflow-auto border border-secondary/10',
@@ -44,7 +44,7 @@ function DataTable() {
 												? null
 												: flexRender(
 														typeof content === 'string' ? (
-															<TableColumnHeader column={header.column} />
+															<TableColumnHeader isSSR column={header.column} />
 														) : (
 															content
 														),
@@ -90,6 +90,6 @@ function DataTable() {
 			</div>
 		</div>
 	);
-}
+};
 
-export default DataTable;
+export default DataTableSSR;
