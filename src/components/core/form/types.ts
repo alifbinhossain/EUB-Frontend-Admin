@@ -152,6 +152,7 @@ export interface FormDatePickerProps {
 	disableLabel?: boolean;
 	className?: string;
 	calendarProps?: DayPickerProps;
+	disabled?: boolean;
 }
 
 // * form-checkbox

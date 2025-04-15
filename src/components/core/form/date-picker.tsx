@@ -20,6 +20,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 	className,
 	disableLabel,
 	calendarProps,
+	disabled = false, // New prop to disable the field
 }) => {
 	const [open, setOpen] = useState(false);
 
@@ -46,6 +47,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 								!field.value && 'text-muted-foreground',
 								className
 							)}
+							disabled={disabled} // Disable the button when the field is disabled
 						>
 							{field.value ? format(new Date(field.value), 'PPP') : <span>Pick a date</span>}
 							<CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
@@ -59,14 +61,19 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						mode='single'
 						selected={field.value ? new Date(field.value) : new Date()}
 						onSelect={(date) => {
-							field.onChange(formatDate(date as Date));
-							setOpen(false);
+							if (!disabled) {
+								field.onChange(formatDate(date as Date));
+								setOpen(false);
+							}
 						}}
 						onMonthChange={(date) => {
-							field.onChange(formatDate(date as Date));
+							if (!disabled) {
+								field.onChange(formatDate(date as Date));
+							}
 						}}
 						month={field.value ? new Date(field.value) : undefined}
 						endMonth={new Date(2050, 11)}
+						disabled={disabled} // Disable the calendar when the field is disabled
 					/>
 				</PopoverContent>
 			</Popover>

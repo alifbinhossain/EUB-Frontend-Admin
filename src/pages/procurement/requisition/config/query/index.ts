@@ -3,10 +3,11 @@ import useTQuery from '@/hooks/useTQuery';
 import { requisitionQK } from './queryKeys';
 
 // * REQUISITION
-export const useRequisition = <T>() =>
+export const useRequisition = <T>(showAll?: boolean, uuid?: string) =>
 	useTQuery<T>({
 		queryKey: requisitionQK.requisition(),
-		url: `/procure/requisition`,
+		url: showAll ? `/procure/requisition` : `/procure/requisition?user_uuid=${uuid}`,
+		enabled: !!showAll || !!uuid,
 	});
 
 export const useRequisitionByUUID = <T>(uuid: string) =>

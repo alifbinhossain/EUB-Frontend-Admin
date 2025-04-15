@@ -7,16 +7,22 @@ import { Button } from '@/components/ui/button';
 
 interface ITableCellActionProps<TData, TValue> {
 	info: CellContext<TData, TValue>;
+	hiddenUpdate?: boolean;
+	hiddenDelete?: boolean;
 }
 
-function TableCellAction<TData, TValue>({ info }: ITableCellActionProps<TData, TValue>) {
+function TableCellAction<TData, TValue>({
+	info,
+	hiddenUpdate = false,
+	hiddenDelete = false,
+}: ITableCellActionProps<TData, TValue>) {
 	const row = info.row;
 	const { updateAccess, deleteAccess } = usePage();
 	const { handleUpdate, handleDelete } = useTable();
 
 	return (
 		<div className='flex w-full items-center justify-center gap-1'>
-			{updateAccess && (
+			{updateAccess && !hiddenUpdate && (
 				<Button
 					aria-label='Edit Row'
 					onClick={() => handleUpdate?.(row)}
@@ -27,7 +33,7 @@ function TableCellAction<TData, TValue>({ info }: ITableCellActionProps<TData, T
 					<SquarePen className='size-4' />
 				</Button>
 			)}
-			{deleteAccess && (
+			{deleteAccess && !hiddenDelete && (
 				<Button
 					aria-label='Delete Row'
 					onClick={() => handleDelete?.(row)}

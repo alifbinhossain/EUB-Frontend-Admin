@@ -10,13 +10,22 @@ import { IRequisition } from './config/schema';
 
 interface IGenerateFieldDefsProps {
 	data: IRequisition;
-	copy: (index: number) => void;
 	remove: (index: number) => void;
 	watch?: UseFormWatch<IRequisition>; // TODO: Update Schema Type
 	isUpdate: boolean;
+	request?: boolean;
+	provider?: boolean;
+	isNew?: boolean;
 }
 
-const useGenerateFieldDefs = ({ data, copy, remove }: IGenerateFieldDefsProps): FieldDef[] => {
+const useGenerateFieldDefs = ({
+	data,
+	remove,
+	request,
+	provider,
+	isNew = true,
+	watch,
+}: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: itemList } = useOtherItem<IFormSelectOption[]>();
 
 	return [
@@ -28,28 +37,39 @@ const useGenerateFieldDefs = ({ data, copy, remove }: IGenerateFieldDefsProps): 
 			options: itemList || [],
 			unique: true,
 			excludeOptions: data.item_requisition.map((item) => item.item_uuid) || [],
+			disabled: provider || !isNew || (watch ? watch('is_received') : false),
 		},
 		{
 			header: 'Request Quantity',
 			accessorKey: 'req_quantity',
 			type: 'number',
+			disabled: provider || (watch ? watch('is_received') : false),
 		},
 		{
 			header: 'Provided Quantity',
 			accessorKey: 'provided_quantity',
 			type: 'number',
+			disabled: request || (watch ? watch('is_received') : false),
+			hidden: isNew,
 		},
 		{
 			header: 'Remarks',
 			accessorKey: 'remarks',
 			type: 'textarea',
+			disabled: watch ? watch('is_received') : false,
 		},
 		{
 			header: 'Actions',
 			accessorKey: 'actions',
 			type: 'custom',
 			component: (index: number) => {
-				return <FieldActionButton handleCopy={copy} handleRemove={remove} index={index} />;
+				return (
+					<FieldActionButton
+						handleRemove={remove}
+						hidden={watch ? watch('is_received') : false}
+						index={index}
+					/>
+				);
 			},
 		},
 	];
