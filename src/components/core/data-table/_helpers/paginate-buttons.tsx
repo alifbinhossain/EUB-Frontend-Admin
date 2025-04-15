@@ -23,7 +23,7 @@ function PaginateButtons({ totalPages, onChange, currentPage }: IPaginatedProps)
 			activeLinkClassName={buttonVariants({
 				variant: 'gradient-accent',
 				size: 'icon',
-				className: '!from-accent !to-accent',
+				className: 'from-accent! to-accent!',
 			})}
 			previousClassName='hidden'
 			nextClassName='hidden'

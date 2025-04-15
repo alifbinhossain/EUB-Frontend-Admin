@@ -6,7 +6,11 @@ import DateTime from '@/components/ui/date-time';
 
 import TableCellAction from '../_components/cell-action';
 
-const useDefaultColumns = <TData, TValue>(): ColumnDef<TData, TValue>[] => {
+interface IDefaultColumns {
+	isSSR?: boolean;
+}
+
+const useDefaultColumns = <TData, TValue>({ isSSR }: IDefaultColumns): ColumnDef<TData, TValue>[] => {
 	const { deleteAccess, updateAccess } = usePage();
 
 	const columns: ColumnDef<TData, TValue>[] = [
@@ -47,7 +51,7 @@ const useDefaultColumns = <TData, TValue>(): ColumnDef<TData, TValue>[] => {
 			enableColumnFilter: false,
 			enableSorting: false,
 			enableHiding: false,
-			cell: (info) => <TableCellAction info={info} />,
+			cell: (info) => <TableCellAction isSSR={isSSR} info={info} />,
 			size: 60,
 			meta: {
 				hidden: !updateAccess && !deleteAccess,

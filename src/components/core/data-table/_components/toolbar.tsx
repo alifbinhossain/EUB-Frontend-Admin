@@ -52,7 +52,6 @@ export function TableToolbar() {
 	const {
 		title,
 		subtitle,
-		clientRedirectUrl,
 		table,
 		toolbarOptions,
 		handleCreate,
@@ -150,7 +149,15 @@ export function TableToolbar() {
 					option='export-csv'
 					render={() =>
 						isValid(startDate) &&
-						isValid(endDate) && <TableExportCSV start_date={startDate} end_date={endDate} />
+						isValid(endDate) && (
+							<TableExportCSV
+								table={table}
+								title={title}
+								isEntry={isEntry}
+								start_date={startDate}
+								end_date={endDate}
+							/>
+						)
 					}
 				/>
 			</div>
@@ -166,6 +173,8 @@ export function TableToolbar() {
 			endDate,
 			onClear,
 			isClear,
+			isEntry,
+			title,
 		]
 	);
 
@@ -203,7 +212,6 @@ export function TableToolbar() {
 					<TableTitle
 						title={title}
 						subtitle={subtitle}
-						clientRedirectUrl={clientRedirectUrl}
 						titleClassName={
 							'text-2xl font-semibold capitalize leading-tight text-primary-foreground md:text-3xl'
 						}
@@ -231,7 +239,7 @@ export function TableToolbar() {
 			<div
 				className={cn('mb-4 flex w-full flex-col justify-between gap-2 border-b pb-4 lg:flex-row lg:items-end')}
 			>
-				<TableTitle title={title} subtitle={subtitle} clientRedirectUrl={clientRedirectUrl} />
+				<TableTitle title={title} subtitle={subtitle} />
 				<DebouncedInput
 					icon={<SearchIcon className={cn('size-5 text-secondary/50')} />}
 					value={globalFilterValue ?? ''}

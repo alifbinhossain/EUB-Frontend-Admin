@@ -1,6 +1,5 @@
+import { ITableFilterOptionSSR } from '@/types';
 import { MixerHorizontalIcon } from '@radix-ui/react-icons';
-import { X } from 'lucide-react';
-import useTable from '@/hooks/useTable';
 
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -14,17 +13,10 @@ import {
 	SheetTrigger,
 } from '@/components/ui/sheet';
 
-import TableColumnFilter from './column';
+import TableColumnFilter from './column-filter';
+import FilterButtons from './filter-buttons';
 
-const TableAllFilter = () => {
-	const { table } = useTable();
-
-	const filteredColumns = table
-		.getAllFlatColumns()
-		.filter((column) => column.columnDef.meta?.disableFullFilter !== true);
-
-	const isFiltered = table.getState().columnFilters.length > 0;
-
+function TableFilter<T>({ options }: { options: ITableFilterOptionSSR<T>[] }) {
 	return (
 		<Sheet>
 			<SheetTrigger>
@@ -46,24 +38,18 @@ const TableAllFilter = () => {
 
 				<ScrollArea className='mt-4 flex-1'>
 					<div className='flex flex-col gap-4'>
-						{filteredColumns.length > 0 &&
-							filteredColumns.map((column) => (
-								<TableColumnFilter key={column.id} showLabel column={column} />
-							))}
+						{options.map((option, index) => (
+							<TableColumnFilter key={index} option={option} />
+						))}
 					</div>
 				</ScrollArea>
 
-				<SheetFooter className='justify-start'>
-					{isFiltered && (
-						<Button variant='outline-destructive' size='sm' onClick={() => table.resetColumnFilters()}>
-							Reset
-							<X className='size-4' />
-						</Button>
-					)}
+				<SheetFooter>
+					<FilterButtons />
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>
 	);
-};
+}
 
-export default TableAllFilter;
+export default TableFilter;
