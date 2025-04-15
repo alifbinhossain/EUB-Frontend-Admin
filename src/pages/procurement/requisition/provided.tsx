@@ -233,6 +233,7 @@ const Entry = () => {
 					remove: handleRemove,
 					isUpdate,
 					provider: true,
+					isNew: false,
 				})}
 				handleAdd={handleAdd}
 				fields={fields}

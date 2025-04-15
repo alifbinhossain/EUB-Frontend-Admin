@@ -1,4 +1,3 @@
-// Removed the unused fs watch import
 import { UseFormWatch } from 'react-hook-form';
 
 import FieldActionButton from '@/components/buttons/field-action';
@@ -24,7 +23,6 @@ const useGenerateFieldDefs = ({
 	remove,
 	request,
 	provider,
-	isUpdate,
 	isNew = true,
 	watch,
 }: IGenerateFieldDefsProps): FieldDef[] => {
@@ -52,6 +50,7 @@ const useGenerateFieldDefs = ({
 			accessorKey: 'provided_quantity',
 			type: 'number',
 			disabled: request || (watch ? watch('is_received') : false),
+			hidden: isNew,
 		},
 		{
 			header: 'Remarks',

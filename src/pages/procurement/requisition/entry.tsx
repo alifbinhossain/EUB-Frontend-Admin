@@ -27,6 +27,8 @@ const Entry = () => {
 
 	const { user } = useAuth();
 	const pageAccess = useAccess('procurement__requisition') as string[];
+	const receivedAccess = pageAccess.includes('click_received');
+	const overrideReceivedAccess = pageAccess.includes('click_received_override');
 	const showAll = pageAccess.includes('show_all');
 	const {
 		data,
@@ -231,6 +233,12 @@ const Entry = () => {
 											form.setValue('is_received', false, { shouldDirty: true });
 										}
 									}}
+									disabled={
+										receivedAccess &&
+										form.watch('is_received') &&
+										!overrideReceivedAccess &&
+										!isUpdate
+									}
 									{...props}
 								/>
 							)}
