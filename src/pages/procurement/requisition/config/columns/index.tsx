@@ -43,7 +43,7 @@ export const requisitionColumns = (
 	},
 	{
 		accessorKey: 'received_date',
-		header: 'Price Validity',
+		header: 'Received Date',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
@@ -85,7 +85,7 @@ export const requisitionColumns = (
 	{
 		id: 'action_trx',
 		header: 'Provide',
-		cell: (info) => <Transfer onClick={() => handleProvided(info.row)} />,
+		cell: (info) => <Transfer disabled={info.row.original.is_received} onClick={() => handleProvided(info.row)} />,
 		size: 40,
 		meta: {
 			hidden: !providedAccess,
@@ -99,7 +99,13 @@ export const requisitionColumns = (
 		enableColumnFilter: false,
 		enableSorting: false,
 		enableHiding: false,
-		cell: (info) => <TableCellAction info={info} hiddenUpdate={info.row.original.is_received} />,
+		cell: (info) => (
+			<TableCellAction
+				info={info}
+				hiddenUpdate={info.row.original.is_received}
+				hiddenDelete={info.row.original.is_received}
+			/>
+		),
 		size: 60,
 		meta: {
 			hidden: !updateAccess && !deleteAccess,

@@ -6,13 +6,14 @@ interface FieldActionButtonProps {
 	handleCopy?: (index: number) => void;
 	handleEdit?: (index: number) => void;
 	handleRemove?: (index: number) => void;
+	hidden?: boolean;
 	index: number;
 }
 
-const FieldActionButton = ({ handleEdit, handleCopy, handleRemove, index }: FieldActionButtonProps) => {
+const FieldActionButton = ({ handleEdit, handleCopy, handleRemove, index, hidden = false }: FieldActionButtonProps) => {
 	return (
 		<div className='flex items-center'>
-			{handleEdit && (
+			{handleEdit && !hidden && (
 				<Button
 					className='rounded-full'
 					onClick={() => handleEdit(index)}
@@ -23,7 +24,7 @@ const FieldActionButton = ({ handleEdit, handleCopy, handleRemove, index }: Fiel
 					<Edit className='size-4' />
 				</Button>
 			)}
-			{handleCopy && (
+			{handleCopy && !hidden && (
 				<Button
 					className='rounded-full'
 					onClick={() => handleCopy(index)}
@@ -34,7 +35,7 @@ const FieldActionButton = ({ handleEdit, handleCopy, handleRemove, index }: Fiel
 					<Copy className='size-4' />
 				</Button>
 			)}
-			{handleRemove && (
+			{handleRemove && !hidden && (
 				<Button
 					className='rounded-full'
 					onClick={() => handleRemove(index)}

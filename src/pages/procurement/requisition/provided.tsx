@@ -230,7 +230,6 @@ const Entry = () => {
 				fieldName='item_requisition'
 				fieldDefs={useGenerateFieldDefs({
 					data: form.getValues(),
-					copy: handleCopy,
 					remove: handleRemove,
 					isUpdate,
 					provider: true,

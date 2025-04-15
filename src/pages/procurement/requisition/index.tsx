@@ -58,10 +58,11 @@ const Requisition = () => {
 	const handleReceived = async (row: Row<IRequisitionTableData>) => {
 		const is_received = row?.original?.is_received ? false : true;
 		const updated_at = getDateTime();
+		const received_date: string | null = is_received ? getDateTime() : null;
 
 		await updateData.mutateAsync({
 			url: `/procure/requisition/${row?.original?.uuid}`,
-			updatedData: { is_received, updated_at },
+			updatedData: { is_received, updated_at, received_date },
 		});
 	};
 
