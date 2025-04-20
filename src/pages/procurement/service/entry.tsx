@@ -1,10 +1,12 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { differenceInMonths } from 'date-fns';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
+import { ShowLocalToast } from '@/components/others/toast';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
@@ -16,7 +18,7 @@ import { getDateTime } from '@/utils';
 import { IServiceTableData } from './config/columns/columns.type';
 import { useService, useServiceDetails } from './config/query';
 import { IService, SERVICE_NULL, SERVICE_SCHEMA } from './config/schema';
-import useServicePayment from './useGenerateServiePayment';
+import useServicePayment from './useGenerateServicePayment';
 import { frequency, payment_terms, status } from './utils';
 
 const Entry = () => {
@@ -36,6 +38,7 @@ const Entry = () => {
 	const { invalidateQuery } = useService<IServiceTableData[]>();
 	const { data: subCategoryList } = useOtherSubCategory<IFormSelectOption[]>();
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
+	const [changeStatus, setChangeStatus] = useState(false);
 
 	const form = useRHF(SERVICE_SCHEMA, SERVICE_NULL);
 
@@ -47,6 +50,39 @@ const Entry = () => {
 		control: form.control,
 		name: 'service_payment',
 	});
+
+	const { arraySize } = useMemo(() => {
+		const startDate = form.watch('start_date') ? new Date(form.watch('start_date')) : null;
+		const endDate = form.watch('end_date') ? new Date(form.watch('end_date')) : null;
+		const duration = differenceInMonths(endDate || new Date(), startDate || new Date());
+
+		const currentFrequency = form.watch('frequency');
+
+		const arraySize = Math.round((duration ?? 0) / Number(currentFrequency));
+
+		return { arraySize };
+	}, [form.watch('start_date'), form.watch('end_date'), form.watch('frequency')]);
+
+	useEffect(() => {
+		const length = generalNotesFields.length;
+		const validData = generalNotesFields.filter((item) => item.payment_date !== undefined);
+		if (validData.length > arraySize) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'Please remove extra service payment',
+			});
+			return;
+		}
+		if (arraySize > length) {
+			for (let i = 0; i < arraySize - length; i++) {
+				appendGeneralNotes({
+					service_uuid: undefined,
+					amount: 0,
+					payment_date: undefined,
+				});
+			}
+		}
+	}, [arraySize, changeStatus, data, invalidateServiceDetails]);
 
 	// Reset form values when data is updated
 	useEffect(() => {
@@ -75,27 +111,29 @@ const Entry = () => {
 					// * UPDATE FOR SERVICE PAYMENT
 					if (service_payment.length > 0) {
 						const servicePaymentUpdatePromise = service_payment.map((entry) => {
-							if (entry.uuid) {
-								const entryUpdateData = {
-									...entry,
-									updated_at: getDateTime(),
-								};
-								return updateData.mutateAsync({
-									url: `/procure/service-payment/${entry.uuid}`,
-									updatedData: entryUpdateData,
-								});
-							} else {
-								const entryData = {
-									...entry,
-									created_at: getDateTime(),
-									created_by: user?.uuid,
-									uuid: nanoid(),
-									service_uuid: uuid,
-								};
-								return postData.mutateAsync({
-									url: `/procure/service-payment`,
-									newData: entryData,
-								});
+							if (entry.payment_date) {
+								if (entry.uuid) {
+									const entryUpdateData = {
+										...entry,
+										updated_at: getDateTime(),
+									};
+									return updateData.mutateAsync({
+										url: `/procure/service-payment/${entry.uuid}`,
+										updatedData: entryUpdateData,
+									});
+								} else {
+									const entryData = {
+										...entry,
+										created_at: getDateTime(),
+										created_by: user?.uuid,
+										uuid: nanoid(),
+										service_uuid: uuid,
+									};
+									return postData.mutateAsync({
+										url: `/procure/service-payment`,
+										newData: entryData,
+									});
+								}
 							}
 						});
 						Promise.all([...servicePaymentUpdatePromise]);
@@ -119,10 +157,6 @@ const Entry = () => {
 				created_by: user?.uuid,
 				uuid: nanoid(),
 			};
-
-			console.log('Main', itemData);
-			console.log('service_payment', service_payment);
-
 			postData
 				.mutateAsync({
 					url: '/procure/service',
@@ -132,17 +166,19 @@ const Entry = () => {
 					// * ENTRY FOR SERVICE PAYMENT
 					if (service_payment.length > 0) {
 						const servicePaymentPromise = service_payment.map((entry) => {
-							const entryData = {
-								...entry,
-								service_uuid: itemData.uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
-							return postData.mutateAsync({
-								url: `/procure/service-payment`,
-								newData: entryData,
-							});
+							if (entry.payment_date) {
+								const entryData = {
+									...entry,
+									service_uuid: itemData.uuid,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+								};
+								return postData.mutateAsync({
+									url: `/procure/service-payment`,
+									newData: entryData,
+								});
+							}
 						});
 						Promise.all([...servicePaymentPromise]);
 					}
@@ -163,9 +199,9 @@ const Entry = () => {
 	// * ADD GENERAL NOTES
 	const handleAddGeneralNotes = () => {
 		appendGeneralNotes({
-			service_uuid: '',
+			service_uuid: undefined,
 			amount: 0,
-			payment_date: '',
+			payment_date: undefined,
 		});
 	};
 
@@ -184,9 +220,15 @@ const Entry = () => {
 				id: generalNotesFields[index].uuid,
 				name: generalNotesFields[index].id,
 			});
+			setChangeStatus((prev) => !prev);
 		} else {
 			removeGeneralNotes(index);
 		}
+		appendGeneralNotes({
+			service_uuid: undefined,
+			amount: 0,
+			payment_date: undefined,
+		});
 	};
 
 	// * COPY GENERAL NOTES
@@ -249,6 +291,9 @@ const Entry = () => {
 							label='Frequency'
 							placeholder='Select frequency'
 							menuPortalTarget={document.body}
+							onChange={() => {
+								setChangeStatus((prev) => !prev);
+							}}
 							options={frequency!}
 							{...props}
 						/>
@@ -293,7 +338,7 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='next_due_date'
-					render={(props) => <CoreForm.DatePicker {...props} />}
+					render={(props) => <CoreForm.DatePicker label='Next Due Date' {...props} />}
 				/>
 				<FormField
 					control={form.control}
@@ -315,11 +360,16 @@ const Entry = () => {
 					data: form.getValues(),
 					copy: handleCopyGeneralNotes,
 					remove: handleRemoveGeneralNotes,
+					form: form,
 					isUpdate,
 					isNew: false,
 				})}
-				fields={generalNotesFields}
-				handleAdd={handleAddGeneralNotes}
+				fields={[
+					...generalNotesFields.slice(
+						0,
+						Math.max(arraySize, generalNotesFields.filter((item) => item.payment_date !== undefined).length)
+					),
+				]}
 			/>
 
 			<Suspense fallback={null}>

@@ -1,5 +1,4 @@
 import { Suspense, useEffect, useState } from 'react';
-import { get } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -151,7 +150,7 @@ const Entry = () => {
 							...entry,
 							received_date: form.watch(`item_work_order_entry.${index}.is_received`)
 								? getDateTime()
-								: undefined,
+								: null,
 							item_work_order_uuid: itemData.uuid,
 							created_at: getDateTime(),
 							created_by: user?.uuid,

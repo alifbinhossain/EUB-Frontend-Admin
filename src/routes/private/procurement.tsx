@@ -19,6 +19,7 @@ const InternalCostCenter = lazy(() => import('@/pages/procurement/internal-cost-
 const Requisition = lazy(() => import('@/pages/procurement/requisition'));
 const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
+const Log = lazy(() => import('@/pages/procurement/log'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -98,7 +99,7 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/item',
 				element: <Item />,
 				page_name: 'procurement__item',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: ['create', 'read', 'update', 'delete', 'click_item_trx'],
 			},
 			{
 				name: 'Item Entry',
@@ -164,7 +165,13 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__requisition_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-
+			{
+				name: 'Log',
+				path: '/procurement/log',
+				element: <Log />,
+				page_name: 'procurement__log',
+				actions: ['read', 'update', 'delete'],
+			},
 			{
 				name: 'Library',
 				children: [

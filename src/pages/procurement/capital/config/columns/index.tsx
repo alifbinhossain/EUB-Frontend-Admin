@@ -1,9 +1,17 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import StatusButton from '@/components/buttons/status';
+
 import { ICapitalTableData } from './columns.type';
 
 // * Service
 export const capitalColumns = (): ColumnDef<ICapitalTableData>[] => [
+	{
+		accessorKey: 'done',
+		header: 'Done',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info.getValue() as number} />,
+	},
 	{
 		accessorKey: 'name',
 		header: 'Name',

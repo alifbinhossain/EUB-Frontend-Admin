@@ -2,6 +2,7 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
+import useAccess from '@/hooks/useAccess';
 
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -9,7 +10,9 @@ import renderSuspenseModals from '@/utils/renderSuspenseModals';
 import { itemColumns } from './config/columns';
 import { IItemTableData } from './config/columns/columns.type';
 import { useItem } from './config/query';
+import { IItemTransfer } from './config/schema';
 
+const ItemTrx = lazy(() => import('./trx-against-order'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
@@ -19,7 +22,8 @@ const Designation = () => {
 	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
 
 	// Add/Update Modal state
-	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+	const pageAccess = useAccess(pageInfo.getTab() as string) as string[];
+	const actionITemTrxAccess = pageAccess.includes('click_item_trx');
 
 	const handleCreate = () => {
 		// setIsOpenAddModal(true);
@@ -46,9 +50,22 @@ const Designation = () => {
 			name: row?.original?.name,
 		});
 	};
+	const [isOpenActionTrxModal, setIsOpenActionTrxModal] = useState(false);
+	const [updateActionTrxData, setUpdateActionTrxData] = useState<IItemTransfer | null>(null);
+
+	const handleTrx = (row: Row<IItemTableData>) => {
+		setUpdateActionTrxData({
+			quantity: row.original.quantity,
+			item_uuid: row.original.uuid,
+			remarks: null,
+			reason: 'emergency',
+		});
+
+		setIsOpenActionTrxModal(true);
+	};
 
 	// Table Columns
-	const columns = itemColumns();
+	const columns = itemColumns(actionITemTrxAccess, handleTrx);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -69,6 +86,17 @@ const Designation = () => {
 							setDeleteItem,
 							url,
 							deleteData,
+						}}
+					/>,
+					<ItemTrx
+						{...{
+							open: isOpenActionTrxModal,
+							setOpen: setIsOpenActionTrxModal,
+							updatedData: updateActionTrxData,
+							setUpdatedData: setUpdateActionTrxData,
+							postData,
+							updateData,
+							url: '/procure/item-transfer',
 						}}
 					/>,
 				])}

@@ -1,3 +1,4 @@
+import { TRANSFER_SCHEMA } from '@/pages/portfolio/office/add-or-update/_config/schema';
 import { z } from 'zod';
 
 import {
@@ -40,3 +41,17 @@ export const ITEM_NULL: Partial<IItem> = {
 };
 
 export type IItem = z.infer<typeof ITEM_SCHEMA>;
+
+export const ITEM_TRANSFER_SCHEMA = z.object({
+	item_uuid: STRING_OPTIONAL,
+	quantity: z.number().int().positive(),
+	reason: z.enum(['emergency']),
+	remarks: STRING_NULLABLE,
+});
+export const ITEM_TRANSFER_NULL: Partial<IItemTransfer> = {
+	item_uuid: undefined,
+	quantity: 0,
+	reason: 'emergency',
+	remarks: '',
+};
+export type IItemTransfer = z.infer<typeof ITEM_TRANSFER_SCHEMA>;

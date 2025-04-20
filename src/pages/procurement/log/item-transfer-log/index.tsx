@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { formColumns } from './config/columns';
-import { IFormTableData } from './config/columns/columns.type';
-import { useForm } from './config/query';
+import { vendorColumns } from '../config/columns';
+import { IITemTransferTableData } from '../config/columns/columns.type';
+import { useItemTransfer } from '../config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
-		useForm<IFormTableData[]>();
+const Vendor = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
+		useItemTransfer<IITemTransferTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Form', url, 'portfolio__form'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Procurement/Item Transfer Log', url, 'procurement__log'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,8 +25,8 @@ const Designation = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IFormTableData | null>(null);
-	const handleUpdate = (row: Row<IFormTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IITemTransferTableData | null>(null);
+	const handleUpdate = (row: Row<IITemTransferTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,24 +37,19 @@ const Designation = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IFormTableData>) => {
+	const handleDelete = (row: Row<IITemTransferTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.item_name,
 		});
 	};
 
 	// Table Columns
-	const columns = formColumns();
+	const columns = vendorColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider
-				defaultVisibleColumns={{
-					created_by_name: false,
-					created_at: false,
-					updated_at: false,
-				}}
 				title={pageInfo.getTitle()}
 				columns={columns}
 				data={data ?? []}
@@ -67,15 +62,13 @@ const Designation = () => {
 				{renderSuspenseModals([
 					<AddOrUpdate
 						{...{
-							url: url,
+							url,
 							open: isOpenAddModal,
 							setOpen: setIsOpenAddModal,
 							updatedData,
 							setUpdatedData,
 							postData,
 							updateData,
-							imagePostData,
-							imageUpdateData,
 						}}
 					/>,
 
@@ -83,7 +76,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url: url,
+							url,
 							deleteData,
 						}}
 					/>,
@@ -93,4 +86,4 @@ const Designation = () => {
 	);
 };
 
-export default Designation;
+export default Vendor;

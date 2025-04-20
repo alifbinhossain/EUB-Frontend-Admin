@@ -17,6 +17,11 @@ export const internalCostCenterColumns = (): ColumnDef<IInternalCostCenterTableD
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'can_submitted_person_name',
+		header: 'Can Submitted Person',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'type',
 		header: 'Type',
 		enableColumnFilter: true,
