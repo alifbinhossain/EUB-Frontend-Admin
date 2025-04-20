@@ -6,6 +6,7 @@ import { BOOLEAN_REQUIRED, NUMBER_REQUIRED, STRING_NULLABLE, STRING_REQUIRED } f
 export const INTERNAL_COST_CENTER_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	authorized_person_uuid: STRING_REQUIRED,
+	can_submitted_person_uuid: STRING_REQUIRED,
 	from: STRING_REQUIRED,
 	to: STRING_REQUIRED,
 	type: z.enum(['proctor', 'admission', 'exam-control', 'fed', 'purchase_committee']),
@@ -16,6 +17,7 @@ export const INTERNAL_COST_CENTER_SCHEMA = z.object({
 export const INTERNAL_COST_CENTER_NULL: Partial<IInternalCostCenter> = {
 	name: '',
 	authorized_person_uuid: '',
+	can_submitted_person_uuid: '',
 	from: '',
 	to: '',
 	type: undefined,

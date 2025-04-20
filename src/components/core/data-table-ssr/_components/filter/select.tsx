@@ -15,7 +15,9 @@ function Select<T>({ label, accessor, apiUrl, isPin }: ITableFilterOptionSSR<T> 
 
 	const promiseOptions = (inputValue: string) => {
 		return new Promise<IFormSelectOption[]>((resolve) => {
-			resolve(data?.filter((option) => option.label.toLowerCase().includes(inputValue.toLowerCase())) || []);
+			resolve(
+				data?.filter((option) => option.label.toString().toLowerCase().includes(inputValue.toLowerCase())) || []
+			);
 		});
 	};
 

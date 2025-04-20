@@ -93,6 +93,11 @@ const AddOrUpdate: React.FC<IInternalCostCenterAddOrUpdateProps> = ({
 			/>
 			<FormField
 				control={form.control}
+				name='can_submitted_person_uuid'
+				render={(props) => <CoreForm.ReactSelect label='Submitted Person' options={userOption!} {...props} />}
+			/>
+			<FormField
+				control={form.control}
 				name='type'
 				render={(props) => (
 					<CoreForm.ReactSelect label='Type' placeholder='Select Type' options={types!} {...props} />

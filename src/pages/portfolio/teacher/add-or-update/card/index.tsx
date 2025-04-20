@@ -55,44 +55,49 @@ export const Card = ({
 				onDragStart={(e: any) => handleDragStart!(e, data)}
 				className='cursor-grab rounded border border-neutral-700 bg-secondary/10 p-3 active:cursor-grabbing'
 			>
-				<div className='flex gap-10'>
+				<div className='flex'>
 					<div className='text-sm'>#{(index ?? 0) + 1}&emsp;</div>
-					<br />
-
-					{fieldDefs
-						.filter((fieldDef: any) => !fieldDef.hidden)
-						.map((fieldDef: any) => {
-							if (fieldDef.view === 'status') {
-								return (
-									<div>
-										<StatusButton value={data[fieldDef.accessorKey] as boolean} />
-									</div>
-								);
-							}
-							if (fieldDef.view === 'preview') {
-								return (
-									<RichTextModal
-										title={fieldDef.title}
-										content={data[fieldDef.accessorKey as keyof typeof data]}
-									/>
-								);
-							}
-							if (fieldDef.view === 'Date') {
-								return <DateTime isTime={false} date={data[fieldDef.accessorKey] as Date} />;
-							}
-							if (fieldDef.type === 'select') {
-								const selectedOption = fieldDef.options.find(
-									(option: any) => option.value === data[fieldDef.accessorKey as keyof typeof data]
-								);
-								return <p key={fieldDef.accessorKey}>{selectedOption?.label}</p>;
-							} else {
-								return (
-									<p className='w-fit' key={fieldDef.accessorKey}>
-										{data[fieldDef.accessorKey as keyof typeof data]}
-									</p>
-								);
-							}
-						})}
+					<div className='grid grid-cols-8 gap-2 p-2'>
+						{fieldDefs
+							.filter((fieldDef: any) => !fieldDef.hidden)
+							.map((fieldDef: any) => {
+								if (fieldDef.view === 'status') {
+									return (
+										<div>
+											<StatusButton value={data[fieldDef.accessorKey] as boolean} />
+										</div>
+									);
+								}
+								if (fieldDef.view === 'preview') {
+									return (
+										<RichTextModal
+											title={fieldDef.title}
+											content={data[fieldDef.accessorKey as keyof typeof data]}
+										/>
+									);
+								}
+								if (fieldDef.view === 'Date') {
+									return <DateTime isTime={false} date={data[fieldDef.accessorKey] as Date} />;
+								}
+								if (fieldDef.type === 'select') {
+									const selectedOption = fieldDef.options.find(
+										(option: any) =>
+											option.value === data[fieldDef.accessorKey as keyof typeof data]
+									);
+									return (
+										<p className='break-all' key={fieldDef.accessorKey}>
+											{selectedOption?.label}
+										</p>
+									);
+								} else {
+									return (
+										<p className='break-all' key={fieldDef.accessorKey}>
+											{data[fieldDef.accessorKey as keyof typeof data]}
+										</p>
+									);
+								}
+							})}
+					</div>
 					<div className='flex gap-2'>
 						<FieldActionButton
 							handleEdit={() => handleUpdate()}

@@ -73,10 +73,14 @@ const useGenerateFieldDefs = ({
 								label='Received'
 								onCheckedChange={() => {
 									if (!watch(`item_work_order_entry.${index}.is_received`)) {
-										set(`item_work_order_entry.${index}.is_received`, true);
+										set(`item_work_order_entry.${index}.is_received`, true, {
+											shouldDirty: true,
+										});
 										set(`item_work_order_entry.${index}.received_date`, getDateTime());
 									} else {
-										set(`item_work_order_entry.${index}.is_received`, false);
+										set(`item_work_order_entry.${index}.is_received`, false, {
+											shouldDirty: true,
+										});
 										set(`item_work_order_entry.${index}.received_date`, undefined);
 									}
 								}}

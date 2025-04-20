@@ -22,7 +22,7 @@ export interface FormTextareaProps extends TextareaProps {
 
 // * form-select
 export interface IFormSelectOption {
-	label: string;
+	label: string | number;
 	value: string | number;
 }
 

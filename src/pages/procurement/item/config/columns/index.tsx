@@ -1,6 +1,7 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
+import Transfer from '@/components/buttons/transfer';
 import TableCellAction from '@/components/core/data-table/_components/cell-action';
 import HoverCardWrapper from '@/components/others/hover-card-wrapper';
 import DateTime from '@/components/ui/date-time';
@@ -10,7 +11,10 @@ import { cn } from '@/lib/utils';
 import { IItemTableData } from './columns.type';
 
 // * Item
-export const itemColumns = (): ColumnDef<IItemTableData>[] => [
+export const itemColumns = (
+	actionTrxAccess: boolean,
+	handleTrx: (row: Row<IItemTableData>) => void
+): ColumnDef<IItemTableData>[] => [
 	{
 		accessorKey: 'index',
 		header: 'Index',
@@ -42,6 +46,16 @@ export const itemColumns = (): ColumnDef<IItemTableData>[] => [
 		accessorKey: 'quantity',
 		header: 'Quantity',
 		enableColumnFilter: true,
+	},
+	{
+		id: 'action_trx',
+		header: 'Item Transfer',
+		cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !actionTrxAccess,
+			disableFullFilter: true,
+		},
 	},
 	{
 		accessorKey: 'unit',
