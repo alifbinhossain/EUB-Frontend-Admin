@@ -12,11 +12,11 @@ import { useForm } from './config/query';
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Designation = () => {
+const Form = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
 		useForm<IFormTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Form', url, 'portfolio__form'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Form', url, 'procurement__form'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -93,4 +93,4 @@ const Designation = () => {
 	);
 };
 
-export default Designation;
+export default Form;

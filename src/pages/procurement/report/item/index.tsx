@@ -36,6 +36,9 @@ const Vendor = () => {
 				isLoading={isLoading}
 				handleRefetch={refetch}
 				defaultVisibleColumns={{ created_at: false, created_by_name: false, updated_at: false, remarks: false }}
+				toolbarOptions={['other', 'view', 'refresh', 'export-csv']}
+				start_date={new Date(dateRange.from)}
+				end_date={new Date(dateRange.to)}
 				otherToolBarComponents={
 					<ToolbarComponent
 						option='other'
