@@ -79,7 +79,7 @@ export type IToolbarOptions =
 	| 'export-pdf'
 	| 'refresh'
 	| 'new-entry'
-	| 'single-date';
+	| 'other';
 
 export type IDeleteModal = {
 	id: string;

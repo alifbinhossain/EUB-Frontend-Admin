@@ -38,7 +38,7 @@ const Vendor = () => {
 				defaultVisibleColumns={{ created_at: false, created_by_name: false, updated_at: false, remarks: false }}
 				otherToolBarComponents={
 					<ToolbarComponent
-						option='single-date'
+						option='other'
 						render={() => (
 							<DateRangePicker
 								onUpdate={({ range }) => {
