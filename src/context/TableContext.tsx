@@ -71,6 +71,7 @@ interface ITableContext<TData> {
 	onUpdate?: ({ range }: { range: DateRange }) => void;
 	onClear?: () => void;
 	isClear?: boolean;
+	otherToolBarComponents?: React.ReactNode;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -101,6 +102,7 @@ interface ITableProviderProps<TData, TValue> {
 	onUpdate?: ({ range }: { range: DateRange }) => void;
 	onClear?: () => void;
 	isClear?: boolean;
+	otherToolBarComponents?: React.ReactNode;
 }
 
 function TableProvider<TData, TValue>({
@@ -127,6 +129,7 @@ function TableProvider<TData, TValue>({
 	end_date,
 	onUpdate,
 	onClear,
+	otherToolBarComponents,
 	isClear,
 }: ITableProviderProps<TData, TValue>) {
 	const [isMounted, setIsMounted] = useState(false);
@@ -222,6 +225,7 @@ function TableProvider<TData, TValue>({
 			onUpdate,
 			onClear,
 			isClear,
+			otherToolBarComponents,
 		}),
 		[
 			title,
@@ -248,6 +252,7 @@ function TableProvider<TData, TValue>({
 			onUpdate,
 			onClear,
 			isClear,
+			otherToolBarComponents,
 		]
 	);
 

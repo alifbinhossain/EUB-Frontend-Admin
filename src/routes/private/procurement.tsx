@@ -20,6 +20,7 @@ const Requisition = lazy(() => import('@/pages/procurement/requisition'));
 const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
+const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -164,6 +165,18 @@ const procurementRoutes: IRoute[] = [
 				hidden: true,
 				page_name: 'procurement__requisition_update',
 				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Report',
+				children: [
+					{
+						name: 'Item',
+						path: '/portfolio/report/item',
+						element: <ReportItem />,
+						page_name: 'portfolio__report_item',
+						actions: ['read'],
+					},
+				],
 			},
 			{
 				name: 'Log',
