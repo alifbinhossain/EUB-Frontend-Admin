@@ -11,7 +11,7 @@ import { reportItemColumns } from '../config/columns';
 import { IReportItemTableData } from '../config/columns/columns.type';
 import { useReportItem } from '../config/query';
 
-const Vendor = () => {
+const ReportItem = () => {
 	const [dateRange, setDateRange] = useState<{ from: string; to: string }>({
 		from: '2025-01-01',
 		to: '2025-01-01',
@@ -59,4 +59,4 @@ const Vendor = () => {
 	);
 };
 
-export default Vendor;
+export default ReportItem;
