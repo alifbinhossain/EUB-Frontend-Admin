@@ -24,5 +24,8 @@ export const short_names = [
 	{ label: 'MA English', value: 'ma-english' },
 	{ label: 'MGDS One Year', value: 'mgds-one-year' },
 	{ label: 'MSS Economics', value: 'mss-economics' },
+	{ label: 'Physics', value: 'physics' },
+	{ label: 'Mathematics', value: 'mathematics' },
+	{ label: 'Chemistry', value: 'chemistry' },
 	{ label: 'Extra Curricular Club', value: 'extra-curricular-club' },
 ];
