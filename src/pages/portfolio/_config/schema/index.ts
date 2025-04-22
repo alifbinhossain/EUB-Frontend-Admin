@@ -105,13 +105,15 @@ export const ROUTINE_SCHEMA = z
 			.or(STRING_REQUIRED),
 		remarks: STRING_NULLABLE,
 	})
-	.refine(
-		(data) => data.type === 'notices', // Only valid if type is NOT 'notices'
-		{
-			message: 'Required',
-			path: ['programs'], // Error message will be shown on the 'type' field
+	.superRefine((data, ctx) => {
+		if (data.type === 'notices' && data.programs === undefined) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'Please select programs',
+				path: ['programs'],
+			});
 		}
-	);
+	});
 
 export const ROUTINE_NULL: Partial<IRoutine> = {
 	department_uuid: '',
