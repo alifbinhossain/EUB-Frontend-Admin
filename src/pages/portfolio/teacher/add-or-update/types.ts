@@ -59,6 +59,7 @@ export interface KanbanProps {
 export interface ICard {
 	uuid?: string;
 	department_uuid?: string;
+	status?: boolean;
 	department_head: boolean;
 	teacher_email: string;
 	teacher_phone: string | null;
