@@ -325,6 +325,7 @@ const AddOrUpdate = () => {
 			handleSaveCard(newData);
 			form.reset({
 				uuid: '',
+				status: false,
 				department_uuid: '',
 				teacher_uuid: '',
 				teacher_email: '',
@@ -344,6 +345,7 @@ const AddOrUpdate = () => {
 		}
 		const newCard: any = {
 			uuid: nanoid(),
+			status: false,
 			department_uuid: '',
 			department_head: data?.department_head,
 			teacher_uuid: data?.teacher_uuid,
@@ -362,6 +364,7 @@ const AddOrUpdate = () => {
 		setCards((pv) => [...pv, newCard]);
 		form.reset({
 			uuid: '',
+			status: false,
 			department_uuid: '',
 			teacher_initial: '',
 			teacher_uuid: '',
