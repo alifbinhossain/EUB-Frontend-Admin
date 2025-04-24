@@ -6,3 +6,12 @@ export type IVendorTableData = {
 	phone: string;
 	remarks: string;
 };
+//* Item
+export type IItemTableData = {
+	id: number;
+	uuid: string;
+	name: string;
+	vendor_price: number;
+	unit: string;
+	remarks: string;
+};

@@ -13,11 +13,13 @@ import { useItem } from './config/query';
 import { IItemTransfer } from './config/schema';
 
 const ItemTrx = lazy(() => import('./trx-against-order'));
+const Details = lazy(() => import('./details'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>();
+	const [itemUuid, setItemUuid] = useState<string | null>(null);
 
 	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
 
@@ -29,13 +31,13 @@ const Designation = () => {
 		// setIsOpenAddModal(true);
 		navigate('/procurement/item/create');
 	};
-
-	const [updatedData, setUpdatedData] = useState<IItemTableData | null>(null);
+	const [isOpenDetailsModal, setIsOpenDetailsModal] = useState(false);
 	const handleUpdate = (row: Row<IItemTableData>) => {
-		// setUpdatedData(row.original);
-		// setIsOpenAddModal(true);
-
 		navigate(`/procurement/item/${row.original.uuid}/update`);
+	};
+	const handleDetails = (row: Row<IItemTableData>) => {
+		setItemUuid(row.original.uuid);
+		setIsOpenDetailsModal(true);
 	};
 
 	// Delete Modal state
@@ -65,7 +67,7 @@ const Designation = () => {
 	};
 
 	// Table Columns
-	const columns = itemColumns(actionITemTrxAccess, handleTrx);
+	const columns = itemColumns(actionITemTrxAccess, handleTrx, handleDetails);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -88,6 +90,7 @@ const Designation = () => {
 							deleteData,
 						}}
 					/>,
+
 					<ItemTrx
 						{...{
 							open: isOpenActionTrxModal,
@@ -97,6 +100,14 @@ const Designation = () => {
 							postData,
 							updateData,
 							url: '/procure/item-transfer',
+						}}
+					/>,
+					<Details
+						{...{
+							itemUuid: itemUuid ?? '',
+							setItemUuid,
+							open: isOpenDetailsModal,
+							setOpen: setIsOpenDetailsModal,
 						}}
 					/>,
 				])}

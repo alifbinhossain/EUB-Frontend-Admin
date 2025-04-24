@@ -2,23 +2,26 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import Transfer from '@/components/buttons/transfer';
-import TableCellAction from '@/components/core/data-table/_components/cell-action';
-import HoverCardWrapper from '@/components/others/hover-card-wrapper';
 import DateTime from '@/components/ui/date-time';
 
-import { cn } from '@/lib/utils';
-
-import { IItemTableData } from './columns.type';
+import { IItemTableData, IItemVendorTableData } from './columns.type';
 
 // * Item
 export const itemColumns = (
 	actionTrxAccess: boolean,
-	handleTrx: (row: Row<IItemTableData>) => void
+	handleTrx: (row: Row<IItemTableData>) => void,
+	handleDetails: (row: Row<IItemTableData>) => void
 ): ColumnDef<IItemTableData>[] => [
 	{
 		accessorKey: 'index',
 		header: 'Index',
 		enableColumnFilter: true,
+	},
+	{
+		id: 'vendors',
+		header: 'Vendors',
+		cell: (info) => <Transfer onClick={() => handleDetails(info.row)} />,
+		size: 40,
 	},
 	{
 		accessorKey: 'name',
@@ -60,6 +63,20 @@ export const itemColumns = (
 	{
 		accessorKey: 'unit',
 		header: 'Unit',
+		enableColumnFilter: true,
+	},
+];
+// * vendor
+export const vendorColumns = (): ColumnDef<IItemVendorTableData>[] => [
+	{
+		accessorKey: 'is_active',
+		header: 'Active',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info.getValue() as number} />,
+	},
+	{
+		accessorKey: 'vendor_name',
+		header: 'Vendor',
 		enableColumnFilter: true,
 	},
 ];

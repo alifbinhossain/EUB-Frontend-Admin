@@ -1,20 +1,12 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import Transfer from '@/components/buttons/transfer';
 import DateTime from '@/components/ui/date-time';
 
-import { IVendorTableData } from './columns.type';
-
-// name: '',
-// phone: '',
-// product_type: '',
-// address: '',
-// purpose: '',
-// starting_date: '',
-// ending_date: '',
-// remarks: null,
+import { IItemTableData, IVendorTableData } from './columns.type';
 
 // * Vendor
-export const vendorColumns = (): ColumnDef<IVendorTableData>[] => [
+export const vendorColumns = (handleDetails: any): ColumnDef<IVendorTableData>[] => [
 	{
 		accessorKey: 'name',
 		header: 'Name',
@@ -34,6 +26,12 @@ export const vendorColumns = (): ColumnDef<IVendorTableData>[] => [
 		accessorKey: 'address',
 		header: 'Address',
 		enableColumnFilter: true,
+	},
+	{
+		id: 'items',
+		header: 'Items',
+		cell: (info) => <Transfer onClick={() => handleDetails(info.row)} />,
+		size: 40,
 	},
 	{
 		accessorKey: 'purpose',
@@ -57,5 +55,23 @@ export const vendorColumns = (): ColumnDef<IVendorTableData>[] => [
 			const date = info.getValue();
 			return <DateTime date={date as Date} isTime={false} />;
 		},
+	},
+];
+// * Item
+export const itemColumns = (): ColumnDef<IItemTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'vendor_price',
+		header: 'Price',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'unit',
+		header: 'Unit',
+		enableColumnFilter: true,
 	},
 ];
