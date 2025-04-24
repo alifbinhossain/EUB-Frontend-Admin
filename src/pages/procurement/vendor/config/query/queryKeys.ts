@@ -4,4 +4,5 @@ export const vendorQK = {
 	// * vendor
 	vendor: () => [...vendorQK.all(), 'vendor'],
 	vendorByUUID: (uuid: string) => [...vendorQK.vendor(), uuid],
+	item: (param: string) => [...vendorQK.all(), 'item', param],
 };

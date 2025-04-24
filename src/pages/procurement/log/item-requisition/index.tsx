@@ -5,18 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { vendorColumns } from './config/columns';
-import { IItemTableData, IVendorTableData } from './config/columns/columns.type';
-import { useVendor } from './config/query';
+import { itemRequisitionColumns } from '../config/columns';
+import { IItemRequisitionTableData } from '../config/columns/columns.type';
+import { useItemRequisition } from '../config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
-const Details = lazy(() => import('./details'));
 
-const Vendor = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useVendor<IVendorTableData[]>();
+const ItemRequisition = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
+		useItemRequisition<IItemRequisitionTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Procurement/Vendor', url, 'procurement__vendor'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Procurement/Item Requisition Log', url, 'procurement__log'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -25,32 +25,27 @@ const Vendor = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IVendorTableData | null>(null);
-	const handleUpdate = (row: Row<IVendorTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IItemRequisitionTableData | null>(null);
+	const handleUpdate = (row: Row<IItemRequisitionTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
-	const [itemUuid, setItemUuid] = useState<string | null>(null);
-	const [isOpenDetailsModal, setIsOpenDetailsModal] = useState(false);
-	const handleDetails = (row: Row<IItemTableData>) => {
-		setItemUuid(row.original.uuid);
-		setIsOpenDetailsModal(true);
-	};
+
 	// Delete Modal state
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IVendorTableData>) => {
+	const handleDelete = (row: Row<IItemRequisitionTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.name,
+			name: row?.original?.item_name,
 		});
 	};
 
 	// Table Columns
-	const columns = vendorColumns(handleDetails);
+	const columns = itemRequisitionColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -85,18 +80,10 @@ const Vendor = () => {
 							deleteData,
 						}}
 					/>,
-					<Details
-						{...{
-							itemUuid: itemUuid ?? '',
-							setItemUuid,
-							open: isOpenDetailsModal,
-							setOpen: setIsOpenDetailsModal,
-						}}
-					/>,
 				])}
 			</TableProvider>
 		</PageProvider>
 	);
 };
 
-export default Vendor;
+export default ItemRequisition;

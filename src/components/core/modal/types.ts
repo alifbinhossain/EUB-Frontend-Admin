@@ -88,3 +88,11 @@ export interface IContentModalProps {
 	className?: string;
 	isSmall?: boolean;
 }
+export interface IDetailsModalProps {
+	title: string;
+	content: string | React.ReactNode;
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	className?: string;
+	isSmall?: boolean;
+}

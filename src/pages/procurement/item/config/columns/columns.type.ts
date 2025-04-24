@@ -9,3 +9,11 @@ export type IItemTableData = {
 	price_validity: number;
 	remarks: string;
 };
+//* Item Vendor
+export type IItemVendorTableData = {
+	index: number;
+	uuid: string;
+	vendor_uuid: string;
+	vendor_name: string;
+	is_active: boolean;
+};
