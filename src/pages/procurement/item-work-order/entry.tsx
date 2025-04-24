@@ -56,8 +56,6 @@ const Entry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
-	console.log(form.formState.errors);
-
 	// Submit handler
 	async function onSubmit(values: IItemWorkOrder) {
 		if (isUpdate) {
@@ -117,10 +115,10 @@ const Entry = () => {
 						}
 					});
 
-					Promise.all([...entryUpdatePromise]);
+					return Promise.all([...entryUpdatePromise]); // Wait for all entry updates to complete
 				})
 				.then(() => {
-					invalidateQuery();
+					invalidateQuery(); // Invalidate queries after all updates are done
 					invalidateQueryItem();
 					invalidateQueryWorkOrderAndEntry();
 					navigate('/procurement/item-work-order');
