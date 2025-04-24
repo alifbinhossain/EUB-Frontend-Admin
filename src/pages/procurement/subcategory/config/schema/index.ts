@@ -15,8 +15,8 @@ export const SUB_CATEGORY_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	category_uuid: STRING_REQUIRED,
 	type: STRING_REQUIRED,
-	min_amount: NUMBER_REQUIRED.min(1, 'Must be greater than 0'),
-	min_quotation: NUMBER_REQUIRED.min(1, 'Must be greater than 0'),
+	min_amount: NUMBER_REQUIRED,
+	min_quotation: NUMBER_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 

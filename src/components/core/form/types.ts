@@ -24,6 +24,7 @@ export interface FormTextareaProps extends TextareaProps {
 export interface IFormSelectOption {
 	label: string | number;
 	value: string | number;
+	unit?: string;
 }
 
 export interface FormSelectProps {
@@ -88,6 +89,7 @@ export interface FormJoinInputUnitProps extends InputProps {
 	subLabel?: string;
 	placeholder?: string;
 	optional?: boolean;
+	disabled?: boolean;
 	icon?: React.ReactNode;
 	unit: string;
 	disableLabel?: boolean;

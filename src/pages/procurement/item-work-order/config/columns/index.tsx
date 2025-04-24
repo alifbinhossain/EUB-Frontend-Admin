@@ -5,6 +5,20 @@ import { IItemWorkOrderTableData } from './columns.type';
 // * Item Work Order Entry
 export const itemWorkOrderEntryColumns = (): ColumnDef<IItemWorkOrderTableData>[] => [
 	{
+		accessorKey: 'item_work_order_id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'item_name',
+		header: 'Item Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'vendor_name',
+		header: 'Vendor Name',
+	},
+	{
 		accessorKey: 'vendor_name',
 		header: 'Vendor Name',
 		enableColumnFilter: true,

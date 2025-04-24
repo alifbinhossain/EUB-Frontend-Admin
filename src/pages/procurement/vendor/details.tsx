@@ -23,7 +23,6 @@ const Trx: React.FC<TrxProps> = ({ itemUuid, setItemUuid, setOpen }) => {
 	const columns = itemColumns();
 	return (
 		<DetailsModal
-			title='Item'
 			isSmall={true}
 			open={!!itemUuid}
 			setOpen={onClose}

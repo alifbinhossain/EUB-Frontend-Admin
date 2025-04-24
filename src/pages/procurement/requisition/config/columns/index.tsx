@@ -19,6 +19,11 @@ export const requisitionColumns = (
 	handleProvided: (row: Row<IRequisitionTableData>) => void
 ): ColumnDef<IRequisitionTableData>[] => [
 	{
+		accessorKey: 'requisition_id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'internal_cost_center_name',
 		header: 'Internal Cost Center',
 		enableColumnFilter: true,

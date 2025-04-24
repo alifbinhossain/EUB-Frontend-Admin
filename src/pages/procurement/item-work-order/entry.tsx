@@ -81,13 +81,15 @@ const Entry = () => {
 									(data as IItemWorkOrder)?.item_work_order_entry[index]?.received_date
 										? form.watch(`item_work_order_entry.${index}.is_received`)
 											? getDateTime()
-											: undefined
-										: formatDate(
-												new Date(
-													(data as IItemWorkOrder)?.item_work_order_entry[index]
-														?.received_date as string
+											: null
+										: entry.received_date
+											? formatDate(
+													new Date(
+														(data as IItemWorkOrder)?.item_work_order_entry[index]
+															?.received_date as string
+													)
 												)
-											),
+											: null,
 								updatedData: itemUpdatedData,
 							};
 							return updateData.mutateAsync({
@@ -99,7 +101,7 @@ const Entry = () => {
 								...entry,
 								received_date: form.watch(`item_work_order_entry.${index}.is_received`)
 									? getDateTime()
-									: undefined,
+									: null,
 								item_work_order_uuid: uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
@@ -113,10 +115,10 @@ const Entry = () => {
 						}
 					});
 
-					Promise.all([...entryUpdatePromise]);
+					return Promise.all([...entryUpdatePromise]); // Wait for all entry updates to complete
 				})
 				.then(() => {
-					invalidateQuery();
+					invalidateQuery(); // Invalidate queries after all updates are done
 					invalidateQueryItem();
 					invalidateQueryWorkOrderAndEntry();
 					navigate('/procurement/item-work-order');
@@ -182,6 +184,7 @@ const Entry = () => {
 			item_uuid: '',
 			quantity: 0,
 			is_received: false,
+			received_date: null,
 		});
 	};
 
@@ -208,6 +211,7 @@ const Entry = () => {
 			item_uuid: field.item_uuid,
 			quantity: field.quantity,
 			is_received: field.is_received,
+			received_date: field.received_date,
 		});
 	};
 

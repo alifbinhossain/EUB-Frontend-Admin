@@ -8,7 +8,7 @@ import { IServiceTableData } from './columns.type';
 // * Service
 export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 	{
-		accessorKey: 'id',
+		accessorKey: 'service_id',
 		header: 'ID',
 		enableColumnFilter: false,
 	},

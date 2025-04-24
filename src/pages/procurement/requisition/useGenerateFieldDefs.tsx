@@ -42,15 +42,26 @@ const useGenerateFieldDefs = ({
 		{
 			header: 'Request Quantity',
 			accessorKey: 'req_quantity',
-			type: 'number',
+			type: 'join-input-unit',
+			inputType: 'number',
 			disabled: provider || (watch ? watch('is_received') : false),
+			unit: (index: number) => {
+				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				console.log(itemUuid);
+				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
+			},
 		},
 		{
 			header: 'Provided Quantity',
 			accessorKey: 'provided_quantity',
-			type: 'number',
+			type: 'join-input-unit',
+			inputType: 'number',
 			disabled: request || (watch ? watch('is_received') : false),
 			hidden: isNew,
+			unit: (index: number) => {
+				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
+			},
 		},
 		{
 			header: 'Remarks',

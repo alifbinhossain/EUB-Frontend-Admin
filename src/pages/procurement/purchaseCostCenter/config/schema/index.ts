@@ -11,7 +11,6 @@ import {
 
 // Purchase Cost Center Schema
 export const PURCHASE_COST_CENTER_SCHEMA = z.object({
-	index: NUMBER_REQUIRED,
 	name: STRING_REQUIRED,
 	sub_category_uuid: STRING_REQUIRED,
 	from: STRING_REQUIRED,
@@ -21,7 +20,6 @@ export const PURCHASE_COST_CENTER_SCHEMA = z.object({
 });
 
 export const PURCHASE_COST_CENTER_NULL: Partial<IPurchaseCostCenter> = {
-	index: 0,
 	name: '',
 	sub_category_uuid: '',
 	from: '',
