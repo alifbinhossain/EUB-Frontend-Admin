@@ -14,7 +14,6 @@ import { getDateTime } from '@/utils';
 import { usePurchaseCostCenterByUUID } from './config/query';
 import { IPurchaseCostCenter, PURCHASE_COST_CENTER_NULL, PURCHASE_COST_CENTER_SCHEMA } from './config/schema';
 import { IPurchaseCostCenterAddOrUpdateProps } from './config/types';
-import { type } from './utils';
 
 const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 	url,
@@ -86,11 +85,6 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField
-				control={form.control}
-				name='index'
-				render={(props) => <CoreForm.Input {...props} type='number' />}
-			/>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
