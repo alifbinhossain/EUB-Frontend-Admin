@@ -11,6 +11,11 @@ export const vendorColumns = (handleDetails: any): ColumnDef<IVendorTableData>[]
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<span onClick={() => handleDetails(info.row)} className='bold text-primary underline'>
+				{info.getValue() as string}
+			</span>
+		),
 	},
 	{
 		accessorKey: 'phone',
@@ -27,12 +32,12 @@ export const vendorColumns = (handleDetails: any): ColumnDef<IVendorTableData>[]
 		header: 'Address',
 		enableColumnFilter: true,
 	},
-	{
-		id: 'items',
-		header: 'Items',
-		cell: (info) => <Transfer onClick={() => handleDetails(info.row)} />,
-		size: 40,
-	},
+	// {
+	// 	id: 'items',
+	// 	header: 'Items',
+	// 	cell: (info) => <Transfer onClick={() => handleDetails(info.row)} />,
+	// 	size: 40,
+	// },
 	{
 		accessorKey: 'purpose',
 		header: 'Purpose',

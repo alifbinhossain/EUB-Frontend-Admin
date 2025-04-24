@@ -51,7 +51,9 @@ const useGenerateFieldDefs = ({
 		{
 			header: 'Quantity',
 			accessorKey: 'quantity',
-			type: 'number',
+			type: 'join-input-unit',
+			unit: (index: number) =>
+				itemData?.find((item) => item.value === watch(`item_work_order_entry.${index}.item_uuid`))?.unit ?? '',
 		},
 		{
 			header: 'Unit Price',

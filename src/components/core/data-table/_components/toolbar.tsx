@@ -192,17 +192,19 @@ export function TableToolbar() {
 					option='refresh'
 					render={() => handleRefetch && <TableRefresh handleRefetch={handleRefetch} />}
 				/>
-				<ToolbarComponent
-					option='new-entry'
-					render={() =>
-						createAccess && (
-							<Button aria-label='Create new entry' onClick={handleCreate} variant='accent' size='sm'>
-								<CirclePlus className='size-4' />
-								New
-							</Button>
-						)
-					}
-				/>
+				{handleCreate && (
+					<ToolbarComponent
+						option='new-entry'
+						render={() =>
+							createAccess && (
+								<Button aria-label='Create new entry' onClick={handleCreate} variant='accent' size='sm'>
+									<CirclePlus className='size-4' />
+									New
+								</Button>
+							)
+						}
+					/>
+				)}
 			</div>
 		),
 		[handleRefetch, createAccess, handleCreate]

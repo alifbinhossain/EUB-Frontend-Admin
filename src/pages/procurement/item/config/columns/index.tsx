@@ -18,15 +18,14 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 	{
-		id: 'vendors',
-		header: 'Vendors',
-		cell: (info) => <Transfer onClick={() => handleDetails(info.row)} />,
-		size: 40,
-	},
-	{
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<span onClick={() => handleDetails(info.row)} className='bold text-primary underline'>
+				{info.getValue() as string}
+			</span>
+		),
 	},
 	{
 		accessorKey: 'purchase_cost_center_name',

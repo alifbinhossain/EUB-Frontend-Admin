@@ -234,6 +234,7 @@ const Entry = () => {
 					isUpdate,
 					provider: true,
 					isNew: false,
+					watch: form.watch,
 				})}
 				handleAdd={handleAdd}
 				fields={fields}

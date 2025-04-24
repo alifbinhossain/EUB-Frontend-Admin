@@ -41,6 +41,7 @@ type FieldJoinInputUnit = {
 	type: 'join-input-unit';
 	placeholder?: string;
 	unit: (index: number) => string;
+	disabled?: boolean;
 	inputType?: string;
 };
 

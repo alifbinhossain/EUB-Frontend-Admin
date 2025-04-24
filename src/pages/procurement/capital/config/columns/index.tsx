@@ -4,8 +4,13 @@ import StatusButton from '@/components/buttons/status';
 
 import { ICapitalTableData } from './columns.type';
 
-// * Service
+// * Capital
 export const capitalColumns = (): ColumnDef<ICapitalTableData>[] => [
+	{
+		accessorKey: 'capital_id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
 	{
 		accessorKey: 'done',
 		header: 'Done',
