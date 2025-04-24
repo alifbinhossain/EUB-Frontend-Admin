@@ -23,7 +23,7 @@ export const ITEM_WORD_ORDER_SCHEMA = z.object({
 			quantity: NUMBER_REQUIRED.min(1, 'Must be greater than 0'),
 			unit_price: NUMBER_OPTIONAL,
 			is_received: BOOLEAN_REQUIRED.default(false),
-			received_date: STRING_OPTIONAL,
+			received_date: STRING_NULLABLE,
 		})
 	),
 });
@@ -39,7 +39,7 @@ export const ITEM_WORD_ORDER_NULL: Partial<IItemWorkOrder> = {
 			quantity: 0,
 			unit_price: 0,
 			is_received: false,
-			received_date: '',
+			received_date: null,
 		},
 	],
 };

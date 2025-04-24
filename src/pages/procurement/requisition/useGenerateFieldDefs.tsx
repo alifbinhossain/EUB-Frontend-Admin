@@ -43,6 +43,7 @@ const useGenerateFieldDefs = ({
 			header: 'Request Quantity',
 			accessorKey: 'req_quantity',
 			type: 'join-input-unit',
+			inputType: 'number',
 			disabled: provider || (watch ? watch('is_received') : false),
 			unit: (index: number) => {
 				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
@@ -54,6 +55,7 @@ const useGenerateFieldDefs = ({
 			header: 'Provided Quantity',
 			accessorKey: 'provided_quantity',
 			type: 'join-input-unit',
+			inputType: 'number',
 			disabled: request || (watch ? watch('is_received') : false),
 			hidden: isNew,
 			unit: (index: number) => {

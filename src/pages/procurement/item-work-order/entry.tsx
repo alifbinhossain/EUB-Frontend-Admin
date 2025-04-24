@@ -56,6 +56,8 @@ const Entry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
+	console.log(form.formState.errors);
+
 	// Submit handler
 	async function onSubmit(values: IItemWorkOrder) {
 		if (isUpdate) {
@@ -81,13 +83,15 @@ const Entry = () => {
 									(data as IItemWorkOrder)?.item_work_order_entry[index]?.received_date
 										? form.watch(`item_work_order_entry.${index}.is_received`)
 											? getDateTime()
-											: undefined
-										: formatDate(
-												new Date(
-													(data as IItemWorkOrder)?.item_work_order_entry[index]
-														?.received_date as string
+											: null
+										: entry.received_date
+											? formatDate(
+													new Date(
+														(data as IItemWorkOrder)?.item_work_order_entry[index]
+															?.received_date as string
+													)
 												)
-											),
+											: null,
 								updatedData: itemUpdatedData,
 							};
 							return updateData.mutateAsync({
@@ -99,7 +103,7 @@ const Entry = () => {
 								...entry,
 								received_date: form.watch(`item_work_order_entry.${index}.is_received`)
 									? getDateTime()
-									: undefined,
+									: null,
 								item_work_order_uuid: uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
@@ -182,6 +186,7 @@ const Entry = () => {
 			item_uuid: '',
 			quantity: 0,
 			is_received: false,
+			received_date: null,
 		});
 	};
 
@@ -208,6 +213,7 @@ const Entry = () => {
 			item_uuid: field.item_uuid,
 			quantity: field.quantity,
 			is_received: field.is_received,
+			received_date: field.received_date,
 		});
 	};
 

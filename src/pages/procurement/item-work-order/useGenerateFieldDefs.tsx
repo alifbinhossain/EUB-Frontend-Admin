@@ -52,6 +52,7 @@ const useGenerateFieldDefs = ({
 			header: 'Quantity',
 			accessorKey: 'quantity',
 			type: 'join-input-unit',
+			inputType: 'number',
 			unit: (index: number) =>
 				itemData?.find((item) => item.value === watch(`item_work_order_entry.${index}.item_uuid`))?.unit ?? '',
 		},
@@ -83,7 +84,7 @@ const useGenerateFieldDefs = ({
 										set(`item_work_order_entry.${index}.is_received`, false, {
 											shouldDirty: true,
 										});
-										set(`item_work_order_entry.${index}.received_date`, undefined);
+										set(`item_work_order_entry.${index}.received_date`, null);
 									}
 								}}
 								{...props}
@@ -103,7 +104,7 @@ const useGenerateFieldDefs = ({
 						date={
 							watch(`item_work_order_entry.${index}.received_date`)
 								? new Date(watch(`item_work_order_entry.${index}.received_date`) as string)
-								: undefined
+								: null
 						}
 						isTime={false}
 					/>
