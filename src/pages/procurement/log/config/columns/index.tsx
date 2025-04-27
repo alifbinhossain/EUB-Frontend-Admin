@@ -43,7 +43,7 @@ export const itemWorkOrderColumns = (): ColumnDef<IItemWorkOrderTableData>[] => 
 		),
 	},
 	{
-		accessorKey: 'items_work_order_name',
+		accessorKey: 'item_work_order_id',
 		header: 'Item Work Order',
 		enableColumnFilter: true,
 	},
@@ -71,7 +71,7 @@ export const itemRequisitionColumns = (): ColumnDef<IItemRequisitionTableData>[]
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'requisition_name',
+		accessorKey: 'requisition_id',
 		header: 'Requisition',
 		enableColumnFilter: true,
 	},
