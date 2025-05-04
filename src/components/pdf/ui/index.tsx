@@ -59,7 +59,7 @@ export const customTable = {
 		return 5;
 	},
 	paddingBottom: function () {
-		return 3;
+		return 0;
 	},
 	paddingLeft: function () {
 		return 0;

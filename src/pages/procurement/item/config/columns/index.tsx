@@ -49,6 +49,12 @@ export const itemColumns = (
 		header: 'Quantity',
 		enableColumnFilter: true,
 	},
+
+	{
+		accessorKey: 'unit',
+		header: 'Unit',
+		enableColumnFilter: true,
+	},
 	{
 		id: 'action_trx',
 		header: 'Item Transfer',
@@ -58,11 +64,6 @@ export const itemColumns = (
 			hidden: !actionTrxAccess,
 			disableFullFilter: true,
 		},
-	},
-	{
-		accessorKey: 'unit',
-		header: 'Unit',
-		enableColumnFilter: true,
 	},
 ];
 // * vendor

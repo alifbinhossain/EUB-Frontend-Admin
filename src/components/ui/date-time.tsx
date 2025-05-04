@@ -12,7 +12,6 @@ interface IDateTimeProps {
 
 const DateTime: React.FC<IDateTimeProps> = ({ date, isDate = true, isTime = true }) => {
 	if (date === null || !date) return null;
-	console.log(date);
 
 	const customizedDate = format(new Date(date), 'dd/MM/yy');
 	const customizedTime = format(new Date(date), 'h:mm a');

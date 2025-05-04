@@ -15,47 +15,97 @@ export const requisitionColumns = (
 	overrideReceivedAccess: boolean,
 	receivedAccess: boolean,
 	handleReceived: (row: Row<IRequisitionTableData>) => void,
+	overrideStoreReceivedAccess: boolean,
+	storeReceivedAccess: boolean,
+	handleStoreReceived: (row: Row<IRequisitionTableData>) => void,
 	providedAccess: boolean,
-	handleProvided: (row: Row<IRequisitionTableData>) => void
+	handleProvided: (row: Row<IRequisitionTableData>) => void,
+	handlePdf: (row: Row<IRequisitionTableData>) => void
 ): ColumnDef<IRequisitionTableData>[] => [
 	{
 		accessorKey: 'requisition_id',
 		header: 'ID',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<button className='underline' onClick={() => handlePdf(info.row)}>
+				{info.getValue() as string}
+			</button>
+		),
 	},
 	{
-		accessorKey: 'internal_cost_center_name',
-		header: 'Internal Cost Center',
-		enableColumnFilter: true,
-	},
-	{
-		accessorKey: 'is_received',
-		header: 'Received',
+		accessorKey: 'is_store_received',
+		header: () => (
+			<div>
+				Store <br /> Received
+			</div>
+		),
 		enableColumnFilter: false,
 		cell: (info) => {
 			return (
-				<Switch
-					checked={Number(info.getValue()) === 1}
-					onCheckedChange={() => handleReceived(info.row)}
-					disabled={receivedAccess && info.row.original.is_received && !overrideReceivedAccess}
-				/>
+				<div className='flex flex-col'>
+					<Switch
+						checked={Number(info.getValue()) === 1}
+						onCheckedChange={() => handleStoreReceived(info.row)}
+						disabled={
+							storeReceivedAccess && info.row.original.is_store_received && !overrideStoreReceivedAccess
+						}
+					/>
+					<span className='text-[0.7rem] font-semibold capitalize text-primary'>
+						{info.row.original.pi_generated_number}
+					</span>
+					<DateTime
+						date={
+							info.row.original.store_received_date
+								? new Date(info.row.original.store_received_date)
+								: null
+						}
+						isTime={false}
+					/>
+				</div>
+			);
+		},
+		size: 40,
+		meta: {
+			hidden: !storeReceivedAccess && !overrideStoreReceivedAccess,
+		},
+	},
+	{
+		id: 'action_trx',
+		header: 'Provide',
+		cell: (info) => <Transfer disabled={info.row.original.is_received} onClick={() => handleProvided(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !providedAccess,
+			disableFullFilter: true,
+		},
+	},
+	{
+		accessorKey: 'is_received',
+		header: () => (
+			<div>
+				Consumer <br /> Received
+			</div>
+		),
+		enableColumnFilter: false,
+		cell: (info) => {
+			return (
+				<div>
+					<Switch
+						checked={Number(info.getValue()) === 1}
+						onCheckedChange={() => handleReceived(info.row)}
+						disabled={receivedAccess && info.row.original.is_received && !overrideReceivedAccess}
+					/>
+					<DateTime
+						date={info.row.original.received_date ? new Date(info.row.original.received_date) : null}
+						isTime={false}
+					/>
+				</div>
 			);
 		},
 		size: 40,
 		meta: {
 			hidden: !receivedAccess && !overrideReceivedAccess,
 		},
-	},
-	{
-		accessorKey: 'received_date',
-		header: 'Received Date',
-		enableColumnFilter: true,
-		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
-	},
-	{
-		accessorKey: 'department',
-		header: 'Department',
-		enableColumnFilter: true,
 	},
 
 	{
@@ -87,16 +137,7 @@ export const requisitionColumns = (
 			filterVariant: 'dateRange',
 		},
 	},
-	{
-		id: 'action_trx',
-		header: 'Provide',
-		cell: (info) => <Transfer disabled={info.row.original.is_received} onClick={() => handleProvided(info.row)} />,
-		size: 40,
-		meta: {
-			hidden: !providedAccess,
-			disableFullFilter: true,
-		},
-	},
+
 	{
 		id: 'actions',
 		accessorKey: 'actions',
@@ -107,8 +148,8 @@ export const requisitionColumns = (
 		cell: (info) => (
 			<TableCellAction
 				info={info}
-				hiddenUpdate={info.row.original.is_received}
-				hiddenDelete={info.row.original.is_received}
+				hiddenUpdate={info.row.original.is_received || info.row.original.is_store_received}
+				hiddenDelete={info.row.original.is_received || info.row.original.is_store_received}
 			/>
 		),
 		size: 60,

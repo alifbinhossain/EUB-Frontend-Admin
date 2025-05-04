@@ -18,7 +18,6 @@ import { IRequisitionTableData } from './config/columns/columns.type';
 import { useRequisition, useRequisitionAndItemByUUID } from './config/query';
 import { IRequisition, REQUISITION_NULL, REQUISITION_SCHEMA } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
-import { departments } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -246,33 +245,6 @@ const Entry = () => {
 					</div>
 				}
 			>
-				<FormField
-					control={form.control}
-					name='internal_cost_center_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Internal Cost Center'
-							placeholder='Select Internal Cost Center'
-							options={internalCostCenter!}
-							isDisabled={form.watch('is_received')}
-							{...props}
-						/>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name='department'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Department'
-							placeholder='Select Department'
-							options={departments}
-							isDisabled={form.watch('is_received')}
-							{...props}
-						/>
-					)}
-				/>
 				<FormField
 					control={form.control}
 					name='received_date'

@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
-import { differenceInMonths } from 'date-fns';
+import { addMonths, differenceInMonths, format } from 'date-fns';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -58,7 +58,7 @@ const Entry = () => {
 
 		const currentFrequency = form.watch('frequency');
 
-		const arraySize = Math.round((duration ?? 0) / Number(currentFrequency));
+		const arraySize = Math.round((duration ?? 0) / (12 / Number(currentFrequency)));
 
 		return { arraySize };
 	}, [form.watch('start_date'), form.watch('end_date'), form.watch('frequency')]);
@@ -109,13 +109,22 @@ const Entry = () => {
 				})
 				.then(() => {
 					// * UPDATE FOR SERVICE PAYMENT
+
 					if (service_payment.length > 0) {
-						const servicePaymentUpdatePromise = service_payment.map((entry) => {
+						const servicePaymentUpdatePromise = service_payment.map((entry, index) => {
+							let paymentDate = form.watch(`start_date`);
+							paymentDate = paymentDate ? format(paymentDate, 'yyyy-MM-dd') : '';
+							if (!paymentDate) {
+								return null;
+							}
+							const frequency = form.watch(`frequency`);
+							const nextDueDate = addMonths(new Date(paymentDate), Number(frequency) * (index + 1));
 							if (entry.payment_date) {
 								if (entry.uuid) {
 									const entryUpdateData = {
 										...entry,
 										updated_at: getDateTime(),
+										next_due_date: nextDueDate,
 									};
 									return updateData.mutateAsync({
 										url: `/procure/service-payment/${entry.uuid}`,
@@ -128,6 +137,7 @@ const Entry = () => {
 										created_by: user?.uuid,
 										uuid: nanoid(),
 										service_uuid: uuid,
+										next_due_date: nextDueDate,
 									};
 									return postData.mutateAsync({
 										url: `/procure/service-payment`,
@@ -165,13 +175,21 @@ const Entry = () => {
 				.then(() => {
 					// * ENTRY FOR SERVICE PAYMENT
 					if (service_payment.length > 0) {
-						const servicePaymentPromise = service_payment.map((entry) => {
+						const servicePaymentPromise = service_payment.map((entry, index) => {
+							let paymentDate = form.watch(`start_date`);
+							paymentDate = paymentDate ? format(paymentDate, 'yyyy-MM-dd') : '';
+							if (!paymentDate) {
+								return null;
+							}
+							const frequency = form.watch(`frequency`);
+							const nextDueDate = addMonths(new Date(paymentDate), Number(frequency) * (index + 1));
 							if (entry.payment_date) {
 								const entryData = {
 									...entry,
 									service_uuid: itemData.uuid,
 									created_at: getDateTime(),
 									created_by: user?.uuid,
+									next_due_date: nextDueDate,
 									uuid: nanoid(),
 								};
 								return postData.mutateAsync({
@@ -334,11 +352,6 @@ const Entry = () => {
 					control={form.control}
 					name='end_date'
 					render={(props) => <CoreForm.DatePicker {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='next_due_date'
-					render={(props) => <CoreForm.DatePicker label='Next Due Date' {...props} />}
 				/>
 				<FormField
 					control={form.control}

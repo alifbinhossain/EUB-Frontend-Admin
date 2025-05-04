@@ -47,7 +47,6 @@ const useGenerateFieldDefs = ({
 			disabled: provider || (watch ? watch('is_received') : false),
 			unit: (index: number) => {
 				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
-				console.log(itemUuid);
 				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
 			},
 		},
