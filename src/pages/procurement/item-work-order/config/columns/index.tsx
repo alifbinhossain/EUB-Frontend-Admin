@@ -10,11 +10,6 @@ export const itemWorkOrderEntryColumns = (): ColumnDef<IItemWorkOrderTableData>[
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'item_name',
-		header: 'Item Name',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'vendor_name',
 		header: 'Vendor Name',
 	},

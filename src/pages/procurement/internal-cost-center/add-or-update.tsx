@@ -14,7 +14,7 @@ import { getDateTime } from '@/utils';
 import { useInternalCostCenterByUUID } from './config/query';
 import { IInternalCostCenter, INTERNAL_COST_CENTER_NULL, INTERNAL_COST_CENTER_SCHEMA } from './config/schema';
 import { IInternalCostCenterAddOrUpdateProps } from './config/types';
-import { types } from './utils';
+import { departments } from './utils';
 
 const AddOrUpdate: React.FC<IInternalCostCenterAddOrUpdateProps> = ({
 	url,
@@ -98,9 +98,14 @@ const AddOrUpdate: React.FC<IInternalCostCenterAddOrUpdateProps> = ({
 			/>
 			<FormField
 				control={form.control}
-				name='type'
+				name='department'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Type' placeholder='Select Type' options={types!} {...props} />
+					<CoreForm.ReactSelect
+						label='Department'
+						placeholder='Select Department'
+						options={departments}
+						{...props}
+					/>
 				)}
 			/>
 			<FormField control={form.control} name='from' render={(props) => <CoreForm.DatePicker {...props} />} />

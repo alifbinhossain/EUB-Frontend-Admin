@@ -18,7 +18,7 @@ export const SERVICE_SCHEMA = z
 		frequency: STRING_REQUIRED,
 		start_date: STRING_REQUIRED,
 		end_date: STRING_REQUIRED,
-		next_due_date: STRING_REQUIRED,
+		next_due_date: STRING_OPTIONAL,
 		cost_per_service: NUMBER_REQUIRED.default(0),
 		payment_terms: STRING_REQUIRED,
 		status: STRING_REQUIRED,

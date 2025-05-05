@@ -1,11 +1,28 @@
+//* Item Requisition
+export type IItemRequisitionTableData = {
+	uuid: string;
+	item_uuid: string;
+	item_name: string;
+	requisition_name: string;
+	req_quantity: number;
+	provided_quantity: number;
+	created_by_name: string;
+	prev_provided_date: string;
+};
 // * Requisition
 export type IRequisitionTableData = {
 	uuid: string;
 	id: number;
-	internal_cost_center_uuid: string;
-	internal_cost_center_name: string;
+	requisition_id: string;
 	is_received: boolean;
+	is_store_received: boolean;
+	pi_generated_number: number;
+	store_received_date: string;
 	received_date: string;
+	created_at: string;
+	created_by_name: string;
+	designation: string;
+
 	department:
 		| 'chairman_bot'
 		| 'vice_chancellor'
@@ -48,5 +65,6 @@ export type IRequisitionTableData = {
 		| 'reception_gate'
 		| 'ict'
 		| 'law';
+	item_requisition: IItemRequisitionTableData[];
 	remarks: string;
 };

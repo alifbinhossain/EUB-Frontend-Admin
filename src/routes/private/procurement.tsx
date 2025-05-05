@@ -21,6 +21,7 @@ const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entr
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
 const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
+const GeneralStatement = lazy(() => import('@/pages/procurement/general-statment/index'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -33,6 +34,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__capital',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+
 			{
 				name: 'Capital Entry',
 				path: '/procurement/capital/create',
@@ -140,6 +142,8 @@ const procurementRoutes: IRoute[] = [
 					'show_all',
 					'click_received',
 					'click_received_override',
+					'click_store_received_override',
+					'click_store_received',
 				],
 			},
 			{
@@ -179,12 +183,20 @@ const procurementRoutes: IRoute[] = [
 				],
 			},
 			{
+				name: 'PDF Generate',
+				path: '/procurement/pdf/generate',
+				element: <GeneralStatement />,
+				page_name: 'procurement__pdf_generate',
+				actions: ['read'],
+			},
+			{
 				name: 'Log',
 				path: '/procurement/log',
 				element: <Log />,
 				page_name: 'procurement__log',
 				actions: ['read', 'update', 'delete'],
 			},
+
 			{
 				name: 'Library',
 				children: [

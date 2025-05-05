@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { addMonths, format } from 'date-fns';
 
 import StatusButton from '@/components/buttons/status';
 import DateTime from '@/components/ui/date-time';
@@ -53,7 +54,11 @@ export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 		accessorKey: 'next_due_date',
 		header: 'Next Due Date',
 		enableColumnFilter: true,
-		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+		cell: (info) => {
+			const date = info.getValue() as Date;
+			const nextDueDate = addMonths(date, Number(info.row.original.frequency));
+			return <DateTime date={nextDueDate as Date} isTime={false} />;
+		},
 	},
 	{
 		accessorKey: 'cost_per_service',

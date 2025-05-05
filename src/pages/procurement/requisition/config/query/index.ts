@@ -23,3 +23,9 @@ export const useRequisitionAndItemByUUID = <T>(uuid: string) =>
 		url: `/procure/item-requisition-details/by/${uuid}`,
 		enabled: !!uuid,
 	});
+export const useRequisitionAndItemForPDF = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: requisitionQK.requisitionAndItemForPDF(uuid),
+		url: `report/procure/item-requisition-details/by/${uuid}`,
+		enabled: !!uuid,
+	});
