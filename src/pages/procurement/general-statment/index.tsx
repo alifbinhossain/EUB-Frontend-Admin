@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useRHF from '@/hooks/useRHF';
 
-import Pdf from '@/components/pdf/general_statement';
+import Pdf from '@/components/pdf/general-statement';
 import { Button } from '@/components/ui/button';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';

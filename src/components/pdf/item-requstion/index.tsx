@@ -1,6 +1,7 @@
 import { EUB_LOGO } from '@/assets/images/base64';
 import { IRequisitionTableData } from '@/pages/procurement/requisition/config/columns/columns.type';
 import { departments } from '@/pages/procurement/requisition/utils';
+import { format } from 'date-fns';
 
 import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE, getTable } from '@/components/pdf/utils';
@@ -78,6 +79,7 @@ export default function Index(data: IRequisitionTableData) {
 			{
 				text: 'Articles Requisition Form',
 				bold: true,
+				decoration: 'underline',
 				fontSize: DEFAULT_FONT_SIZE + 4,
 				alignment: 'center',
 			},
@@ -92,7 +94,7 @@ export default function Index(data: IRequisitionTableData) {
 							{ text: `UID: ${data?.requisition_id}`, colSpan: 3 },
 							'',
 							'',
-							{ text: `Date: ${formatDateTable(data?.created_at)}`, colSpan: 3 },
+							{ text: `Date: ${format(data?.created_at, 'MMM dd, yyyy')}`, colSpan: 3 },
 							'',
 							'',
 						],
@@ -125,7 +127,7 @@ export default function Index(data: IRequisitionTableData) {
 									nodeItem.field === 'index'
 										? index + 1
 										: nodeItem.field === 'prev_provided_date'
-											? formatDateTable(item?.prev_provided_date)
+											? format(item?.prev_provided_date, 'MMM dd, yyyy')
 											: (item as any)[nodeItem.field],
 								style: nodeItem.cellStyle,
 								alignment: nodeItem.alignment,

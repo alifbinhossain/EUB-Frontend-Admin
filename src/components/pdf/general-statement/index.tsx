@@ -1,8 +1,11 @@
 import { EUB_LOGO } from '@/assets/images/base64';
 import { IGeneralStatement } from '@/pages/procurement/general-statment/config/schema';
+import { format } from 'date-fns';
 
 import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
+
+import { getDateTime } from '@/utils';
 
 import pdfMake from '..';
 import { getPageFooter } from './utils';
@@ -66,10 +69,15 @@ export default function Index(data: IGeneralStatement) {
 			{
 				text: 'General Note',
 				bold: true,
+				decoration: 'underline',
 				fontSize: DEFAULT_FONT_SIZE + 4,
 				alignment: 'center',
 			},
 			{ text: '\n' },
+			{
+				text: `Date:${format(getDateTime(), 'MMM dd, yyyy')}`,
+				alignment: 'right',
+			},
 			{ text: '\n' },
 			{
 				table: {
@@ -103,7 +111,7 @@ export default function Index(data: IGeneralStatement) {
 				table: {
 					headerRows: 1,
 					widths: ['*'],
-					body: [[{ text: 'Accounts Use Only\n\n\n\n\n', alignment: 'center' }]],
+					body: [[{ text: 'Accounts Use Only\n\n\n\n\n\n\n\n', alignment: 'center' }]],
 				},
 			},
 			{ text: '\n' },
