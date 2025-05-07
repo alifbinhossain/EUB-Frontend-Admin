@@ -13,7 +13,7 @@ import { getPageFooter } from './utils';
 
 export default function Index(data: IRequisitionTableData) {
 	const headerHeight = 20;
-	const footerHeight = 0;
+	const footerHeight = 170;
 
 	const node = [
 		getTable('index', 'Sl\n No', 'center'),
@@ -32,12 +32,60 @@ export default function Index(data: IRequisitionTableData) {
 		}),
 
 		// * Page Header
+		header: 'simple text',
+
 		// * Page Footer
-		footer: (currentPage: number, pageCount: number) => ({
-			table: getPageFooter({ currentPage, pageCount }),
-			margin: [xMargin, 2],
-			fontSize: DEFAULT_FONT_SIZE,
-		}),
+		footer: (currentPage: number, pageCount: number) => [
+			{
+				table: {
+					headerRows: 1,
+					widths: ['*', 10, '*', 10, '*'],
+					body: [
+						[
+							{
+								text: ``,
+								alignment: 'center',
+								border: [false, false, false, false],
+							},
+							{
+								text: ``,
+								alignment: 'center',
+								border: [false, false, false, false],
+							},
+							{
+								text: ``,
+								alignment: 'center',
+								border: [false, false, false, false],
+							},
+							{
+								text: ``,
+								alignment: 'center',
+								border: [false, false, false, false],
+							},
+							{
+								text: ``,
+								alignment: 'center',
+								border: [false, false, false, false],
+							},
+						],
+						[
+							{ text: 'Requested By', alignment: 'center', border: [false, true, false, false] },
+							{ text: '', alignment: 'center', border: [false, false, false, false] },
+							{ text: 'Dept. Head', alignment: 'center', border: [false, true, false, false] },
+							{ text: '', alignment: 'center', border: [false, false, false, false] },
+							{ text: 'P&I CODE', alignment: 'center', border: [false, true, false, false] },
+						],
+					],
+				},
+				margin: [xMargin, 2],
+			},
+			{ text: '\n' },
+			{
+				table: getPageFooter({ currentPage, pageCount }),
+				margin: [xMargin, 2],
+				fontSize: DEFAULT_FONT_SIZE,
+			},
+		],
 
 		// * Main Table
 		content: [
@@ -120,7 +168,47 @@ export default function Index(data: IRequisitionTableData) {
 							'',
 							'',
 						],
-						node.map((col) => ({ text: col.name, style: col.headerStyle, alignment: col.alignment })),
+						[
+							{
+								text: 'Sl\n No',
+								style: 'tableHeader',
+								alignment: 'center',
+								rowSpan: 2,
+							},
+							{
+								text: 'Item',
+								rowSpan: 2,
+							},
+							{
+								text: 'Qty',
+								style: 'tableHeader',
+								alignment: 'right',
+								rowSpan: 2,
+							},
+							{
+								text: `Previous Receive Log`,
+								colSpan: 2,
+							},
+							'',
+							{
+								text: 'Sign',
+								rowSpan: 2,
+							},
+						],
+						[
+							'',
+							'',
+							'',
+							{
+								text: 'Date',
+							},
+							{
+								text: 'Qty',
+
+								alignment: 'right',
+							},
+							'',
+						],
 						...(data?.item_requisition || []).map((item, index) =>
 							node.map((nodeItem) => ({
 								text:
@@ -133,71 +221,6 @@ export default function Index(data: IRequisitionTableData) {
 								alignment: nodeItem.alignment,
 							}))
 						),
-					],
-				},
-			},
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{
-				table: {
-					headerRows: 1,
-					widths: ['*', 10, '*', 10, '*'],
-					body: [
-						[
-							{
-								text: ``,
-								alignment: 'center',
-								border: [false, false, false, false],
-							},
-							{
-								text: ``,
-								alignment: 'center',
-								border: [false, false, false, false],
-							},
-							{
-								text: ``,
-								alignment: 'center',
-								border: [false, false, false, false],
-							},
-							{
-								text: ``,
-								alignment: 'center',
-								border: [false, false, false, false],
-							},
-							{
-								text: `${data?.pi_generated_number}`,
-								alignment: 'center',
-								border: [false, false, false, false],
-							},
-						],
-						[
-							{ text: 'Requested By', alignment: 'center', border: [false, true, false, false] },
-							{ text: '', alignment: 'center', border: [false, false, false, false] },
-							{ text: 'Dept. Head', alignment: 'center', border: [false, true, false, false] },
-							{ text: '', alignment: 'center', border: [false, false, false, false] },
-							{ text: 'P&I CODE', alignment: 'center', border: [false, true, false, false] },
-						],
-					],
-				},
-			},
-			{ text: '\n' },
-			{
-				table: {
-					headerRows: 1,
-					widths: ['*', '*'],
-					body: [
-						[{ text: 'Remarks', colSpan: 2 }, ''],
-						[
-							{ text: 'Requisitioner:\n\n\n\n\n', rowSpan: 5 },
-							{ text: 'P&I:\n\n\n\n\n', rowSpan: 5 },
-						],
-						[{ text: '' }, { text: '' }],
-						[{ text: '' }, { text: '' }],
-						[{ text: '' }, { text: '' }],
-						[{ text: '' }, { text: '' }],
 					],
 				},
 			},

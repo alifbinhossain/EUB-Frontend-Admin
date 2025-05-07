@@ -12,7 +12,7 @@ import { getPageFooter } from './utils';
 
 export default function Index(data: IGeneralStatement) {
 	const headerHeight = 20;
-	const footerHeight = 0;
+	const footerHeight = 110;
 
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_PAGE({
@@ -105,34 +105,7 @@ export default function Index(data: IGeneralStatement) {
 						],
 					],
 				},
-			},
-			{ text: '\n' },
-			{
-				table: {
-					headerRows: 1,
-					widths: ['*'],
-					body: [[{ text: 'Accounts Use Only\n\n\n\n\n\n\n\n', alignment: 'center' }]],
-				},
-			},
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{ text: '\n' },
-			{
-				table: {
-					headerRows: 1,
-					widths: ['*', 10, '*', 10, '*'],
-					body: [
-						[
-							{ text: 'Requested By', alignment: 'center', border: [false, true, false, false] },
-							{ text: '', alignment: 'center', border: [false, false, false, false] },
-							{ text: 'Dept. Head', alignment: 'center', border: [false, true, false, false] },
-							{ text: '', alignment: 'center', border: [false, false, false, false] },
-							{ text: 'P&I CODE', alignment: 'center', border: [false, true, false, false] },
-						],
-					],
-				},
+				margin: [0, 200, 0, 0],
 			},
 		],
 	});
