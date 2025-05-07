@@ -306,7 +306,7 @@ const Entry = () => {
 					name='frequency'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='Frequency'
+							label={`Frequency (After how many months do I have to pay )`}
 							placeholder='Select frequency'
 							menuPortalTarget={document.body}
 							onChange={() => {
