@@ -48,34 +48,21 @@ const EMPTY_COLUMN: string[] = getEmptyColumn(4);
 
 export const getPageFooter = ({ currentPage, pageCount }: { currentPage: number; pageCount: number }) => {
 	return {
-		widths: ['*', '*', '*'],
+		headerRows: 1,
+		widths: ['*'],
 		body: [
 			[
 				{
-					text: 'SNO',
+					text: [{ text: 'Accounts Use Only', decoration: 'underline' }, '\n', '\n', '\n', '\n', '\n'],
 					alignment: 'center',
-					border: [false, true, false, false],
-				},
-				{
-					text: '',
-					alignment: 'center',
-					border: [false, false, false, false],
-				},
-				{
-					text: 'Managing Director',
-					alignment: 'center',
-					border: [false, true, false, false],
 				},
 			],
 			[
 				{
-					colSpan: 3,
 					text: `Page ${currentPage} of ${pageCount}`,
 					alignment: 'center',
 					border: [false, false, false, false],
 				},
-				'',
-				'',
 			],
 		],
 	};
