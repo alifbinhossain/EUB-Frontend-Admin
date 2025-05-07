@@ -48,62 +48,35 @@ const EMPTY_COLUMN: string[] = getEmptyColumn(4);
 
 export const getPageFooter = ({ currentPage, pageCount }: { currentPage: number; pageCount: number }) => {
 	return {
-		widths: ['*'], // Ensure widths match the number of columns
+		widths: ['*', '*', '*'],
 		body: [
 			[
 				{
-					table: {
-						headerRows: 1,
-						widths: ['*'], // Match the single column in the body
-						body: [
-							[
-								{
-									text: 'Accounts Use Only\n\n\n\n\n\n\n\n',
-									alignment: 'center',
-									decoration: 'underline',
-								},
-							],
-						],
-						layout: 'noBorders', // Add layout to avoid border issues
-						border: [false, false, false, false],
-					},
+					text: 'SNO',
+					alignment: 'center',
+					border: [false, true, false, false],
+				},
+				{
+					text: '',
+					alignment: 'center',
+					border: [false, false, false, false],
+				},
+				{
+					text: 'Managing Director',
+					alignment: 'center',
+					border: [false, true, false, false],
 				},
 			],
 			[
 				{
-					table: {
-						headerRows: 1,
-						widths: ['*', 10, '*', 10, '*'], // Ensure widths match the number of columns
-						body: [
-							[
-								{ text: 'Requested By', alignment: 'center', border: [false, true, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: 'Dept. Head', alignment: 'center', border: [false, true, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: 'P&I CODE', alignment: 'center', border: [false, true, false, false] },
-							],
-							[
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
-							],
-						],
-						layout: 'noBorders', // Add layout to avoid border issues
-						border: [false, false, false, false],
-					},
-				},
-			],
-			[
-				{
-					colSpan: 1, // Ensure colSpan matches the number of columns
+					colSpan: 3,
 					text: `Page ${currentPage} of ${pageCount}`,
 					alignment: 'center',
 					border: [false, false, false, false],
 				},
+				'',
+				'',
 			],
 		],
-		layout: 'noBorders', // Add layout to avoid border issues
 	};
 };
