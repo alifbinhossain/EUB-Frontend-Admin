@@ -299,7 +299,7 @@ const Entry = () => {
 					<FormField
 						control={form.control}
 						name='done'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' label='Paid' {...props} />}
 					/>
 				}
 			>
@@ -352,17 +352,19 @@ const Entry = () => {
 					/>
 				}
 			>
-				<FormField
-					control={form.control}
-					name='cs_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Cs Remarks'
-							disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
-							{...props}
-						/>
-					)}
-				/>
+				{form.watch('is_cs') && (
+					<FormField
+						control={form.control}
+						name='cs_remarks'
+						render={(props) => (
+							<CoreForm.Textarea
+								label='Cs Remarks'
+								disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
+								{...props}
+							/>
+						)}
+					/>
+				)}
 			</CoreForm.Section>
 
 			<CoreForm.Section
@@ -378,19 +380,25 @@ const Entry = () => {
 					/>
 				}
 			>
-				<FormField
-					control={form.control}
-					name='monthly_meeting_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Monthly Meeting Remarks'
-							disabled={
-								!(form.watch('is_monthly_meeting') && form.watch('is_cs') && form.watch('is_quotation'))
-							}
-							{...props}
-						/>
-					)}
-				/>
+				{form.watch('is_monthly_meeting') && (
+					<FormField
+						control={form.control}
+						name='monthly_meeting_remarks'
+						render={(props) => (
+							<CoreForm.Textarea
+								label='Monthly Meeting Remarks'
+								disabled={
+									!(
+										form.watch('is_monthly_meeting') &&
+										form.watch('is_cs') &&
+										form.watch('is_quotation')
+									)
+								}
+								{...props}
+							/>
+						)}
+					/>
+				)}
 			</CoreForm.Section>
 
 			<CoreForm.Section
@@ -406,49 +414,53 @@ const Entry = () => {
 					/>
 				}
 			>
-				<FormField
-					control={form.control}
-					name='vendor_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Vendor'
-							options={
-								vendorList?.filter((item) =>
-									form
-										.getValues('quotations')
-										.some((quotation) => quotation.vendor_uuid === item.value)
-								) || []
-							}
-							isDisabled={
-								!(
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
-							{...props}
+				{form.watch('is_work_order') && (
+					<>
+						<FormField
+							control={form.control}
+							name='vendor_uuid'
+							render={(props) => (
+								<CoreForm.ReactSelect
+									label='Vendor'
+									options={
+										vendorList?.filter((item) =>
+											form
+												.getValues('quotations')
+												.some((quotation) => quotation.vendor_uuid === item.value)
+										) || []
+									}
+									isDisabled={
+										!(
+											form.watch('is_work_order') &&
+											form.watch('is_monthly_meeting') &&
+											form.watch('is_cs') &&
+											form.watch('is_quotation')
+										)
+									}
+									{...props}
+								/>
+							)}
 						/>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='work_order_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Work Order Remarks'
-							disabled={
-								!(
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
-							{...props}
+						<FormField
+							control={form.control}
+							name='work_order_remarks'
+							render={(props) => (
+								<CoreForm.Textarea
+									label='Work Order Remarks'
+									disabled={
+										!(
+											form.watch('is_work_order') &&
+											form.watch('is_monthly_meeting') &&
+											form.watch('is_cs') &&
+											form.watch('is_quotation')
+										)
+									}
+									{...props}
+								/>
+							)}
 						/>
-					)}
-				/>
+					</>
+				)}
 			</CoreForm.Section>
 
 			<CoreForm.Section
@@ -464,25 +476,27 @@ const Entry = () => {
 					/>
 				}
 			>
-				<FormField
-					control={form.control}
-					name='delivery_statement_remarks'
-					render={(props) => (
-						<CoreForm.Textarea
-							label='Delivery Statement Remarks'
-							disabled={
-								!(
-									form.watch('is_delivery_statement') &&
-									form.watch('is_work_order') &&
-									form.watch('is_monthly_meeting') &&
-									form.watch('is_cs') &&
-									form.watch('is_quotation')
-								)
-							}
-							{...props}
-						/>
-					)}
-				/>
+				{form.watch('is_delivery_statement') && (
+					<FormField
+						control={form.control}
+						name='delivery_statement_remarks'
+						render={(props) => (
+							<CoreForm.Textarea
+								label='Delivery Statement Remarks'
+								disabled={
+									!(
+										form.watch('is_delivery_statement') &&
+										form.watch('is_work_order') &&
+										form.watch('is_monthly_meeting') &&
+										form.watch('is_cs') &&
+										form.watch('is_quotation')
+									)
+								}
+								{...props}
+							/>
+						)}
+					/>
+				)}
 			</CoreForm.Section>
 
 			<CoreForm.DynamicFields

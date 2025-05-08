@@ -1,17 +1,24 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { addMonths, format } from 'date-fns';
 
 import StatusButton from '@/components/buttons/status';
 import DateTime from '@/components/ui/date-time';
 
-import { IServiceTableData } from './columns.type';
+import { IServicePayment, IServiceTableData } from './columns.type';
 
 // * Service
-export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
+export const serviceColumns = (
+	handleDetails: (row: Row<IServiceTableData>) => void
+): ColumnDef<IServiceTableData>[] => [
 	{
 		accessorKey: 'service_id',
 		header: 'ID',
 		enableColumnFilter: false,
+		cell: (info) => (
+			<span onClick={() => handleDetails(info.row)} className='bold text-primary underline'>
+				{info.getValue() as string}
+			</span>
+		),
 	},
 	{
 		accessorKey: 'name',
@@ -80,5 +87,20 @@ export const serviceColumns = (): ColumnDef<IServiceTableData>[] => [
 		header: 'Approval Required',
 		enableColumnFilter: false,
 		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
+	},
+];
+
+// * Service Payment
+export const servicePaymentColumns = (): ColumnDef<IServicePayment>[] => [
+	{
+		accessorKey: 'amount',
+		header: 'Amount',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'payment_date',
+		header: 'Payment Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 ];

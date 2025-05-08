@@ -39,8 +39,12 @@ const Designation = () => {
 		});
 	};
 
+	const handleDetails = (row: Row<ICapitalTableData>) => {
+		navigate(`/procurement/capital-details/${row.original.uuid}`);
+	};
+
 	// Table Columns
-	const columns = capitalColumns();
+	const columns = capitalColumns(handleDetails);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

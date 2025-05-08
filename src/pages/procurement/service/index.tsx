@@ -39,8 +39,12 @@ const Designation = () => {
 		});
 	};
 
+	const handleDetails = (row: Row<IServiceTableData>) => {
+		navigate(`/procurement/service-details/${row.original.uuid}`);
+	};
+
 	// Table Columns
-	const columns = serviceColumns();
+	const columns = serviceColumns(handleDetails);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
