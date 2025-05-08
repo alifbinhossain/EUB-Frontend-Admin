@@ -122,7 +122,7 @@ const procurementRoutes: IRoute[] = [
 			},
 			{
 				name: 'Item Work Order Details',
-				path: '/procurement/item-work-details/:uuid',
+				path: '/procurement/item-work-order-details/:uuid',
 				element: <ItemWorkOrderDetails />,
 				hidden: true,
 				page_name: 'procurement__item_work_order_details',
