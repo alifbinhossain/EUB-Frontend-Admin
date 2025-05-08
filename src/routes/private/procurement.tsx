@@ -10,11 +10,14 @@ const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
 const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
+const ItemWorkOrderDetails = lazy(() => import('@/pages/procurement/item-work-order/details'));
 const Form = lazy(() => import('@/pages/procurement/form'));
 const Capital = lazy(() => import('@/pages/procurement/capital'));
 const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
+const CapitalDetails = lazy(() => import('@/pages/procurement/capital/details'));
 const Service = lazy(() => import('@/pages/procurement/service'));
 const ServiceEntry = lazy(() => import('@/pages/procurement/service/entry'));
+const ServiceDetails = lazy(() => import('@/pages/procurement/service/details'));
 const InternalCostCenter = lazy(() => import('@/pages/procurement/internal-cost-center'));
 const Requisition = lazy(() => import('@/pages/procurement/requisition'));
 const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
@@ -27,6 +30,7 @@ const procurementRoutes: IRoute[] = [
 	{
 		name: 'Procurement',
 		children: [
+			// ? Capital
 			{
 				name: 'Capital',
 				path: '/procurement/capital',
@@ -34,7 +38,6 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__capital',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-
 			{
 				name: 'Capital Entry',
 				path: '/procurement/capital/create',
@@ -51,6 +54,16 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__capital_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+			{
+				name: 'Capital Details',
+				path: '/procurement/capital-details/:uuid',
+				element: <CapitalDetails />,
+				hidden: true,
+				page_name: 'procurement__capital_details',
+				actions: ['read'],
+			},
+
+			// ? Service
 			{
 				name: 'Service',
 				path: '/procurement/service',
@@ -75,6 +88,16 @@ const procurementRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
+				name: 'Service Details',
+				path: '/procurement/service-details/:uuid',
+				element: <ServiceDetails />,
+				hidden: true,
+				page_name: 'procurement__service_details',
+				actions: ['read'],
+			},
+
+			// ? Item Work Order
+			{
 				name: 'Item Work Order',
 				path: '/procurement/item-work-order',
 				element: <ItemWorkOrder />,
@@ -97,6 +120,16 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item_work_order_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+			{
+				name: 'Item Work Order Details',
+				path: '/procurement/item-work-order-details/:uuid',
+				element: <ItemWorkOrderDetails />,
+				hidden: true,
+				page_name: 'procurement__item_work_order_details',
+				actions: ['read'],
+			},
+
+			// ? Item Work Order Details
 			{
 				name: 'Item',
 				path: '/procurement/item',

@@ -40,8 +40,12 @@ const Designation = () => {
 		});
 	};
 
+	const handleDetails = (row: Row<IItemWorkOrderTableData>) => {
+		navigate(`/procurement/item-work-order-details/${row.original.uuid}`);
+	};
+
 	// Table Columns
-	const columns = itemWorkOrderEntryColumns();
+	const columns = itemWorkOrderEntryColumns(handleDetails);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
