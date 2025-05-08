@@ -10,6 +10,7 @@ const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
 const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
+const ItemWorkOrderDetails = lazy(() => import('@/pages/procurement/item-work-order/details'));
 const Form = lazy(() => import('@/pages/procurement/form'));
 const Capital = lazy(() => import('@/pages/procurement/capital'));
 const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
@@ -119,6 +120,16 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item_work_order_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+			{
+				name: 'Item Work Order Details',
+				path: '/procurement/item-work-details/:uuid',
+				element: <ItemWorkOrderDetails />,
+				hidden: true,
+				page_name: 'procurement__item_work_order_details',
+				actions: ['read'],
+			},
+
+			// ? Item Work Order Details
 			{
 				name: 'Item',
 				path: '/procurement/item',
