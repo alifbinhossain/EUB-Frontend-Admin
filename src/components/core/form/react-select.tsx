@@ -41,6 +41,9 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 					isDisabled={isDisabled}
 					placeholder={placeholder}
 					menuPortalTarget={menuPortalTarget}
+					styles={{
+						menuPortal: (base) => ({ ...base, zIndex: 999 }),
+					}}
 					{...field}
 					value={
 						isMulti

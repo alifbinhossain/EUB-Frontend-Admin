@@ -395,6 +395,7 @@ const AddOrUpdate = () => {
 										label='Category'
 										placeholder='Select Category'
 										options={categoryOptions!}
+										menuPortalTarget={document.body}
 										{...props}
 									/>
 									{errors.category && <span className='text-red-500'>{errors.category.message}</span>}
