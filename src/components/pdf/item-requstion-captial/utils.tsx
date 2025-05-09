@@ -47,12 +47,6 @@ export const getPageHeader = () => {
 const EMPTY_COLUMN: string[] = getEmptyColumn(4);
 
 export const getPageFooter = ({ currentPage, pageCount }: { currentPage: number; pageCount: number }) => {
-	return {
-		headerRows: 1,
-		widths: ['*', '*'],
-		body: [[{ text: 'Remarks\n\n\n\n\n', colSpan: 2 }, '']],
-	};
-
 	// return [
 	// 	{
 	// 		table: {

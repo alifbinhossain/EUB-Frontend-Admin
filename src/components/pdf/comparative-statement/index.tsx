@@ -185,7 +185,7 @@ export default function Index(data: IComparative) {
 				table: {
 					headerRows: 1,
 					widths: ['*'],
-					body: [[{ text: 'Remarks\n\n\n\n\n', border: [true, false, true, true] }]],
+					body: [[{ text: 'Notes\n\n\n\n\n', border: [true, false, true, true] }]],
 				},
 			},
 		],

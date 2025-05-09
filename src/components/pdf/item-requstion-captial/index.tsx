@@ -29,11 +29,6 @@ export default function Index(data: ItemRequisition) {
 
 		// * Page Footer
 		footer: (currentPage: number, pageCount: number) => [
-			{
-				table: getPageFooter({ currentPage, pageCount }),
-				margin: [xMargin, 2],
-				fontSize: DEFAULT_FONT_SIZE,
-			},
 			{ text: '\n' },
 			{
 				table: {
@@ -266,6 +261,7 @@ export default function Index(data: ItemRequisition) {
 								alignment: node[2].alignment,
 							},
 						]),
+						[{ text: 'Notes\n\n\n\n\n', colSpan: 4 }, '', '', ''],
 					],
 				},
 			},
