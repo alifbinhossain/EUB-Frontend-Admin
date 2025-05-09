@@ -167,12 +167,50 @@ export default function Index(data: IRequisitionTableData) {
 							'',
 							'',
 						],
-						node.map((col) => ({
-							text: col.name,
-							style: col.headerStyle,
-							alignment: 'center',
-							bold: true,
-						})),
+						[
+							{
+								text: 'Sl\n No',
+								style: 'tableHeader',
+								alignment: 'center',
+								rowSpan: 2,
+							},
+							{
+								text: 'Item',
+								rowSpan: 2,
+								alignment: 'center',
+							},
+							{
+								text: 'Qty',
+								style: 'tableHeader',
+								alignment: 'center',
+								rowSpan: 2,
+							},
+							{
+								text: `Previous Receive Log`,
+								alignment: 'center',
+								colSpan: 2,
+							},
+							'',
+							{
+								text: 'Sign',
+								alignment: 'center',
+								rowSpan: 2,
+							},
+						],
+						[
+							'',
+							'',
+							'',
+							{
+								text: 'Date',
+								alignment: 'center',
+							},
+							{
+								text: 'Qty',
+								alignment: 'center',
+							},
+							'',
+						],
 						...(data?.item_requisition || []).map((item, index) =>
 							node.map((nodeItem) => ({
 								text:
