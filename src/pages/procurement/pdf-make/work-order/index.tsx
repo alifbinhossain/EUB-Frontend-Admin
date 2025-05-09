@@ -102,7 +102,7 @@ const Entry = () => {
 					render={(props) => <CoreForm.Input label='Vendor Contact Number' {...props} />}
 				/>
 			</CoreForm.Section>
-			<CoreForm.Section title={`Email Body`} className='flex flex-col gap-2'>
+			<CoreForm.Section title={`Body`} className='flex flex-col gap-2'>
 				<FormField
 					control={form.control}
 					name='subject'
