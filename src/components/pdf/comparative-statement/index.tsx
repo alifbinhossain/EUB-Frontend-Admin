@@ -147,7 +147,7 @@ export default function Index(data: IComparative) {
 						],
 						[
 							{
-								text: `Department: ${data?.description}`,
+								text: `Item/Work Description: ${data?.description}`,
 								colSpan: 4,
 								border: [true, true, true, false],
 							},

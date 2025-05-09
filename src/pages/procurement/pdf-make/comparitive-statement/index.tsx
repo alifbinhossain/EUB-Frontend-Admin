@@ -2,6 +2,7 @@ import { useFieldArray } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useRHF from '@/hooks/useRHF';
 
+import { ShowLocalToast } from '@/components/others/toast';
 import Pdf from '@/components/pdf/comparative-statement';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
@@ -21,11 +22,25 @@ const Entry = () => {
 
 	// Submit handler
 	async function onSubmit(values: IComparative) {
+		if (values.vendors.length < 2) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You must add at least 2 vendors',
+			});
+			return;
+		}
 		const printWindow = window.open('', '_blank');
 		Pdf(values)?.print({}, printWindow);
 	}
 
 	const handleAdd = () => {
+		if (fields.length > 2) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You can add maximum 3 vendors',
+			});
+			return;
+		}
 		append({
 			name: '',
 			quantity: 0,
@@ -45,7 +60,7 @@ const Entry = () => {
 	};
 
 	return (
-		<CoreForm.AddEditWrapper title='Work Order Form' form={form} onSubmit={onSubmit}>
+		<CoreForm.AddEditWrapper title='Comparative Statement' form={form} onSubmit={onSubmit}>
 			<CoreForm.Section title={`Comparative Statement`}>
 				<FormField
 					control={form.control}
@@ -59,7 +74,7 @@ const Entry = () => {
 				/>{' '}
 			</CoreForm.Section>
 			<CoreForm.DynamicFields
-				title='Vendors'
+				title='Vendors(Min 2) (Max 3) '
 				form={form}
 				fieldName='vendors'
 				fieldDefs={useGenerateFieldDefs({

@@ -2,6 +2,7 @@ import { useFieldArray } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import useRHF from '@/hooks/useRHF';
 
+import { ShowLocalToast } from '@/components/others/toast';
 import Pdf from '@/components/pdf/item-requstion-captial';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
@@ -21,11 +22,17 @@ const Entry = () => {
 
 	// Submit handler
 	async function onSubmit(values: ItemRequisition) {
-		// console.log(values);
 		Pdf(values)?.print({}, window);
 	}
 
 	const handleAdd = () => {
+		if (fields.length > 9) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You can add maximum 10 products',
+			});
+			return;
+		}
 		append({
 			item: '',
 			quantity: 0,
@@ -34,9 +41,6 @@ const Entry = () => {
 	const handleRemove = (index: number) => {
 		remove(index);
 	};
-	// item: '',
-	// quantity: 0,
-	// Copy Handler
 	const handleCopy = (index: number) => {
 		const field = form.watch('item_requisition')[index];
 		append({
@@ -59,7 +63,7 @@ const Entry = () => {
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>
 			<CoreForm.DynamicFields
-				title='Product List'
+				title='Product List: Max 10'
 				form={form}
 				fieldName='item_requisition'
 				fieldDefs={useGenerateFieldDefs({

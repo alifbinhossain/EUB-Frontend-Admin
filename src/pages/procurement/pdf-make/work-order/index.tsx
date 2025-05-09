@@ -1,6 +1,7 @@
 import { useFieldArray } from 'react-hook-form';
 import useRHF from '@/hooks/useRHF';
 
+import { ShowLocalToast } from '@/components/others/toast';
 import Pdf from '@/components/pdf/work-order';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
@@ -26,11 +27,17 @@ const Entry = () => {
 
 	// Submit handler
 	async function onSubmit(values: IWorkOrder) {
-		// console.log(values);
 		Pdf(values)?.print({}, window);
 	}
 
 	const handleAdd = () => {
+		if (fields.length > 9) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You can add maximum 10 products',
+			});
+			return;
+		}
 		append({
 			product_name: '',
 			description: '',
@@ -47,6 +54,13 @@ const Entry = () => {
 		paymentRemove(index);
 	};
 	const handlePaymentAdd = () => {
+		if (paymentFields.length > 1) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You can add maximum 2 payment conditions',
+			});
+			return;
+		}
 		paymentAppend({
 			condition: '',
 		});
@@ -75,7 +89,7 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='vendor_company_name'
-					render={(props) => <CoreForm.Input {...props} />}
+					render={(props) => <CoreForm.Input label='Vendor Company Name' {...props} />}
 				/>
 				<FormField
 					control={form.control}
@@ -85,7 +99,7 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='employee_contact_number'
-					render={(props) => <CoreForm.Input {...props} />}
+					render={(props) => <CoreForm.Input label='Vendor Contact Number' {...props} />}
 				/>
 			</CoreForm.Section>
 			<CoreForm.Section title={`Email Body`} className='flex flex-col gap-2'>
@@ -97,11 +111,11 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='body_opening'
-					render={(props) => <CoreForm.Textarea className='flex-1' {...props} />}
+					render={(props) => <CoreForm.Textarea label='Body Opening' className='flex-1' {...props} />}
 				/>
 				<div className='flex-1'>
 					<CoreForm.DynamicFields
-						title='Product List'
+						title={`Product List : Max 10`}
 						form={form}
 						fieldName='product'
 						fieldDefs={useGenerateFieldDefs({
@@ -145,10 +159,10 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='body_ending'
-					render={(props) => <CoreForm.Textarea {...props} />}
+					render={(props) => <CoreForm.Textarea label='Body Ending' {...props} />}
 				/>
 				<CoreForm.DynamicFields
-					title='Payment Condition'
+					title='Payment Condition: Max 2'
 					form={form}
 					fieldName='payment'
 					fieldDefs={usePaymentFieldDefs({
