@@ -93,4 +93,5 @@ export interface DynamicFieldsProps {
 	handleAdd?: () => void;
 	fields: FieldArrayWithId<any>[];
 	viewAs?: 'default' | 'spreadsheet';
+	children?: React.ReactNode;
 }
