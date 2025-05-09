@@ -147,7 +147,7 @@ export default function Index(data: IWorkOrder) {
 			{
 				ul: [
 					'Price Mention in BDT excluding VAT / TAX',
-					`Completion of work by ${format(data?.completion_date, 'dd-MM-yyyy')}`,
+					`Completion of work by ${format(data?.completion_date, 'MMM dd, yyyy')}`,
 				],
 			},
 			{ text: '\n' },
