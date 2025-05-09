@@ -97,7 +97,19 @@ export const getPageFooter = ({ currentPage, pageCount }: { currentPage: number;
 		body: [
 			[
 				{
-					text: [{ text: 'Accounts Use Only', decoration: 'underline' }, '\n', '\n', '\n', '\n', '\n'],
+					text: [
+						{ text: 'Accounts Use Only', decoration: 'underline' },
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+						'\n',
+					],
 					alignment: 'center',
 				},
 			],
@@ -115,17 +127,21 @@ export const getPageFooter = ({ currentPage, pageCount }: { currentPage: number;
 						widths: ['*', 10, '*', 10, '*', 10, '*'],
 						body: [
 							[
-								{ text: 'Prepared By', alignment: 'center', border: [false, true, false, false] },
-								{ text: '', alignment: 'center', border: [false, false, false, false] },
 								{
-									text: 'Senior Manager (P&I)',
+									text: 'Manager\n(Accounts)',
 									alignment: 'center',
 									border: [false, true, false, false],
 								},
 								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: 'Director (P&D)', alignment: 'center', border: [false, true, false, false] },
+								{
+									text: 'Director (Finance)',
+									alignment: 'center',
+									border: [false, true, false, false],
+								},
 								{ text: '', alignment: 'center', border: [false, false, false, false] },
-								{ text: 'Director (PCU)', alignment: 'center', border: [false, true, false, false] },
+								{ text: 'Treasurer', alignment: 'center', border: [false, true, false, false] },
+								{ text: '', alignment: 'center', border: [false, false, false, false] },
+								{ text: 'V.C', alignment: 'center', border: [false, true, false, false] },
 							],
 						],
 					},

@@ -12,7 +12,7 @@ import { getPageFooter, getPageHeader } from './utils';
 
 export default function Index(data: IGeneralStatement) {
 	const headerHeight = 500;
-	const footerHeight = 200;
+	const footerHeight = 300;
 
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_PAGE({
