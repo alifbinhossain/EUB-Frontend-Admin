@@ -102,7 +102,7 @@ const Entry = () => {
 					render={(props) => <CoreForm.Input label='Vendor Contact Number' {...props} />}
 				/>
 			</CoreForm.Section>
-			<CoreForm.Section title={`Email Body`} className='flex flex-col gap-2'>
+			<CoreForm.Section title={`Body`} className='flex flex-col gap-2'>
 				<FormField
 					control={form.control}
 					name='subject'
@@ -156,11 +156,6 @@ const Entry = () => {
 						</tr>
 					</CoreForm.DynamicFields>
 				</div>
-				<FormField
-					control={form.control}
-					name='body_ending'
-					render={(props) => <CoreForm.Textarea label='Body Ending' {...props} />}
-				/>
 				<CoreForm.DynamicFields
 					title='Payment Condition: Max 2'
 					form={form}
@@ -180,6 +175,11 @@ const Entry = () => {
 					control={form.control}
 					name='completion_date'
 					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='body_ending'
+					render={(props) => <CoreForm.Textarea label='Body Ending' {...props} />}
 				/>
 			</CoreForm.Section>
 		</CoreForm.AddEditWrapper>
