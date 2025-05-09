@@ -156,11 +156,6 @@ const Entry = () => {
 						</tr>
 					</CoreForm.DynamicFields>
 				</div>
-				<FormField
-					control={form.control}
-					name='body_ending'
-					render={(props) => <CoreForm.Textarea label='Body Ending' {...props} />}
-				/>
 				<CoreForm.DynamicFields
 					title='Payment Condition: Max 2'
 					form={form}
@@ -180,6 +175,11 @@ const Entry = () => {
 					control={form.control}
 					name='completion_date'
 					render={(props) => <CoreForm.DatePicker {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='body_ending'
+					render={(props) => <CoreForm.Textarea label='Body Ending' {...props} />}
 				/>
 			</CoreForm.Section>
 		</CoreForm.AddEditWrapper>
