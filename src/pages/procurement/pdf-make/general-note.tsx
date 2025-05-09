@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useRHF from '@/hooks/useRHF';
 
 import Pdf from '@/components/pdf/general-statement';
@@ -18,7 +17,6 @@ const AddOrUpdate = ({ open, setOpen }: { open: boolean; setOpen: React.Dispatch
 
 	// Submit handler
 	async function onSubmit(values: IGeneralStatement) {
-		console.log(values?.general_note.length);
 		const printWindow = window.open('', '_blank');
 		Pdf(values)?.print({}, printWindow);
 	}

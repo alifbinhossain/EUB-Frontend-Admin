@@ -1,4 +1,4 @@
-import { lazy, useMemo, useState } from 'react';
+import { lazy, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';

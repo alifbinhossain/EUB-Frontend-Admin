@@ -74,7 +74,7 @@ const Entry = () => {
 				/>{' '}
 			</CoreForm.Section>
 			<CoreForm.DynamicFields
-				title='Vendors(Min 2) (Max 3) '
+				title='Vendors (Min: 2 Max: 3) '
 				form={form}
 				fieldName='vendors'
 				fieldDefs={useGenerateFieldDefs({
