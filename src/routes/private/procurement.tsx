@@ -24,7 +24,10 @@ const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entr
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
 const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
-const GeneralStatement = lazy(() => import('@/pages/procurement/general-statment/index'));
+const GeneralStatement = lazy(() => import('@/pages/procurement/pdf-make/index'));
+const WorkOrder = lazy(() => import('@/pages/procurement/pdf-make/work-order'));
+const ItemRequisitionFormCapital = lazy(() => import('@/pages/procurement/pdf-make/item-requistion-capital'));
+const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/comparitive-statement'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -221,6 +224,30 @@ const procurementRoutes: IRoute[] = [
 				element: <GeneralStatement />,
 				page_name: 'procurement__pdf_generate',
 				actions: ['read'],
+			},
+			{
+				name: 'Work-Order-Form',
+				path: '/procurement/pdf/generate/work-order-form',
+				element: <WorkOrder />,
+				hidden: true,
+				page_name: 'procurement__pdf_form_work_order_form',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Item-Requisition-Form (Capital)',
+				path: '/procurement/pdf/generate/item-requisition-form-capital',
+				element: <ItemRequisitionFormCapital />,
+				hidden: true,
+				page_name: 'procurement__pdf_form_item_requisition_form_capital',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Comparative Statement',
+				path: '/procurement/pdf/generate/comparative-statement',
+				element: <ComparativeStatement />,
+				hidden: true,
+				page_name: 'procurement__pdf_form_comparative_statement',
+				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
 				name: 'Log',

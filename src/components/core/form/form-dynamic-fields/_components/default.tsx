@@ -14,6 +14,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 	fieldName,
 	fieldDefs,
 	form,
+	children,
 }) => {
 	return (
 		<div className='rounded-b-md border border-t-0'>
@@ -186,6 +187,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 									})}
 							</TableRow>
 						))}
+					{children}
 				</TableBody>
 			</Table>
 		</div>

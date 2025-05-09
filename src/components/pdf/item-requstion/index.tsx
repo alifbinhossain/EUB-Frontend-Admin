@@ -32,7 +32,6 @@ export default function Index(data: IRequisitionTableData) {
 		}),
 
 		// * Page Header
-		header: 'simple text',
 
 		// * Page Footer
 		footer: (currentPage: number, pageCount: number) => [
@@ -178,20 +177,23 @@ export default function Index(data: IRequisitionTableData) {
 							{
 								text: 'Item',
 								rowSpan: 2,
+								alignment: 'center',
 							},
 							{
 								text: 'Qty',
 								style: 'tableHeader',
-								alignment: 'right',
+								alignment: 'center',
 								rowSpan: 2,
 							},
 							{
 								text: `Previous Receive Log`,
+								alignment: 'center',
 								colSpan: 2,
 							},
 							'',
 							{
 								text: 'Sign',
+								alignment: 'center',
 								rowSpan: 2,
 							},
 						],
@@ -201,11 +203,11 @@ export default function Index(data: IRequisitionTableData) {
 							'',
 							{
 								text: 'Date',
+								alignment: 'center',
 							},
 							{
 								text: 'Qty',
-
-								alignment: 'right',
+								alignment: 'center',
 							},
 							'',
 						],
