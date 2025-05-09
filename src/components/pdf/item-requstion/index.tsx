@@ -32,7 +32,6 @@ export default function Index(data: IRequisitionTableData) {
 		}),
 
 		// * Page Header
-		header: 'simple text',
 
 		// * Page Footer
 		footer: (currentPage: number, pageCount: number) => [
