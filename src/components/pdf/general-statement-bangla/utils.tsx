@@ -76,7 +76,8 @@ export const getPageHeader = (data: IGeneralStatement) => {
 						body: [
 							[
 								{
-									text: data?.general_note ? String(data.general_note) : '',
+									text: `${data?.general_note}\n\n` + '\n'.repeat(emptyRowNeeded),
+									alignment: 'justify',
 									font: 'Bangla',
 								},
 							],
