@@ -1,4 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+console.log(pdfFonts);
 
 const BASE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts';
 const ROBOTO = BASE_URL + '/Roboto/Roboto-';
@@ -9,6 +12,9 @@ pdfMake.fonts = {
 		bold: ROBOTO + 'Medium.ttf',
 		italics: ROBOTO + 'Italic.ttf',
 		bolditalics: ROBOTO + 'MediumItalic.ttf',
+	},
+	Bangla: {
+		normal: 'NotoSerifBengali_ExtraCondensed-Regular.ttf',
 	},
 };
 
