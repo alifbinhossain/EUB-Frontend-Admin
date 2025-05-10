@@ -265,7 +265,7 @@ const Entry = () => {
 					fields={fields}
 				/>
 			)}
-			{!form.watch('is_received') && (
+			{
 				<CoreForm.DynamicFields
 					title='New Item Requisition'
 					form={form}
@@ -274,7 +274,7 @@ const Entry = () => {
 					handleAdd={handleAdd}
 					fields={newFields}
 				/>
-			)}
+			}
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{
