@@ -6,6 +6,7 @@ import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
+import { ShowLocalToast } from '@/components/others/toast';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
@@ -164,6 +165,13 @@ const Entry = () => {
 
 	const handleAdd = () => {
 		// TODO: Update field names
+		if (form.watch('is_received')) {
+			ShowLocalToast({
+				toastType: 'error',
+				message: 'You cannot add new item if the requisition is received',
+			});
+			return;
+		}
 
 		newAppend({
 			item_uuid: '',
@@ -265,7 +273,7 @@ const Entry = () => {
 					fields={fields}
 				/>
 			)}
-			{!form.watch('is_received') && (
+			{
 				<CoreForm.DynamicFields
 					title='New Item Requisition'
 					form={form}
@@ -274,7 +282,7 @@ const Entry = () => {
 					handleAdd={handleAdd}
 					fields={newFields}
 				/>
-			)}
+			}
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{
