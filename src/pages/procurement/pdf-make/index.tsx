@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 const GeneralNote = lazy(() => import('./general-note'));
+const GeneralNoteBangla = lazy(() => import('./general-note-bangla'));
 const PdfMaker = () => {
 	const [open, setOpen] = useState(false);
+	const [openBangla, setOpenBangla] = useState(false);
 	const navigate = useNavigate();
 	const handleWorkOrder = () => {
 		navigate('/procurement/pdf/generate/work-order-form');
@@ -25,6 +27,9 @@ const PdfMaker = () => {
 				<Button variant={'accent'} onClick={() => setOpen(true)}>
 					Add General Note
 				</Button>
+				<Button variant={'accent'} onClick={() => setOpenBangla(true)}>
+					Add General Note(Bangla)
+				</Button>
 				<Button variant={'accent'} onClick={() => handleWorkOrder()}>
 					Work Order
 				</Button>
@@ -39,6 +44,12 @@ const PdfMaker = () => {
 						{...{
 							open: open,
 							setOpen: setOpen,
+						}}
+					/>,
+					<GeneralNoteBangla
+						{...{
+							open: openBangla,
+							setOpen: setOpenBangla,
 						}}
 					/>,
 				])}
