@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
-import { divide } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -31,12 +31,17 @@ const Entry = () => {
 		postData,
 		deleteData,
 		invalidateQuery: invalidateQueryRequisition,
-	} = useRequisitionAndItemByUUID(uuid as string);
+	} = useRequisitionAndItemByUUID<IRequisitionTableData>(uuid as string);
 	const { invalidateQuery } = useRequisition<IRequisitionTableData[]>();
+
 	const { data: internalCostCenter, invalidateQuery: invalidateQueryInternalCostCenter } =
 		useOtherInternalCostCenter<IFormSelectOption[]>();
+	const pageAccess = useAccess('procurement__requisition') as string[];
+	const receivedAccess = pageAccess.includes('click_store_received');
+	const overrideReceivedAccess = pageAccess.includes('click_store_received_override');
 
 	const form = useRHF(REQUISITION_SCHEMA, REQUISITION_NULL);
+
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
 		name: 'item_requisition',
@@ -148,16 +153,17 @@ const Entry = () => {
 		}
 	}
 
-	const handleAdd = () => {
-		// TODO: Update field names
+	// const handleAdd = () => {
+	// 	// TODO: Update field names
 
-		append({
-			item_uuid: '',
-			req_quantity: 0,
-			provided_quantity: 0,
-			remarks: '',
-		});
-	};
+	// 	append({
+	// 		item_uuid: '',
+	// 		req_quantity: 0,
+	// 		provided_quantity: 0,
+	// 		stock_quantity: 0,
+	// 		remarks: '',
+	// 	});
+	// };
 
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
@@ -175,26 +181,50 @@ const Entry = () => {
 		}
 	};
 
-	// Copy Handler
-	const handleCopy = (index: number) => {
-		// TODO: Update fields ⬇️
-		const field = form.watch('item_requisition')[index];
-		append({
-			item_uuid: field.item_uuid,
-			req_quantity: field.req_quantity,
-			provided_quantity: field.provided_quantity,
-			remarks: field.remarks,
-		});
-	};
-
 	return (
 		<CoreForm.AddEditWrapper
 			title={isUpdate ? 'Edit Requisition' : 'Add Requisition'}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<CoreForm.Section title={`Requisition`}>
-				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
+			<CoreForm.Section
+				title={`Requisition`}
+				extraHeader={
+					<div className='flex gap-4 text-white'>
+						<FormField
+							control={form.control}
+							name='is_store_received'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Store Received'
+									onCheckedChange={(value: boolean) => {
+										form.setValue('is_store_received', value);
+										if (value) {
+											form.setValue('store_received_date', getDateTime(), { shouldDirty: true });
+										} else {
+											form.setValue('store_received_date', null, { shouldDirty: true });
+											form.setValue('is_store_received', false, { shouldDirty: true });
+										}
+									}}
+									disabled={receivedAccess && data?.is_store_received && !overrideReceivedAccess}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
+				}
+			>
+				<FormField
+					control={form.control}
+					name='store_received_date'
+					render={(props) => <CoreForm.DatePicker disabled={true} placeholder='Received Date' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='remarks'
+					disabled={form.watch('is_received')}
+					render={(props) => <CoreForm.Textarea disabled={form.watch('is_received')} {...props} />}
+				/>
 			</CoreForm.Section>
 			<CoreForm.DynamicFields
 				title='Item Requisition'
@@ -207,8 +237,8 @@ const Entry = () => {
 					provider: true,
 					isNew: false,
 					watch: form.watch,
+					form: form,
 				})}
-				handleAdd={handleAdd}
 				fields={fields}
 			/>
 			<Suspense fallback={null}>

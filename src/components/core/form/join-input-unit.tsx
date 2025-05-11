@@ -19,6 +19,7 @@ const FormJoinInputUnit: React.FC<FormJoinInputUnitProps> = ({
 	unit,
 	disabled = false,
 	disableLabel,
+	children,
 }) => {
 	return (
 		<FormItem className='space-y-1.5'>
@@ -73,6 +74,7 @@ const FormJoinInputUnit: React.FC<FormJoinInputUnitProps> = ({
 				>
 					{unit}
 				</span>
+				<span>{children}</span>
 			</div>
 			<FormMessage />
 		</FormItem>

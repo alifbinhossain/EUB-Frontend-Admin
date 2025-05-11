@@ -77,7 +77,7 @@ const AddOrUpdate: React.FC<IFormAddOrUpdateProps> = ({
 			isSmall
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Form' : 'Add Form'}
+			title={isUpdate ? 'Update PDF(Static)' : 'Add PDF(Static)'}
 			form={form}
 			onSubmit={onSubmit}
 		>

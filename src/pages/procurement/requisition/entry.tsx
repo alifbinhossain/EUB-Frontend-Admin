@@ -36,13 +36,14 @@ const Entry = () => {
 		postData,
 		deleteData,
 		invalidateQuery: invalidateQueryRequisition,
-	} = useRequisitionAndItemByUUID(uuid as string);
+	} = useRequisitionAndItemByUUID<IRequisitionTableData>(uuid as string);
 
 	const { invalidateQuery } = useRequisition<IRequisitionTableData[]>(showAll, user?.uuid);
 	const { data: internalCostCenter, invalidateQuery: invalidateQueryInternalCostCenter } =
 		useOtherInternalCostCenter<IFormSelectOption[]>();
 
 	const form = useRHF(REQUISITION_SCHEMA, REQUISITION_NULL);
+
 	const { fields } = useFieldArray({
 		control: form.control,
 		name: 'item_requisition',
@@ -177,6 +178,7 @@ const Entry = () => {
 			item_uuid: '',
 			req_quantity: 0,
 			provided_quantity: 0,
+			stock_quantity: 0,
 			remarks: '',
 		});
 	};
@@ -206,6 +208,7 @@ const Entry = () => {
 		isUpdate,
 		isNew: false,
 		watch: form.watch,
+		form: form,
 	});
 	const newFieldDef = useGenerateFieldDefs({
 		data: form.getValues(),
@@ -213,6 +216,7 @@ const Entry = () => {
 		request: true,
 		isUpdate,
 		watch: form.watch,
+		form: form,
 	});
 
 	return (
@@ -230,7 +234,7 @@ const Entry = () => {
 							name='is_received'
 							render={(props) => (
 								<CoreForm.Switch
-									label='Received'
+									label='Consumer Received'
 									onCheckedChange={(value: boolean) => {
 										form.setValue('is_received', value);
 										if (value) {
@@ -240,12 +244,7 @@ const Entry = () => {
 											form.setValue('is_received', false, { shouldDirty: true });
 										}
 									}}
-									disabled={
-										receivedAccess &&
-										form.watch('is_received') &&
-										!overrideReceivedAccess &&
-										!isUpdate
-									}
+									disabled={receivedAccess && data?.is_received && !overrideReceivedAccess}
 									{...props}
 								/>
 							)}

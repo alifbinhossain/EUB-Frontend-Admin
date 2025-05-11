@@ -16,7 +16,7 @@ const Form = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
 		useForm<IFormTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Form', url, 'procurement__form'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('PDF(Static)', url, 'procurement__pdf_static'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
