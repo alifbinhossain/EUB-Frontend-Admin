@@ -7,6 +7,8 @@ import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
 
 import { getDateTime } from '@/utils';
 
+import '../vfs_fonts';
+
 import pdfMake from '..';
 import { getPageFooter, getPageHeader } from './utils';
 
