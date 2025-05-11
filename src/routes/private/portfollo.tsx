@@ -12,6 +12,8 @@ const Program = lazy(() => import('@/pages/portfolio/program'));
 
 const Teachers = lazy(() => import('@/pages/portfolio/teacher'));
 const UpdateTeacher = lazy(() => import('@/pages/portfolio/teacher/add-or-update'));
+const DepartmentTeachers = lazy(() => import('@/pages/portfolio/department-teacher'));
+const UpdateDepartmentTeacher = lazy(() => import('@/pages/portfolio/department-teacher/add-or-update'));
 const News = lazy(() => import('@/pages/portfolio/useful-links/news'));
 const NewsEntry = lazy(() => import('@/pages/portfolio/useful-links/news/entry'));
 
@@ -100,7 +102,21 @@ const portfolioRoutes: IRoute[] = [
 						page_name: 'portfolio__teachers_update',
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
-
+					{
+						name: 'Department Teachers',
+						path: '/portfolio/department-teacher',
+						element: <DepartmentTeachers />,
+						page_name: 'portfolio__department_teachers',
+						actions: ['read', 'update', 'delete', ...DepartmentAccess],
+					},
+					{
+						name: 'Department Teachers',
+						path: '/portfolio/department-teacher/:uuid/update',
+						element: <UpdateDepartmentTeacher />,
+						hidden: true,
+						page_name: 'portfolio__department_teachers_update',
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
+					},
 					{
 						name: 'Routine',
 						path: '/portfolio/routine',
