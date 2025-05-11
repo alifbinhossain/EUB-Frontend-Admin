@@ -145,7 +145,7 @@ const Entry = () => {
 				.then(() => {
 					invalidateQuery();
 					invalidateCapitalDetails();
-					navigate('/procurement/capital');
+					navigate('/procurement/procure');
 				})
 				.catch((error) => {
 					console.error('Error updating news:', error);
@@ -167,7 +167,7 @@ const Entry = () => {
 
 			postData
 				.mutateAsync({
-					url: '/procure/capital',
+					url: '/procure/procure',
 					newData: itemData,
 				})
 				.then(() => {
@@ -210,7 +210,7 @@ const Entry = () => {
 				.then(() => {
 					invalidateQuery();
 					invalidateCapitalDetails();
-					navigate('/procurement/capital');
+					navigate('/procurement/procure');
 				})
 				.catch((error) => {
 					console.error('Error adding news:', error);
@@ -290,7 +290,7 @@ const Entry = () => {
 	};
 
 	return (
-		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Capital' : 'Add Capital'} form={form} onSubmit={onSubmit}>
+		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Procure' : 'Add Procure'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section
 				title={`Request`}
 				className='grid gap-4 lg:grid-cols-2'

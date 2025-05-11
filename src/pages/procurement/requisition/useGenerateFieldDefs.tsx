@@ -1,7 +1,11 @@
+import { Copy } from 'lucide-react';
 import { UseFormWatch } from 'react-hook-form';
 
 import FieldActionButton from '@/components/buttons/field-action';
 import { IFormSelectOption } from '@/components/core/form/types';
+import { Button } from '@/components/ui/button';
+import { FormField } from '@/components/ui/form';
+import CoreForm from '@core/form';
 import { FieldDef } from '@core/form/form-dynamic-fields/types';
 
 import { useOtherItem } from '@/lib/common-queries/other';
@@ -15,6 +19,7 @@ interface IGenerateFieldDefsProps {
 	isUpdate: boolean;
 	request?: boolean;
 	provider?: boolean;
+	form: any;
 	isNew?: boolean;
 }
 
@@ -25,8 +30,18 @@ const useGenerateFieldDefs = ({
 	provider,
 	isNew = true,
 	watch,
+	form,
 }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: itemList } = useOtherItem<IFormSelectOption[]>();
+
+	// Copy req_quantity to provided_quantity for the given index
+	const handleCopy = (index: number) => {
+		const reqQuantity = form.getValues(`item_requisition.${index}.req_quantity`);
+		form.setValue(`item_requisition.${index}.provided_quantity`, reqQuantity, {
+			shouldValidate: true,
+			shouldDirty: true,
+		});
+	};
 
 	return [
 		{
@@ -36,15 +51,55 @@ const useGenerateFieldDefs = ({
 			placeholder: 'Select Item',
 			options: itemList || [],
 			unique: true,
-			excludeOptions: data.item_requisition.map((item) => item.item_uuid) || [],
+			excludeOptions: watch ? watch('item_requisition').map((item) => item.item_uuid) : [],
 			disabled: provider || !isNew || (watch ? watch('is_received') : false),
 		},
 		{
 			header: 'Request Quantity',
 			accessorKey: 'req_quantity',
+			type: 'custom',
+			component: (index: number) => {
+				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				const unit = itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
+				return (
+					<FormField
+						control={form.control}
+						name={`item_requisition.${index}.req_quantity`}
+						render={(props) => (
+							<CoreForm.JoinInputUnit
+								disableLabel={true}
+								type='number'
+								label='Request Quantity'
+								disabled={provider || (watch ? watch('is_received') : false)}
+								unit={unit}
+								{...props}
+							>
+								{' '}
+								{provider && (
+									<Button
+										className='rounded-full'
+										onClick={() => handleCopy(index)}
+										type='button'
+										size={'icon'}
+										variant={'ghost'}
+										title='Copy to Provided Quantity'
+									>
+										<Copy className='size-4' />
+									</Button>
+								)}
+							</CoreForm.JoinInputUnit>
+						)}
+					/>
+				);
+			},
+		},
+		{
+			header: 'Stock Quantity',
+			accessorKey: 'stock_quantity',
 			type: 'join-input-unit',
 			inputType: 'number',
-			disabled: provider || (watch ? watch('is_received') : false),
+			disabled: true,
+			hidden: request,
 			unit: (index: number) => {
 				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
 				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';

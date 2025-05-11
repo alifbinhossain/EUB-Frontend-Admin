@@ -16,14 +16,14 @@ const Designation = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, refetch } = useCapital<ICapitalTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Capital', url, 'procurement__capital'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Procure', url, 'procurement__procure'), [url]);
 
 	const handleCreate = () => {
-		navigate('/procurement/capital/create');
+		navigate('/procurement/procure/create');
 	};
 
 	const handleUpdate = (row: Row<ICapitalTableData>) => {
-		navigate(`/procurement/capital/${row.original.uuid}/update`);
+		navigate(`/procurement/procure/${row.original.uuid}/update`);
 	};
 
 	// Delete Modal state

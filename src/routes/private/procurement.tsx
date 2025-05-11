@@ -11,10 +11,10 @@ const Vendor = lazy(() => import('@/pages/procurement/vendor'));
 const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
 const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
 const ItemWorkOrderDetails = lazy(() => import('@/pages/procurement/item-work-order/details'));
-const Form = lazy(() => import('@/pages/procurement/form'));
-const Capital = lazy(() => import('@/pages/procurement/capital'));
-const CapitalEntry = lazy(() => import('@/pages/procurement/capital/entry'));
-const CapitalDetails = lazy(() => import('@/pages/procurement/capital/details'));
+const PDFStatic = lazy(() => import('@/pages/procurement/form'));
+const Procure = lazy(() => import('@/pages/procurement/procure'));
+const ProcureEntry = lazy(() => import('@/pages/procurement/procure/entry'));
+const ProcureDetails = lazy(() => import('@/pages/procurement/procure/details'));
 const Service = lazy(() => import('@/pages/procurement/service'));
 const ServiceEntry = lazy(() => import('@/pages/procurement/service/entry'));
 const ServiceDetails = lazy(() => import('@/pages/procurement/service/details'));
@@ -35,34 +35,46 @@ const procurementRoutes: IRoute[] = [
 		children: [
 			// ? Capital
 			{
-				name: 'Capital',
-				path: '/procurement/capital',
-				element: <Capital />,
-				page_name: 'procurement__capital',
+				name: 'Report',
+				children: [
+					{
+						name: 'Item',
+						path: '/portfolio/report/item',
+						element: <ReportItem />,
+						page_name: 'portfolio__report_item',
+						actions: ['read'],
+					},
+				],
+			},
+			{
+				name: 'Procure',
+				path: '/procurement/procure',
+				element: <Procure />,
+				page_name: 'procurement__procure',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Capital Entry',
-				path: '/procurement/capital/create',
-				element: <CapitalEntry />,
+				name: 'Procure Entry',
+				path: '/procurement/procure/create',
+				element: <ProcureEntry />,
 				hidden: true,
-				page_name: 'procurement__capital_entry',
+				page_name: 'procurement__procure_entry',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Capital Update',
-				path: '/procurement/capital/:uuid/update',
-				element: <CapitalEntry />,
+				name: 'Procure Update',
+				path: '/procurement/procure/:uuid/update',
+				element: <ProcureEntry />,
 				hidden: true,
-				page_name: 'procurement__capital_update',
+				page_name: 'procurement__procure_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Capital Details',
-				path: '/procurement/capital-details/:uuid',
-				element: <CapitalDetails />,
+				name: 'Procure Details',
+				path: '/procurement/procure-details/:uuid',
+				element: <ProcureDetails />,
 				hidden: true,
-				page_name: 'procurement__capital_details',
+				page_name: 'procurement__procure_details',
 				actions: ['read'],
 			},
 
@@ -158,10 +170,10 @@ const procurementRoutes: IRoute[] = [
 			},
 
 			{
-				name: 'Form',
-				path: '/procurement/form',
-				element: <Form />,
-				page_name: 'procurement__form',
+				name: 'PDF (Static)',
+				path: '/procurement/pdf-static',
+				element: <PDFStatic />,
+				page_name: 'procurement__pdf_static',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
@@ -206,20 +218,9 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__requisition_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
+
 			{
-				name: 'Report',
-				children: [
-					{
-						name: 'Item',
-						path: '/portfolio/report/item',
-						element: <ReportItem />,
-						page_name: 'portfolio__report_item',
-						actions: ['read'],
-					},
-				],
-			},
-			{
-				name: 'PDF Generate',
+				name: 'PDF (Generate)',
 				path: '/procurement/pdf/generate',
 				element: <GeneralStatement />,
 				page_name: 'procurement__pdf_generate',
@@ -261,28 +262,28 @@ const procurementRoutes: IRoute[] = [
 				name: 'Library',
 				children: [
 					{
-						name: 'Internal Cost Center',
+						name: 'Cost Center',
 						path: '/procurement/internal-cost-center',
 						element: <InternalCostCenter />,
 						page_name: 'procurement__internal_cost_center',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
-						name: 'Purchase Cost Center',
+						name: 'Category',
 						path: '/procurement/purchase-cost-center',
 						element: <PurchaseCostCenter />,
 						page_name: 'procurement__purchase_cost_center',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
-						name: 'Sub Category',
+						name: 'Sub Segment',
 						path: '/procurement/subcategory',
 						element: <SubCategory />,
 						page_name: 'procurement__subcategory',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
-						name: 'Category',
+						name: 'Segment',
 						path: '/procurement/category',
 						element: <Category />,
 						page_name: 'procurement__category',
