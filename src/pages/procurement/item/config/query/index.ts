@@ -26,6 +26,6 @@ export const useItemAndVendorByUUID = <T>(uuid: string) =>
 export const useVendors = <T>(param: string) =>
 	useTQuery<T>({
 		queryKey: itemQK.vendor(),
-		url: `/procure/item-vendor?${param}`,
+		url: `/procure/item-vendor?item_uuid=${param}`,
 		enabled: !!param,
 	});

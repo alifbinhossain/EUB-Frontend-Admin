@@ -4,7 +4,9 @@ import { format } from 'date-fns';
 import StatusButton from '@/components/buttons/status';
 import SectionContainer from '@/components/others/section-container';
 import TableList, { ITableListItems } from '@/components/others/table-list';
+import { Badge } from '@/components/ui/badge';
 
+import { cn } from '@/lib/utils';
 import { formatDateTable } from '@/utils/formatDate';
 
 import { ICapitalTableData } from '../config/columns/columns.type'; // TODO: update data type
@@ -23,6 +25,26 @@ const Information: React.FC<{ data: ICapitalTableData }> = ({ data }) => {
 			{
 				label: 'Sub Category',
 				value: data.sub_category_name,
+			},
+			{
+				label: 'Status',
+				value: (
+					<Badge
+						className={cn(
+							data.status === 'Requested' && 'bg-red-500 text-white',
+							data.status === 'Pipeline' && 'bg-yellow-500 text-white',
+							data.status === 'Decided' && 'bg-blue-500 text-white',
+							data.status === 'Committed' && 'bg-teal-500 text-white',
+							data.status === 'Paid' && 'bg-green-500 text-white'
+						)}
+					>
+						{data.status as string}
+					</Badge>
+				),
+			},
+			{
+				label: 'Value',
+				value: data.value,
 			},
 			{
 				label: 'Remarks',
@@ -166,12 +188,14 @@ const Information: React.FC<{ data: ICapitalTableData }> = ({ data }) => {
 	return (
 		<>
 			<SectionContainer title={'General Information'}>
-				<div className='grid grid-cols-5 gap-4'>
+				<div className='grid grid-cols-2 gap-2'>
 					<TableList title='Basic Information' items={renderHeaderITems()} />
-					<TableList title='CS' items={renderCsITems()} />
-					<TableList title='Monthly Meeting' items={renderMonthlyMeetingITems()} />
-					<TableList title='Work Order' items={renderWorkOrderITems()} />
-					<TableList title='Delivery Statement' items={renderDeliveryStatementITems()} />
+					<div className='grid grid-cols-2'>
+						<TableList title='CS' items={renderCsITems()} />
+						<TableList title='Monthly Meeting' items={renderMonthlyMeetingITems()} />
+						<TableList title='Work Order' items={renderWorkOrderITems()} />
+						<TableList title='Delivery Statement' items={renderDeliveryStatementITems()} />
+					</div>
 				</div>
 			</SectionContainer>
 		</>

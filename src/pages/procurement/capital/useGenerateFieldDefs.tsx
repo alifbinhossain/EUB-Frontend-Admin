@@ -36,20 +36,12 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, watch }: IGenerate
 			type: 'number',
 			disabled: watch ? !watch('is_quotation') : true,
 		},
-
-		{
-			header: 'Received',
-			accessorKey: 'is_received',
-			type: 'checkbox',
-			disabled: true,
-		},
-
 		{
 			header: 'Actions',
 			accessorKey: 'actions',
 			type: 'custom',
 			component: (index: number) => {
-				return <FieldActionButton handleCopy={copy} handleRemove={remove} index={index} />;
+				return <FieldActionButton handleRemove={remove} index={index} />;
 			},
 		},
 	];
