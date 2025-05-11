@@ -92,7 +92,7 @@ const portfolioRoutes: IRoute[] = [
 						path: '/portfolio/teacher',
 						element: <Teachers />,
 						page_name: 'portfolio__teachers',
-						actions: ['read', 'update', 'delete', ...DepartmentAccess],
+						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
 						name: 'Teachers',

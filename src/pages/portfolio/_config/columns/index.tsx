@@ -2,13 +2,10 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
-import { ContentModal, RichTextModal } from '@/components/core/modal';
+import { AddModal, ContentModal, RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import { LinkWithRedirect } from '@/components/others/link';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import DateTime from '@/components/ui/date-time';
-
-import { API_IMAGE_URL } from '@/lib/secret';
 
 import { categories as authoritiesCategories } from '../../authorities/utils';
 import { categories as botCategories, status as botStatus } from '../../boardOfTrustees/utils';
@@ -25,6 +22,7 @@ import {
 	IOfficeEntryTableData,
 	IOfficeTableData,
 	IRoutineTableData,
+	ITeacherTableData,
 } from './columns.type';
 
 // * Department
@@ -58,6 +56,76 @@ export const departmentColumns = (): ColumnDef<IDepartmentTableData>[] => [
 		header: 'Category',
 		enableColumnFilter: true,
 		cell: (info) => <span className='capitalize'>{info?.getValue() as string}</span>,
+	},
+];
+
+// * Teacher
+export const teacherColumns = (): ColumnDef<ITeacherTableData>[] => [
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const status = info.row.original.status;
+			return <StatusButton value={status} />;
+		},
+		size: 20,
+		maxSize: 20,
+	},
+	{
+		accessorKey: 'teacher_initial',
+		header: 'Initial',
+		enableColumnFilter: true,
+		size: 20,
+		maxSize: 20,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Name',
+		enableColumnFilter: true,
+	},
+
+	{
+		accessorKey: 'teacher_email',
+		header: 'Email',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'teacher_phone',
+		header: 'Phone',
+		enableColumnFilter: true,
+	},
+
+	{
+		accessorKey: 'about',
+		header: 'About',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='About' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'education',
+		header: 'Education',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Education' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'publication',
+		header: 'Publication',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Publication' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'journal',
+		header: 'Journal',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Journal' content={info.getValue() as string} />,
+	},
+
+	{
+		accessorKey: 'appointment_date',
+		header: 'Appointment Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 ];
 

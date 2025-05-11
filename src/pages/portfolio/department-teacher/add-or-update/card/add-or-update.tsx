@@ -6,7 +6,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherUser } from '@/lib/common-queries/other';
+import { useOtherTeachers } from '@/lib/common-queries/other';
 
 import { useDepartmentsTeachers } from '../../../_config/query';
 import { PORTFOLIO_DEPARTMENT_TEACHER_NULL, PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA } from '../../../_config/schema';
@@ -20,7 +20,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	updatedData,
 	setUpdatedData,
 }) => {
-	const { data: users } = useOtherUser<IFormSelectOption[]>();
+	const { data: teachers } = useOtherTeachers<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
 
 	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
@@ -67,64 +67,23 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField
 					control={form.control}
-					name='teacher_designation'
-					render={(props) => <CoreForm.Input label='Designation' {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='teacher_initial'
-					render={(props) => <CoreForm.Input label='Initial' {...props} />}
-				/>
-			</div>
-
-			<div className='grid grid-cols-3 gap-4'>
-				<FormField
-					control={form.control}
-					name='teacher_uuid'
+					name='teachers_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
 							label='Teacher'
 							placeholder='Select Teacher'
-							options={users!}
+							options={teachers!}
 							{...props}
 						/>
 					)}
 				/>
 				<FormField
 					control={form.control}
-					name='teacher_email'
-					render={(props) => <CoreForm.Input label='Email' {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='teacher_phone'
-					render={(props) => <CoreForm.Input label='Phone' {...props} />}
+					name='teacher_designation'
+					render={(props) => <CoreForm.Input label='Designation' {...props} />}
 				/>
 			</div>
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField
-					control={form.control}
-					name='appointment_date'
-					render={(props) => <CoreForm.DatePicker {...props} />}
-				/>
-				<FormField
-					control={form.control}
-					name='resign_date'
-					render={(props) => <CoreForm.DatePicker {...props} />}
-				/>
-			</div>
-			<FormField
-				control={form.control}
-				name='education'
-				render={(props) => <CoreForm.RichTextEditor {...props} />}
-			/>
-			<FormField control={form.control} name='about' render={(props) => <CoreForm.RichTextEditor {...props} />} />
 
-			<FormField
-				control={form.control}
-				name='publication'
-				render={(props) => <CoreForm.RichTextEditor {...props} />}
-			/>
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

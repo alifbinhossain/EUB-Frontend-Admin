@@ -201,6 +201,20 @@ export const useDepartmentsTeachersByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
+// * ALL Teachers
+export const useTeachers = <T>(query: string = '') =>
+	useTQuery<T>({
+		queryKey: portfolioQK.teachers(query),
+		url: query ? `/portfolio/teachers?access=${query}` : `/portfolio/teachers`,
+	});
+// * Teachers By UUID
+export const useTeachersByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: portfolioQK.teachersByUUID(uuid),
+		url: `/portfolio/teachers/${uuid}`,
+		enabled: !!uuid,
+	});
+
 // ? NEWS
 // * ALL news
 export const useNews = <T>() =>

@@ -12,9 +12,13 @@ const otherQK = {
 
 	//* Faculty
 	faculty: () => [...otherQK.all(), 'faculty'],
+
 	//* User
 	user: () => [...otherQK.all(), 'user'],
 	userByQuery: (query: string) => [...otherQK.all(), 'byUserQuery', query],
+
+	//* Teachers
+	teachers: () => [...otherQK.all(), 'teachers'],
 
 	//* Programs
 	programs: () => [...otherQK.all(), 'programs'],

@@ -89,6 +89,29 @@ export type IDepartmentTableData = {
 	department_teaches: IDepartmentTeachersTableData[];
 };
 
+// * Teacher
+export type ITeacherTableData = {
+	uuid: string;
+	teacher_uuid: string;
+	teacher_name: string;
+	teacher_email: string;
+	teacher_phone: string;
+	teacher_image: string;
+	education: string;
+	publication: string;
+	journal: string;
+	appointment_date: string;
+	resign_date: string;
+	about: string;
+	created_at: string;
+	updated_at: string;
+	created_by: string;
+	created_by_name: string;
+	remarks: string;
+	teacher_initial: string;
+	status: boolean;
+};
+
 //* bot
 export type IBotTableData = {
 	id: number;

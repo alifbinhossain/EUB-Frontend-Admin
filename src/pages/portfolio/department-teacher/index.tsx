@@ -27,7 +27,7 @@ const Designation = () => {
 	// Add/Update Modal state
 	const handleCreate = () => navigate('/portfolio/office/create');
 	const handleUpdate = (row: Row<IDepartmentTableData>) => {
-		navigate(`/portfolio/teacher/${row.original.uuid}/update`);
+		navigate(`/portfolio/department-teacher/${row.original.uuid}/update`);
 	};
 
 	// Table Columns
