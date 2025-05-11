@@ -1,6 +1,9 @@
 import { ColumnDef, Row } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
+import { Badge } from '@/components/ui/badge';
+
+import { cn } from '@/lib/utils';
 
 import { ICapitalTableData, IGeneralNotesTableData, IQuotationTableData } from './columns.type';
 
@@ -19,12 +22,6 @@ export const capitalColumns = (
 		),
 	},
 	{
-		accessorKey: 'done',
-		header: 'Done',
-		enableColumnFilter: true,
-		cell: (info) => <StatusButton value={info.getValue() as number} />,
-	},
-	{
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
@@ -34,6 +31,36 @@ export const capitalColumns = (
 		header: 'Sub Category',
 		enableColumnFilter: true,
 	},
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		enableColumnFilter: true,
+		cell: (info) => (
+			<Badge
+				className={cn(
+					info.getValue() === 'Requested' && 'bg-red-500 text-white',
+					info.getValue() === 'Pipeline' && 'bg-yellow-500 text-white',
+					info.getValue() === 'Decided' && 'bg-blue-500 text-white',
+					info.getValue() === 'Committed' && 'bg-teal-500 text-white',
+					info.getValue() === 'Paid' && 'bg-green-500 text-white'
+				)}
+			>
+				{info.getValue() as string}
+			</Badge>
+		),
+	},
+
+	{
+		accessorKey: 'value',
+		header: 'Value',
+		enableColumnFilter: true,
+	},
+	// {
+	// 	accessorKey: 'done',
+	// 	header: 'Paid',
+	// 	enableColumnFilter: true,
+	// 	cell: (info) => <StatusButton value={info.getValue() as number} />,
+	// },
 ];
 
 export const quotationsColumns = (): ColumnDef<IQuotationTableData>[] => [

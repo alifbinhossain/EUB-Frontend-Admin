@@ -4,6 +4,8 @@ export type ICapitalTableData = {
 	name: string;
 	sub_category: string;
 	sub_category_name: string;
+	status: string;
+	value: number;
 	vendor_name: string;
 	remarks: string;
 

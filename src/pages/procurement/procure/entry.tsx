@@ -66,7 +66,6 @@ const Entry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
-	console.log(form.formState.errors);
 	// Submit handler
 	async function onSubmit(values: ICapital) {
 		if (isUpdate) {
@@ -293,7 +292,7 @@ const Entry = () => {
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Procure' : 'Add Procure'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section
-				title={`Main`}
+				title={`Request`}
 				className='grid gap-4 lg:grid-cols-2'
 				extraHeader={
 					<FormField
