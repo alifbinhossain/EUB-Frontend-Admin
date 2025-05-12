@@ -36,6 +36,12 @@ export const useOtherUser = <T>() =>
 		queryKey: otherQK.user(),
 		url: `/other/hr/users/value/label`,
 	});
+//* GET OTHER USER BY QUERY
+export const useOtherUserQuery = <T>(query: string = '') =>
+	useTQuery<T>({
+		queryKey: otherQK.userByQuery(query),
+		url: `/other/hr/users/value/label?${query}`,
+	});
 
 //* GET OTHER Teachers
 export const useOtherTeachers = <T>() =>

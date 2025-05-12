@@ -228,12 +228,10 @@ export type ITeacher = z.infer<typeof TEACHER_SCHEMA>;
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	.object({
-		uuid: STRING_REQUIRED,
-		index: NUMBER_NULLABLE,
 		department_uuid: STRING_OPTIONAL,
 		teachers_uuid: STRING_REQUIRED,
 		department_head: BOOLEAN_REQUIRED,
-		department_head_message: STRING_NULLABLE,
+		department_head_message: STRING_OPTIONAL,
 		teacher_designation: STRING_REQUIRED,
 		status: BOOLEAN_REQUIRED,
 		remarks: STRING_NULLABLE,
@@ -262,8 +260,9 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
 	department_uuid: '',
 	status: false,
+	teachers_uuid: '',
 	department_head: false,
-	department_head_message: null,
+	department_head_message: '',
 	teacher_designation: '',
 	remarks: null,
 };

@@ -10,7 +10,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherUser } from '@/lib/common-queries/other';
+import { useOtherUserQuery } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -61,8 +61,8 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useTeachersByUUID(updatedData?.uuid as string);
-
-	const { data: users } = useOtherUser<IFormSelectOption[]>();
+	const query = isUpdate ? `?uuid=${updatedData?.uuid}` : `is_teacher=false`;
+	const { data: users } = useOtherUserQuery<IFormSelectOption[]>(query);
 
 	const form = useRHF(TEACHER_SCHEMA, TEACHER_NULL);
 
@@ -85,7 +85,6 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 		// TODO: Update type here
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
-		console.log(values);
 
 		if (isUpdate) {
 			// UPDATE ITEM
@@ -130,7 +129,9 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 				<FormField
 					control={form.control}
 					name='teacher_uuid'
-					render={(props) => <CoreForm.ReactSelect label='Select User' options={users!} {...props} />}
+					render={(props) => (
+						<CoreForm.ReactSelect label='Select User' options={users!} isDisabled={isUpdate} {...props} />
+					)}
 				/>
 			</div>
 

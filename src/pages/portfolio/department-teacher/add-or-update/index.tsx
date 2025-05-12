@@ -12,7 +12,7 @@ import { getDateTime } from '@/utils';
 
 import { IDepartmentTeachersTableData } from '../../_config/columns/columns.type';
 import { useDepartmentsTeachersByUUID } from '../../_config/query';
-import { IDepartmentTeachers, IPortfolioDepartment } from '../../_config/schema';
+import { IPortfolioDepartment } from '../../_config/schema';
 import {
 	PORTFOLIO_DEPARTMENT_TEACHER_NULL,
 	PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA,
@@ -183,8 +183,16 @@ const AddOrUpdate = () => {
 
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 	const [isUpdateModal, setIsUpdateModal] = useState(false);
+	const [formKey, setFormKey] = useState(0);
+
 	const handleCreate = () => {
+		form.reset({
+			...PORTFOLIO_DEPARTMENT_TEACHER_NULL,
+		});
 		setIsUpdateModal(false);
+		setUpdatedData(null);
+		setFormKey((prev) => prev + 1); // force remount
+		console.log('handleCreate', updatedData, form.getValues());
 		setIsOpenAddModal(true);
 	};
 
@@ -229,7 +237,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL))
 				.then(() => {
 					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/teacher`);
+					navigate(`/portfolio/department-teacher`);
 				})
 				.catch((error) => {
 					console.error('Error updating Office:', error);
@@ -277,7 +285,6 @@ const AddOrUpdate = () => {
 				console.error('Error adding Office:', error);
 			});
 	};
-
 	const fliedDefs = [
 		{
 			header: 'Status',
@@ -293,37 +300,20 @@ const AddOrUpdate = () => {
 		},
 		{
 			header: 'Teacher',
-			accessorKey: 'teacher_uuid',
+			accessorKey: 'teachers_uuid',
 			type: 'select',
 			placeholder: 'Select Teacher',
 			options: teachers || [],
 		},
 		{
-			header: 'Email',
-			accessorKey: 'teacher_email',
-			type: 'text',
-		},
-		{
-			header: 'Phone',
-			accessorKey: 'teacher_phone',
-			type: 'text',
+			header: 'Department Head Message',
+			accessorKey: 'department_head_message',
+			view: 'preview',
 		},
 		{
 			header: 'Designation',
 			accessorKey: 'teacher_designation',
 			type: 'text',
-		},
-		{
-			header: 'Appointment Date',
-			accessorKey: 'appointment_date',
-			type: 'date',
-			view: 'Date',
-		},
-		{
-			header: 'Resign Date',
-			accessorKey: 'resign_date',
-			type: 'date',
-			view: 'Date',
 		},
 	];
 
@@ -339,16 +329,9 @@ const AddOrUpdate = () => {
 				uuid: '',
 				status: false,
 				department_uuid: '',
-				teacher_uuid: '',
-				teacher_email: '',
-				teacher_phone: '',
+				teachers_uuid: '',
 				teacher_designation: '',
-				education: '',
-				publication: '',
-				about: '',
 				teacher_initial: '',
-				appointment_date: '',
-				resign_date: null,
 				remarks: '',
 			});
 
@@ -362,7 +345,7 @@ const AddOrUpdate = () => {
 			status: false,
 			department_uuid: uuid,
 			department_head: data?.department_head,
-			teachers_uuid: data?.teacher_uuid,
+			teachers_uuid: data?.teachers_uuid,
 			teacher_designation: data?.teacher_designation,
 			department_head_message: data?.department_head_message,
 			remarks: data?.remarks,
@@ -374,19 +357,15 @@ const AddOrUpdate = () => {
 			uuid: '',
 			status: false,
 			department_uuid: '',
-			teacher_initial: '',
-			teacher_uuid: '',
-			teacher_email: '',
-			teacher_phone: '',
+			department_head_message: '',
+			teachers_uuid: '',
 			teacher_designation: '',
-			education: '',
-			publication: '',
-			about: '',
-			appointment_date: '',
-			resign_date: null,
 			remarks: '',
 		});
+
 		setIsOpenAddModal((prev) => !prev);
+		setUpdatedData(null);
+		console.log('newCard', updatedData);
 		setAdding(false);
 	};
 
@@ -433,6 +412,7 @@ const AddOrUpdate = () => {
 					</div>
 				</DynamicFieldContainer>
 				<AddOrUpdateCard
+					key={formKey}
 					{...{
 						isUpdate: isUpdateModal,
 						onSubmit: onFormSubmit,
