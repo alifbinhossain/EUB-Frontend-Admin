@@ -72,6 +72,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 						<CoreForm.ReactSelect
 							label='Teacher'
 							placeholder='Select Teacher'
+							isDisabled={isUpdate}
 							options={teachers!}
 							{...props}
 						/>
