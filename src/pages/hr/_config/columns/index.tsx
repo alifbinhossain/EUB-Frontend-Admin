@@ -65,7 +65,11 @@ export function userColumns(): ColumnDef<IUserTableData>[] {
 			cell: (info) => info.getValue(),
 		},
 		{
-			accessorKey: 'department_name',
+			accessorFn: (row) => {
+				const { department_name, designation_name } = row;
+
+				return `${department_name} - ${designation_name}`;
+			},
 			header: 'Department',
 			enableColumnFilter: false,
 			cell: (info) => {
