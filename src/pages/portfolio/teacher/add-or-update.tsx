@@ -15,7 +15,7 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { ITeacherTableData } from '../_config/columns/columns.type';
-import { useTeachersByUUID } from '../_config/query';
+import { useTeachers, useTeachersByUUID } from '../_config/query';
 import { ITeacher, TEACHER_NULL, TEACHER_SCHEMA } from '../_config/schema';
 
 interface IAddOrUpdateProps {
@@ -63,6 +63,7 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 	const { data } = useTeachersByUUID(updatedData?.uuid as string);
 	const query = isUpdate ? `?uuid=${updatedData?.uuid}` : `is_teacher=false`;
 	const { data: users } = useOtherUserQuery<IFormSelectOption[]>(query);
+	const { invalidateQuery: invalidateTeachers } = useTeachers<ITeacherTableData[]>();
 
 	const form = useRHF(TEACHER_SCHEMA, TEACHER_NULL);
 
@@ -70,6 +71,7 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 		setUpdatedData?.(null);
 		form.reset(TEACHER_NULL);
 		setOpen((prev) => !prev);
+		invalidateTeachers();
 	};
 
 	// Reset form values when data is updated
