@@ -1,11 +1,14 @@
 export const portfolioQK = {
 	all: () => ['portfolio'],
+
 	//* program
 	programs: () => [...portfolioQK.all(), 'programs'],
 	programByUUID: (uuid: string) => [...portfolioQK.programs(), uuid],
+
 	//* authorities
 	authorities: () => [...portfolioQK.all(), 'authorities'],
 	authorityByUUID: (uuid: string) => [...portfolioQK.authorities(), uuid],
+
 	// * certificate_course_fee
 	certificateCourseFees: () => [...portfolioQK.all(), 'certificate_course_fee'],
 	certificateCourseFeeByUUID: (uuid: string) => [...portfolioQK.certificateCourseFees(), uuid],
@@ -17,6 +20,7 @@ export const portfolioQK = {
 	//* bot
 	bot: () => [...portfolioQK.all(), 'bot'],
 	botByUUID: (uuid: string) => [...portfolioQK.bot(), uuid],
+
 	//* office
 	office: () => [...portfolioQK.all(), 'office'],
 	officeByUUID: (uuid: string) => [...portfolioQK.office(), uuid],
@@ -28,22 +32,32 @@ export const portfolioQK = {
 	// * club
 	club: () => [...portfolioQK.all(), 'club'],
 	clubByUUID: (uuid: string) => [...portfolioQK.club(), uuid],
+
 	// * offers
 	offers: () => [...portfolioQK.all(), 'offers'],
 	offersByUUID: (uuid: string) => [...portfolioQK.offers(), uuid],
+
 	// * faculty
 	faculty: () => [...portfolioQK.all(), 'faculty'],
 	facultyByUUID: (uuid: string) => [...portfolioQK.faculty(), uuid],
+
 	// * department
 	department: (query: string = '') => [...portfolioQK.all(), 'department', ...(query ? [query] : [])],
 	departmentByUUID: (uuid: string) => [...portfolioQK.department(), uuid],
+
+	// *teachers
+	teachers: (query: string = '') => [...portfolioQK.all(), 'teacher', ...(query ? [query] : [])],
+	teachersByUUID: (uuid: string) => [...portfolioQK.teachers(), uuid],
+
 	// * department-teacher
 	departmentTeachers: (query: string = '') => [...portfolioQK.all(), 'department-teacher', ...(query ? [query] : [])],
 	departmentTeachersByUUID: (uuid: string) => [...portfolioQK.departmentTeachers(), uuid],
+
 	// * News
 	news: () => [...portfolioQK.all(), 'news'],
 	newsByUUID: (uuid: string) => [...portfolioQK.news(), uuid],
 	newsDetails: (uuid: string) => [...portfolioQK.news(), 'details', uuid],
+
 	//* admission
 	admission: () => [...portfolioQK.all(), 'admission'],
 	admissionByUUID: (uuid: string) => [...portfolioQK.admission(), uuid],

@@ -4,6 +4,7 @@ import { PORTFOLIO_PAGE_NAME, PORTFOLIO_PROGRAM_TYPE, PORTFOLIO_ROUTINE_TYPE } f
 import {
 	BOOLEAN_OPTIONAL,
 	BOOLEAN_REQUIRED,
+	NUMBER_NULLABLE,
 	NUMBER_REQUIRED,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
@@ -191,25 +192,60 @@ export const BOT_NULL: Partial<IBot> = {
 
 export type IBot = z.infer<typeof BOT_SCHEMA>;
 
+//* Bot Schema
+export const TEACHER_SCHEMA = z.object({
+	teacher_uuid: STRING_REQUIRED,
+	teacher_phone: STRING_NULLABLE,
+	teacher_email: STRING_REQUIRED,
+	education: STRING_REQUIRED,
+	publication: STRING_OPTIONAL,
+	journal: STRING_OPTIONAL,
+	about: STRING_REQUIRED,
+	appointment_date: STRING_REQUIRED,
+	resign_date: STRING_NULLABLE,
+	teacher_initial: STRING_NULLABLE,
+	status: BOOLEAN_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const TEACHER_NULL: Partial<ITeacher> = {
+	teacher_uuid: '',
+	teacher_phone: '',
+	teacher_email: '',
+	education: '',
+	publication: '',
+	journal: '',
+	about: '',
+	appointment_date: '',
+	resign_date: null,
+	teacher_initial: null,
+	status: false,
+	remarks: null,
+};
+
+export type ITeacher = z.infer<typeof TEACHER_SCHEMA>;
+
 // * Department-Teacher Schema
 export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	.object({
-		uuid: STRING_OPTIONAL,
-		teacher_initial: STRING_OPTIONAL,
+		uuid: STRING_REQUIRED,
+		index: NUMBER_NULLABLE,
 		department_uuid: STRING_OPTIONAL,
+		teachers_uuid: STRING_REQUIRED,
 		department_head: BOOLEAN_REQUIRED,
-		status: BOOLEAN_REQUIRED,
-		teacher_email: STRING_REQUIRED,
-		teacher_phone: STRING_NULLABLE,
-		teacher_designation: STRING_REQUIRED,
-		teacher_uuid: STRING_REQUIRED,
-		education: STRING_REQUIRED,
-		publication: STRING_REQUIRED,
-		about: STRING_REQUIRED,
-		appointment_date: STRING_REQUIRED,
-		resign_date: STRING_NULLABLE,
-		remarks: STRING_NULLABLE,
 		department_head_message: STRING_NULLABLE,
+		teacher_designation: STRING_REQUIRED,
+		status: BOOLEAN_REQUIRED,
+		remarks: STRING_NULLABLE,
+
+		// teacher_initial: STRING_OPTIONAL,
+		// teacher_email: STRING_REQUIRED,
+		// teacher_phone: STRING_NULLABLE,
+		// education: STRING_REQUIRED,
+		// publication: STRING_REQUIRED,
+		// about: STRING_REQUIRED,
+		// appointment_date: STRING_REQUIRED,
+		// resign_date: STRING_NULLABLE,
 	})
 	.superRefine((data, ctx) => {
 		if (data.department_head) {
@@ -224,20 +260,11 @@ export const PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA = z
 	});
 
 export const PORTFOLIO_DEPARTMENT_TEACHER_NULL: Partial<IDepartmentTeachers> = {
-	teacher_initial: '',
 	department_uuid: '',
 	status: false,
 	department_head: false,
 	department_head_message: null,
-	teacher_email: '',
-	teacher_phone: null,
 	teacher_designation: '',
-	teacher_uuid: '',
-	education: '',
-	publication: '',
-	about: '',
-	appointment_date: '',
-	resign_date: null,
 	remarks: null,
 };
 

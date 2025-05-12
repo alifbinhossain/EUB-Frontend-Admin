@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { motion as m } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -6,7 +6,7 @@ import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
 
-import { useOtherUser } from '@/lib/common-queries/other';
+import { useOtherTeachers } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -33,7 +33,7 @@ const AddOrUpdate = () => {
 
 	const { uuid } = useParams();
 	const isUpdate: boolean = !!uuid;
-	const { data: userOption } = useOtherUser<IFormSelectOption[]>();
+	const { data: teachers } = useOtherTeachers<IFormSelectOption[]>();
 	const {
 		data,
 		postData,
@@ -41,23 +41,33 @@ const AddOrUpdate = () => {
 		deleteData,
 		invalidateQuery: invalidateTestDetails,
 	} = useDepartmentsTeachersByUUID<IPortfolioDepartment>(uuid as string);
-	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
+
+	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, {
+		...PORTFOLIO_DEPARTMENT_TEACHER_NULL,
+	});
+
+	console.log({
+		error: form.formState.errors,
+	});
+
 	const [cards, setCards] = useState<ICard[]>([]);
 
 	const { department_teaches } = data || {};
 
-	useMemo(() => {
+	useEffect(() => {
 		if (!isUpdate) return;
 		setCards(department_teaches ?? []);
-	}, [data]);
+	}, [isUpdate, department_teaches]);
 
 	const [active, setActive] = useState(false);
 	const [adding, setAdding] = useState(false);
 	const [isEditing, setEditing] = useState(-1);
+
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
+
 	const handleDragStart = (e: React.DragEvent<HTMLDivElement>, card: ICard) => {
 		e.dataTransfer.setData('cardId', card.uuid || '');
 	};
@@ -179,6 +189,7 @@ const AddOrUpdate = () => {
 	};
 
 	const [updatedData, setUpdatedData] = useState<IDepartmentTeachersTableData | null>(null);
+
 	const handleSaveAll = async () => {
 		if (isUpdate) {
 			const department_teaches_promise = cards.map((item, index) => {
@@ -285,7 +296,7 @@ const AddOrUpdate = () => {
 			accessorKey: 'teacher_uuid',
 			type: 'select',
 			placeholder: 'Select Teacher',
-			options: userOption || [],
+			options: teachers || [],
 		},
 		{
 			header: 'Email',
@@ -323,6 +334,7 @@ const AddOrUpdate = () => {
 				uuid: updatedData?.uuid,
 			};
 			handleSaveCard(newData);
+
 			form.reset({
 				uuid: '',
 				status: false,
@@ -339,29 +351,25 @@ const AddOrUpdate = () => {
 				resign_date: null,
 				remarks: '',
 			});
+
 			setIsOpenAddModal((prev) => !prev);
 			setUpdatedData(null);
 			return;
 		}
+
 		const newCard: any = {
 			uuid: nanoid(),
 			status: false,
-			department_uuid: '',
+			department_uuid: uuid,
 			department_head: data?.department_head,
-			teacher_uuid: data?.teacher_uuid,
-			teacher_email: data?.teacher_email,
-			teacher_phone: data?.teacher_phone,
-			teacher_initial: data?.teacher_initial,
+			teachers_uuid: data?.teacher_uuid,
 			teacher_designation: data?.teacher_designation,
-			education: data?.education,
-			publication: data?.publication,
-			journal: data?.journal,
-			about: data?.about,
-			appointment_date: data?.appointment_date,
-			resign_date: data?.resign_date,
+			department_head_message: data?.department_head_message,
 			remarks: data?.remarks,
 		};
+
 		setCards((pv) => [...pv, newCard]);
+
 		form.reset({
 			uuid: '',
 			status: false,
@@ -381,6 +389,7 @@ const AddOrUpdate = () => {
 		setIsOpenAddModal((prev) => !prev);
 		setAdding(false);
 	};
+
 	return (
 		<>
 			<div
