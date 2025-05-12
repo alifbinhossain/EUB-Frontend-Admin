@@ -192,7 +192,6 @@ const AddOrUpdate = () => {
 		setIsUpdateModal(false);
 		setUpdatedData(null);
 		setFormKey((prev) => prev + 1); // force remount
-		console.log('handleCreate', updatedData, form.getValues());
 		setIsOpenAddModal(true);
 	};
 
@@ -423,6 +422,7 @@ const AddOrUpdate = () => {
 						setUpdatedData,
 						postData,
 						updateData,
+						excludedOption: cards?.map((c) => c.teachers_uuid),
 					}}
 				/>
 				,

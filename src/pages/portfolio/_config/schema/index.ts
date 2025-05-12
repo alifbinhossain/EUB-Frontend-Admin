@@ -145,7 +145,7 @@ export const PORTFOLIO_DEPARTMENT_SCHEMA = z.object({
 				teacher_email: STRING_REQUIRED,
 				teacher_phone: STRING_NULLABLE,
 				teacher_designation: STRING_REQUIRED,
-				teacher_uuid: STRING_REQUIRED,
+				teachers_uuid: STRING_REQUIRED,
 				education: STRING_REQUIRED,
 				publication: STRING_REQUIRED,
 				journal: STRING_REQUIRED,

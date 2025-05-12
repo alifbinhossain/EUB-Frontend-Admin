@@ -54,5 +54,6 @@ export interface IOffersAddOrUpdateProps extends IDefaultImageAddOrUpdateProps {
 export interface IDepartmentTeachersAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IDepartmentTeachersTableData | null;
 	isUpdate?: boolean;
+	excludedOption?: any;
 	onSubmit: (data: any) => void;
 }
