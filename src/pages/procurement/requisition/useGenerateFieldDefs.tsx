@@ -51,7 +51,12 @@ const useGenerateFieldDefs = ({
 			placeholder: 'Select Item',
 			options: itemList || [],
 			unique: true,
-			excludeOptions: watch ? watch('item_requisition').map((item) => item.item_uuid) : [],
+			excludeOptions: watch
+				? [
+						...(watch('new_item_requisition')?.map((item) => item.item_uuid) || []),
+						...(watch('item_requisition')?.map((item) => item.item_uuid) || []),
+					]
+				: [],
 			disabled: provider || !isNew || (watch ? watch('is_received') : false),
 		},
 		{
