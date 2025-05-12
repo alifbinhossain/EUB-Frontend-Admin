@@ -49,7 +49,7 @@ const AddOrUpdate = () => {
 	}, [data, isUpdate]);
 	const { office_entries } = data || {};
 
-	useMemo(() => {
+	useEffect(() => {
 		if (!isUpdate) return;
 		setCards(office_entries ?? []);
 	}, [data]);
@@ -228,11 +228,13 @@ const AddOrUpdate = () => {
 						}
 					});
 
-					Promise.all([...office_entries_promise]);
+					return Promise.all([...office_entries_promise]);
 				})
-				.then(() => form.reset(OFFICE_NULL))
 				.then(() => {
-					invalidateTestDetails(); // TODO: Update invalidate query
+					form.reset(OFFICE_NULL);
+					invalidateTestDetails(); // Ensure this runs after all mutations
+				})
+				.then(() => {
 					navigate(`/portfolio/office`);
 				})
 				.catch((error) => {
@@ -246,8 +248,6 @@ const AddOrUpdate = () => {
 		const created_at = getDateTime();
 		const created_by = user?.uuid;
 
-		// Create Office description
-
 		const office_data = {
 			...formHeader.getValues(),
 			index: formHeader.getValues('index'),
@@ -256,13 +256,11 @@ const AddOrUpdate = () => {
 			created_by,
 		};
 		const formData = Formdata<IOffice>(office_data);
-		// delete Office field from data to be sent
 
 		if ('office_entries' in office_data) {
 			delete (office_data as { office_entries?: any })['office_entries'];
 		}
 
-		// TODO: Update url and variable name ⬇️
 		imagePostData
 			.mutateAsync({
 				url: officeUrl,
@@ -270,7 +268,6 @@ const AddOrUpdate = () => {
 				isOnCloseNeeded: false,
 			})
 			.then(() => {
-				// Create Office entries
 				const office_entries = [...cards].map((item, index) => ({
 					...item,
 					office_uuid: new_office_uuid,
@@ -288,11 +285,13 @@ const AddOrUpdate = () => {
 					})
 				);
 
-				Promise.all([...office_entries_promise]);
+				return Promise.all([...office_entries_promise]);
 			})
-			.then(() => form.reset(OFFICE_NULL))
 			.then(() => {
-				invalidateTestDetails(); // TODO: Update invalidate query
+				form.reset(OFFICE_NULL);
+				invalidateTestDetails(); // Ensure this runs after all mutations
+			})
+			.then(() => {
 				navigate(`/portfolio/office`);
 			})
 			.catch((error) => {
