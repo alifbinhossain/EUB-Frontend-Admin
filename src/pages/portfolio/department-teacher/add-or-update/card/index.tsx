@@ -57,7 +57,7 @@ export const Card = ({
 			>
 				<div className='flex'>
 					<div className='text-sm'>#{(index ?? 0) + 1}&emsp;</div>
-					<div className='grid grid-cols-8 gap-2 p-2'>
+					<div className='grid flex-1 grid-cols-5 gap-2 p-2'>
 						{fieldDefs
 							.filter((fieldDef: any) => !fieldDef.hidden)
 							.map((fieldDef: any) => {
