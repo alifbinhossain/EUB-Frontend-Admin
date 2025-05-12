@@ -127,6 +127,12 @@ export const teacherColumns = (): ColumnDef<ITeacherTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
+	{
+		accessorKey: 'resign_date',
+		header: 'Resign Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
 ];
 
 //* Program Columns

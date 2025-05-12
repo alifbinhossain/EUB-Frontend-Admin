@@ -84,10 +84,6 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 
 	// Submit handler
 	async function onSubmit(values: ITeacher) {
-		// TODO: Update type here
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
