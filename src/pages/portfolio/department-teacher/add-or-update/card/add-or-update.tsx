@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { te } from 'date-fns/locale';
 import useRHF from '@/hooks/useRHF';
 
 import { IFormSelectOption } from '@/components/core/form/types';
@@ -19,9 +20,11 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 	onSubmit,
 	updatedData,
 	setUpdatedData,
+	excludedOption,
 }) => {
 	const { data: teachers } = useOtherTeachers<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
+	console.log(excludedOption);
 
 	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 
@@ -72,7 +75,12 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 						<CoreForm.ReactSelect
 							label='Teacher'
 							placeholder='Select Teacher'
-							options={teachers!}
+							isDisabled={isUpdate}
+							options={
+								isUpdate
+									? (teachers ?? [])
+									: (teachers?.filter((teacher) => !excludedOption?.includes(teacher.value)) ?? [])
+							}
 							{...props}
 						/>
 					)}

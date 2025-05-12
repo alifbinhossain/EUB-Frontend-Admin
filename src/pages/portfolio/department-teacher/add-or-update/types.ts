@@ -64,7 +64,7 @@ export interface ICard {
 	teacher_email: string;
 	teacher_phone: string | null;
 	teacher_designation: string;
-	teacher_uuid: string;
+	teachers_uuid: string;
 	education: string;
 	publication: string;
 	journal: string;
