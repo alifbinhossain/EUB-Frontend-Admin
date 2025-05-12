@@ -94,14 +94,14 @@ const portfolioRoutes: IRoute[] = [
 						page_name: 'portfolio__teachers',
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
-					{
-						name: 'Teachers',
-						path: '/portfolio/teacher/:uuid/update',
-						element: <UpdateTeacher />,
-						hidden: true,
-						page_name: 'portfolio__teachers_update',
-						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
-					},
+					// {
+					// 	name: 'Teachers',
+					// 	path: '/portfolio/teacher/:uuid/update',
+					// 	element: <UpdateTeacher />,
+					// 	hidden: true,
+					// 	page_name: 'portfolio__teachers_update',
+					// 	actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
+					// },
 					{
 						name: 'Department Teachers',
 						path: '/portfolio/department-teacher',
