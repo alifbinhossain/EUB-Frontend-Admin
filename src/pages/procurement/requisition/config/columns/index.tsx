@@ -51,7 +51,7 @@ export const requisitionColumns = (
 						}
 					/>
 					<span className='text-[0.7rem] font-semibold capitalize text-primary'>
-						{info.row.original.pi_generated_number}
+						{info.row.original.pi_generated_number > 99 ? info.row.original.pi_generated_number : ''}
 					</span>
 					<DateTime
 						date={

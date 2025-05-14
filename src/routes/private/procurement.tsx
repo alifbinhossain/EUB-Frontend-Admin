@@ -112,37 +112,37 @@ const procurementRoutes: IRoute[] = [
 			},
 
 			// ? Item Work Order
-			{
-				name: 'Item Work Order',
-				path: '/procurement/item-work-order',
-				element: <ItemWorkOrder />,
-				page_name: 'procurement__item_work_order',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Item Work Order Entry',
-				path: '/procurement/item-work-order/create',
-				element: <ItemWorkOrderEntry />,
-				hidden: true,
-				page_name: 'procurement__item_work_order_entry',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Item Work Order Update',
-				path: '/procurement/item-work-order/:uuid/update',
-				element: <ItemWorkOrderEntry />,
-				hidden: true,
-				page_name: 'procurement__item_work_order_update',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Item Work Order Details',
-				path: '/procurement/item-work-order-details/:uuid',
-				element: <ItemWorkOrderDetails />,
-				hidden: true,
-				page_name: 'procurement__item_work_order_details',
-				actions: ['read'],
-			},
+			// {
+			// 	name: 'Item Work Order',
+			// 	path: '/procurement/item-work-order',
+			// 	element: <ItemWorkOrder />,
+			// 	page_name: 'procurement__item_work_order',
+			// 	actions: ['create', 'read', 'update', 'delete'],
+			// },
+			// {
+			// 	name: 'Item Work Order Entry',
+			// 	path: '/procurement/item-work-order/create',
+			// 	element: <ItemWorkOrderEntry />,
+			// 	hidden: true,
+			// 	page_name: 'procurement__item_work_order_entry',
+			// 	actions: ['create', 'read', 'update', 'delete'],
+			// },
+			// {
+			// 	name: 'Item Work Order Update',
+			// 	path: '/procurement/item-work-order/:uuid/update',
+			// 	element: <ItemWorkOrderEntry />,
+			// 	hidden: true,
+			// 	page_name: 'procurement__item_work_order_update',
+			// 	actions: ['create', 'read', 'update', 'delete'],
+			// },
+			// {
+			// 	name: 'Item Work Order Details',
+			// 	path: '/procurement/item-work-order-details/:uuid',
+			// 	element: <ItemWorkOrderDetails />,
+			// 	hidden: true,
+			// 	page_name: 'procurement__item_work_order_details',
+			// 	actions: ['read'],
+			// },
 
 			// ? Item Work Order Details
 			{

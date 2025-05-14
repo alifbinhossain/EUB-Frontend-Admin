@@ -12,7 +12,7 @@ import {
 export const PORTFOLIO_VISITOR_SCHEMA = z
 	.object({
 		name: STRING_REQUIRED,
-		mobile: STRING_REQUIRED,
+		mobile: PHONE_NUMBER_REQUIRED,
 		category: STRING_REQUIRED.default('call_entry'),
 		status: STRING_REQUIRED.default('pending'),
 

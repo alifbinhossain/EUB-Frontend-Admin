@@ -96,8 +96,8 @@ export const NUMBER_DOUBLE_NULLABLE = NUMBER_DOUBLE().nullable();
 
 // PHONE NUMBER
 export const PHONE_NUMBER = STRING('Required', 'Invalid Phone Number').regex(
-	/^$|^\+?\d{4,15}$/,
-	'Must be a valid phone number with optional "+" sign and up to 4-15 digits'
+	/^01\d{9}$/,
+	'Phone Number should be 11 digits starting with 01'
 );
 export const PHONE_NUMBER_REQUIRED = PHONE_NUMBER;
 export const PHONE_NUMBER_OPTIONAL = PHONE_NUMBER.optional();
