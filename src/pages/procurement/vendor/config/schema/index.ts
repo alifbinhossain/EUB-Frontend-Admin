@@ -1,12 +1,12 @@
 import { add } from 'lodash';
 import { z } from 'zod';
 
-import { STRING_NULLABLE, STRING_REQUIRED } from '@/utils/validators';
+import { PHONE_NUMBER_REQUIRED, STRING_NULLABLE, STRING_REQUIRED } from '@/utils/validators';
 
 //* Visitor Schema
 export const VENDOR_SCHEMA = z.object({
 	name: STRING_REQUIRED,
-	phone: STRING_REQUIRED,
+	phone: PHONE_NUMBER_REQUIRED,
 	product_type: STRING_REQUIRED,
 	address: STRING_REQUIRED,
 	purpose: STRING_REQUIRED,

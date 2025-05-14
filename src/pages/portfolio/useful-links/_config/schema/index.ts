@@ -13,6 +13,7 @@ import {
 	DATE,
 	EMAIL_REQUIRED,
 	NUMBER_REQUIRED,
+	PHONE_NUMBER_NULLABLE,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
 	STRING_REQUIRED,
@@ -237,7 +238,7 @@ export const CLUB_SCHEMA = z.object({
 	department_uuid: STRING_REQUIRED,
 	president_uuid: STRING_REQUIRED,
 	president_email: EMAIL_REQUIRED,
-	president_phone: STRING_NULLABLE,
+	president_phone: PHONE_NUMBER_NULLABLE,
 	message: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
