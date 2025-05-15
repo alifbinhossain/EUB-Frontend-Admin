@@ -40,7 +40,7 @@ const Designation = () => {
 	};
 
 	const handleDetails = (row: Row<ICapitalTableData>) => {
-		navigate(`/procurement/capital-details/${row.original.uuid}`);
+		navigate(`/procurement/procure-details/${row.original.uuid}`);
 	};
 
 	// Table Columns

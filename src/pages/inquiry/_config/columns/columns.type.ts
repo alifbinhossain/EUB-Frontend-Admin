@@ -18,3 +18,12 @@ export type IVisitorTableData = {
 
 	remarks: string;
 };
+// * Contact Us
+export type IContactUSTableData = {
+	id?: number;
+	uuid?: string;
+	full_name: string;
+	question: string;
+	description: string;
+	remarks?: string;
+};

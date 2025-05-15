@@ -9,9 +9,9 @@ export type IServiceTableData = {
 	vendor_name: string;
 	description: string;
 	frequency: string;
-	start_date: string;
-	end_date: string;
-	next_due_date: string;
+	start_date: string | Date;
+	end_date: string | Date;
+	next_due_date: string | Date;
 	cost_per_service: string;
 	payment_terms: string;
 	status: string;
@@ -26,10 +26,11 @@ export type IServiceTableData = {
 };
 
 export type IServicePayment = {
-	amount: string;
+	amount: number;
 	payment_date: string;
-	created_at: string;
-	updated_at: string;
-	created_by_name: string;
+	created_at?: string;
+	updated_at?: string;
+	created_by_name?: string;
+	next_due_date: string | Date;
 	remarks: string;
 };

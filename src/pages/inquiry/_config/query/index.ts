@@ -16,3 +16,16 @@ export const useVisitorByUUID = <T>(uuid: string) =>
 		url: `/inquire/visitor/${uuid}`,
 		enabled: !!uuid,
 	});
+
+export const useContactUs = <T>() =>
+	useTQuery<T>({
+		queryKey: inquiryQK.contactUs(),
+		url: `/portfolio/contact-us`,
+	});
+
+export const useContactUsByUUID = <T>(uuid: number) =>
+	useTQuery<T>({
+		queryKey: inquiryQK.contactUsByUUID(uuid),
+		url: `/portfolio/contact-us/${uuid}`,
+		enabled: !!uuid,
+	});

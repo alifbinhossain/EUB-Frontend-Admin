@@ -38,7 +38,7 @@ export interface IDeleteAllModalProps {
 export interface IDeleteModalProps {
 	deleteItem: {
 		type?: string;
-		id: string | null;
+		id: string | number | null;
 		name: string | null;
 	} | null;
 	setDeleteItem: React.Dispatch<

@@ -1,3 +1,4 @@
+import { Description } from '@radix-ui/react-dialog';
 import { z } from 'zod';
 
 import {
@@ -73,3 +74,19 @@ export const PORTFOLIO_VISITOR_NULL: Partial<IInquiryVisitor> = {
 };
 
 export type IInquiryVisitor = z.infer<typeof PORTFOLIO_VISITOR_SCHEMA>;
+
+export const CONTACT_US_SCHEMA = z.object({
+	full_name: STRING_REQUIRED,
+	question: STRING_REQUIRED,
+	description: PHONE_NUMBER_OPTIONAL,
+	remarks: STRING_NULLABLE,
+});
+
+export const CONTACT_US_NULL: Partial<IContactUs> = {
+	full_name: '',
+	question: '',
+	description: '',
+	remarks: null,
+};
+
+export type IContactUs = z.infer<typeof CONTACT_US_SCHEMA>;
