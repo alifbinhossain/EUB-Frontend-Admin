@@ -77,7 +77,7 @@ const AddOrUpdate: React.FC<IFeatureAddOrUpdateProps> = ({
 			isSmall
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Feature' : 'Add Feature'}
+			title={isUpdate ? 'Update Articles' : 'Add Articles'}
 			form={form}
 			onSubmit={onSubmit}
 		>

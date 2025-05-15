@@ -376,7 +376,7 @@ const AddOrUpdate = () => {
 				onDragLeave={handleDragLeave}
 				className={`flex flex-col transition-colors ${active ? 'bg-secondary/5' : 'bg-neutral-800/0'}`}
 			>
-				<DynamicFieldContainer title={`Department of ${data?.name} Teacher Entries `} handleAdd={handleCreate}>
+				<DynamicFieldContainer title={`Department of ${data?.name} Faculty Members `} handleAdd={handleCreate}>
 					<Header fliedDefs={fliedDefs} />
 					{cards?.map((c, index) => {
 						const transferData = { ...c };

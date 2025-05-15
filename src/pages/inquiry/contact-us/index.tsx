@@ -15,7 +15,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useContactUs<IContactUSTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Visitor', url, 'inquiry__contact_us'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Contact Us', url, 'inquiry__contact_us'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

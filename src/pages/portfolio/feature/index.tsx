@@ -16,7 +16,7 @@ const Feature = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
 		useFeature<IFeatureTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Feature', url, 'portfolio__feature'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Articles', url, 'portfolio__articles'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

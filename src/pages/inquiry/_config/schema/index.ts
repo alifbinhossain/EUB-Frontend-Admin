@@ -78,7 +78,7 @@ export type IInquiryVisitor = z.infer<typeof PORTFOLIO_VISITOR_SCHEMA>;
 export const CONTACT_US_SCHEMA = z.object({
 	full_name: STRING_REQUIRED,
 	question: STRING_REQUIRED,
-	description: PHONE_NUMBER_OPTIONAL,
+	description: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
 

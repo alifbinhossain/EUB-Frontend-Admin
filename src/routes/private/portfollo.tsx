@@ -44,9 +44,9 @@ const portfolioRoutes: IRoute[] = [
 		children: [
 			{
 				name: 'Doc Upload',
-				path: '/portfolio/info',
+				path: '/portfolio/doc-upload',
 				element: <Info />,
-				page_name: 'portfolio__info',
+				page_name: 'portfolio__doc_upload',
 				actions: ['create', 'read', 'update', 'delete', ...InfoAccess],
 			},
 			{
@@ -58,9 +58,9 @@ const portfolioRoutes: IRoute[] = [
 			},
 			{
 				name: 'Articles',
-				path: '/portfolio/feature',
+				path: '/portfolio/articles',
 				element: <Feature />,
-				page_name: 'portfolio__feature',
+				page_name: 'portfolio__articles',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
@@ -68,9 +68,9 @@ const portfolioRoutes: IRoute[] = [
 				children: [
 					{
 						name: 'Faculty Profile',
-						path: '/portfolio/teacher',
+						path: '/portfolio/faculty-profile',
 						element: <Teachers />,
-						page_name: 'portfolio__teachers',
+						page_name: 'portfolio__faculty_profile',
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					// {
@@ -83,24 +83,24 @@ const portfolioRoutes: IRoute[] = [
 					// },
 					{
 						name: 'Faculty Members',
-						path: '/portfolio/department-teacher',
+						path: '/portfolio/faculty-members',
 						element: <DepartmentTeachers />,
-						page_name: 'portfolio__department_teachers',
+						page_name: 'portfolio__department_faculty_members',
 						actions: ['read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
-						name: 'Faculty Members',
-						path: '/portfolio/department-teacher/:uuid/update',
+						name: 'Faculty Members Add',
+						path: '/portfolio/faculty-members/:uuid/update',
 						element: <UpdateDepartmentTeacher />,
 						hidden: true,
-						page_name: 'portfolio__department_teachers_update',
+						page_name: 'portfolio__department_faculty_members_add',
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
 						name: 'Doc Upload',
-						path: '/portfolio/routine',
+						path: '/portfolio/doc-upload/routine',
 						element: <Routine />,
-						page_name: 'portfolio__routine',
+						page_name: 'portfolio__doc_upload_routine',
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 				],
@@ -148,9 +148,9 @@ const portfolioRoutes: IRoute[] = [
 					},
 					{
 						name: 'Committee Members',
-						path: '/portfolio/bot',
+						path: '/portfolio/committee-members',
 						element: <BoardOfTrustees />,
-						page_name: 'portfolio__bot',
+						page_name: 'portfolio__committee_members',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 				],

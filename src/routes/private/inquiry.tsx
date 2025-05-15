@@ -16,7 +16,7 @@ const inquiryRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Contact US',
+				name: 'Contact Us',
 				path: '/inquiry/contact-us',
 				element: <ContactUs />,
 				page_name: 'inquiry__contact_us',
