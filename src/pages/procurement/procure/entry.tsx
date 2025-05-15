@@ -601,31 +601,33 @@ const Entry = () => {
 			>
 				{form.watch('is_work_order') && (
 					<>
-						<FormField
-							control={form.control}
-							name='vendor_uuid'
-							render={(props) => (
-								<CoreForm.ReactSelect
-									label='Vendor'
-									options={
-										vendorList?.filter((item) =>
-											form
-												.getValues('quotations')
-												.some((quotation) => quotation.vendor_uuid === item.value)
-										) || []
-									}
-									isDisabled={
-										!(
-											form.watch('is_work_order') &&
-											form.watch('is_monthly_meeting') &&
-											form.watch('is_cs') &&
-											form.watch('is_quotation')
-										)
-									}
-									{...props}
-								/>
-							)}
-						/>
+						{subCategory !== 'Items' && (
+							<FormField
+								control={form.control}
+								name='vendor_uuid'
+								render={(props) => (
+									<CoreForm.ReactSelect
+										label='Vendor'
+										options={
+											vendorList?.filter((item) =>
+												form
+													.getValues('quotations')
+													.some((quotation) => quotation.vendor_uuid === item.value)
+											) || []
+										}
+										isDisabled={
+											!(
+												form.watch('is_work_order') &&
+												form.watch('is_monthly_meeting') &&
+												form.watch('is_cs') &&
+												form.watch('is_quotation')
+											)
+										}
+										{...props}
+									/>
+								)}
+							/>
+						)}
 						<FormField
 							control={form.control}
 							name='work_order_remarks'
