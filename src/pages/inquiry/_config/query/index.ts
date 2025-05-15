@@ -23,7 +23,7 @@ export const useContactUs = <T>() =>
 		url: `/portfolio/contact-us`,
 	});
 
-export const useContactUsByUUID = <T>(uuid: number) =>
+export const useContactUsByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: inquiryQK.contactUsByUUID(uuid),
 		url: `/portfolio/contact-us/${uuid}`,

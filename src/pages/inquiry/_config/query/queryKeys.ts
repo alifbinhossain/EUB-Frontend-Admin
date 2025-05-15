@@ -5,5 +5,5 @@ export const inquiryQK = {
 	visitor: () => [...inquiryQK.all(), 'visitor'],
 	visitorByUUID: (uuid: string) => [...inquiryQK.visitor(), uuid],
 	contactUs: () => [...inquiryQK.all(), 'contact-us'],
-	contactUsByUUID: (uuid: number) => [...inquiryQK.visitor(), uuid],
+	contactUsByUUID: (uuid: string) => [...inquiryQK.visitor(), uuid],
 };

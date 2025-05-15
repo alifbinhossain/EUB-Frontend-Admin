@@ -12,7 +12,6 @@ import { getDateTime } from '@/utils';
 import { useContactUsByUUID } from '../_config/query';
 import { CONTACT_US_NULL, CONTACT_US_SCHEMA, IContactUs } from '../_config/schema';
 import { IContactUsAddOrUpdateProps } from '../_config/types';
-import { category, status } from './utils';
 
 const AddOrUpdate: React.FC<IContactUsAddOrUpdateProps> = ({
 	url,
@@ -26,7 +25,7 @@ const AddOrUpdate: React.FC<IContactUsAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useContactUsByUUID(updatedData?.id as number);
+	const { data } = useContactUsByUUID(updatedData?.uuid as string);
 
 	const form = useRHF(CONTACT_US_SCHEMA, CONTACT_US_NULL);
 
