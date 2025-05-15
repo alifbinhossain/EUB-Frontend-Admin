@@ -17,10 +17,7 @@ const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		usePurchaseCostCenter<IPurchaseCostCenterTableData[]>();
 
-	const pageInfo = useMemo(
-		() => new PageInfo('Purchase Cost Center', url, 'procurement__purchase_cost_center'),
-		[url]
-	);
+	const pageInfo = useMemo(() => new PageInfo('Category', url, 'procurement__category'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

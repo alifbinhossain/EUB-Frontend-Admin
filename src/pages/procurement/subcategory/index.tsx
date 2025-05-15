@@ -16,7 +16,7 @@ const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		useSubCategory<ISubCategoryTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Sub-Category', url, 'procurement__subcategory'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Sub-Segment', url, 'procurement__sub_segment'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
