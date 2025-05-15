@@ -79,7 +79,7 @@ const AddOrUpdate: React.FC<ICategoryAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Categories' : 'Add Categories'}
+			title={isUpdate ? 'Update Segment' : 'Add Segment'}
 			form={form}
 			onSubmit={onSubmit}
 		>

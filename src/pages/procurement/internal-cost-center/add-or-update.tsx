@@ -81,7 +81,7 @@ const AddOrUpdate: React.FC<IInternalCostCenterAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Internal Cost Center' : 'Add Internal Cost Center'}
+			title={isUpdate ? 'Update Cost Center' : 'Add Cost Center'}
 			form={form}
 			onSubmit={onSubmit}
 		>

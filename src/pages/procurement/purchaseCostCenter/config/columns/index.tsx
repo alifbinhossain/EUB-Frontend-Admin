@@ -21,7 +21,7 @@ export const purchaseCostCenterColumns = (): ColumnDef<IPurchaseCostCenterTableD
 	},
 	{
 		accessorKey: 'sub_category_name',
-		header: 'Sub Category',
+		header: 'Sub Segment',
 		enableColumnFilter: true,
 	},
 	{

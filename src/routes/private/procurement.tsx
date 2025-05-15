@@ -275,7 +275,7 @@ const procurementRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
-						name: 'Sub Segment',
+						name: 'Sub-Segment',
 						path: '/procurement/sub-segment',
 						element: <SubCategory />,
 						page_name: 'procurement__sub_segment',
