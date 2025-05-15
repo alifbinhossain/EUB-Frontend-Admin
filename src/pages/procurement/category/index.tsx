@@ -15,7 +15,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useCategory<ICategoryTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Category', url, 'procurement__category'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Segment', url, 'procurement__segment'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

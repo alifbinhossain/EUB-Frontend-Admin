@@ -189,8 +189,8 @@ const Entry = () => {
 					name='purchase_cost_center_uuid'
 					render={(props) => (
 						<CoreForm.ReactSelect
-							label='Purchase Cost Center'
-							placeholder='Select purchase cost center'
+							label='Category'
+							placeholder='Select purchase category'
 							options={purchases!}
 							{...props}
 						/>

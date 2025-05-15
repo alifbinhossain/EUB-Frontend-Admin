@@ -262,30 +262,30 @@ const procurementRoutes: IRoute[] = [
 				children: [
 					{
 						name: 'Cost Center',
-						path: '/procurement/internal-cost-center',
+						path: '/procurement/cost-center',
 						element: <InternalCostCenter />,
-						page_name: 'procurement__internal_cost_center',
+						page_name: 'procurement__cost_center',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
 						name: 'Category',
-						path: '/procurement/purchase-cost-center',
+						path: '/procurement/category',
 						element: <PurchaseCostCenter />,
-						page_name: 'procurement__purchase_cost_center',
+						page_name: 'procurement__category',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
 						name: 'Sub Segment',
-						path: '/procurement/subcategory',
+						path: '/procurement/sub-segment',
 						element: <SubCategory />,
-						page_name: 'procurement__subcategory',
+						page_name: 'procurement__sub_segment',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
 						name: 'Segment',
-						path: '/procurement/category',
+						path: '/procurement/segment',
 						element: <Category />,
-						page_name: 'procurement__category',
+						page_name: 'procurement__segment',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 

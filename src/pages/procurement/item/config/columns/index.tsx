@@ -29,7 +29,7 @@ export const itemColumns = (
 	},
 	{
 		accessorKey: 'purchase_cost_center_name',
-		header: 'Purchase Cost Center',
+		header: 'category',
 		enableColumnFilter: true,
 	},
 	{
