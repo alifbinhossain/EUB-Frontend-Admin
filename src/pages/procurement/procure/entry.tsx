@@ -98,7 +98,6 @@ const Entry = () => {
 
 		if (isUpdate) {
 			// UPDATE ITEM
-			const { quotations, general_notes, ...rest } = values;
 
 			const itemUpdatedData = {
 				...rest,
@@ -141,7 +140,7 @@ const Entry = () => {
 						Promise.all([...quotationsUpdatePromise]);
 					}
 
-					// * ENTRY FOR ITEMS
+					// * UPDATE FOR ITEMS
 					if (filteredItems.length > 0) {
 						const itemsPromise = filteredItems.map((entry) => {
 							if (entry.uuid) {
