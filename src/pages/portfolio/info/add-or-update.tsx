@@ -84,7 +84,7 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 			isSmall
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Info' : 'Add Info'}
+			title={isUpdate ? 'Update Doc Upload' : 'Add Doc Upload'}
 			form={form}
 			onSubmit={onSubmit}
 		>

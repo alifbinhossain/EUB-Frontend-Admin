@@ -21,7 +21,7 @@ const Info = () => {
 		IInfoTableData[]
 	>(getAccess(hasAccess));
 
-	const pageInfo = useMemo(() => new PageInfo('Info(PDF)', url, 'portfolio__info'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Doc Upload', url, 'portfolio__doc_upload'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

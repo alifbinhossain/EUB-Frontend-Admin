@@ -30,7 +30,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	imageUpdateData,
 }) => {
 	const isUpdate = !!updatedData;
-	const hasAccess: string[] = useAccess('portfolio__routine') as string[];
+	const hasAccess: string[] = useAccess('portfolio__doc_upload_routine') as string[];
 
 	const { user } = useAuth();
 	const { data } = useRoutineByUUID(updatedData?.uuid as string);
@@ -89,7 +89,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 			isSmall
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Routine' : 'Add Routine'}
+			title={isUpdate ? 'Update Doc Upload' : 'Add Doc Upload'}
 			form={form}
 			onSubmit={onSubmit}
 		>

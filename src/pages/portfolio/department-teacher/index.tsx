@@ -22,12 +22,15 @@ const Designation = () => {
 		getAccess(hasAccess)
 	);
 
-	const pageInfo = useMemo(() => new PageInfo('Teachers', url, 'portfolio__department_teachers'), [url]);
+	const pageInfo = useMemo(
+		() => new PageInfo('Faculty Members', url, 'portfolio__department_faculty_members'),
+		[url]
+	);
 
 	// Add/Update Modal state
 	const handleCreate = () => navigate('/portfolio/office/create');
 	const handleUpdate = (row: Row<IDepartmentTableData>) => {
-		navigate(`/portfolio/department-teacher/${row.original.uuid}/update`);
+		navigate(`/portfolio/faculty-members/${row.original.uuid}/update`);
 	};
 
 	// Table Columns

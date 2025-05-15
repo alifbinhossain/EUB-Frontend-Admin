@@ -15,11 +15,11 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const hasAccess: string[] = useAccess('portfolio__routine') as string[];
+	const hasAccess: string[] = useAccess('portfolio__doc_upload_routine') as string[];
 	const { data, isLoading, url, deleteData, postData, updateData, imagePostData, imageUpdateData, refetch } =
 		useRoutine<IRoutineTableData[]>(getAccess(hasAccess));
 
-	const pageInfo = useMemo(() => new PageInfo('Routine', url, 'portfolio__routine'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Doc Upload', url, 'portfolio__doc_upload_routine'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

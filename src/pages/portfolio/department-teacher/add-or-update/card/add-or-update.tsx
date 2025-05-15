@@ -46,7 +46,7 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Teacher' : 'Add Teacher'}
+			title={isUpdate ? 'Update Faculty Members' : 'Add Faculty Members'}
 			form={form}
 			onSubmit={onSubmit}
 			isSmall={true}
