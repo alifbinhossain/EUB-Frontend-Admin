@@ -313,6 +313,7 @@ export const OFFICE_SCHEMA = z.object({
 		'procurement_and_inventory',
 		'iqac',
 		'library',
+		'medical',
 	]),
 	image: z.any().refine((file) => file !== null && file !== undefined, 'Image is required'),
 	remarks: STRING_NULLABLE,

@@ -8,7 +8,7 @@ const Department = lazy(() => import('@/pages/hr/department'));
 
 const HrRoutes: IRoute[] = [
 	{
-		name: 'HR',
+		name: 'Admin',
 		children: [
 			{
 				name: 'User',

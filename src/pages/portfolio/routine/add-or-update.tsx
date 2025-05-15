@@ -99,7 +99,7 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 						control={form.control}
 						name='department_uuid'
 						render={(props) => (
-							<CoreForm.ReactSelect label='Department' options={departments!} {...props} />
+							<CoreForm.ReactSelect label='Department' options={departments!} {...props} /> // phy, chem, math
 						)}
 					/>
 					<FormField

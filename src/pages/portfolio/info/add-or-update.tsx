@@ -99,7 +99,7 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 					<FormField
 						control={form.control}
 						name='description'
-						render={(props) => <CoreForm.Textarea rows={4} {...props} />}
+						render={(props) => <CoreForm.Textarea rows={5} {...props} />}
 					/>
 
 					<FormField

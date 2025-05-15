@@ -28,4 +28,5 @@ export const categories = [
 	{ label: 'Procurement and Inventory', value: 'procurement_and_inventory', link: '/procurement_and_inventory' },
 	{ label: 'IQAC', value: 'iqac', link: '/iqac' },
 	{ label: 'Library', value: 'library', link: '/library' },
+	{ label: 'Medical', value: 'medical', link: '/medical' },
 ];

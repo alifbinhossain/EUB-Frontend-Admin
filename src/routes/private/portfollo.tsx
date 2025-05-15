@@ -43,28 +43,7 @@ const portfolioRoutes: IRoute[] = [
 		name: 'Portfolio',
 		children: [
 			{
-				name: 'Department',
-				path: '/portfolio/department',
-				element: <Department />,
-				page_name: 'portfolio__department',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Faculty',
-				path: '/portfolio/faculty',
-				element: <Faculty />,
-				page_name: 'portfolio__faculty',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Program',
-				path: '/portfolio/program',
-				element: <Program />,
-				page_name: 'portfolio__program',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Info',
+				name: 'Doc Upload',
 				path: '/portfolio/info',
 				element: <Info />,
 				page_name: 'portfolio__info',
@@ -78,7 +57,7 @@ const portfolioRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Feature',
+				name: 'Articles',
 				path: '/portfolio/feature',
 				element: <Feature />,
 				page_name: 'portfolio__feature',
@@ -88,7 +67,7 @@ const portfolioRoutes: IRoute[] = [
 				name: 'Programs',
 				children: [
 					{
-						name: 'Teachers',
+						name: 'Faculty Profile',
 						path: '/portfolio/teacher',
 						element: <Teachers />,
 						page_name: 'portfolio__teachers',
@@ -103,14 +82,14 @@ const portfolioRoutes: IRoute[] = [
 					// 	actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					// },
 					{
-						name: 'Department Teachers',
+						name: 'Faculty Members',
 						path: '/portfolio/department-teacher',
 						element: <DepartmentTeachers />,
 						page_name: 'portfolio__department_teachers',
 						actions: ['read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
-						name: 'Department Teachers',
+						name: 'Faculty Members',
 						path: '/portfolio/department-teacher/:uuid/update',
 						element: <UpdateDepartmentTeacher />,
 						hidden: true,
@@ -118,7 +97,7 @@ const portfolioRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete', ...DepartmentAccess],
 					},
 					{
-						name: 'Routine',
+						name: 'Doc Upload',
 						path: '/portfolio/routine',
 						element: <Routine />,
 						page_name: 'portfolio__routine',
@@ -168,7 +147,7 @@ const portfolioRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
-						name: 'Board Of Trustees',
+						name: 'Committee Members',
 						path: '/portfolio/bot',
 						element: <BoardOfTrustees />,
 						page_name: 'portfolio__bot',
@@ -285,6 +264,32 @@ const portfolioRoutes: IRoute[] = [
 						path: '/portfolio/job-circular',
 						element: <JobCircular />,
 						page_name: 'portfolio__job_circular',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+				],
+			},
+			{
+				name: 'Library',
+				children: [
+					{
+						name: 'Department',
+						path: '/portfolio/department',
+						element: <Department />,
+						page_name: 'portfolio__department',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
+						name: 'Faculty',
+						path: '/portfolio/faculty',
+						element: <Faculty />,
+						page_name: 'portfolio__faculty',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
+						name: 'Program',
+						path: '/portfolio/program',
+						element: <Program />,
+						page_name: 'portfolio__program',
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 				],
