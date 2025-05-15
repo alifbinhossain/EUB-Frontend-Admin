@@ -16,10 +16,7 @@ const Vendor = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		useItemWorkOrderEntry<IItemWorkOrderTableData[]>();
 
-	const pageInfo = useMemo(
-		() => new PageInfo('Procurement/Item Work Order Entry Log', url, 'procurement__log'),
-		[url]
-	);
+	const pageInfo = useMemo(() => new PageInfo('Procurement/Procure Entry Log', url, 'procurement__log'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

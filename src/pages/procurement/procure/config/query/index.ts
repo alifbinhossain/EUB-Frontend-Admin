@@ -28,3 +28,11 @@ export const useCapitalDetails = <T>(uuid: string) =>
 		url: `procure/capital/${uuid}`,
 		enabled: !!uuid,
 	});
+
+// Item by Vendor
+export const useItemByVendor = <T>(uuid: string, query?: string) =>
+	useTQuery<T>({
+		queryKey: capitalQK.itemByVendor(uuid, query),
+		url: query ? `/procure/item/by/vendor-uuid/${uuid}?${query}` : `/procure/item/by/vendor-uuid/${uuid}`,
+		enabled: !!uuid,
+	});
