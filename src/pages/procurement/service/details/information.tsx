@@ -46,7 +46,7 @@ const Information: React.FC<{ data: IServiceTableData }> = ({ data }) => {
 			},
 			{
 				label: 'Updated At',
-				value: formatDateTable(data.updated_at),
+				value: data.updated_at ? formatDateTable(data.updated_at) : '---',
 			},
 		];
 	};

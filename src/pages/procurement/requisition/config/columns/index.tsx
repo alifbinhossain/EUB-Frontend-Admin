@@ -34,11 +34,7 @@ export const requisitionColumns = (
 	},
 	{
 		accessorKey: 'is_store_received',
-		header: () => (
-			<div>
-				Store <br /> Received
-			</div>
-		),
+		header: 'Store Rcv.',
 		enableColumnFilter: false,
 		cell: (info) => {
 			return (
@@ -81,11 +77,7 @@ export const requisitionColumns = (
 	},
 	{
 		accessorKey: 'is_received',
-		header: () => (
-			<div>
-				Consumer <br /> Received
-			</div>
-		),
+		header: 'Consumer Rcv.',
 		enableColumnFilter: false,
 		cell: (info) => {
 			return (
@@ -123,7 +115,7 @@ export const requisitionColumns = (
 		header: 'Created At',
 		enablePinning: false,
 		cell: (info) => <DateTime date={info.getValue() as Date} />,
-		filterFn: 'dateRange',
+		// filterFn: 'dateRange',
 		meta: {
 			filterVariant: 'dateRange',
 		},
