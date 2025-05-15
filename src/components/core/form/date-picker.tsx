@@ -59,7 +59,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						{...calendarProps}
 						captionLayout={'dropdown'}
 						mode='single'
-						selected={field.value ? new Date(field.value) : new Date()}
+						selected={field.value ? new Date(field.value) : undefined}
 						onSelect={(date) => {
 							if (!disabled) {
 								field.onChange(formatDate(date as Date));
