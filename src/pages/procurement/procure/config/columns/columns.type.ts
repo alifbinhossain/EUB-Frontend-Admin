@@ -4,6 +4,7 @@ export type ICapitalTableData = {
 	name: string;
 	sub_category: string;
 	sub_category_name: string;
+	sub_category_uuid: string;
 	status: string;
 	value: number;
 	vendor_name: string;
@@ -23,6 +24,7 @@ export type ICapitalTableData = {
 
 	quotations: IQuotationTableData[];
 	general_notes: IGeneralNotesTableData[];
+	items: IItemsTableData[];
 
 	created_by_name: string;
 	created_at: string;
@@ -35,6 +37,16 @@ export type IQuotationTableData = {
 	is_selected: boolean;
 	vendor_name: string;
 	capital_name: string;
+};
+
+// * Items
+export type IItemsTableData = {
+	uuid: string;
+	item_uuid: string;
+	quantity: number;
+	unit_price: number;
+	is_received: boolean;
+	received_date: string;
 };
 
 // * General Notes

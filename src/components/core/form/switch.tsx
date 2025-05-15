@@ -44,7 +44,10 @@ const FormSwitch: React.FC<FormSwitchProps> = ({
 				<Switch
 					className={className}
 					checked={checked ?? field.value}
-					onCheckedChange={onCheckedChange ?? field.onChange}
+					onCheckedChange={(e) => {
+						field.onChange(e);
+						onCheckedChange?.(e);
+					}}
 					disabled={disabled}
 				/>
 			</FormControl>

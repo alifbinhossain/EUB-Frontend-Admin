@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
 	BOOLEAN_REQUIRED,
+	NUMBER_OPTIONAL,
 	NUMBER_REQUIRED,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
@@ -23,6 +24,19 @@ export const CAPITAL_SCHEMA = z
 				capital_uuid: STRING_OPTIONAL,
 				amount: NUMBER_REQUIRED.default(0),
 				is_selected: BOOLEAN_REQUIRED.default(false),
+			})
+		),
+
+		items: z.array(
+			z.object({
+				uuid: STRING_OPTIONAL,
+				item_uuid: STRING_OPTIONAL,
+				quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
+					message: 'Must be greater than 0',
+				}),
+				unit_price: NUMBER_OPTIONAL,
+				is_received: BOOLEAN_REQUIRED.default(false),
+				received_date: STRING_NULLABLE,
 			})
 		),
 
@@ -75,6 +89,8 @@ export const CAPITAL_NULL: Partial<ICapital> = {
 
 	is_quotation: false,
 	quotations: [],
+
+	items: [],
 
 	is_cs: false,
 	cs_remarks: null,

@@ -19,11 +19,14 @@ import { useCapital, useCapitalDetails } from './config/query';
 import { CAPITAL_NULL, CAPITAL_SCHEMA, ICapital } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 import useGenerateGeneralNotes from './useGenerateGeneralNotes';
+import useGenerateItemWorkOrder from './useGenerateItemWorkOrder';
+import { status } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 	const navigate = useNavigate();
+	const [subCategory, setSubCategory] = useState<string | null>(null);
 
 	const { user } = useAuth();
 	const {
@@ -32,7 +35,7 @@ const Entry = () => {
 		postData,
 		deleteData,
 		invalidateQuery: invalidateCapitalDetails,
-	} = useCapitalDetails(uuid as string);
+	} = useCapitalDetails<ICapitalTableData>(uuid as string);
 
 	const { invalidateQuery } = useCapital<ICapitalTableData[]>();
 	const { data: subCategoryList } = useOtherSubCategory<IFormSelectOption[]>();
@@ -48,6 +51,16 @@ const Entry = () => {
 		control: form.control,
 		name: 'quotations',
 	});
+
+	const {
+		fields: itemsFields,
+		append: appendItems,
+		remove: removeItems,
+	} = useFieldArray({
+		control: form.control,
+		name: 'items',
+	});
+
 	const {
 		fields: generalNotesFields,
 		append: appendGeneralNotes,
@@ -62,15 +75,29 @@ const Entry = () => {
 		if (data && isUpdate) {
 			// Reset form values
 			form.reset(data);
+
+			// Set subCategory
+			setSubCategory(
+				(subCategoryList?.find((item) => item.value === data.sub_category_uuid)?.label as string) || null
+			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
 
 	// Submit handler
 	async function onSubmit(values: ICapital) {
+		const { quotations, general_notes, items, ...rest } = values;
+
+		// * Filtered entries
+		const filteredItems = items.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
+
+		if (subCategory === 'Items' && filteredItems.length === 0) {
+			toast.warning('please add at least one item entry');
+			return;
+		}
+
 		if (isUpdate) {
 			// UPDATE ITEM
-			const { quotations, general_notes, ...rest } = values;
 
 			const itemUpdatedData = {
 				...rest,
@@ -113,6 +140,37 @@ const Entry = () => {
 						Promise.all([...quotationsUpdatePromise]);
 					}
 
+					// * UPDATE FOR ITEMS
+					if (filteredItems.length > 0) {
+						const itemsPromise = filteredItems.map((entry) => {
+							if (entry.uuid) {
+								const entryUpdateData = {
+									...entry,
+									received_date: entry.is_received ? getDateTime() : null,
+									updated_at: getDateTime(),
+								};
+								return updateData.mutateAsync({
+									url: `/procure/item-work-order-entry/${entry.uuid}`,
+									updatedData: entryUpdateData,
+								});
+							} else {
+								const entryData = {
+									...entry,
+									received_date: entry.is_received ? getDateTime() : null,
+									capital_uuid: uuid,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+								};
+								return postData.mutateAsync({
+									url: `/procure/item-work-order-entry`,
+									newData: entryData,
+								});
+							}
+						});
+						Promise.all([...itemsPromise]);
+					}
+
 					// * UPDATE FOR GENERAL NOTES
 					if (general_notes.length > 0) {
 						const generalNotesUpdatePromise = general_notes.map((entry) => {
@@ -152,7 +210,6 @@ const Entry = () => {
 				});
 		} else {
 			// ADD NEW ITEM
-			const { quotations, general_notes, ...rest } = values;
 
 			const itemData = {
 				...rest,
@@ -161,13 +218,9 @@ const Entry = () => {
 				uuid: nanoid(),
 			};
 
-			console.log('Main', itemData);
-			console.log('Quotations', quotations);
-			console.log('GN', general_notes);
-
 			postData
 				.mutateAsync({
-					url: '/procure/procure',
+					url: '/procure/capital',
 					newData: itemData,
 				})
 				.then(() => {
@@ -187,6 +240,25 @@ const Entry = () => {
 							});
 						});
 						Promise.all([...quotationsPromise]);
+					}
+
+					// * ENTRY FOR ITEMS
+					if (filteredItems.length > 0) {
+						const itemsPromise = filteredItems.map((entry) => {
+							const entryData = {
+								...entry,
+								received_date: entry.is_received ? getDateTime() : null,
+								capital_uuid: itemData.uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
+							return postData.mutateAsync({
+								url: `/procure/item-work-order-entry`,
+								newData: entryData,
+							});
+						});
+						Promise.all([...itemsPromise]);
 					}
 
 					// * ENTRY FOR GENERAL NOTES
@@ -229,6 +301,16 @@ const Entry = () => {
 		});
 	};
 
+	// * ADD ITEMS
+	const handleAddItems = () => {
+		appendItems({
+			item_uuid: '',
+			quantity: 0,
+			is_received: false,
+			received_date: null,
+		});
+	};
+
 	// * ADD GENERAL NOTES
 	const handleAddGeneralNotes = () => {
 		appendGeneralNotes({
@@ -257,6 +339,19 @@ const Entry = () => {
 		}
 	};
 
+	// * REMOVE ITEMS
+	const handleRemoveItems = (index: number) => {
+		if (itemsFields[index].uuid) {
+			setDeleteItem({
+				type: 'items',
+				id: itemsFields[index].uuid,
+				name: itemsFields[index].uuid,
+			});
+		} else {
+			removeItems(index);
+		}
+	};
+
 	// * REMOVE GENERAL NOTES
 	const handleRemoveGeneralNotes = (index: number) => {
 		if (generalNotesFields[index].uuid) {
@@ -280,6 +375,17 @@ const Entry = () => {
 		});
 	};
 
+	// * COPY ITEMS
+	const handleCopyItems = (index: number) => {
+		const field = form.watch('items')[index];
+		appendItems({
+			item_uuid: field.item_uuid,
+			quantity: field.quantity,
+			is_received: field.is_received,
+			received_date: field.received_date,
+		});
+	};
+
 	// * COPY GENERAL NOTES
 	const handleCopyGeneralNotes = (index: number) => {
 		const field = form.watch('general_notes')[index];
@@ -288,6 +394,25 @@ const Entry = () => {
 			description: field.description,
 		});
 	};
+
+	const fieldDefsQuotations = useGenerateFieldDefs({
+		data: form.getValues(),
+		copy: handleCopyQuotations,
+		remove: handleRemoveQuotations,
+		isUpdate,
+		watch: form.watch,
+	});
+
+	const fieldDefsItems = useGenerateItemWorkOrder({
+		data: form.getValues(),
+		copy: handleCopyItems,
+		remove: handleRemoveItems,
+		isUpdate,
+		watch: form.watch,
+		set: form.setValue,
+		isNew: false,
+		form: form,
+	});
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Procure' : 'Add Procure'} form={form} onSubmit={onSubmit}>
@@ -313,32 +438,79 @@ const Entry = () => {
 							menuPortalTarget={document.body}
 							options={subCategoryList!}
 							{...props}
+							onChange={(option) => {
+								setSubCategory(option?.label || null);
+								// form.setValue('sub_category_uuid', option?.value || null);
+							}}
 						/>
 					)}
 				/>
-			</CoreForm.Section>
 
-			<CoreForm.DynamicFields
-				title='Quotations'
-				extraHeader={
+				{subCategory === 'Items' && (
 					<FormField
 						control={form.control}
-						name='is_quotation'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+						name='vendor_uuid'
+						render={(props) => (
+							<CoreForm.ReactSelect
+								label='Vendor'
+								placeholder='Select vendor'
+								menuPortalTarget={document.body}
+								isDisabled={isUpdate}
+								options={vendorList!}
+								{...props}
+							/>
+						)}
 					/>
-				}
-				form={form}
-				fieldName='quotations'
-				fieldDefs={useGenerateFieldDefs({
-					data: form.getValues(),
-					copy: handleCopyQuotations,
-					remove: handleRemoveQuotations,
-					isUpdate,
-					watch: form.watch,
-				})}
-				fields={quotationFields}
-				{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
-			/>
+				)}
+				{/* <FormField
+					control={form.control}
+					name='status'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Status'
+							placeholder='Select status'
+							menuPortalTarget={document.body}
+							options={status!}
+							{...props}
+						/>
+					)}
+				/> */}
+			</CoreForm.Section>
+
+			{subCategory !== 'Items' ? (
+				<CoreForm.DynamicFields
+					title='Quotations'
+					extraHeader={
+						<FormField
+							control={form.control}
+							name='is_quotation'
+							render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+						/>
+					}
+					form={form}
+					fieldName='quotations'
+					fieldDefs={fieldDefsQuotations}
+					fields={quotationFields}
+					{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
+				/>
+			) : (
+				<CoreForm.DynamicFields
+					title='Items'
+					// extraHeader={
+					// 	<FormField
+					// 		control={form.control}
+					// 		name='is_quotation'
+					// 		render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+					// 	/>
+					// }
+					form={form}
+					fieldName='items'
+					fieldDefs={fieldDefsItems}
+					fields={itemsFields}
+					handleAdd={handleAddItems}
+					// {...(form.watch('is_quotation') ? { handleAdd: handleAddItems } : {})}
+				/>
+			)}
 
 			<CoreForm.Section
 				title={`Cs`}
@@ -408,38 +580,54 @@ const Entry = () => {
 						control={form.control}
 						name='is_work_order'
 						render={(props) => (
-							<CoreForm.Switch label='Work Order' labelClassName='text-slate-100' {...props} />
+							<CoreForm.Switch
+								label='Work Order'
+								labelClassName='text-slate-100'
+								{...props}
+								onCheckedChange={(value) => {
+									if (!value) {
+										form.setValue(
+											'items',
+											form
+												.getValues('items')
+												.map((item) => ({ ...item, is_received: false, received_date: null }))
+										);
+									}
+								}}
+							/>
 						)}
 					/>
 				}
 			>
 				{form.watch('is_work_order') && (
 					<>
-						<FormField
-							control={form.control}
-							name='vendor_uuid'
-							render={(props) => (
-								<CoreForm.ReactSelect
-									label='Vendor'
-									options={
-										vendorList?.filter((item) =>
-											form
-												.getValues('quotations')
-												.some((quotation) => quotation.vendor_uuid === item.value)
-										) || []
-									}
-									isDisabled={
-										!(
-											form.watch('is_work_order') &&
-											form.watch('is_monthly_meeting') &&
-											form.watch('is_cs') &&
-											form.watch('is_quotation')
-										)
-									}
-									{...props}
-								/>
-							)}
-						/>
+						{subCategory !== 'Items' && (
+							<FormField
+								control={form.control}
+								name='vendor_uuid'
+								render={(props) => (
+									<CoreForm.ReactSelect
+										label='Vendor'
+										options={
+											vendorList?.filter((item) =>
+												form
+													.getValues('quotations')
+													.some((quotation) => quotation.vendor_uuid === item.value)
+											) || []
+										}
+										isDisabled={
+											!(
+												form.watch('is_work_order') &&
+												form.watch('is_monthly_meeting') &&
+												form.watch('is_cs') &&
+												form.watch('is_quotation')
+											)
+										}
+										{...props}
+									/>
+								)}
+							/>
+						)}
 						<FormField
 							control={form.control}
 							name='work_order_remarks'
@@ -518,7 +706,12 @@ const Entry = () => {
 					{...{
 						deleteItem,
 						setDeleteItem,
-						url: deleteItem?.type === 'quotations' ? `/procure/capital-vendor` : `/procure/general-note`,
+						url:
+							deleteItem?.type === 'quotations'
+								? `/procure/capital-vendor`
+								: deleteItem?.type === 'general_notes'
+									? `/procure/general-note`
+									: `/procure/item-work-order-entry`,
 						deleteData,
 						invalidateQuery: invalidateCapitalDetails,
 					}}
