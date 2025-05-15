@@ -189,6 +189,7 @@ export const authoritiesColumns = (): ColumnDef<IAuthoritiesTableData>[] => [
 		accessorKey: 'short_biography',
 		header: 'Short Biography',
 		enableColumnFilter: false,
+		cell: (info) => <RichTextModal title='Short Biography' content={info.getValue() as string} />,
 	},
 ];
 

@@ -1,8 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import HoverCardWrapper from '@/components/others/hover-card-wrapper';
+
 import { cn } from '@/lib/utils';
 
-import { IVisitorTableData } from './columns.type';
+import { IContactUSTableData, IVisitorTableData } from './columns.type';
 
 // * Inquiry
 export const visitorColumns = (): ColumnDef<IVisitorTableData>[] => [
@@ -75,5 +77,23 @@ export const visitorColumns = (): ColumnDef<IVisitorTableData>[] => [
 		accessorKey: 'through',
 		header: 'Through',
 		enableColumnFilter: true,
+	},
+];
+export const contactUSColumns = (): ColumnDef<IContactUSTableData>[] => [
+	{
+		accessorKey: 'full_name',
+		header: 'Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'question',
+		header: 'Question',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'description',
+		header: 'Description',
+		enableColumnFilter: true,
+		cell: (info) => <HoverCardWrapper title={info.getValue<string>()} content={info.getValue<string>()} />,
 	},
 ];

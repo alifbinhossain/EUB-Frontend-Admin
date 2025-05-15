@@ -1,4 +1,4 @@
-import { addMonths, format } from 'date-fns';
+import { addMonths, format, isBefore } from 'date-fns';
 import { UseFormWatch } from 'react-hook-form';
 
 import FieldActionButton from '@/components/buttons/field-action';
@@ -43,7 +43,14 @@ const useServicePayment = ({ data, copy, remove, isUpdate, isNew, form }: IGener
 					return null;
 				}
 				const frequency = form.watch(`frequency`);
-				const nextDueDate = addMonths(new Date(paymentDate), Number(frequency) * (index + 1));
+				const addDueDate = addMonths(new Date(paymentDate), (12 / Number(frequency)) * (index + 1));
+				const endDate = form.watch(`end_date`);
+				let nextDueDate = addDueDate;
+				if (isBefore(new Date(endDate), addDueDate)) {
+					nextDueDate = new Date(endDate);
+				} else {
+					nextDueDate = new Date(addDueDate);
+				}
 				form.setValue(`service_payment.${index}.next_due_date`, nextDueDate);
 				return <DateTime date={nextDueDate} isTime={false} />;
 			},

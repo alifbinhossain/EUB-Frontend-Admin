@@ -113,7 +113,7 @@ const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 			<FormField
 				control={form.control}
 				name='short_biography'
-				render={(props) => <CoreForm.Textarea label='Short Biography' {...props} />}
+				render={(props) => <CoreForm.RichTextEditor label='Short Biography' {...props} />}
 			/>
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>

@@ -58,7 +58,7 @@ const Entry = () => {
 
 		const currentFrequency = form.watch('frequency');
 
-		const arraySize = Math.round((duration ?? 0) / (12 / Number(currentFrequency)));
+		const arraySize = Math.ceil((duration ?? 0) / (12 / Number(currentFrequency)));
 
 		return { arraySize };
 	}, [form.watch('start_date'), form.watch('end_date'), form.watch('frequency')]);

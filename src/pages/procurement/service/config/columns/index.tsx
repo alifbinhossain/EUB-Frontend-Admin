@@ -98,6 +98,12 @@ export const servicePaymentColumns = (): ColumnDef<IServicePayment>[] => [
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'next_due_date',
+		header: 'Next Due Date',
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
 		accessorKey: 'payment_date',
 		header: 'Payment Date',
 		enableColumnFilter: true,
