@@ -8,9 +8,9 @@ const Item = lazy(() => import('@/pages/procurement/item'));
 const ItemEntry = lazy(() => import('@/pages/procurement/item/entry'));
 const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
-const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
-const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
-const ItemWorkOrderDetails = lazy(() => import('@/pages/procurement/item-work-order/details'));
+// const ItemWorkOrder = lazy(() => import('@/pages/procurement/item-work-order'));
+// const ItemWorkOrderEntry = lazy(() => import('@/pages/procurement/item-work-order/entry'));
+// const ItemWorkOrderDetails = lazy(() => import('@/pages/procurement/item-work-order/details'));
 const PDFStatic = lazy(() => import('@/pages/procurement/form'));
 const Procure = lazy(() => import('@/pages/procurement/procure'));
 const ProcureEntry = lazy(() => import('@/pages/procurement/procure/entry'));
@@ -170,13 +170,6 @@ const procurementRoutes: IRoute[] = [
 			},
 
 			{
-				name: 'PDF (Static)',
-				path: '/procurement/pdf-static',
-				element: <PDFStatic />,
-				page_name: 'procurement__pdf_static',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
 				name: 'Requisition',
 				path: '/procurement/requisition',
 				element: <Requisition />,
@@ -218,7 +211,13 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__requisition_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-
+			{
+				name: 'PDF (Static)',
+				path: '/procurement/pdf-static',
+				element: <PDFStatic />,
+				page_name: 'procurement__pdf_static',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
 			{
 				name: 'PDF (Generate)',
 				path: '/procurement/pdf/generate',
