@@ -16,7 +16,7 @@ const InternalCostCenter = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		useInternalCostCenter<IInternalCostCenterTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Internal Cost Center', url, 'procurement__cost_center'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Cost Center', url, 'procurement__cost_center'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);

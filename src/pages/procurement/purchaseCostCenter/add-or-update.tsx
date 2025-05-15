@@ -91,8 +91,8 @@ const AddOrUpdate: React.FC<IPurchaseCostCenterAddOrUpdateProps> = ({
 				name='sub_category_uuid'
 				render={(props) => (
 					<CoreForm.ReactSelect
-						label='Sub Category'
-						placeholder='Select sub-category'
+						label='Sub Segment'
+						placeholder='Select sub-segment'
 						options={subCategory!}
 						{...props}
 					/>

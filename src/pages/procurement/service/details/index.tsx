@@ -11,7 +11,7 @@ const Index = () => {
 	const { data, isLoading } = useServiceDetails(uuid as string);
 
 	useEffect(() => {
-		document.title = 'Capital Details';
+		document.title = 'Service Details';
 	}, []);
 	if (isLoading) return <div>Loading...</div>;
 	return (
