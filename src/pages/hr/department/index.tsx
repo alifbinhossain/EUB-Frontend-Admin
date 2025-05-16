@@ -15,7 +15,6 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Department = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
 		useHrDepartments<IDepartmentTableData[]>();
-	console.log(data);
 
 	const pageInfo = useMemo(() => new PageInfo('HR/Department', url, 'admin__user_department'), [url]);
 

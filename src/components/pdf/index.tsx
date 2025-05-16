@@ -3,8 +3,6 @@ import pdfMake from 'pdfmake/build/pdfmake';
 // import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { vfs } from './vfs_fonts';
 
-// console.log(pdfFonts);
-
 const BASE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts';
 const ROBOTO = BASE_URL + '/Roboto/Roboto-';
 pdfMake.vfs = vfs;

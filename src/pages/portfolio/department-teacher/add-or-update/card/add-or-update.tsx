@@ -24,7 +24,6 @@ const AddOrUpdate: React.FC<IDepartmentTeachersAddOrUpdateProps> = ({
 }) => {
 	const { data: teachers } = useOtherTeachers<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateTeachers } = useDepartmentsTeachers();
-	console.log(excludedOption);
 
 	const form = useRHF(PORTFOLIO_DEPARTMENT_TEACHER_SCHEMA, PORTFOLIO_DEPARTMENT_TEACHER_NULL);
 

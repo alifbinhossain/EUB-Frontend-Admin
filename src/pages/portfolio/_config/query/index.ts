@@ -185,7 +185,6 @@ export const useOffersByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
-// ? DEPARTMENT-TEACHERS
 // * ALL Department-Teachers
 export const useDepartmentsTeachers = <T>(query: string = '') =>
 	useTQuery<T>({

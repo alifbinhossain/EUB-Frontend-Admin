@@ -13,7 +13,6 @@ import pdfMake from '..';
 import { getPageFooter } from './utils';
 
 export default function Index(data: IWorkOrder) {
-	console.log('data', data);
 	const headerHeight = 20;
 	const footerHeight = 50;
 	// product_name: '',

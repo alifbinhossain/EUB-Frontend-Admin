@@ -236,7 +236,7 @@ const AddOrUpdate = () => {
 				.then(() => form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL))
 				.then(() => {
 					invalidateTestDetails(); // TODO: Update invalidate query
-					navigate(`/portfolio/department-teacher`);
+					navigate(`/portfolio/faculty-members`);
 				})
 				.catch((error) => {
 					console.error('Error updating Office:', error);
@@ -278,12 +278,13 @@ const AddOrUpdate = () => {
 			.then(() => form.reset(PORTFOLIO_DEPARTMENT_TEACHER_NULL))
 			.then(() => {
 				invalidateTestDetails(); // TODO: Update invalidate query
-				navigate(`/portfolio/teacher`);
+				navigate(`/portfolio/faculty-profile`);
 			})
 			.catch((error) => {
 				console.error('Error adding Office:', error);
 			});
 	};
+
 	const fliedDefs = [
 		{
 			header: 'Status',
@@ -364,7 +365,6 @@ const AddOrUpdate = () => {
 
 		setIsOpenAddModal((prev) => !prev);
 		setUpdatedData(null);
-		console.log('newCard', updatedData);
 		setAdding(false);
 	};
 

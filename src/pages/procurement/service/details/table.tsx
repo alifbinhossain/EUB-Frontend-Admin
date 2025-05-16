@@ -18,7 +18,6 @@ const Table: React.FC<{ data: IServiceTableData; isLoading: boolean }> = ({ data
 		const arraySize = Math.ceil((duration ?? 0) / (12 / Number(currentFrequency)));
 
 		const newServicePayments = [];
-		console.log('arraySize', arraySize);
 
 		for (let index = 0; index < arraySize; index++) {
 			if (!startDate) {

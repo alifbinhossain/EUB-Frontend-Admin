@@ -8,7 +8,6 @@ import Information from './information';
 
 const DetailsPage = () => {
 	const { user } = useAuth();
-	console.log('user', user);
 	const { data, isLoading, url, updateData, imageUpdateData, postData } = useHrUsersByUUID<IUserTableData>(
 		user?.uuid as string
 	);

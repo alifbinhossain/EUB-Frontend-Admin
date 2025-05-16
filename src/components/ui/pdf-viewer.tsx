@@ -9,12 +9,6 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 const PdfViewer: React.FC<{ fileUrl: string }> = ({ fileUrl }) => {
 	const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-	console.log({
-		fileUrl,
-	});
-
-	// return <>Hello</>;
-
 	return (
 		<Worker workerUrl='https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js'>
 			<div className='size-full'>

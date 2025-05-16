@@ -66,7 +66,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 		async (data: ILoginData) => {
 			try {
 				const response = await api.post<IAuthResponse>('/signin', data);
-				console.log(response);
 
 				const { token, user, can_access } = response.data;
 
