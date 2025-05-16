@@ -1,11 +1,13 @@
-export const types = [
+type IValueLabel = { label: string; value: string };
+
+export const types: IValueLabel[] = [
 	{ label: 'Proctor', value: 'proctor' },
 	{ label: 'Admission', value: 'admission' },
 	{ label: 'Exam Control', value: 'exam-control' },
 	{ label: 'Fed', value: 'fed' },
 	{ label: 'Purchase Committee', value: 'purchase_committee' },
 ];
-export const departments = [
+export const departments: IValueLabel[] = [
 	{
 		label: 'Chairman Bot',
 		value: 'chairman_bot',
@@ -19,11 +21,11 @@ export const departments = [
 		value: 'treasurer',
 	},
 	{
-		label: 'PNI',
+		label: 'P&I',
 		value: 'pni',
 	},
 	{
-		label: 'PND',
+		label: 'P&D',
 		value: 'pnd',
 	},
 	{
@@ -37,10 +39,6 @@ export const departments = [
 	{
 		label: 'Controller Office',
 		value: 'controller_office',
-	},
-	{
-		label: 'Civil Engineering',
-		value: 'civil_engineering',
 	},
 	{
 		label: 'Exam C-01',
@@ -85,7 +83,7 @@ export const departments = [
 	},
 	{
 		label: 'Business Administration',
-		value: 'businessadministration',
+		value: 'business_administration',
 	},
 
 	{
@@ -94,7 +92,7 @@ export const departments = [
 	},
 	{
 		label: 'IPE & IQAC',
-		value: 'ipe&_iqac',
+		value: 'ipe_n_iqac',
 	},
 	{
 		label: 'Textile Engineering',

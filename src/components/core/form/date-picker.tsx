@@ -59,10 +59,10 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						{...calendarProps}
 						captionLayout={'dropdown'}
 						mode='single'
-						selected={field.value ? new Date(field.value) : undefined}
-						onSelect={(date) => {
+						selected={field.value ? new Date(field.value) : new Date()}
+						onSelect={(selected, triggerDate) => {
 							if (!disabled) {
-								field.onChange(formatDate(date as Date));
+								field.onChange(formatDate(triggerDate as Date));
 								setOpen(false);
 							}
 						}}
@@ -72,7 +72,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 							}
 						}}
 						month={field.value ? new Date(field.value) : undefined}
-						endMonth={new Date(2050, 11)}
+						endMonth={new Date(2040, 11)}
 						disabled={disabled} // Disable the calendar when the field is disabled
 					/>
 				</PopoverContent>
