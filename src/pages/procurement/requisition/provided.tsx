@@ -42,7 +42,7 @@ const Entry = () => {
 
 	const form = useRHF(REQUISITION_SCHEMA, REQUISITION_NULL);
 
-	const { fields, append, remove } = useFieldArray({
+	const { fields, remove } = useFieldArray({
 		control: form.control,
 		name: 'item_requisition',
 	});
