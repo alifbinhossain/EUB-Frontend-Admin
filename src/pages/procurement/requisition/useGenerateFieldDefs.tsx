@@ -33,11 +33,11 @@ const useGenerateFieldDefs = ({
 	form,
 }: IGenerateFieldDefsProps): FieldDef[] => {
 	const { data: itemList } = useOtherItem<IFormSelectOption[]>();
-
+	const fieldName = isNew ? 'new_item_requisition' : 'item_requisition';
 	// Copy req_quantity to provided_quantity for the given index
 	const handleCopy = (index: number) => {
-		const reqQuantity = form.getValues(`item_requisition.${index}.req_quantity`);
-		form.setValue(`item_requisition.${index}.provided_quantity`, reqQuantity, {
+		const reqQuantity = form.getValues(`${fieldName}.${index}.req_quantity`);
+		form.setValue(`${fieldName}.${index}.provided_quantity`, reqQuantity, {
 			shouldValidate: true,
 			shouldDirty: true,
 		});
@@ -51,12 +51,7 @@ const useGenerateFieldDefs = ({
 			placeholder: 'Select Item',
 			options: itemList || [],
 			unique: true,
-			excludeOptions: watch
-				? [
-						...(watch('new_item_requisition')?.map((item) => item.item_uuid) || []),
-						...(watch('item_requisition')?.map((item) => item.item_uuid) || []),
-					]
-				: [],
+			excludeOptions: watch ? [...(watch(`${fieldName}`)?.map((item) => item.item_uuid) || [])] : [],
 			disabled: provider || !isNew || (watch ? watch('is_received') : false),
 		},
 		{
@@ -64,12 +59,12 @@ const useGenerateFieldDefs = ({
 			accessorKey: 'req_quantity',
 			type: 'custom',
 			component: (index: number) => {
-				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				const itemUuid = watch ? watch(`${fieldName}.${index}.item_uuid`) : '';
 				const unit = itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
 				return (
 					<FormField
 						control={form.control}
-						name={`item_requisition.${index}.req_quantity`}
+						name={`${fieldName}.${index}.req_quantity`}
 						render={(props) => (
 							<CoreForm.JoinInputUnit
 								disableLabel={true}
@@ -79,7 +74,6 @@ const useGenerateFieldDefs = ({
 								unit={unit}
 								{...props}
 							>
-								{' '}
 								{provider && (
 									<Button
 										className='rounded-full'
@@ -106,7 +100,7 @@ const useGenerateFieldDefs = ({
 			disabled: true,
 			hidden: request,
 			unit: (index: number) => {
-				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				const itemUuid = watch ? watch(`${fieldName}.${index}.item_uuid`) : '';
 				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
 			},
 		},
@@ -118,7 +112,7 @@ const useGenerateFieldDefs = ({
 			disabled: request || (watch ? watch('is_received') : false),
 			hidden: isNew,
 			unit: (index: number) => {
-				const itemUuid = watch ? watch(`item_requisition.${index}.item_uuid`) : '';
+				const itemUuid = watch ? watch(`${fieldName}.${index}.item_uuid`) : '';
 				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
 			},
 		},

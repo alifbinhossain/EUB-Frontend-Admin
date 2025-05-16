@@ -46,10 +46,6 @@ const AddOrUpdate = () => {
 		...PORTFOLIO_DEPARTMENT_TEACHER_NULL,
 	});
 
-	console.log({
-		error: form.formState.errors,
-	});
-
 	const [cards, setCards] = useState<ICard[]>([]);
 
 	const { department_teaches } = data || {};
@@ -364,7 +360,6 @@ const AddOrUpdate = () => {
 
 		setIsOpenAddModal((prev) => !prev);
 		setUpdatedData(null);
-		console.log('newCard', updatedData);
 		setAdding(false);
 	};
 
