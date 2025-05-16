@@ -16,10 +16,7 @@ const DeleteAllModal = lazy(() => import('@core/modal/delete/all'));
 const Teachers = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useTeachers<ITeacherTableData[]>();
 
-	const pageInfo = useMemo(
-		() => new PageInfo('Faculty Profile', url, 'portfolio__department_faculty_members'),
-		[url]
-	);
+	const pageInfo = useMemo(() => new PageInfo('Faculty Profile', url, 'portfolio__faculty_profile'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
