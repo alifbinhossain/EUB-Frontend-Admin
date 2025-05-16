@@ -1,13 +1,11 @@
 import { EUB_LOGO } from '@/assets/images/base64';
 import { IWorkOrder } from '@/pages/procurement/pdf-make/config/schema';
-import { departments } from '@/pages/procurement/requisition/utils';
 import { format } from 'date-fns';
 
 import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE, getTable } from '@/components/pdf/utils';
 
 import { getDateTime } from '@/utils';
-import { formatDateTable } from '@/utils/formatDate';
 
 import pdfMake from '..';
 import { getPageFooter } from './utils';
@@ -15,11 +13,6 @@ import { getPageFooter } from './utils';
 export default function Index(data: IWorkOrder) {
 	const headerHeight = 20;
 	const footerHeight = 50;
-	// product_name: '',
-	// description: '',
-	// quantity: 0,
-	// unit_price: 0,
-	// total_price: 0,
 	const node = [
 		getTable('index', 'No', 'center'),
 		getTable('description', 'Description'),
@@ -27,15 +20,13 @@ export default function Index(data: IWorkOrder) {
 		getTable('unit_price', 'Unit Price', 'right'),
 		getTable('total_price', 'Total', 'right'),
 	];
-	const departement_options = departments;
+
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_PAGE({
 			xMargin,
 			headerHeight,
 			footerHeight,
 		}),
-
-		// * Page Header
 
 		// * Page Footer
 		footer: (currentPage: number, pageCount: number) => ({

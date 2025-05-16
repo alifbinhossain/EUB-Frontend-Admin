@@ -42,7 +42,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'frequency',
-		header: 'Frequency',
+		header: 'Frequency/Year',
 		enableColumnFilter: true,
 	},
 	{

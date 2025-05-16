@@ -54,7 +54,7 @@ const Information: React.FC<{ data: IServiceTableData }> = ({ data }) => {
 	const renderMoreITems = (): ITableListItems => {
 		return [
 			{
-				label: 'Frequency',
+				label: 'Frequency/Year',
 				value: data.frequency,
 			},
 			{

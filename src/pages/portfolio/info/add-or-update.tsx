@@ -116,10 +116,10 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						<CoreForm.FileUpload
 							label='File'
 							fileType='document'
-							errorText='File must be less than 10MB and of type pdf, doc, docx'
+							errorText='File must be less than 100MB and of type pdf, doc, docx'
 							isUpdate={isUpdate}
 							options={{
-								maxSize: 10000000,
+								maxSize: 100000000,
 							}}
 							{...props}
 						/>

@@ -16,8 +16,6 @@ const SidebarHeader = () => {
 			<div className='relative border-b border-border/10 px-4 py-6'>
 				<BrandLogo />
 
-				<span className='absolute right-4 top-4 hidden text-xs italic text-secondary-light md:block'>V2.0</span>
-
 				<button
 					className='btn btn-square btn-ghost btn-sm absolute right-4 top-4 text-white md:hidden'
 					onClick={() => setSidebarOpen(false)}
