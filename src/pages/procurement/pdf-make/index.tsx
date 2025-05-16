@@ -28,11 +28,11 @@ const PdfMaker = () => {
 		<>
 			<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 				<div className='flex h-full flex-col items-center justify-center gap-2'>
-					<Button variant={'accent'} onClick={() => setOpen(true)}>
+					{/* <Button variant={'accent'} onClick={() => setOpen(true)}>
 						Add General Note
-					</Button>
+					</Button> */}
 					<Button variant={'accent'} onClick={() => setOpenBangla(true)}>
-						Add General Note(Bangla)
+						Add General Note
 					</Button>
 					<Button variant={'accent'} onClick={() => handleWorkOrder()}>
 						Work Order
@@ -44,12 +44,12 @@ const PdfMaker = () => {
 						Comparative Statement
 					</Button>
 					{renderSuspenseModals([
-						<GeneralNote
-							{...{
-								open: open,
-								setOpen: setOpen,
-							}}
-						/>,
+						// <GeneralNote
+						// 	{...{
+						// 		open: open,
+						// 		setOpen: setOpen,
+						// 	}}
+						// />,
 						<GeneralNoteBangla
 							{...{
 								open: openBangla,
