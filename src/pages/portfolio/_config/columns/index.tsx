@@ -245,12 +245,14 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 	{
 		accessorKey: 'id',
 		header: 'ID',
-		enableColumnFilter: true,
+		enableColumnFilter: false,
+		size: 20,
 	},
 	{
 		accessorKey: 'department_name',
-		header: 'Department Name',
+		header: 'Department',
 		enableColumnFilter: true,
+		size: 20,
 		cell: (info) => {
 			const link = info.row.original.page_link;
 			return <LinkWithRedirect baseUrlNeeded={false} uri={link} title={info.getValue() as string} />;
@@ -260,11 +262,13 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		accessorKey: 'programs',
 		header: 'Programs',
 		enableColumnFilter: true,
+		size: 20,
 	},
 	{
 		accessorKey: 'type',
 		header: 'Type',
 		enableColumnFilter: true,
+		size: 20,
 		cell: (info) => {
 			const { programs, page_link, type } = info.row.original;
 
@@ -279,17 +283,20 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		header: 'Description',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'is_global',
-		header: 'Global',
-		enableColumnFilter: true,
-		cell: (info) => <StatusButton value={info.getValue() as number} />,
-	},
+	// {
+	// 	accessorKey: 'is_global',
+	// 	header: 'Global',
+	// 	enableColumnFilter: true,
+	// 	cell: (info) => <StatusButton value={info.getValue() as number} />,
+	// },
 	{
 		accessorKey: 'file',
 		header: 'File',
-		enableColumnFilter: true,
+		enableColumnFilter: false,
 		cell: (info) => <FilePreview preview={info.getValue() as string} />,
+		meta: {
+			disableFullFilter: true,
+		},
 	},
 ];
 

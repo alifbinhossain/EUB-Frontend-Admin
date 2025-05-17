@@ -31,7 +31,8 @@ const useDefaultColumns = <TData, TValue>({ isSSR }: IDefaultColumns): ColumnDef
 			cell: (info) => <DateTime date={info.getValue() as Date} />,
 			filterFn: 'dateRange',
 			meta: {
-				filterVariant: 'dateRange',
+				// filterVariant: 'dateRange',
+				disableFullFilter: true,
 			},
 		},
 		{
@@ -40,10 +41,10 @@ const useDefaultColumns = <TData, TValue>({ isSSR }: IDefaultColumns): ColumnDef
 			enablePinning: false,
 			cell: (info) => <DateTime date={info.getValue() as Date} />,
 			meta: {
-				filterVariant: 'dateRange',
+				// filterVariant: 'dateRange',
+				disableFullFilter: true,
 			},
 		},
-
 		{
 			id: 'actions',
 			accessorKey: 'actions',
