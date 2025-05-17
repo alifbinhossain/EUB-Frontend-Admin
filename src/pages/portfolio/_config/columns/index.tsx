@@ -236,10 +236,13 @@ type IRoutineKeyValue = { [key: string]: string };
 const programType: IRoutineKeyValue = {
 	regular: 'regular-program-',
 	evening: 'evening-program-',
+	none: '',
 };
 const programTypeValue: IRoutineKeyValue = {
 	class_routine: 'class-routine',
 	exam_schedule: 'exam-schedule',
+	course_offer: 'course-offer',
+	notices: 'notices',
 };
 export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 	{
@@ -271,9 +274,12 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		size: 20,
 		cell: (info) => {
 			const { programs, page_link, type } = info.row.original;
-
 			let baseUrl = page_link.split('=')[0] + '=';
-			baseUrl += programType[programs] + programTypeValue[type];
+			if (type == 'notices') {
+				baseUrl += 'notices';
+			} else {
+				baseUrl += programType[programs] + programTypeValue[type];
+			}
 
 			return <LinkWithRedirect baseUrlNeeded={false} uri={baseUrl} title={info.getValue() as string} />;
 		},
