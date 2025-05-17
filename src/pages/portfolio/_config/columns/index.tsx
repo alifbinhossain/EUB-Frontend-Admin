@@ -232,6 +232,15 @@ export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
 ];
 
 // * Routine Columns
+type IRoutineKeyValue = { [key: string]: string };
+const programType: IRoutineKeyValue = {
+	regular: 'regular-program-',
+	evening: 'evening-program-',
+};
+const programTypeValue: IRoutineKeyValue = {
+	class_routine: 'class-routine',
+	exam_schedule: 'exam-schedule',
+};
 export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 	{
 		accessorKey: 'id',
@@ -256,6 +265,14 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		accessorKey: 'type',
 		header: 'Type',
 		enableColumnFilter: true,
+		cell: (info) => {
+			const { programs, page_link, type } = info.row.original;
+
+			let baseUrl = page_link.split('=')[0] + '=';
+			baseUrl += programType[programs] + programTypeValue[type];
+
+			return <LinkWithRedirect baseUrlNeeded={false} uri={baseUrl} title={info.getValue() as string} />;
+		},
 	},
 	{
 		accessorKey: 'description',
