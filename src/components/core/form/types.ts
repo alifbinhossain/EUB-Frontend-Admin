@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckboxProps } from '@radix-ui/react-checkbox';
+import { OTPInputProps } from 'input-otp';
 import { DayPickerProps } from 'react-day-picker';
 import { DropzoneOptions } from 'react-dropzone';
 import { ControllerFieldState, ControllerRenderProps, UseFormReturn, UseFormStateReturn } from 'react-hook-form';
@@ -124,6 +125,16 @@ export interface FormInputProps extends InputProps {
 	icon?: React.ReactNode;
 	disableLabel?: boolean;
 }
+// * form-phone
+export type FormOtpProps = Omit<OTPInputProps, 'children'> & {
+	field: ControllerRenderProps<any, any>;
+	fieldState: ControllerFieldState;
+	formState: UseFormStateReturn<any>;
+	label?: string;
+	subLabel?: string;
+	optional?: boolean;
+	disableLabel?: boolean;
+};
 
 // * form-file-upload
 export interface FormFileUploadProps extends InputProps {

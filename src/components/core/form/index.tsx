@@ -7,6 +7,8 @@ import Input from './input';
 import JoinInputSelect from './join-input-select';
 import JoinInputUnit from './join-input-unit';
 import MultiSelect from './multi-select';
+import Otp from './otp';
+import Phone from './phone';
 import ReactSelect from './react-select';
 import RichTextEditor from './rich-text-editor';
 import Section from './section';
@@ -32,6 +34,8 @@ const Form = {
 	FileUpload,
 	RichTextEditor,
 	Switch,
+	Otp,
+	Phone,
 };
 
 export default Form;

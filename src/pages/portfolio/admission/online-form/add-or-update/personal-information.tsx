@@ -49,7 +49,7 @@ const PersonalInformation = () => {
 			<FormField
 				control={form.control}
 				name='phone_number'
-				render={(props) => <CoreForm.Input label='Phone Number' {...props} />}
+				render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
 			/>
 			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Input {...props} />} />

@@ -68,7 +68,7 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 		>
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Phone {...props} />} />
 			</div>
 
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
