@@ -440,6 +440,11 @@ const Entry = () => {
 							{...props}
 							onChange={(option) => {
 								setSubCategory(option?.label || null);
+								if (option?.label === 'Items') {
+									form.setValue('is_quotation', true);
+								} else {
+									form.setValue('is_quotation', false);
+								}
 								// form.setValue('sub_category_uuid', option?.value || null);
 							}}
 						/>

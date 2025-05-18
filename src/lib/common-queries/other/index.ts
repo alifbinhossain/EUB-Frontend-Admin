@@ -86,6 +86,14 @@ export const useOtherPurchaseCostCenter = <T>() =>
 		queryKey: otherQK.purchaseCostCenter(),
 		url: `/other/procure/purchase-cost-center/value/label`,
 	});
+// * GET OTHER SUB PURCHASE COST CENTER
+export const useOtherSubPurchaseCostCenter = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: otherQK.subPurchaseCostCenter(),
+		url: query
+			? `/other/procure/sub-purchase-cost-center/value/label${query}`
+			: `/other/procure/sub-purchase-cost-center/value/label`,
+	});
 
 // * GET OTHER VENDOR
 export const useOtherVendor = <T>() =>

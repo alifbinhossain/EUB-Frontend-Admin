@@ -34,6 +34,8 @@ const otherQK = {
 
 	//* Purchase Cost Center
 	purchaseCostCenter: () => [...otherQK.all(), 'purchaseCostCenter'],
+	//* Sub Purchase Cost Center
+	subPurchaseCostCenter: () => [...otherQK.all(), 'subPurchaseCostCenter'],
 
 	//* Vendor
 	vendor: () => [...otherQK.all(), 'vendor'],

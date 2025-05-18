@@ -28,6 +28,7 @@ const GeneralStatement = lazy(() => import('@/pages/procurement/pdf-make/index')
 const WorkOrder = lazy(() => import('@/pages/procurement/pdf-make/work-order'));
 const ItemRequisitionFormCapital = lazy(() => import('@/pages/procurement/pdf-make/item-requistion-capital'));
 const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/comparitive-statement'));
+const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchase-cost-center'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -268,6 +269,20 @@ const procurementRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 					{
+						name: 'Vendor',
+						path: '/procurement/vendor',
+						element: <Vendor />,
+						page_name: 'procurement__vendor',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
+						name: 'Sub-Category',
+						path: '/procurement/sub-category',
+						element: <SubPurchaseCostCenter />,
+						page_name: 'procurement__sub_category',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
+					{
 						name: 'Category',
 						path: '/procurement/category',
 						element: <PurchaseCostCenter />,
@@ -289,13 +304,6 @@ const procurementRoutes: IRoute[] = [
 						actions: ['create', 'read', 'update', 'delete'],
 					},
 
-					{
-						name: 'Vendor',
-						path: '/procurement/vendor',
-						element: <Vendor />,
-						page_name: 'procurement__vendor',
-						actions: ['create', 'read', 'update', 'delete'],
-					},
 					{
 						name: 'Process',
 						path: '/procurement/process',

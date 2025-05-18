@@ -15,9 +15,10 @@ import {
 export const ITEM_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	purchase_cost_center_uuid: STRING_REQUIRED,
-	vendor_price: NUMBER_REQUIRED.min(1, 'Vendor Price must be greater than 0'),
+	sub_purchase_cost_center_uuid: STRING_NULLABLE,
+	// vendor_price: NUMBER_REQUIRED.min(1, 'Vendor Price must be greater than 0'),
 	unit: STRING_REQUIRED,
-	price_validity: STRING_REQUIRED,
+	// price_validity: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 	vendors: z.array(
 		z.object({ uuid: STRING_OPTIONAL, vendor_uuid: STRING_REQUIRED, is_active: BOOLEAN_REQUIRED.default(false) })
@@ -27,17 +28,12 @@ export const ITEM_SCHEMA = z.object({
 export const ITEM_NULL: Partial<IItem> = {
 	name: '',
 	purchase_cost_center_uuid: '',
-	vendor_price: 0,
+	sub_purchase_cost_center_uuid: null,
+	// vendor_price: 0,
 	unit: '',
-	price_validity: '',
+	// price_validity: '',
 	remarks: '',
-	vendors: [
-		{
-			uuid: '',
-			vendor_uuid: '',
-			is_active: false,
-		},
-	],
+	vendors: [],
 };
 
 export type IItem = z.infer<typeof ITEM_SCHEMA>;

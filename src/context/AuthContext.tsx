@@ -28,7 +28,6 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	// State variables for redirectUrl, user, access, and loading state
-	const [redirectUrl, setRedirectUrl] = useState('/');
 	const [user, setUser] = useState<IUser | null>(null);
 	const [canAccess, setCanAccess] = useState<{
 		[key: string]: string;
@@ -39,14 +38,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const { value: authCookie, updateCookie: updateAuthCookie, deleteCookie: deleteAuthCookie } = useCookie('auth');
 	const { value: userCookie, updateCookie: updateUserCookie, deleteCookie: deleteUserCookie } = useCookie('user');
 	const [userCanAccess, updateUserCanAccess, removeUserCanAccess] = useLocalStorage('can_access', '');
-
-	useEffect(() => {
-		if (!user) {
-			setRedirectUrl(new URLSearchParams(window.location.search).get('redirect') || '/');
-		} else {
-			setRedirectUrl('/');
-		}
-	}, [redirectUrl, user]);
 
 	// Effect hook to load data from cookies on mount
 	useEffect(() => {
@@ -77,8 +68,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 				if (token && user) {
 					toast.success('Logged in successfully');
-
-					window.location.href = redirectUrl;
+					window.location.href = '/profile';
 					return;
 				}
 
@@ -92,7 +82,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 				toast.error(error?.response?.data?.message);
 			}
 		},
-		[updateAuthCookie, updateUserCanAccess, updateUserCookie, redirectUrl]
+		[updateAuthCookie, updateUserCanAccess, updateUserCookie]
 	);
 
 	// Logout function that clears cookies and state
