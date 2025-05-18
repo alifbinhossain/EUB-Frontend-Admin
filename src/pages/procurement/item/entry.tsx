@@ -9,7 +9,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal, DeleteModal } from '@core/modal';
 
-import { useOtherPurchaseCostCenter } from '@/lib/common-queries/other';
+import { useOtherPurchaseCostCenter, useOtherSubPurchaseCostCenter } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -36,6 +36,10 @@ const Entry = () => {
 	const { data: purchases } = useOtherPurchaseCostCenter<IFormSelectOption[]>();
 
 	const form = useRHF(ITEM_SCHEMA, ITEM_NULL);
+	const { data: subPurchases } = useOtherSubPurchaseCostCenter<IFormSelectOption[]>(
+		`?purchase_cost_center_uuid=${form.watch('purchase_cost_center_uuid')}`
+	);
+
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
 		name: 'vendors',
@@ -190,7 +194,7 @@ const Entry = () => {
 					render={(props) => (
 						<CoreForm.ReactSelect
 							label='Category'
-							placeholder='Select purchase category'
+							placeholder='Select Category'
 							options={purchases!}
 							{...props}
 						/>
@@ -198,17 +202,29 @@ const Entry = () => {
 				/>
 				<FormField
 					control={form.control}
+					name='sub_purchase_cost_center_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Sub Category'
+							placeholder='Select Sub Category'
+							options={subPurchases!}
+							{...props}
+						/>
+					)}
+				/>
+				{/* <FormField
+					control={form.control}
 					name='vendor_price'
 					render={(props) => <CoreForm.Input {...props} type='number' />}
-				/>
+				/> */}
 				<FormField control={form.control} name='unit' render={(props) => <CoreForm.Input {...props} />} />
-				<FormField
+				{/* <FormField
 					control={form.control}
 					name='price_validity'
 					render={(props) => (
 						<CoreForm.DatePicker label='Price Validity' placeholder='Select to' {...props} />
 					)}
-				/>
+				/> */}
 
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>

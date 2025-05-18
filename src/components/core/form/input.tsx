@@ -46,10 +46,16 @@ const FormInput: React.FC<FormInputProps> = ({
 						placeholder={placeholder}
 						icon={icon}
 						disabled={disabled}
+						onFocus={(e) => {
+							if (Number(e.target.value) === 0) {
+								e.target.value = '';
+								field.onChange('');
+							}
+						}}
 						{...field}
 						value={field.value === null ? '' : field.value}
 						onBlur={(e) => {
-							field.onChange(e.target.value === '' ? null : +e.target.value);
+							field.onChange(e.target.value === '' ? 0 : +e.target.value);
 						}}
 					/>
 				) : (

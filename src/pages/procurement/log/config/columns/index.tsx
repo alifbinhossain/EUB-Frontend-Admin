@@ -32,13 +32,13 @@ export const vendorColumns = (): ColumnDef<IITemTransferTableData>[] => [
 // * Item work Order Entry
 export const itemWorkOrderColumns = (): ColumnDef<IItemWorkOrderTableData>[] => [
 	{
-		accessorKey: 'is_received',
+		accessorFn: (row) => row.received_date,
 		header: 'Received',
 		enableColumnFilter: true,
 		cell: (info) => (
 			<div>
-				<StatusButton value={info.getValue() as number} />
-				<DateTime date={info.getValue() as Date} isTime={false} />,
+				<StatusButton value={info.row.original.is_received as boolean} />
+				<DateTime date={info.getValue() as Date} isTime={false} />
 			</div>
 		),
 	},

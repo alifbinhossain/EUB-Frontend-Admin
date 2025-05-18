@@ -29,21 +29,26 @@ export const itemColumns = (
 	},
 	{
 		accessorKey: 'purchase_cost_center_name',
-		header: 'category',
+		header: 'Category',
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'vendor_price',
-		header: 'Vendor Price',
+		accessorKey: 'sub_purchase_cost_center_name',
+		header: 'Sub Category',
 		enableColumnFilter: true,
 	},
+	// {
+	// 	accessorKey: 'vendor_price',
+	// 	header: 'Vendor Price',
+	// 	enableColumnFilter: true,
+	// },
 
-	{
-		accessorKey: 'price_validity',
-		header: 'Price Validity',
-		enableColumnFilter: true,
-		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
-	},
+	// {
+	// 	accessorKey: 'price_validity',
+	// 	header: 'Price Validity',
+	// 	enableColumnFilter: true,
+	// 	cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	// },
 	{
 		accessorKey: 'quantity',
 		header: 'Quantity',

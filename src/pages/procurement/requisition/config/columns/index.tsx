@@ -43,7 +43,10 @@ export const requisitionColumns = (
 						checked={Number(info.getValue()) === 1}
 						onCheckedChange={() => handleStoreReceived(info.row)}
 						disabled={
-							storeReceivedAccess && info.row.original.is_store_received && !overrideStoreReceivedAccess
+							(storeReceivedAccess &&
+								info.row.original.is_store_received &&
+								!overrideStoreReceivedAccess) ||
+							info.row.original.is_received
 						}
 					/>
 					<span className='text-[0.7rem] font-semibold capitalize text-primary'>
@@ -68,7 +71,12 @@ export const requisitionColumns = (
 	{
 		id: 'action_trx',
 		header: 'Provide',
-		cell: (info) => <Transfer disabled={info.row.original.is_received} onClick={() => handleProvided(info.row)} />,
+		cell: (info) => (
+			<Transfer
+				disabled={info.row.original.is_received || !info.row.original.is_store_received}
+				onClick={() => handleProvided(info.row)}
+			/>
+		),
 		size: 40,
 		meta: {
 			hidden: !providedAccess,
