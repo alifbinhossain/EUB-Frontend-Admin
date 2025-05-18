@@ -28,7 +28,7 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	// State variables for redirectUrl, user, access, and loading state
-	const [redirectUrl, setRedirectUrl] = useState('/');
+	const [redirectUrl, setRedirectUrl] = useState('/profile');
 	const [user, setUser] = useState<IUser | null>(null);
 	const [canAccess, setCanAccess] = useState<{
 		[key: string]: string;
@@ -42,9 +42,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 	useEffect(() => {
 		if (!user) {
-			setRedirectUrl(new URLSearchParams(window.location.search).get('redirect') || '/');
+			setRedirectUrl('/profile');
 		} else {
-			setRedirectUrl('/');
+			setRedirectUrl('/profile');
 		}
 	}, [redirectUrl, user]);
 
