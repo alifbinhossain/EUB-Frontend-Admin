@@ -83,15 +83,18 @@ const AddOrUpdate: React.FC<IVendorAddOrUpdateProps> = ({
 			isSmall={true}
 			onSubmit={onSubmit}
 		>
-			<div className='grid grid-cols-3 gap-4'>
+			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+
 				<FormField
 					control={form.control}
 					name='product_type'
 					render={(props) => <CoreForm.Input {...props} />}
 				/>
 			</div>
+
+			<FormField control={form.control} name='phone' render={(props) => <CoreForm.Phone {...props} />} />
+
 			<div className='grid grid-cols-2 gap-4'>
 				<FormField control={form.control} name='address' render={(props) => <CoreForm.Textarea {...props} />} />
 				<FormField control={form.control} name='purpose' render={(props) => <CoreForm.Textarea {...props} />} />

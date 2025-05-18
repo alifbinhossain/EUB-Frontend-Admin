@@ -96,7 +96,7 @@ const AddOrUpdate: React.FC<IAuthoritiesAddOrUpdateProps> = ({
 			<FormField
 				control={form.control}
 				name='phone'
-				render={(props) => <CoreForm.Input label='phone' {...props} />}
+				render={(props) => <CoreForm.Phone label='phone' {...props} />}
 			/>
 			<FormField
 				control={form.control}
