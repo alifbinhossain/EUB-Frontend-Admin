@@ -8,7 +8,7 @@ import { INews } from '../_config/schema';
 interface IGenerateFieldDefsProps {
 	copy: (index: number) => void;
 	remove: (index: number) => void;
-	watch?: UseFormWatch<INews>; // TODO: Update Schema Type
+	watch?: UseFormWatch<INews>;
 	isUpdate: boolean;
 }
 

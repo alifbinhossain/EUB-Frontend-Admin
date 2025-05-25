@@ -5,8 +5,6 @@ import ResetPassword from '@/components/buttons/reset-password';
 import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
 import { Switch } from '@/components/ui/switch';
 
-import { API_IMAGE_URL } from '@/lib/secret';
-
 import { UserColumnProps } from '../types';
 import { IDepartmentTableData, IDesignationTableData, IUserTableData } from './columns.type';
 
