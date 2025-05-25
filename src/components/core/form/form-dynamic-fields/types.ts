@@ -65,12 +65,25 @@ type FieldDate = {
 	disabled?: boolean;
 };
 
+type FieldMultiSelect = {
+	type: 'multiSelect';
+	placeholder?: string;
+	options: IFormSelectOption[];
+};
+
+type FieldSelectCreate = {
+	type: 'select-create';
+	placeholder?: string;
+	options: IFormSelectOption[];
+};
+
 export type FieldDef = {
 	header: string;
 	accessorKey: string;
 	className?: string;
 	isLoading?: boolean;
 	hidden?: boolean;
+	width?: string;
 } & (
 	| FieldText
 	| FieldNumber
@@ -79,19 +92,24 @@ export type FieldDef = {
 	| FieldCustom
 	| FieldJoinInputUnit
 	| FieldTextArea
+	| FieldCheckbox
+	| FieldMultiSelect
+	| FieldSelectCreate
 	| FieldImage
 	| FieldCheckbox
 	| FieldDate
 );
 
 export interface DynamicFieldsProps {
-	title: string;
+	title: string | React.ReactNode;
 	form: UseFormReturn<any>;
 	fieldName: string;
 	fieldDefs: FieldDef[];
 	extraHeader?: React.ReactNode;
 	handleAdd?: () => void;
 	fields: FieldArrayWithId<any>[];
-	viewAs?: 'default' | 'spreadsheet';
+	viewAs?: 'default' | 'spreadsheet' | 'kanban';
+	containerClassName?: string;
+	className?: string;
 	children?: React.ReactNode;
 }

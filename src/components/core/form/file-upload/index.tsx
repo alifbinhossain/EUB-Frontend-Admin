@@ -87,6 +87,22 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 				</FormLabel>
 			)}
 
+			<FormControl>
+				<div {...getRootProps()} className='flex flex-1 items-center justify-center'>
+					<label
+						htmlFor='dropzone-file'
+						className='border-300 relative flex size-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500'
+					>
+						{fileType === 'image' && <ImagePreview preview={preview} />}
+						{fileType === 'video' && <VideoPreview preview={preview} />}
+						{fileType === 'document' && <DocumentPreview preview={preview} />}
+
+						<Input disabled={disabled} {...getInputProps()} type='file' className='hidden' />
+					</label>
+				</div>
+			</FormControl>
+			<FormMessage>{fileRejections.length !== 0 && errorText}</FormMessage>
+
 			{preview && (
 				<div className='absolute bottom-2 right-2 z-50 size-10'>
 					<Button
@@ -101,22 +117,6 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 					</Button>
 				</div>
 			)}
-
-			<FormControl>
-				<div {...getRootProps()} className='flex flex-1 items-center justify-center'>
-					<label
-						htmlFor='dropzone-file'
-						className='relative flex size-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500'
-					>
-						{fileType === 'image' && <ImagePreview preview={preview} />}
-						{fileType === 'video' && <VideoPreview preview={preview} />}
-						{fileType === 'document' && <DocumentPreview preview={preview} />}
-
-						<Input disabled={disabled} {...getInputProps()} type='file' className='hidden' />
-					</label>
-				</div>
-			</FormControl>
-			<FormMessage>{fileRejections.length !== 0 && errorText}</FormMessage>
 		</FormItem>
 	);
 };

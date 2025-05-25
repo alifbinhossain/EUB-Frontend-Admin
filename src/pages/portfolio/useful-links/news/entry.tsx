@@ -1,5 +1,4 @@
 import { Suspense, useEffect, useState } from 'react';
-import { divide } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAccess from '@/hooks/useAccess';
@@ -27,7 +26,13 @@ export default function NewsEntry() {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 	const hasAccess: string[] = useAccess('portfolio__news') as string[];
-	const { data, deleteData, imagePostData, imageUpdateData } = useNewsDetails(uuid as string);
+	const {
+		data,
+		deleteData,
+		imagePostData,
+		imageUpdateData,
+		invalidateQuery: invalidateNews,
+	} = useNewsDetails(uuid as string);
 	const { data: departments } = useOtherDepartments<IFormSelectOption[]>(getAccess(hasAccess));
 	const { invalidateQuery } = useNews(getAccess(hasAccess));
 
@@ -35,7 +40,7 @@ export default function NewsEntry() {
 
 	const { fields, append, remove } = useFieldArray({
 		control: form.control,
-		name: 'entry', // TODO: Update field name
+		name: 'entry',
 	});
 
 	// Reset form values when data is updated
@@ -91,6 +96,7 @@ export default function NewsEntry() {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateNews();
 					navigate('/portfolio/news');
 				})
 				.catch((error) => {
@@ -127,6 +133,7 @@ export default function NewsEntry() {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateNews();
 					navigate('/portfolio/news');
 				})
 				.catch((error) => {
@@ -136,10 +143,7 @@ export default function NewsEntry() {
 	}
 
 	const handleAdd = () => {
-		// TODO: Update field names
-
 		append({
-			// image: new File([''], 'filename'),
 			documents: '',
 		});
 	};
@@ -152,8 +156,8 @@ export default function NewsEntry() {
 	const handleRemove = (index: number) => {
 		if (fields[index].uuid) {
 			setDeleteItem({
-				id: fields[index].uuid, // TODO: Update field id
-				name: fields[index].id, // TODO: Update field name
+				id: fields[index].uuid,
+				name: fields[index].id,
 			});
 		} else {
 			remove(index);
@@ -162,7 +166,6 @@ export default function NewsEntry() {
 
 	// Copy Handler
 	const handleCopy = (index: number) => {
-		// TODO: Update fields ⬇️
 		const field = form.watch('entry')[index];
 		append({
 			documents: field.documents,
@@ -184,55 +187,56 @@ export default function NewsEntry() {
 				}
 				className='flex flex-col'
 			>
-				<div className='grid grid-cols-2 gap-4'>
-					<div className='flex flex-col gap-4'>
-						<div className='flex w-full gap-4'>
-							<FormField
-								control={form.control}
-								name='title'
-								render={(props) => <CoreForm.Input {...props} />}
-							/>
-							<FormField
-								control={form.control}
-								name='subtitle'
-								render={(props) => <CoreForm.Input {...props} />}
-							/>
-						</div>
-						<div className='flex w-full gap-4'>
-							<FormField
-								control={form.control}
-								name='department_uuid'
-								render={(props) => (
-									<CoreForm.ReactSelect
-										label='Department'
-										placeholder='Select Department'
-										options={departments!}
-										{...props}
-									/>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='published_date'
-								render={(props) => <CoreForm.DatePicker {...props} />}
-							/>
-						</div>
-						<div className='flex w-full gap-4'>
-							<FormField
-								control={form.control}
-								name='remarks'
-								render={(props) => <CoreForm.Textarea {...props} />}
-							/>
-						</div>
-						<div className='w-full'>
-							<FormField
-								control={form.control}
-								name='cover_image'
-								render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
-							/>
-						</div>
+				<div className='grid grid-cols-1 gap-4 xl:grid-cols-2'>
+					<div className='space-y-4'>
+						<FormField
+							control={form.control}
+							name='title'
+							render={(props) => <CoreForm.Input {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='subtitle'
+							render={(props) => <CoreForm.Input {...props} />}
+						/>
+
+						<FormField
+							control={form.control}
+							name='department_uuid'
+							render={(props) => (
+								<CoreForm.ReactSelect
+									label='Department'
+									placeholder='Select Department'
+									options={departments!}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='published_date'
+							render={(props) => <CoreForm.DatePicker {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='cover_image'
+							render={(props) => (
+								<CoreForm.FileUpload
+									subLabel='Recommended Size: 1200x800'
+									isUpdate={isUpdate}
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='remarks'
+							render={(props) => <CoreForm.Textarea {...props} />}
+						/>
 					</div>
-					<div className='flex flex-col gap-4'>
+
+					<div className='space-y-4'>
 						<FormField
 							control={form.control}
 							name='description'
@@ -248,11 +252,10 @@ export default function NewsEntry() {
 			</CoreForm.Section>
 
 			<CoreForm.DynamicFields
-				viewAs='default'
-				title='Image Entry' // TODO: Update title
+				viewAs='kanban'
+				title='Image Entry (Recommended Size: 1200x800)'
 				form={form}
-				fieldName='entry' // TODO: Update field name
-				// TODO: Go to _generateFieldDefs.tsx and update field name
+				fieldName='entry'
 				fieldDefs={useGenerateFieldDefs({
 					copy: handleCopy,
 					remove: handleRemove,
@@ -266,14 +269,12 @@ export default function NewsEntry() {
 					{...{
 						deleteItem,
 						setDeleteItem,
-						url: `/portfolio/news-entry`, // TODO: Update url
+						url: `/portfolio/news-entry`,
 						deleteData,
 						onClose: () => {
 							form.setValue(
-								'entry', // TODO: Update field name
-								form
-									.getValues('entry') // TODO: Update field name
-									.filter((item) => item.uuid !== deleteItem?.id)
+								'entry',
+								form.getValues('entry').filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}

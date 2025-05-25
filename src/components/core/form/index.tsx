@@ -10,6 +10,7 @@ import MultiSelect from './multi-select';
 import Otp from './otp';
 import Phone from './phone';
 import ReactSelect from './react-select';
+import ReactSelectCreate from './react-select-create';
 import RichTextEditor from './rich-text-editor';
 import Section from './section';
 import Select from './select';
@@ -36,6 +37,7 @@ const Form = {
 	Switch,
 	Otp,
 	Phone,
+	ReactSelectCreate,
 };
 
 export default Form;

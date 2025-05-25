@@ -1,12 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
+import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
 import { RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
-import { LinkOnly } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
-
-import { API_IMAGE_URL } from '@/lib/secret';
 
 import { tableNames } from '../../tender/utills';
 import {
@@ -119,19 +117,19 @@ export const newsColumns = (): ColumnDef<INewsTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => <RichTextModal title='Description' content={info.getValue<string>()} />,
 	},
 	{
 		accessorKey: 'content',
 		header: 'Content',
 		enableColumnFilter: true,
-		cell: (info) => info.getValue(),
+		cell: (info) => <RichTextModal title='Content' content={info.getValue<string>()} />,
 	},
 	{
 		accessorKey: 'cover_image',
 		header: 'Cover Image',
 		enableColumnFilter: true,
-		cell: (info) => <img className='h-10 w-10 rounded-full' src={API_IMAGE_URL + info.getValue()} alt='' />,
+		cell: (info) => <ColumnAvatar alt={info.row.original.title} src={info.getValue() as string} />,
 	},
 	{
 		accessorKey: 'published_date',
