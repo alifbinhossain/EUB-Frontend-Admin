@@ -184,60 +184,72 @@ export default function NewsEntry() {
 				}
 				className='flex flex-col'
 			>
-				<div className='flex w-full gap-4'>
-					<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
-					<FormField
-						control={form.control}
-						name='subtitle'
-						render={(props) => <CoreForm.Input {...props} />}
-					/>
-					<FormField
-						control={form.control}
-						name='department_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect
-								label='Department'
-								placeholder='Select Department'
-								options={departments!}
-								{...props}
+				<div className='grid grid-cols-2 gap-4'>
+					<div className='flex flex-col gap-4'>
+						<div className='flex w-full gap-4'>
+							<FormField
+								control={form.control}
+								name='title'
+								render={(props) => <CoreForm.Input {...props} />}
 							/>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='published_date'
-						render={(props) => <CoreForm.DatePicker {...props} />}
-					/>
-				</div>
-				<div className='flex w-full gap-4'>
-					<FormField
-						control={form.control}
-						name='description'
-						render={(props) => <CoreForm.Textarea {...props} />}
-					/>
-					<FormField
-						control={form.control}
-						name='content'
-						render={(props) => <CoreForm.Textarea {...props} />}
-					/>
-					<FormField
-						control={form.control}
-						name='remarks'
-						render={(props) => <CoreForm.Textarea {...props} />}
-					/>
-				</div>
-				<div className='w-full'>
-					<FormField
-						control={form.control}
-						name='cover_image'
-						render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
-					/>
+							<FormField
+								control={form.control}
+								name='subtitle'
+								render={(props) => <CoreForm.Input {...props} />}
+							/>
+						</div>
+						<div className='flex w-full gap-4'>
+							<FormField
+								control={form.control}
+								name='department_uuid'
+								render={(props) => (
+									<CoreForm.ReactSelect
+										label='Department'
+										placeholder='Select Department'
+										options={departments!}
+										{...props}
+									/>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='published_date'
+								render={(props) => <CoreForm.DatePicker {...props} />}
+							/>
+						</div>
+						<div className='flex w-full gap-4'>
+							<FormField
+								control={form.control}
+								name='remarks'
+								render={(props) => <CoreForm.Textarea {...props} />}
+							/>
+						</div>
+						<div className='w-full'>
+							<FormField
+								control={form.control}
+								name='cover_image'
+								render={(props) => <CoreForm.FileUpload isUpdate={isUpdate} {...props} />}
+							/>
+						</div>
+					</div>
+					<div className='flex flex-col gap-4'>
+						<FormField
+							control={form.control}
+							name='description'
+							render={(props) => <CoreForm.RichTextEditor label='Summary' {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='content'
+							render={(props) => <CoreForm.RichTextEditor className='h-full' {...props} />}
+						/>
+					</div>
 				</div>
 			</CoreForm.Section>
 
 			<CoreForm.DynamicFields
 				viewAs='default'
-				title='entry' // TODO: Update title
+				title='Image Entry' // TODO: Update title
 				form={form}
 				fieldName='entry' // TODO: Update field name
 				// TODO: Go to _generateFieldDefs.tsx and update field name
