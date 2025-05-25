@@ -175,6 +175,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.FileUpload
+																	disableLabel={true}
 																	isUpdate={fieldDef.isUpdate}
 																	{...props}
 																/>
