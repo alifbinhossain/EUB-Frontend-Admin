@@ -118,7 +118,7 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 			</div>
 
 			<div className='grid grid-cols-2 gap-4'>
-				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Phone {...props} />} />
 				<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
 			</div>
 			<div className='grid grid-cols-2 gap-4'>
