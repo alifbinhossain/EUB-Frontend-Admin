@@ -2,7 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
-import { AddModal, ContentModal, RichTextModal } from '@/components/core/modal';
+import { ContentModal, RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import { LinkWithRedirect } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
@@ -119,6 +119,36 @@ export const teacherColumns = (): ColumnDef<ITeacherTableData>[] => [
 		header: 'Journal',
 		enableColumnFilter: true,
 		cell: (info) => <RichTextModal title='Journal' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'interests',
+		header: 'Interests',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Interests' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'awards',
+		header: 'Awards',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Awards' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'experience',
+		header: 'Experience',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Experience' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'courses',
+		header: 'Courses',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Courses' content={info.getValue() as string} />,
+	},
+	{
+		accessorKey: 'corporate',
+		header: 'Corporate',
+		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Corporate' content={info.getValue() as string} />,
 	},
 
 	{

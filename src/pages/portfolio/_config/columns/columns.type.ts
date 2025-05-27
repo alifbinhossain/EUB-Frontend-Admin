@@ -91,6 +91,7 @@ export type IDepartmentTableData = {
 
 // * Teacher
 export type ITeacherTableData = {
+	id: number;
 	uuid: string;
 	teacher_uuid: string;
 	teacher_name: string;
@@ -101,7 +102,7 @@ export type ITeacherTableData = {
 	publication: string;
 	journal: string;
 	appointment_date: string;
-	resign_date: string;
+	resign_date: string | null;
 	about: string;
 	created_at: string;
 	updated_at: string;
@@ -110,6 +111,11 @@ export type ITeacherTableData = {
 	remarks: string;
 	teacher_initial: string;
 	status: boolean;
+	interests: string | null;
+	awards: string | null;
+	experience: string | null;
+	courses: string | null;
+	corporate: string | null;
 };
 
 //* bot
