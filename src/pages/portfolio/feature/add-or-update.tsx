@@ -81,35 +81,69 @@ const AddOrUpdate: React.FC<IFeatureAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
-				<div className='col-span-2 space-y-4'>
+			<div className='mb-4 grid grid-cols-1 gap-4 md:grid-cols-2'>
+				<div className='order-last md:order-first'>
 					<FormField
 						control={form.control}
-						name='is_active'
-						render={(props) => <CoreForm.Switch label='Active' {...props} />}
+						name='type'
+						render={(props) => (
+							<CoreForm.ReactSelect
+								options={[
+									{ value: 'article', label: 'Article' },
+									{ value: 'hero', label: 'Hero' },
+								]}
+								{...props}
+							/>
+						)}
 					/>
-					<FormField
-						control={form.control}
-						name='index'
-						render={(props) => <CoreForm.Input type='number' {...props} />}
-					/>
+				</div>
+				<FormField
+					control={form.control}
+					name='is_active'
+					render={(props) => <CoreForm.Switch label='Active' {...props} />}
+				/>
+			</div>
+			<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+				<div className='space-y-4'>
 					<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
 					<FormField
 						control={form.control}
 						name='description'
 						render={(props) => <CoreForm.Textarea rows={4} {...props} />}
 					/>
+
+					<FormField
+						control={form.control}
+						name='index'
+						render={(props) => <CoreForm.Input type='number' {...props} />}
+					/>
+
 					<FormField
 						control={form.control}
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
 				</div>
-				<FormField
-					control={form.control}
-					name='file'
-					render={(props) => <CoreForm.FileUpload fileType='image' isUpdate={isUpdate} {...props} />}
-				/>
+
+				<div className='space-y-4'>
+					<FormField
+						control={form.control}
+						name='file'
+						render={(props) => (
+							<CoreForm.FileUpload
+								subLabel={
+									form.watch('type') === 'hero'
+										? 'Recommend ratio 16:9 (1920x1080)'
+										: 'Recommend ratio 1:1 (300x300)'
+								}
+								className='h-full'
+								fileType='image'
+								isUpdate={isUpdate}
+								{...props}
+							/>
+						)}
+					/>
+				</div>
 			</div>
 		</AddModal>
 	);

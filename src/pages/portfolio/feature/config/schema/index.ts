@@ -13,6 +13,7 @@ export const FEATURE_SCHEMA = z.object({
 		.refine((file) => file?.size !== 0, 'Please upload an image')
 		.or(STRING_NULLABLE),
 	remarks: STRING_NULLABLE,
+	type: z.enum(['article', 'hero']),
 });
 
 export const FEATURE_NULL: Partial<IFeature> = {
@@ -22,6 +23,7 @@ export const FEATURE_NULL: Partial<IFeature> = {
 	description: '',
 	file: new File([''], 'filename') as File,
 	remarks: '',
+	type: 'article',
 };
 
 export type IFeature = z.infer<typeof FEATURE_SCHEMA>;
