@@ -2,6 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
+import TooltipWrapper from '@/components/others/tooltip-wrapper';
 
 import { IFeatureTableData } from './columns.type';
 
@@ -12,6 +13,11 @@ export const featureColumns = (): ColumnDef<IFeatureTableData>[] => [
 		header: 'Active',
 		enableColumnFilter: true,
 		cell: (info) => <StatusButton value={info.getValue() as number} />,
+	},
+	{
+		accessorKey: 'type',
+		header: 'Type',
+		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'index',
@@ -34,5 +40,10 @@ export const featureColumns = (): ColumnDef<IFeatureTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<TooltipWrapper message={info.getValue() as string}>
+				<div className='max-w-[200px] truncate'>{info.getValue() as string}</div>
+			</TooltipWrapper>
+		),
 	},
 ];

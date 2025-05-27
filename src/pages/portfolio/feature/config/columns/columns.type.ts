@@ -8,4 +8,5 @@ export type IFeatureTableData = {
 	file: string;
 	is_active: boolean;
 	remarks: string;
+	type: string;
 };

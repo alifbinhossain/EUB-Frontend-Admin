@@ -121,7 +121,6 @@ export interface IDefaultAddOrUpdateProps {
 	url: string;
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
 	setUpdatedData?: React.Dispatch<React.SetStateAction<any | null>>;
 	postData: UseMutationResult<
 		IToast,

@@ -176,6 +176,31 @@ const AddOrUpdate: React.FC<IAddOrUpdateProps> = ({
 				name='journal'
 				render={(props) => <CoreForm.RichTextEditor {...props} />}
 			/>
+			<FormField
+				control={form.control}
+				name='interests'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='awards'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='experience'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='courses'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='corporate'
+				render={(props) => <CoreForm.RichTextEditor {...props} />}
+			/>
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

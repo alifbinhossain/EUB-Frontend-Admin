@@ -8,7 +8,7 @@ const TooltipWrapper: React.FC<{
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger asChild>{children}</TooltipTrigger>
-				<TooltipContent align='center'>
+				<TooltipContent align='center' sideOffset={4} className='max-w-[300px]'>
 					<p>{message}</p>
 				</TooltipContent>
 			</Tooltip>
