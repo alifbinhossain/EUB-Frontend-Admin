@@ -99,7 +99,7 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='employee_contact_number'
-					render={(props) => <CoreForm.Input label='Vendor Contact Number' {...props} />}
+					render={(props) => <CoreForm.Phone label='Vendor Contact Number' {...props} />}
 				/>
 			</CoreForm.Section>
 			<CoreForm.Section title={`Body`} className='flex flex-col gap-2'>

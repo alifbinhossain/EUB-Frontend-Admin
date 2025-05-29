@@ -14,7 +14,8 @@ pdfMake.fonts = {
 		bolditalics: ROBOTO + 'MediumItalic.ttf',
 	},
 	Bangla: {
-		normal: 'NotoSerifBengali_ExtraCondensed-Regular.ttf',
+		normal: 'NotoSansBengali-Medium.ttf',
+		bold: 'NotoSansBengali-Bold.ttf',
 	},
 };
 

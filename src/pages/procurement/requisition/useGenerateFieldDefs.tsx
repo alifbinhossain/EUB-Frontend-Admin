@@ -45,6 +45,15 @@ const useGenerateFieldDefs = ({
 
 	return [
 		{
+			header: 'ID',
+			accessorKey: 'index',
+			type: 'custom',
+			component: (index: number) => {
+				const idx = isNew && watch ? watch('item_requisition')?.length : 0;
+				return <span className='ms-4'>{idx + index + 1}</span>;
+			},
+		},
+		{
 			header: 'Item',
 			accessorKey: 'item_uuid',
 			type: 'select',

@@ -76,12 +76,12 @@ const Entry = () => {
 				updated_at: getDateTime(),
 			};
 
-			updateData
+			await updateData
 				.mutateAsync({
 					url: `/procure/requisition/${uuid}`,
 					updatedData: itemUpdatedData,
 				})
-				.then(() => {
+				.then(async () => {
 					const entryUpdatePromise = item_requisition.map((entry) => {
 						if (entry.uuid) {
 							const entryUpdateData = {
@@ -92,23 +92,22 @@ const Entry = () => {
 								url: `/procure/item-requisition/${entry.uuid}`,
 								updatedData: entryUpdateData,
 							});
-						} else {
-							const entryData = {
-								...entry,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-								requisition_uuid: uuid,
-							};
-
-							return postData.mutateAsync({
-								url: `/procure/item-requisition`,
-								newData: entryData,
-							});
 						}
+
+						const entryData = {
+							...entry,
+							created_at: getDateTime(),
+							created_by: user?.uuid,
+							uuid: nanoid(),
+							requisition_uuid: uuid,
+						};
+						return postData.mutateAsync({
+							url: `/procure/item-requisition`,
+							newData: entryData,
+						});
 					});
 
-					Promise.all(entryUpdatePromise);
+					await Promise.all(entryUpdatePromise);
 				})
 				.then(() => {
 					invalidateQuery();
@@ -124,12 +123,12 @@ const Entry = () => {
 			const { new_item_requisition, ...rest } = values;
 			const itemData = {
 				...rest,
+				uuid: nanoid(),
 				created_at: getDateTime(),
 				created_by: user?.uuid,
-				uuid: nanoid(),
 			};
 
-			postData
+			await postData
 				.mutateAsync({
 					url: '/procure/requisition',
 					newData: itemData,
@@ -138,10 +137,10 @@ const Entry = () => {
 					const entryPromise = new_item_requisition?.map((entry) => {
 						const entryData = {
 							...entry,
-							created_at: getDateTime(),
-							created_by: user?.uuid,
 							uuid: nanoid(),
 							requisition_uuid: itemData.uuid,
+							created_at: getDateTime(),
+							created_by: user?.uuid,
 						};
 
 						return postData.mutateAsync({
@@ -202,7 +201,6 @@ const Entry = () => {
 
 	const fieldDef = useGenerateFieldDefs({
 		data: form.getValues(),
-
 		remove: handleRemove,
 		request: true,
 		isUpdate,
@@ -210,6 +208,7 @@ const Entry = () => {
 		watch: form.watch,
 		form: form,
 	});
+
 	const newFieldDef = useGenerateFieldDefs({
 		data: form.getValues(),
 		remove: handleNewRemove,
@@ -272,16 +271,14 @@ const Entry = () => {
 					fields={fields}
 				/>
 			)}
-			{
-				<CoreForm.DynamicFields
-					title='New Item Requisition'
-					form={form}
-					fieldName='new_item_requisition'
-					fieldDefs={newFieldDef}
-					handleAdd={handleAdd}
-					fields={newFields}
-				/>
-			}
+			<CoreForm.DynamicFields
+				title='New Item Requisition'
+				form={form}
+				fieldName='new_item_requisition'
+				fieldDefs={newFieldDef}
+				handleAdd={handleAdd}
+				fields={newFields}
+			/>
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{

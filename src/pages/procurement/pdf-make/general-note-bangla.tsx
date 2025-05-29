@@ -22,17 +22,13 @@ const AddOrUpdate = ({ open, setOpen }: { open: boolean; setOpen: React.Dispatch
 	}
 
 	return (
-		<>
-			{
-				<AddModal open={open} setOpen={onClose} title='Create General Note' form={form} onSubmit={onSubmit}>
-					<FormField
-						control={form.control}
-						name='general_note'
-						render={(props) => <CoreForm.Textarea label='General Note' {...props} />}
-					/>
-				</AddModal>
-			}
-		</>
+		<AddModal open={open} setOpen={onClose} title='Create General Note' form={form} onSubmit={onSubmit}>
+			<FormField
+				control={form.control}
+				name='general_note'
+				render={(props) => <CoreForm.Textarea label='General Note' {...props} />}
+			/>
+		</AddModal>
 	);
 };
 
