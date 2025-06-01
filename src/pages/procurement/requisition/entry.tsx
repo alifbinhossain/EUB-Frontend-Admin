@@ -82,10 +82,11 @@ const Entry = () => {
 					updatedData: itemUpdatedData,
 				})
 				.then(async () => {
-					const entryUpdatePromise = item_requisition.map((entry) => {
+					const entryUpdatePromise = item_requisition.map((entry, index) => {
 						if (entry.uuid) {
 							const entryUpdateData = {
 								...entry,
+								index: index + 1,
 								updatedData: itemUpdatedData,
 							};
 							return updateData.mutateAsync({
@@ -96,6 +97,7 @@ const Entry = () => {
 
 						const entryData = {
 							...entry,
+							index: index + 1,
 							created_at: getDateTime(),
 							created_by: user?.uuid,
 							uuid: nanoid(),
@@ -134,9 +136,10 @@ const Entry = () => {
 					newData: itemData,
 				})
 				.then(() => {
-					const entryPromise = new_item_requisition?.map((entry) => {
+					const entryPromise = new_item_requisition?.map((entry, index) => {
 						const entryData = {
 							...entry,
+							index: index + 1,
 							uuid: nanoid(),
 							requisition_uuid: itemData.uuid,
 							created_at: getDateTime(),

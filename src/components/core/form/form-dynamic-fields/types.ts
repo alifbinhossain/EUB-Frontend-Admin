@@ -50,6 +50,11 @@ type FieldImage = {
 	placeholder?: string;
 	isUpdate?: boolean;
 };
+type FieldFile = {
+	type: 'file';
+	placeholder?: string;
+	isUpdate?: boolean;
+};
 
 type FieldCheckbox = {
 	type: 'checkbox';
@@ -98,6 +103,7 @@ export type FieldDef = {
 	| FieldImage
 	| FieldCheckbox
 	| FieldDate
+	| FieldFile
 );
 
 export interface DynamicFieldsProps {

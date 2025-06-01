@@ -182,6 +182,25 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															)}
 														/>
 													)}
+
+													{fieldDef.type === 'file' && (
+														<FormField
+															control={form.control}
+															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															render={(props) => (
+																<CoreForm.FileUpload
+																	fileType='document'
+																	disableLabel={true}
+																	errorText='File must be less than 10MB and of type pdf, doc, docx'
+																	options={{
+																		maxSize: 10000000,
+																	}}
+																	isUpdate={fieldDef.isUpdate}
+																	{...props}
+																/>
+															)}
+														/>
+													)}
 												</TableCell>
 											);
 										}
