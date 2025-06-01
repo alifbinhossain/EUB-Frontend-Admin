@@ -15,7 +15,26 @@ export const CAPITAL_SCHEMA = z
 		name: STRING_REQUIRED,
 		sub_category_uuid: STRING_REQUIRED,
 		done: BOOLEAN_REQUIRED.default(false),
-
+		quotation_file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_NULLABLE),
+		cs_file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_NULLABLE),
+		monthly_meeting_file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_NULLABLE),
+		work_order_file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_NULLABLE),
+		delivery_statement_file: z
+			.instanceof(File)
+			.refine((file) => file?.size !== 0, 'Please upload an file')
+			.or(STRING_NULLABLE),
 		is_quotation: BOOLEAN_REQUIRED,
 		quotations: z.array(
 			z.object({
@@ -59,6 +78,7 @@ export const CAPITAL_SCHEMA = z
 					uuid: STRING_OPTIONAL,
 					capital_uuid: STRING_OPTIONAL,
 					description: STRING_OPTIONAL,
+					file: STRING_OPTIONAL,
 					amount: NUMBER_REQUIRED.default(0),
 				})
 				.refine((note) => note.description, {
@@ -86,7 +106,11 @@ export const CAPITAL_NULL: Partial<ICapital> = {
 	name: '',
 	sub_category_uuid: '',
 	done: false,
-
+	quotation_file: null,
+	cs_file: null,
+	monthly_meeting_file: null,
+	work_order_file: null,
+	delivery_statement_file: null,
 	is_quotation: false,
 	quotations: [],
 

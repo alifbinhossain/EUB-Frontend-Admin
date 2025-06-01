@@ -27,6 +27,11 @@ const useGenerateGeneralNotes = ({ data, copy, remove, isUpdate, isNew }: IGener
 			type: 'number',
 		},
 		{
+			header: 'File',
+			accessorKey: 'general_note_file',
+			type: 'file',
+		},
+		{
 			header: 'Actions',
 			accessorKey: 'actions',
 			type: 'custom',

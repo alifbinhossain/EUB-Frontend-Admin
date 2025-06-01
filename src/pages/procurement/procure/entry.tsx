@@ -13,6 +13,7 @@ import { DeleteModal } from '@core/modal';
 import { useOtherSubCategory, useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
+import Formdata from '@/utils/formdata';
 
 import { ICapitalTableData } from './config/columns/columns.type';
 import { useCapital, useCapitalDetails } from './config/query';
@@ -34,6 +35,8 @@ const Entry = () => {
 		updateData,
 		postData,
 		deleteData,
+		imagePostData,
+		imageUpdateData,
 		invalidateQuery: invalidateCapitalDetails,
 	} = useCapitalDetails<ICapitalTableData>(uuid as string);
 
@@ -87,6 +90,7 @@ const Entry = () => {
 	// Submit handler
 	async function onSubmit(values: ICapital) {
 		const { quotations, general_notes, items, ...rest } = values;
+		const formData = Formdata<ICapital>(values);
 
 		// * Filtered entries
 		const filteredItems = items.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
@@ -98,16 +102,12 @@ const Entry = () => {
 
 		if (isUpdate) {
 			// UPDATE ITEM
+			formData.append('updated_at', getDateTime());
 
-			const itemUpdatedData = {
-				...rest,
-				updated_at: getDateTime(),
-			};
-
-			updateData
+			imageUpdateData
 				.mutateAsync({
 					url: `/procure/capital/${uuid}`,
-					updatedData: itemUpdatedData,
+					updatedData: formData,
 				})
 				.then(() => {
 					// * UPDATE FOR QUOTATIONS
@@ -210,18 +210,16 @@ const Entry = () => {
 				});
 		} else {
 			// ADD NEW ITEM
+			const new_uuid = nanoid();
 
-			const itemData = {
-				...rest,
-				created_at: getDateTime(),
-				created_by: user?.uuid,
-				uuid: nanoid(),
-			};
+			formData.append('created_at', getDateTime());
+			formData.append('created_by', user?.uuid || '');
+			formData.append('uuid', new_uuid);
 
-			postData
+			imagePostData
 				.mutateAsync({
 					url: '/procure/capital',
-					newData: itemData,
+					newData: formData,
 				})
 				.then(() => {
 					// * ENTRY FOR QUOTATIONS
@@ -229,7 +227,7 @@ const Entry = () => {
 						const quotationsPromise = quotations.map((entry) => {
 							const entryData = {
 								...entry,
-								capital_uuid: itemData.uuid,
+								capital_uuid: new_uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
@@ -248,7 +246,7 @@ const Entry = () => {
 							const entryData = {
 								...entry,
 								received_date: entry.is_received ? getDateTime() : null,
-								capital_uuid: itemData.uuid,
+								capital_uuid: new_uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
@@ -266,7 +264,7 @@ const Entry = () => {
 						const generalNotesPromise = general_notes.map((entry) => {
 							const entryData = {
 								...entry,
-								capital_uuid: itemData.uuid,
+								capital_uuid: new_uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
@@ -483,21 +481,39 @@ const Entry = () => {
 			</CoreForm.Section>
 
 			{subCategory !== 'Items' ? (
-				<CoreForm.DynamicFields
-					title='Quotations'
-					extraHeader={
-						<FormField
-							control={form.control}
-							name='is_quotation'
-							render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
-						/>
-					}
-					form={form}
-					fieldName='quotations'
-					fieldDefs={fieldDefsQuotations}
-					fields={quotationFields}
-					{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
-				/>
+				<div className='grid grid-cols-2 gap-4'>
+					<CoreForm.DynamicFields
+						title='Quotations'
+						extraHeader={
+							<FormField
+								control={form.control}
+								name='is_quotation'
+								render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
+							/>
+						}
+						form={form}
+						fieldName='quotations'
+						fieldDefs={fieldDefsQuotations}
+						fields={quotationFields}
+						{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
+					/>
+					<FormField
+						control={form.control}
+						name='quotation_file'
+						render={(props) => (
+							<CoreForm.FileUpload
+								label='File'
+								fileType='document'
+								errorText='File must be less than 10MB and of type pdf, doc, docx'
+								isUpdate={isUpdate}
+								options={{
+									maxSize: 10000000,
+								}}
+								{...props}
+							/>
+						)}
+					/>
+				</div>
 			) : (
 				<CoreForm.DynamicFields
 					title='Items'
@@ -529,17 +545,35 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_cs') && (
-					<FormField
-						control={form.control}
-						name='cs_remarks'
-						render={(props) => (
-							<CoreForm.Textarea
-								label='Cs Remarks'
-								disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
-								{...props}
-							/>
-						)}
-					/>
+					<div className='grid grid-cols-2 gap-4'>
+						<FormField
+							control={form.control}
+							name='cs_remarks'
+							render={(props) => (
+								<CoreForm.Textarea
+									label='Cs Remarks'
+									disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='cs_file'
+							render={(props) => (
+								<CoreForm.FileUpload
+									label='File'
+									fileType='document'
+									errorText='File must be less than 10MB and of type pdf, doc, docx'
+									isUpdate={isUpdate}
+									options={{
+										maxSize: 10000000,
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				)}
 			</CoreForm.Section>
 
@@ -557,23 +591,41 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_monthly_meeting') && (
-					<FormField
-						control={form.control}
-						name='monthly_meeting_remarks'
-						render={(props) => (
-							<CoreForm.Textarea
-								label='Monthly Meeting Remarks'
-								disabled={
-									!(
-										form.watch('is_monthly_meeting') &&
-										form.watch('is_cs') &&
-										form.watch('is_quotation')
-									)
-								}
-								{...props}
-							/>
-						)}
-					/>
+					<div className='grid grid-cols-2 gap-4'>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_remarks'
+							render={(props) => (
+								<CoreForm.Textarea
+									label='Monthly Meeting Remarks'
+									disabled={
+										!(
+											form.watch('is_monthly_meeting') &&
+											form.watch('is_cs') &&
+											form.watch('is_quotation')
+										)
+									}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_file'
+							render={(props) => (
+								<CoreForm.FileUpload
+									label='File'
+									fileType='document'
+									errorText='File must be less than 10MB and of type pdf, doc, docx'
+									isUpdate={isUpdate}
+									options={{
+										maxSize: 10000000,
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				)}
 			</CoreForm.Section>
 
@@ -605,22 +657,42 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_work_order') && (
-					<>
-						{subCategory !== 'Items' && (
+					<div className='grid grid-cols-2 gap-4'>
+						<div>
+							{subCategory !== 'Items' && (
+								<FormField
+									control={form.control}
+									name='vendor_uuid'
+									render={(props) => (
+										<CoreForm.ReactSelect
+											label='Vendor'
+											options={
+												vendorList?.filter((item) =>
+													form
+														.getValues('quotations')
+														.some((quotation) => quotation.vendor_uuid === item.value)
+												) || []
+											}
+											isDisabled={
+												!(
+													form.watch('is_work_order') &&
+													form.watch('is_monthly_meeting') &&
+													form.watch('is_cs') &&
+													form.watch('is_quotation')
+												)
+											}
+											{...props}
+										/>
+									)}
+								/>
+							)}
 							<FormField
 								control={form.control}
-								name='vendor_uuid'
+								name='work_order_remarks'
 								render={(props) => (
-									<CoreForm.ReactSelect
-										label='Vendor'
-										options={
-											vendorList?.filter((item) =>
-												form
-													.getValues('quotations')
-													.some((quotation) => quotation.vendor_uuid === item.value)
-											) || []
-										}
-										isDisabled={
+									<CoreForm.Textarea
+										label='Work Order Remarks'
+										disabled={
 											!(
 												form.watch('is_work_order') &&
 												form.watch('is_monthly_meeting') &&
@@ -632,26 +704,24 @@ const Entry = () => {
 									/>
 								)}
 							/>
-						)}
+						</div>
 						<FormField
 							control={form.control}
-							name='work_order_remarks'
+							name='monthly_meeting_file'
 							render={(props) => (
-								<CoreForm.Textarea
-									label='Work Order Remarks'
-									disabled={
-										!(
-											form.watch('is_work_order') &&
-											form.watch('is_monthly_meeting') &&
-											form.watch('is_cs') &&
-											form.watch('is_quotation')
-										)
-									}
+								<CoreForm.FileUpload
+									label='File'
+									fileType='document'
+									errorText='File must be less than 10MB and of type pdf, doc, docx'
+									isUpdate={isUpdate}
+									options={{
+										maxSize: 10000000,
+									}}
 									{...props}
 								/>
 							)}
 						/>
-					</>
+					</div>
 				)}
 			</CoreForm.Section>
 
@@ -669,25 +739,43 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_delivery_statement') && (
-					<FormField
-						control={form.control}
-						name='delivery_statement_remarks'
-						render={(props) => (
-							<CoreForm.Textarea
-								label='Delivery Statement Remarks'
-								disabled={
-									!(
-										form.watch('is_delivery_statement') &&
-										form.watch('is_work_order') &&
-										form.watch('is_monthly_meeting') &&
-										form.watch('is_cs') &&
-										form.watch('is_quotation')
-									)
-								}
-								{...props}
-							/>
-						)}
-					/>
+					<div className='grid grid-cols-2 gap-4'>
+						<FormField
+							control={form.control}
+							name='delivery_statement_remarks'
+							render={(props) => (
+								<CoreForm.Textarea
+									label='Delivery Statement Remarks'
+									disabled={
+										!(
+											form.watch('is_delivery_statement') &&
+											form.watch('is_work_order') &&
+											form.watch('is_monthly_meeting') &&
+											form.watch('is_cs') &&
+											form.watch('is_quotation')
+										)
+									}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='work_order_file'
+							render={(props) => (
+								<CoreForm.FileUpload
+									label='File'
+									fileType='document'
+									errorText='File must be less than 10MB and of type pdf, doc, docx'
+									isUpdate={isUpdate}
+									options={{
+										maxSize: 10000000,
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				)}
 			</CoreForm.Section>
 
