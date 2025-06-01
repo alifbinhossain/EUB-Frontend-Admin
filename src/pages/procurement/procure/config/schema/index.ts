@@ -117,17 +117,17 @@ export const CAPITAL_NULL: Partial<ICapital> = {
 	items: [],
 
 	is_cs: false,
-	cs_remarks: null,
+	cs_remarks: '',
 
 	is_monthly_meeting: false,
-	monthly_meeting_remarks: null,
+	monthly_meeting_remarks: '',
 
 	is_work_order: false,
-	work_order_remarks: null,
-	vendor_uuid: null,
+	work_order_remarks: '',
+	vendor_uuid: '',
 
 	is_delivery_statement: false,
-	delivery_statement_remarks: null,
+	delivery_statement_remarks: '',
 
 	general_notes: [
 		// {

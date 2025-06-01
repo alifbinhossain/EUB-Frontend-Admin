@@ -2,6 +2,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import { array } from 'zod';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -21,13 +22,16 @@ import { CAPITAL_NULL, CAPITAL_SCHEMA, ICapital } from './config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 import useGenerateGeneralNotes from './useGenerateGeneralNotes';
 import useGenerateItemWorkOrder from './useGenerateItemWorkOrder';
-import { status } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 	const navigate = useNavigate();
 	const [subCategory, setSubCategory] = useState<string | null>(null);
+	const [min, setMin] = useState<{ min_amount: number; min_quotation: number }>({
+		min_amount: 0,
+		min_quotation: 0,
+	});
 
 	const { user } = useAuth();
 	const {
@@ -90,13 +94,44 @@ const Entry = () => {
 	// Submit handler
 	async function onSubmit(values: ICapital) {
 		const { quotations, general_notes, items, ...rest } = values;
-		const formData = Formdata<ICapital>(values);
+
+		const formData = Formdata(rest);
+
+		// Remove fields with null value from formData
+		const formFields = [
+			'quotation_file',
+			'cs_file',
+			'monthly_meeting_file',
+			'work_order_file',
+			'delivery_statement_file',
+
+			'cs_remarks',
+			'monthly_meeting_remarks',
+			'work_order_remarks',
+			'vendor_uuid',
+			'delivery_statement_remarks',
+		];
+		formFields.forEach((field) => {
+			if (values[field as keyof typeof values] == null) {
+				formData.delete(field);
+			}
+		});
 
 		// * Filtered entries
 		const filteredItems = items.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
 
 		if (subCategory === 'Items' && filteredItems.length === 0) {
 			toast.warning('please add at least one item entry');
+			return;
+		}
+
+		if (min.min_quotation > 0 && quotations.length < min.min_quotation) {
+			toast.warning(`Please add at least ${min.min_quotation} quotation entries`);
+			return;
+		}
+
+		if (min.min_amount > 0 && quotations.reduce((acc, curr) => acc + curr.amount, 0) < min.min_amount) {
+			toast.warning(`Please add at least total of ${min.min_amount} quotation amount`);
 			return;
 		}
 
@@ -223,6 +258,7 @@ const Entry = () => {
 				})
 				.then(() => {
 					// * ENTRY FOR QUOTATIONS
+
 					if (quotations.length > 0) {
 						const quotationsPromise = quotations.map((entry) => {
 							const entryData = {
@@ -412,6 +448,19 @@ const Entry = () => {
 		form: form,
 	});
 
+	useEffect(() => {
+		if (min.min_quotation > 0) {
+			const currentQuotations = form.getValues('quotations') || [];
+			form.setValue('quotations', []);
+			const toAdd = min.min_quotation;
+			if (toAdd > 0) {
+				for (let i = 0; i < toAdd; i++) {
+					handleAddQuotations();
+				}
+			}
+		}
+	}, [min]);
+
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Procure' : 'Add Procure'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section
@@ -438,6 +487,10 @@ const Entry = () => {
 							{...props}
 							onChange={(option) => {
 								setSubCategory(option?.label || null);
+								setMin({
+									min_amount: option?.min_amount || 0,
+									min_quotation: option?.min_quotation || 0,
+								});
 								if (option?.label === 'Items') {
 									form.setValue('is_quotation', true);
 								} else {
