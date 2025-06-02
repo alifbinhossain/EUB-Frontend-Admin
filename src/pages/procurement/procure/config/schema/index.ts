@@ -14,7 +14,10 @@ export const CAPITAL_SCHEMA = z
 	.object({
 		name: STRING_REQUIRED,
 		sub_category_uuid: STRING_REQUIRED,
+
 		done: BOOLEAN_REQUIRED.default(false),
+		done_date: STRING_OPTIONAL.nullable(),
+
 		quotation_file: z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -35,7 +38,9 @@ export const CAPITAL_SCHEMA = z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')
 			.or(STRING_NULLABLE),
+
 		is_quotation: BOOLEAN_REQUIRED,
+		quotation_date: STRING_OPTIONAL.nullable(),
 		quotations: z.array(
 			z.object({
 				uuid: STRING_OPTIONAL,
@@ -60,16 +65,21 @@ export const CAPITAL_SCHEMA = z
 		),
 
 		is_cs: BOOLEAN_REQUIRED.default(false),
+		cs_date: STRING_OPTIONAL.nullable(),
 		cs_remarks: STRING_NULLABLE,
 
 		is_monthly_meeting: BOOLEAN_REQUIRED.default(false),
+		monthly_meeting_date: STRING_OPTIONAL.nullable(),
+		monthly_meeting_schedule_date: STRING_OPTIONAL.nullable(),
 		monthly_meeting_remarks: STRING_NULLABLE,
 
 		is_work_order: BOOLEAN_REQUIRED.default(false),
+		work_order_date: STRING_OPTIONAL.nullable(),
 		work_order_remarks: STRING_NULLABLE,
 		vendor_uuid: STRING_OPTIONAL.nullable(),
 
 		is_delivery_statement: BOOLEAN_REQUIRED.default(false),
+		delivery_statement_date: STRING_OPTIONAL.nullable(),
 		delivery_statement_remarks: STRING_NULLABLE,
 
 		general_notes: z.array(
@@ -105,28 +115,38 @@ export const CAPITAL_SCHEMA = z
 export const CAPITAL_NULL: Partial<ICapital> = {
 	name: '',
 	sub_category_uuid: '',
+
 	done: false,
+	done_date: '',
+
 	quotation_file: null,
 	cs_file: null,
 	monthly_meeting_file: null,
 	work_order_file: null,
 	delivery_statement_file: null,
+
 	is_quotation: false,
+	quotation_date: '',
 	quotations: [],
 
 	items: [],
 
 	is_cs: false,
+	cs_date: '',
 	cs_remarks: '',
 
 	is_monthly_meeting: false,
+	monthly_meeting_date: '',
 	monthly_meeting_remarks: '',
 
 	is_work_order: false,
+	work_order_date: '',
+	monthly_meeting_schedule_date: '',
 	work_order_remarks: '',
 	vendor_uuid: '',
 
 	is_delivery_statement: false,
+	delivery_statement_date: '',
 	delivery_statement_remarks: '',
 
 	general_notes: [

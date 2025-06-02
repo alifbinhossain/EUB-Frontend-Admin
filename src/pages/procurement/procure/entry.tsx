@@ -1,3 +1,4 @@
+import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -104,6 +105,14 @@ const Entry = () => {
 			'monthly_meeting_file',
 			'work_order_file',
 			'delivery_statement_file',
+
+			'done_date',
+			'quotation_date',
+			'cs_date',
+			'monthly_meeting_date',
+			'work_order_date',
+			'delivery_statement_date',
+			'monthly_meeting_schedule_date',
 
 			'cs_remarks',
 			'monthly_meeting_remarks',
@@ -450,7 +459,6 @@ const Entry = () => {
 
 	useEffect(() => {
 		if (min.min_quotation > 0) {
-			const currentQuotations = form.getValues('quotations') || [];
 			form.setValue('quotations', []);
 			const toAdd = min.min_quotation;
 			if (toAdd > 0) {
@@ -467,11 +475,33 @@ const Entry = () => {
 				title={`Request`}
 				className='grid gap-4 lg:grid-cols-2'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='done'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' label='Paid' {...props} />}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='done_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Done Date' disabled {...props} />
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='done'
+							render={(props) => (
+								<CoreForm.Switch
+									labelClassName='text-slate-100'
+									label='Paid'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('done_date', getDateTime());
+										} else {
+											form.setValue('done_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
@@ -538,11 +568,37 @@ const Entry = () => {
 					<CoreForm.DynamicFields
 						title='Quotations'
 						extraHeader={
-							<FormField
-								control={form.control}
-								name='is_quotation'
-								render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
-							/>
+							<div className='flex items-center justify-center gap-4'>
+								<FormField
+									control={form.control}
+									name='quotation_date'
+									render={(props) => (
+										<CoreForm.DatePicker
+											disableLabel
+											placeholder='Quotation Date'
+											disabled
+											{...props}
+										/>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name='is_quotation'
+									render={(props) => (
+										<CoreForm.Switch
+											labelClassName='text-slate-100'
+											onCheckedChange={(e) => {
+												if (e) {
+													form.setValue('quotation_date', getDateTime());
+												} else {
+													form.setValue('quotation_date', '');
+												}
+											}}
+											{...props}
+										/>
+									)}
+								/>
+							</div>
 						}
 						form={form}
 						fieldName='quotations'
@@ -590,11 +646,34 @@ const Entry = () => {
 				title={`Cs`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_cs'
-						render={(props) => <CoreForm.Switch label='Cs' labelClassName='text-slate-100' {...props} />}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='cs_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Cs Date' disabled {...props} />
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_cs'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Cs'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('cs_date', getDateTime());
+										} else {
+											form.setValue('cs_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_cs') && (
@@ -634,13 +713,51 @@ const Entry = () => {
 				title={`Monthly Meeting`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_monthly_meeting'
-						render={(props) => (
-							<CoreForm.Switch label='Monthly Meeting' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_schedule_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Monthly Meeting Schedule'
+									disabled={form.watch('is_monthly_meeting')}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Monthly Meeting Date'
+									disabled
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_monthly_meeting'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Monthly Meeting'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('monthly_meeting_date', getDateTime());
+										} else {
+											form.setValue('monthly_meeting_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_monthly_meeting') && (
@@ -686,27 +803,42 @@ const Entry = () => {
 				title={`Work Order`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_work_order'
-						render={(props) => (
-							<CoreForm.Switch
-								label='Work Order'
-								labelClassName='text-slate-100'
-								{...props}
-								onCheckedChange={(value) => {
-									if (!value) {
-										form.setValue(
-											'items',
-											form
-												.getValues('items')
-												.map((item) => ({ ...item, is_received: false, received_date: null }))
-										);
-									}
-								}}
-							/>
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='work_order_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Work Order Date' disabled {...props} />
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_work_order'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Work Order'
+									labelClassName='text-slate-100'
+									{...props}
+									onCheckedChange={(value) => {
+										if (!value) {
+											form.setValue(
+												'items',
+												form.getValues('items').map((item) => ({
+													...item,
+													is_received: false,
+													received_date: null,
+												}))
+											);
+											form.setValue('work_order_date', '');
+										} else {
+											form.setValue('work_order_date', getDateTime());
+										}
+									}}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_work_order') && (
@@ -782,13 +914,39 @@ const Entry = () => {
 				title={`Delivery Statement`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_delivery_statement'
-						render={(props) => (
-							<CoreForm.Switch label='Delivery Statement' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='delivery_statement_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Delivery Statement Date'
+									disabled
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_delivery_statement'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Delivery Statement'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('delivery_statement_date', getDateTime());
+										} else {
+											form.setValue('delivery_statement_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_delivery_statement') && (
