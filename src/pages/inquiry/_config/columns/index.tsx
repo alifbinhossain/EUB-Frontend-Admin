@@ -86,6 +86,16 @@ export const contactUSColumns = (): ColumnDef<IContactUSTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'email',
+		header: 'Email',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'phone',
+		header: 'phone',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'question',
 		header: 'Question',
 		enableColumnFilter: true,
