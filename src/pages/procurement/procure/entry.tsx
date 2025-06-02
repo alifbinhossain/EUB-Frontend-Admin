@@ -162,9 +162,9 @@ const Entry = () => {
 									...entry,
 									updated_at: getDateTime(),
 								};
-								return updateData.mutateAsync({
+								return imageUpdateData.mutateAsync({
 									url: `/procure/capital-vendor/${entry.uuid}`,
-									updatedData: entryUpdateData,
+									updatedData: Formdata(entryUpdateData),
 								});
 							} else {
 								const entryData = {
@@ -174,9 +174,9 @@ const Entry = () => {
 									uuid: nanoid(),
 									capital_uuid: uuid,
 								};
-								return postData.mutateAsync({
+								return imagePostData.mutateAsync({
 									url: `/procure/capital-vendor`,
-									newData: entryData,
+									newData: Formdata(entryData),
 								});
 							}
 						});
@@ -218,26 +218,34 @@ const Entry = () => {
 					// * UPDATE FOR GENERAL NOTES
 					if (general_notes.length > 0) {
 						const generalNotesUpdatePromise = general_notes.map((entry) => {
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['general_note_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
 							if (entry.uuid) {
-								const entryUpdateData = {
-									...entry,
-									updated_at: getDateTime(),
-								};
-								return updateData.mutateAsync({
+								formData.append('updated_at', getDateTime());
+								return imageUpdateData.mutateAsync({
 									url: `/procure/general-note/${entry.uuid}`,
-									updatedData: entryUpdateData,
+									updatedData: formData,
 								});
 							} else {
-								const entryData = {
-									...entry,
-									created_at: getDateTime(),
-									created_by: user?.uuid,
-									uuid: nanoid(),
-									capital_uuid: uuid,
-								};
-								return postData.mutateAsync({
+								formData.append('capital_uuid', uuid);
+								formData.append('created_at', getDateTime());
+								formData.append('created_by', user?.uuid || '');
+								formData.append('uuid', nanoid());
+
+								return imagePostData.mutateAsync({
 									url: `/procure/general-note`,
-									newData: entryData,
+									newData: formData,
 								});
 							}
 						});
@@ -307,16 +315,27 @@ const Entry = () => {
 					// * ENTRY FOR GENERAL NOTES
 					if (general_notes.length > 0) {
 						const generalNotesPromise = general_notes.map((entry) => {
-							const entryData = {
-								...entry,
-								capital_uuid: new_uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
-							return postData.mutateAsync({
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['general_note_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
+							formData.append('uuid', nanoid());
+							formData.append('created_at', getDateTime());
+							formData.append('created_by', user?.uuid || '');
+							formData.append('capital_uuid', new_uuid);
+
+							return imagePostData.mutateAsync({
 								url: `/procure/general-note`,
-								newData: entryData,
+								newData: formData,
 							});
 						});
 						Promise.all([...generalNotesPromise]);
@@ -359,6 +378,7 @@ const Entry = () => {
 		appendGeneralNotes({
 			description: '',
 			amount: 0,
+			general_note_file: null,
 		});
 	};
 
@@ -435,6 +455,7 @@ const Entry = () => {
 		appendGeneralNotes({
 			amount: field.amount,
 			description: field.description,
+			general_note_file: null,
 		});
 	};
 

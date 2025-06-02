@@ -88,7 +88,10 @@ export const CAPITAL_SCHEMA = z
 					uuid: STRING_OPTIONAL,
 					capital_uuid: STRING_OPTIONAL,
 					description: STRING_OPTIONAL,
-					file: STRING_OPTIONAL,
+					general_note_file: z
+						.instanceof(File)
+						.refine((file) => file?.size !== 0, 'Please upload an file')
+						.or(STRING_NULLABLE),
 					amount: NUMBER_REQUIRED.default(0),
 				})
 				.refine((note) => note.description, {
