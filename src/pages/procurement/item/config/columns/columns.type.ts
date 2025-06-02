@@ -4,6 +4,8 @@ export type IItemTableData = {
 	uuid: string;
 	name: string;
 	quantity: number;
+	threshold: number;
+	lead_time: number;
 	purchase_cost_center_name: string;
 	vendor_price: number;
 	price_validity: number;
