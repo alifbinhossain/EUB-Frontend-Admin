@@ -27,5 +27,6 @@ export type IContactUSTableData = {
 	phone: string;
 	question: string;
 	description: string;
+	is_response: boolean;
 	remarks?: string;
 };

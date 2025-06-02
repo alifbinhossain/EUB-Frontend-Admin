@@ -2,7 +2,7 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 
-import { PageInfo } from '@/utils';
+import { getDateTime, PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { contactUSColumns } from '../_config/columns';
@@ -43,8 +43,18 @@ const Designation = () => {
 		});
 	};
 
+	const handleResponse = async (row: Row<IContactUSTableData>) => {
+		const is_response = row?.original?.is_response ? false : true;
+		const updated_at = getDateTime();
+
+		await updateData.mutateAsync({
+			url: `/portfolio/contact-us/${row?.original?.uuid}`,
+			updatedData: { is_response, updated_at },
+		});
+	};
+
 	// Table Columns
-	const columns = contactUSColumns();
+	const columns = contactUSColumns(handleResponse);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

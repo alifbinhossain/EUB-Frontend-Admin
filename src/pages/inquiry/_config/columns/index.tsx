@@ -1,6 +1,7 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 
 import HoverCardWrapper from '@/components/others/hover-card-wrapper';
+import { Switch } from '@/components/ui/switch';
 
 import { cn } from '@/lib/utils';
 
@@ -79,7 +80,17 @@ export const visitorColumns = (): ColumnDef<IVisitorTableData>[] => [
 		enableColumnFilter: true,
 	},
 ];
-export const contactUSColumns = (): ColumnDef<IContactUSTableData>[] => [
+export const contactUSColumns = (
+	handleResponse: (row: Row<IContactUSTableData>) => void
+): ColumnDef<IContactUSTableData>[] => [
+	{
+		accessorKey: 'is_response',
+		header: 'Response',
+		enableColumnFilter: true,
+		cell: (info) => (
+			<Switch checked={Number(info.getValue()) === 1} onCheckedChange={() => handleResponse(info.row)} />
+		),
+	},
 	{
 		accessorKey: 'full_name',
 		header: 'Name',
