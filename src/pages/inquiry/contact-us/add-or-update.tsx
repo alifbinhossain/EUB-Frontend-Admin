@@ -79,6 +79,8 @@ const AddOrUpdate: React.FC<IContactUsAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 		>
 			<FormField control={form.control} name='full_name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='phone' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='question' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='description' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />

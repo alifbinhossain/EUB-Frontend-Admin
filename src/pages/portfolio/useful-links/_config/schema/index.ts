@@ -171,7 +171,6 @@ export type IRoutine = z.infer<typeof ROUTINE_SCHEMA>;
 //* Job Circular Schema
 export const JOB_CIRCULAR_SCHEMA = z.object({
 	title: STRING_REQUIRED,
-	faculty_uuid: STRING_REQUIRED,
 	category: STRING_REQUIRED,
 	location: STRING_REQUIRED,
 	deadline: STRING_REQUIRED,
@@ -185,7 +184,6 @@ export const JOB_CIRCULAR_SCHEMA = z.object({
 export const JOB_CIRCULAR_NULL: Partial<IJobCircular> = {
 	title: '',
 	category: '',
-	faculty_uuid: '',
 	deadline: '',
 	location: '',
 	file: new File([''], 'filename') as File,

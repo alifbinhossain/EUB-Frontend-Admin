@@ -68,6 +68,17 @@ const SecondaryEducationBackground = () => {
 				name='ssc_institute'
 				render={(props) => <CoreForm.Input label='Institute' {...props} />}
 			/>
+
+			<FormField
+				control={form.control}
+				name='ssc_roll_number'
+				render={(props) => <CoreForm.Input label='Roll Number' {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='ssc_registration_number'
+				render={(props) => <CoreForm.Input label='Registration Number' {...props} />}
+			/>
 		</CoreForm.Section>
 	);
 };
