@@ -13,7 +13,7 @@ const BachelorDegree = () => {
 			<FormField
 				control={form.control}
 				name='bsc_name'
-				render={(props) => <CoreForm.Input label='Name' {...props} />}
+				render={(props) => <CoreForm.Input label='Name of Degree' {...props} />}
 			/>
 			<FormField
 				control={form.control}

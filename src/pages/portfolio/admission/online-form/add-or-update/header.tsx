@@ -35,7 +35,7 @@ const Header = () => {
 					name='spring'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={() => {
+							onCheckedChange={() => {
 								if (form.getValues('spring') === false) {
 									form.setValue('spring', true);
 									form.setValue('summer', false);
@@ -53,7 +53,7 @@ const Header = () => {
 					name='summer'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={() => {
+							onCheckedChange={() => {
 								if (form.getValues('summer') === false) {
 									form.setValue('spring', false);
 									form.setValue('summer', true);
@@ -71,9 +71,8 @@ const Header = () => {
 					name='fall'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={(event) => {
-								const e = event.target as HTMLInputElement;
-								if (e.checked) {
+							onCheckedChange={() => {
+								if (form.getValues('fall') === false) {
 									form.setValue('spring', false);
 									form.setValue('summer', false);
 									form.setValue('fall', true);
