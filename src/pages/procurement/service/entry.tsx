@@ -39,7 +39,6 @@ const Entry = () => {
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 
 	const form = useRHF(SERVICE_SCHEMA, SERVICE_NULL);
-	console.log(form.formState.errors);
 
 	const {
 		fields: generalNotesFields,
@@ -61,30 +60,27 @@ const Entry = () => {
 		let arraySize = 0;
 
 		if (
-			startDate?.getDate() !== endDate?.getDate() &&
-			Math.ceil(((duration ?? 0) + 1) % (12 / Number(currentFrequency))) === 0
+			(startDate?.getDate() !== endDate?.getDate() &&
+				Math.ceil(((duration ?? 0) + 1) % (12 / Number(currentFrequency))) === 0) ||
+			duration === 0
 		) {
 			arraySize = Math.ceil(((duration ?? 0) + 1) / (12 / Number(currentFrequency)));
+			console.log('arraySize', arraySize);
 		} else {
 			arraySize = Math.ceil((duration ?? 0) / (12 / Number(currentFrequency)));
 		}
-		const validData = generalNotesFields.filter((item) => item.payment_date !== undefined);
-		if (validData.length > arraySize) {
-			ShowLocalToast({
-				toastType: 'error',
-				message: 'Please remove extra service payment',
-			});
-			return;
-		}
-		if (arraySize - validData.length === 0) return;
-		if (arraySize <= generalNotesFields.length) return;
-		if (arraySize > length) {
+		if (arraySize) {
 			for (let i = 0; i < arraySize - length; i++) {
 				appendGeneralNotes({
 					service_uuid: undefined,
 					amount: 0,
 					payment_date: null,
 				});
+			}
+		}
+		if (arraySize < length) {
+			for (let i = 0; i < length - arraySize; i++) {
+				removeGeneralNotes(i);
 			}
 		}
 	}, [startDate, endDate, currentFrequency]);
@@ -132,12 +128,10 @@ const Entry = () => {
 							const endDateRaw = form.watch('end_date');
 							const endDate = endDateRaw ? new Date(endDateRaw) : null;
 							let nextDueDate = addDueDate;
-
 							if (endDate && isBefore(endDate, addDueDate)) {
 								nextDueDate = endDate;
 							}
 							const formatNextDueDate = format(nextDueDate, 'yyyy-MM-dd HH:mm:ss');
-
 							if (entry.uuid) {
 								const entryUpdateData = {
 									...entry,
@@ -314,6 +308,7 @@ const Entry = () => {
 							label={`Frequency/Year`}
 							placeholder='Select frequency'
 							menuPortalTarget={document.body}
+							isDisabled={isUpdate}
 							options={frequency!}
 							{...props}
 						/>
@@ -348,12 +343,12 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='start_date'
-					render={(props) => <CoreForm.DatePicker {...props} />}
+					render={(props) => <CoreForm.DatePicker disabled={isUpdate} {...props} />}
 				/>
 				<FormField
 					control={form.control}
 					name='end_date'
-					render={(props) => <CoreForm.DatePicker {...props} />}
+					render={(props) => <CoreForm.DatePicker disabled={isUpdate} {...props} />}
 				/>
 				<FormField
 					control={form.control}
