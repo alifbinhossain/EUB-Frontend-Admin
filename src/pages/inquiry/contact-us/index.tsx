@@ -2,18 +2,24 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 
+import ReactSelect from '@/components/ui/react-select';
+
 import { getDateTime, PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { contactUSColumns } from '../_config/columns';
 import { IContactUSTableData } from '../_config/columns/columns.type';
 import { useContactUs } from '../_config/query';
+import { types } from './utils';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Designation = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useContactUs<IContactUSTableData[]>();
+	const [type, setType] = useState<boolean>(false);
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useContactUs<IContactUSTableData[]>(
+		`is_response=${type}`
+	);
 
 	const pageInfo = useMemo(() => new PageInfo('Contact Us', url, 'inquiry__contact_us'), [url]);
 
@@ -69,7 +75,22 @@ const Designation = () => {
 				handleRefetch={refetch}
 				defaultVisibleColumns={{
 					created_by_name: false,
+					updated_at: false,
 				}}
+				otherToolBarComponents={
+					<ReactSelect
+						placeholder='Select type'
+						options={types}
+						menuPortalTarget={document.body}
+						styles={{
+							menuPortal: (base) => ({ ...base, zIndex: 999 }),
+						}}
+						value={types.find((option) => option.value === type)}
+						onChange={(e: any) => {
+							setType(e?.value);
+						}}
+					/>
+				}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

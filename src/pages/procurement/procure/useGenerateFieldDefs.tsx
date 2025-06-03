@@ -37,6 +37,12 @@ const useGenerateFieldDefs = ({ data, copy, remove, isUpdate, watch }: IGenerate
 			disabled: watch ? !watch('is_quotation') : true,
 		},
 		{
+			header: 'File',
+			accessorKey: 'quotation_file',
+			type: 'file',
+			isUpdate: isUpdate,
+		},
+		{
 			header: 'Actions',
 			accessorKey: 'actions',
 			type: 'custom',
