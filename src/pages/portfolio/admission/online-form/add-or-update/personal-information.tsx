@@ -48,16 +48,12 @@ const PersonalInformation = () => {
 				name='date_of_birth'
 				render={(props) => <CoreForm.DatePicker label='Date of Birth' {...props} />}
 			/>
-
-			<div className='al'>
-				<FormField
-					control={form.control}
-					name='phone_number'
-					render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
-				/>
-			</div>
+			<FormField
+				control={form.control}
+				name='phone_number'
+				render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
+			/>
 			<br />
-
 			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
