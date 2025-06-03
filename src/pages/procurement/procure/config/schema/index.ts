@@ -18,10 +18,6 @@ export const CAPITAL_SCHEMA = z
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
 
-		quotation_file: z
-			.instanceof(File)
-			.refine((file) => file?.size !== 0, 'Please upload an file')
-			.or(STRING_NULLABLE),
 		cs_file: z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -47,6 +43,10 @@ export const CAPITAL_SCHEMA = z
 				vendor_uuid: STRING_OPTIONAL,
 				capital_uuid: STRING_OPTIONAL,
 				amount: NUMBER_REQUIRED.default(0),
+				quotation_file: z
+					.instanceof(File)
+					.refine((file) => file?.size !== 0, 'Please upload an file')
+					.or(STRING_NULLABLE),
 				is_selected: BOOLEAN_REQUIRED.default(false),
 			})
 		),
@@ -113,6 +113,16 @@ export const CAPITAL_SCHEMA = z
 				});
 			});
 		}
+
+		if (data.is_work_order) {
+			if (!data.vendor_uuid) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: 'Required',
+					path: ['vendor_uuid'],
+				});
+			}
+		}
 	});
 
 export const CAPITAL_NULL: Partial<ICapital> = {
@@ -122,7 +132,6 @@ export const CAPITAL_NULL: Partial<ICapital> = {
 	done: false,
 	done_date: '',
 
-	quotation_file: null,
 	cs_file: null,
 	monthly_meeting_file: null,
 	work_order_file: null,

@@ -157,26 +157,35 @@ const Entry = () => {
 					// * UPDATE FOR QUOTATIONS
 					if (quotations.length > 0) {
 						const quotationsUpdatePromise = quotations.map((entry) => {
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['quotation_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
 							if (entry.uuid) {
-								const entryUpdateData = {
-									...entry,
-									updated_at: getDateTime(),
-								};
+								formData.append('updated_at', getDateTime());
+
 								return imageUpdateData.mutateAsync({
 									url: `/procure/capital-vendor/${entry.uuid}`,
-									updatedData: Formdata(entryUpdateData),
+									updatedData: formData,
 								});
 							} else {
-								const entryData = {
-									...entry,
-									created_at: getDateTime(),
-									created_by: user?.uuid,
-									uuid: nanoid(),
-									capital_uuid: uuid,
-								};
+								formData.append('capital_uuid', uuid);
+								formData.append('created_at', getDateTime());
+								formData.append('created_by', user?.uuid || '');
+								formData.append('uuid', nanoid());
+
 								return imagePostData.mutateAsync({
 									url: `/procure/capital-vendor`,
-									newData: Formdata(entryData),
+									newData: formData,
 								});
 							}
 						});
@@ -278,16 +287,27 @@ const Entry = () => {
 
 					if (quotations.length > 0) {
 						const quotationsPromise = quotations.map((entry) => {
-							const entryData = {
-								...entry,
-								capital_uuid: new_uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
-							return postData.mutateAsync({
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['quotation_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
+							formData.append('capital_uuid', new_uuid);
+							formData.append('created_at', getDateTime());
+							formData.append('created_by', user?.uuid || '');
+							formData.append('uuid', nanoid());
+
+							return imagePostData.mutateAsync({
 								url: `/procure/capital-vendor`,
-								newData: entryData,
+								newData: formData,
 							});
 						});
 						Promise.all([...quotationsPromise]);
@@ -360,6 +380,7 @@ const Entry = () => {
 			vendor_uuid: '',
 			amount: 0,
 			is_selected: false,
+			quotation_file: null,
 		});
 	};
 
@@ -435,6 +456,7 @@ const Entry = () => {
 			vendor_uuid: field.vendor_uuid,
 			amount: field.amount,
 			is_selected: field.is_selected,
+			quotation_file: null,
 		});
 	};
 
@@ -585,65 +607,47 @@ const Entry = () => {
 			</CoreForm.Section>
 
 			{subCategory !== 'Items' ? (
-				<div className='grid grid-cols-2 gap-4'>
-					<CoreForm.DynamicFields
-						title='Quotations'
-						extraHeader={
-							<div className='flex items-center justify-center gap-4'>
-								<FormField
-									control={form.control}
-									name='quotation_date'
-									render={(props) => (
-										<CoreForm.DatePicker
-											disableLabel
-											placeholder='Quotation Date'
-											disabled
-											{...props}
-										/>
-									)}
-								/>
-								<FormField
-									control={form.control}
-									name='is_quotation'
-									render={(props) => (
-										<CoreForm.Switch
-											labelClassName='text-slate-100'
-											onCheckedChange={(e) => {
-												if (e) {
-													form.setValue('quotation_date', getDateTime());
-												} else {
-													form.setValue('quotation_date', '');
-												}
-											}}
-											{...props}
-										/>
-									)}
-								/>
-							</div>
-						}
-						form={form}
-						fieldName='quotations'
-						fieldDefs={fieldDefsQuotations}
-						fields={quotationFields}
-						{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
-					/>
-					<FormField
-						control={form.control}
-						name='quotation_file'
-						render={(props) => (
-							<CoreForm.FileUpload
-								label='File'
-								fileType='document'
-								errorText='File must be less than 10MB and of type pdf, doc, docx'
-								isUpdate={isUpdate}
-								options={{
-									maxSize: 10000000,
-								}}
-								{...props}
+				<CoreForm.DynamicFields
+					title='Quotations'
+					extraHeader={
+						<div className='flex items-center justify-center gap-4'>
+							<FormField
+								control={form.control}
+								name='quotation_date'
+								render={(props) => (
+									<CoreForm.DatePicker
+										disableLabel
+										placeholder='Quotation Date'
+										disabled
+										{...props}
+									/>
+								)}
 							/>
-						)}
-					/>
-				</div>
+							<FormField
+								control={form.control}
+								name='is_quotation'
+								render={(props) => (
+									<CoreForm.Switch
+										labelClassName='text-slate-100'
+										onCheckedChange={(e) => {
+											if (e) {
+												form.setValue('quotation_date', getDateTime());
+											} else {
+												form.setValue('quotation_date', '');
+											}
+										}}
+										{...props}
+									/>
+								)}
+							/>
+						</div>
+					}
+					form={form}
+					fieldName='quotations'
+					fieldDefs={fieldDefsQuotations}
+					fields={quotationFields}
+					{...(form.watch('is_quotation') ? { handleAdd: handleAddQuotations } : {})}
+				/>
 			) : (
 				<CoreForm.DynamicFields
 					title='Items'
@@ -864,7 +868,7 @@ const Entry = () => {
 			>
 				{form.watch('is_work_order') && (
 					<div className='grid grid-cols-2 gap-4'>
-						<div>
+						<div className='flex flex-col gap-4'>
 							{subCategory !== 'Items' && (
 								<FormField
 									control={form.control}
