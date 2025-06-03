@@ -1,3 +1,4 @@
+import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -105,6 +106,14 @@ const Entry = () => {
 			'work_order_file',
 			'delivery_statement_file',
 
+			'done_date',
+			'quotation_date',
+			'cs_date',
+			'monthly_meeting_date',
+			'work_order_date',
+			'delivery_statement_date',
+			'monthly_meeting_schedule_date',
+
 			'cs_remarks',
 			'monthly_meeting_remarks',
 			'work_order_remarks',
@@ -153,9 +162,9 @@ const Entry = () => {
 									...entry,
 									updated_at: getDateTime(),
 								};
-								return updateData.mutateAsync({
+								return imageUpdateData.mutateAsync({
 									url: `/procure/capital-vendor/${entry.uuid}`,
-									updatedData: entryUpdateData,
+									updatedData: Formdata(entryUpdateData),
 								});
 							} else {
 								const entryData = {
@@ -165,9 +174,9 @@ const Entry = () => {
 									uuid: nanoid(),
 									capital_uuid: uuid,
 								};
-								return postData.mutateAsync({
+								return imagePostData.mutateAsync({
 									url: `/procure/capital-vendor`,
-									newData: entryData,
+									newData: Formdata(entryData),
 								});
 							}
 						});
@@ -209,26 +218,34 @@ const Entry = () => {
 					// * UPDATE FOR GENERAL NOTES
 					if (general_notes.length > 0) {
 						const generalNotesUpdatePromise = general_notes.map((entry) => {
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['general_note_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
 							if (entry.uuid) {
-								const entryUpdateData = {
-									...entry,
-									updated_at: getDateTime(),
-								};
-								return updateData.mutateAsync({
+								formData.append('updated_at', getDateTime());
+								return imageUpdateData.mutateAsync({
 									url: `/procure/general-note/${entry.uuid}`,
-									updatedData: entryUpdateData,
+									updatedData: formData,
 								});
 							} else {
-								const entryData = {
-									...entry,
-									created_at: getDateTime(),
-									created_by: user?.uuid,
-									uuid: nanoid(),
-									capital_uuid: uuid,
-								};
-								return postData.mutateAsync({
+								formData.append('capital_uuid', uuid);
+								formData.append('created_at', getDateTime());
+								formData.append('created_by', user?.uuid || '');
+								formData.append('uuid', nanoid());
+
+								return imagePostData.mutateAsync({
 									url: `/procure/general-note`,
-									newData: entryData,
+									newData: formData,
 								});
 							}
 						});
@@ -298,16 +315,27 @@ const Entry = () => {
 					// * ENTRY FOR GENERAL NOTES
 					if (general_notes.length > 0) {
 						const generalNotesPromise = general_notes.map((entry) => {
-							const entryData = {
-								...entry,
-								capital_uuid: new_uuid,
-								created_at: getDateTime(),
-								created_by: user?.uuid,
-								uuid: nanoid(),
-							};
-							return postData.mutateAsync({
+							const formData = Formdata(entry);
+
+							// Remove fields with null value from generalNotesFormData
+							const fields = ['general_note_file', 'amount'];
+							fields.forEach((field) => {
+								if (
+									entry[field as keyof typeof entry] == null ||
+									entry[field as keyof typeof entry] === 0
+								) {
+									formData.delete(field);
+								}
+							});
+
+							formData.append('uuid', nanoid());
+							formData.append('created_at', getDateTime());
+							formData.append('created_by', user?.uuid || '');
+							formData.append('capital_uuid', new_uuid);
+
+							return imagePostData.mutateAsync({
 								url: `/procure/general-note`,
-								newData: entryData,
+								newData: formData,
 							});
 						});
 						Promise.all([...generalNotesPromise]);
@@ -350,6 +378,7 @@ const Entry = () => {
 		appendGeneralNotes({
 			description: '',
 			amount: 0,
+			general_note_file: null,
 		});
 	};
 
@@ -426,6 +455,7 @@ const Entry = () => {
 		appendGeneralNotes({
 			amount: field.amount,
 			description: field.description,
+			general_note_file: null,
 		});
 	};
 
@@ -450,7 +480,6 @@ const Entry = () => {
 
 	useEffect(() => {
 		if (min.min_quotation > 0) {
-			const currentQuotations = form.getValues('quotations') || [];
 			form.setValue('quotations', []);
 			const toAdd = min.min_quotation;
 			if (toAdd > 0) {
@@ -467,11 +496,33 @@ const Entry = () => {
 				title={`Request`}
 				className='grid gap-4 lg:grid-cols-2'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='done'
-						render={(props) => <CoreForm.Switch labelClassName='text-slate-100' label='Paid' {...props} />}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='done_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Done Date' disabled {...props} />
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='done'
+							render={(props) => (
+								<CoreForm.Switch
+									labelClassName='text-slate-100'
+									label='Paid'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('done_date', getDateTime());
+										} else {
+											form.setValue('done_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
@@ -538,11 +589,37 @@ const Entry = () => {
 					<CoreForm.DynamicFields
 						title='Quotations'
 						extraHeader={
-							<FormField
-								control={form.control}
-								name='is_quotation'
-								render={(props) => <CoreForm.Switch labelClassName='text-slate-100' {...props} />}
-							/>
+							<div className='flex items-center justify-center gap-4'>
+								<FormField
+									control={form.control}
+									name='quotation_date'
+									render={(props) => (
+										<CoreForm.DatePicker
+											disableLabel
+											placeholder='Quotation Date'
+											disabled
+											{...props}
+										/>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name='is_quotation'
+									render={(props) => (
+										<CoreForm.Switch
+											labelClassName='text-slate-100'
+											onCheckedChange={(e) => {
+												if (e) {
+													form.setValue('quotation_date', getDateTime());
+												} else {
+													form.setValue('quotation_date', '');
+												}
+											}}
+											{...props}
+										/>
+									)}
+								/>
+							</div>
 						}
 						form={form}
 						fieldName='quotations'
@@ -590,11 +667,34 @@ const Entry = () => {
 				title={`Cs`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_cs'
-						render={(props) => <CoreForm.Switch label='Cs' labelClassName='text-slate-100' {...props} />}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='cs_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Cs Date' disabled {...props} />
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_cs'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Cs'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('cs_date', getDateTime());
+										} else {
+											form.setValue('cs_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_cs') && (
@@ -634,13 +734,51 @@ const Entry = () => {
 				title={`Monthly Meeting`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_monthly_meeting'
-						render={(props) => (
-							<CoreForm.Switch label='Monthly Meeting' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_schedule_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Monthly Meeting Schedule'
+									disabled={form.watch('is_monthly_meeting')}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='monthly_meeting_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Monthly Meeting Date'
+									disabled
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_monthly_meeting'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Monthly Meeting'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('monthly_meeting_date', getDateTime());
+										} else {
+											form.setValue('monthly_meeting_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_monthly_meeting') && (
@@ -686,27 +824,42 @@ const Entry = () => {
 				title={`Work Order`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_work_order'
-						render={(props) => (
-							<CoreForm.Switch
-								label='Work Order'
-								labelClassName='text-slate-100'
-								{...props}
-								onCheckedChange={(value) => {
-									if (!value) {
-										form.setValue(
-											'items',
-											form
-												.getValues('items')
-												.map((item) => ({ ...item, is_received: false, received_date: null }))
-										);
-									}
-								}}
-							/>
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='work_order_date'
+							render={(props) => (
+								<CoreForm.DatePicker disableLabel placeholder='Work Order Date' disabled {...props} />
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_work_order'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Work Order'
+									labelClassName='text-slate-100'
+									{...props}
+									onCheckedChange={(value) => {
+										if (!value) {
+											form.setValue(
+												'items',
+												form.getValues('items').map((item) => ({
+													...item,
+													is_received: false,
+													received_date: null,
+												}))
+											);
+											form.setValue('work_order_date', '');
+										} else {
+											form.setValue('work_order_date', getDateTime());
+										}
+									}}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_work_order') && (
@@ -782,13 +935,39 @@ const Entry = () => {
 				title={`Delivery Statement`}
 				className='grid gap-4 lg:grid-cols-1'
 				extraHeader={
-					<FormField
-						control={form.control}
-						name='is_delivery_statement'
-						render={(props) => (
-							<CoreForm.Switch label='Delivery Statement' labelClassName='text-slate-100' {...props} />
-						)}
-					/>
+					<div className='flex items-center justify-center gap-4'>
+						<FormField
+							control={form.control}
+							name='delivery_statement_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									disableLabel
+									placeholder='Delivery Statement Date'
+									disabled
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='is_delivery_statement'
+							render={(props) => (
+								<CoreForm.Switch
+									label='Delivery Statement'
+									labelClassName='text-slate-100'
+									onCheckedChange={(e) => {
+										if (e) {
+											form.setValue('delivery_statement_date', getDateTime());
+										} else {
+											form.setValue('delivery_statement_date', '');
+										}
+									}}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
 				}
 			>
 				{form.watch('is_delivery_statement') && (

@@ -66,6 +66,16 @@ const PersonalInformation = () => {
 				)}
 			/>
 			<FormField control={form.control} name='nationality' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='birth_certificate_number'
+				render={(props) => <CoreForm.Input label='Birth Certificate' {...props} />}
+			/>
+			<FormField
+				control={form.control}
+				name='nid_number'
+				render={(props) => <CoreForm.Input label='NID Number' {...props} />}
+			/>
 		</CoreForm.Section>
 	);
 };

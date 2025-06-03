@@ -54,6 +54,16 @@ export const itemColumns = (
 		header: 'Quantity',
 		enableColumnFilter: true,
 	},
+	{
+		accessorKey: 'threshold',
+		header: 'Threshold',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'lead_time',
+		header: 'Lead Time',
+		enableColumnFilter: true,
+	},
 
 	{
 		accessorKey: 'unit',

@@ -23,11 +23,6 @@ export const jobCircularColumns = (): ColumnDef<IJobCircularTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'faculty_name',
-		header: 'Faculty Name',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'category',
 		header: 'Category',
 		enableColumnFilter: true,
@@ -37,14 +32,12 @@ export const jobCircularColumns = (): ColumnDef<IJobCircularTableData>[] => [
 		header: 'Location',
 		enableColumnFilter: true,
 	},
-
 	{
 		accessorKey: 'file',
 		header: 'File',
 		enableColumnFilter: true,
 		cell: (info) => <FilePreview preview={info.getValue() as string} />,
 	},
-
 	{
 		accessorKey: 'deadline',
 		header: 'Deadline',

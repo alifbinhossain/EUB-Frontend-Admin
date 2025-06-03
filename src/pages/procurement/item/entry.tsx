@@ -226,6 +226,16 @@ const Entry = () => {
 					)}
 				/> */}
 
+				<FormField
+					control={form.control}
+					name='threshold'
+					render={(props) => <CoreForm.Input type='number' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='lead_time'
+					render={(props) => <CoreForm.Input type='number' {...props} />}
+				/>
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>
 			<CoreForm.DynamicFields

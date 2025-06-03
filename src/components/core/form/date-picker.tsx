@@ -15,6 +15,7 @@ import { FormDatePickerProps } from './types';
 const FormDatePicker: React.FC<FormDatePickerProps> = ({
 	field,
 	label,
+	placeholder,
 	subLabel,
 	optional = false,
 	className,
@@ -49,7 +50,11 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 							)}
 							disabled={disabled} // Disable the button when the field is disabled
 						>
-							{field.value ? format(new Date(field.value), 'PPP') : <span>Pick a date</span>}
+							{field.value ? (
+								format(new Date(field.value), 'PPP')
+							) : (
+								<span>{placeholder || 'Pick a date'} </span>
+							)}
 							<CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
 						</Button>
 					</FormControl>

@@ -90,12 +90,6 @@ const AddOrUpdate: React.FC<IJobCircularAddOrUpdateProps> = ({
 					<FormField control={form.control} name='title' render={(props) => <CoreForm.Input {...props} />} />
 					<FormField
 						control={form.control}
-						name='faculty_uuid'
-						render={(props) => <CoreForm.ReactSelect label='Faculty' options={faculties!} {...props} />}
-					/>
-
-					<FormField
-						control={form.control}
 						name='category'
 						render={(props) => <CoreForm.Input {...props} />}
 					/>
