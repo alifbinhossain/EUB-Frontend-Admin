@@ -26,11 +26,6 @@ export const serviceColumns = (
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'sub_category_name',
-		header: 'Sub Segment',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'vendor_name',
 		header: 'Vendor Name',
 		enableColumnFilter: true,
@@ -63,8 +58,7 @@ export const serviceColumns = (
 		enableColumnFilter: true,
 		cell: (info) => {
 			const date = info.getValue() as Date;
-			const nextDueDate = addMonths(date, Number(info.row.original.frequency));
-			return <DateTime date={nextDueDate as Date} isTime={false} />;
+			return <DateTime date={date as Date} isTime={false} />;
 		},
 	},
 	{

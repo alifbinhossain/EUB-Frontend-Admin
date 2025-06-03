@@ -235,6 +235,12 @@ export const facultyColumns = (): ColumnDef<IFacultyTableData>[] => [
 // * Info Columns
 export const infoColumns = (): ColumnDef<IInfoTableData>[] => [
 	{
+		accessorKey: 'is_offer',
+		header: 'Offer',
+		enableColumnFilter: true,
+		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
+	},
+	{
 		accessorKey: 'id',
 		header: 'ID',
 		enableColumnFilter: true,
@@ -545,6 +551,7 @@ export const offersColumns = (): ColumnDef<IOffersTableData>[] => [
 		header: 'Serial',
 		enableColumnFilter: true,
 		cell: (info) => info.getValue(),
+		size: 20,
 	},
 	{
 		accessorKey: 'title',

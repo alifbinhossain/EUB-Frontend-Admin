@@ -107,6 +107,11 @@ const AddOrUpdate: React.FC<IInfoAddOrUpdateProps> = ({
 						name='remarks'
 						render={(props) => <CoreForm.Textarea {...props} />}
 					/>
+					<FormField
+						control={form.control}
+						name='is_offer'
+						render={(props) => <CoreForm.Checkbox label='Show in Offer' {...props} />}
+					/>
 				</div>
 
 				<FormField
