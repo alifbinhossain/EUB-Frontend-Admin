@@ -69,15 +69,6 @@ const useServicePayment = ({ remove, form }: IGenerateFieldDefsProps): FieldDef[
 			accessorKey: 'payment_date',
 			type: 'date',
 		},
-
-		{
-			header: 'Actions',
-			accessorKey: 'actions',
-			type: 'custom',
-			component: (index: number) => {
-				return <FieldActionButton handleRemove={remove} index={index} />;
-			},
-		},
 	];
 };
 

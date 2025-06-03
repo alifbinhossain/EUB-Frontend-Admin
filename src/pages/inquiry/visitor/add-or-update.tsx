@@ -99,7 +99,7 @@ const AddOrUpdate: React.FC<IVisitorAddOrUpdateProps> = ({
 				)}
 			/>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='mobile' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='mobile' render={(props) => <CoreForm.Phone {...props} />} />
 
 			{form.watch('category') === 'call_entry' ? (
 				<div className='flex flex-col gap-4'>
