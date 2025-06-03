@@ -355,7 +355,7 @@ const Entry = () => {
 				<FormField
 					control={form.control}
 					name='cost_per_service'
-					render={(props) => <CoreForm.Input type='number' label='Cost Per Service' {...props} />}
+					render={(props) => <CoreForm.Input type='number' label='Cost/Service' {...props} />}
 				/>
 				<FormField
 					control={form.control}

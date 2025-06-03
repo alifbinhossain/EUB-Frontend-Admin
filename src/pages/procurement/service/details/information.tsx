@@ -74,7 +74,7 @@ const Information: React.FC<{ data: IServiceTableData }> = ({ data }) => {
 				value: formatDateTable(data.end_date),
 			},
 			{
-				label: 'Cost Per Service',
+				label: 'Cost/Service',
 				value: data.cost_per_service,
 			},
 			{
