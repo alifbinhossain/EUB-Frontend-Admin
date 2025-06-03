@@ -25,7 +25,7 @@ const Entry = () => {
 	const { uuid } = useParams();
 	const isUpdate = !!uuid;
 	const navigate = useNavigate();
-
+	const { invalidateQuery: invalidateService } = useService<IServiceTableData[]>();
 	const { user } = useAuth();
 	const {
 		data,
@@ -162,6 +162,7 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateService();
 					invalidateServiceDetails();
 					navigate('/procurement/service');
 				})
@@ -226,6 +227,7 @@ const Entry = () => {
 				.then(() => {
 					invalidateQuery();
 					invalidateServiceDetails();
+					invalidateService();
 					navigate('/procurement/service');
 				})
 				.catch((error) => {
