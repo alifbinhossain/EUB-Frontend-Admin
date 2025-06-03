@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 
@@ -24,6 +24,16 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 	disabled = false, // New prop to disable the field
 }) => {
 	const [open, setOpen] = useState(false);
+
+	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+		field.value ? new Date(field.value) : new Date()
+	);
+
+	useEffect(() => {
+		if (field.value) {
+			setSelectedDate(new Date(field.value));
+		}
+	}, [field.value]);
 
 	return (
 		<FormItem className='space-y-1.5'>
@@ -64,7 +74,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						{...calendarProps}
 						captionLayout={'dropdown'}
 						mode='single'
-						selected={field.value ? new Date(field.value) : new Date()}
+						selected={selectedDate}
 						onSelect={(selected, triggerDate) => {
 							if (!disabled) {
 								field.onChange(formatDate(triggerDate as Date));
@@ -73,12 +83,12 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
 						}}
 						onMonthChange={(date) => {
 							if (!disabled) {
-								field.onChange(formatDate(date as Date));
+								setSelectedDate(date);
 							}
 						}}
-						month={field.value ? new Date(field.value) : undefined}
+						month={selectedDate}
 						endMonth={new Date(2040, 11)}
-						disabled={disabled} // Disable the calendar when the field is disabled
+						disabled={disabled}
 					/>
 				</PopoverContent>
 			</Popover>
