@@ -22,6 +22,7 @@ const Header = () => {
 					<CoreForm.ReactSelect
 						label='Program'
 						placeholder='Select Program'
+						menuPortalTarget={document.body}
 						options={programOption!}
 						{...props}
 					/>
