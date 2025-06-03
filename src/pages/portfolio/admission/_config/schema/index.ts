@@ -160,6 +160,11 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		bkash: STRING_REQUIRED.min(1, { message: 'Bkash number is required' }),
 		blood_group: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], { message: 'Select any blood group' }),
 
+		birth_certificate_number: STRING_REQUIRED.regex(/^\d+$/, {
+			message: 'Birth certificate number must be numeric',
+		}),
+		nid_number: STRING_REQUIRED.regex(/^\d+$/, { message: 'NID number must be numeric' }),
+
 		ssc_group: z.enum(['Science', 'Business Group', 'Humanities', 'Vocational'], { message: 'Select Group' }),
 		ssc_grade: z.enum(['Golden A+', 'A+', 'A', 'A-', 'B+', 'B', 'B+', 'B-', 'C+', 'C', 'C-', 'D', 'F'], {
 			message: 'Grade is required',
@@ -178,6 +183,10 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		]),
 		ssc_passing_year: z.number().min(4, { message: 'Passing year is required' }),
 		ssc_institute: STRING_REQUIRED.min(1, { message: 'Institution is required' }),
+		ssc_roll_number: STRING_REQUIRED.regex(/^\d+$/, { message: 'SSC roll number must be numeric' }),
+		ssc_registration_number: STRING_REQUIRED.regex(/^\d+$/, {
+			message: 'SSC registration number must be numeric',
+		}),
 
 		hsc_group: z.enum(['Science', 'Business Group', 'Humanities', 'BM', 'CSE', 'EEE', 'Civil'], {
 			message: 'Select Group',
@@ -199,6 +208,10 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		]),
 		hsc_passing_year: z.number().min(4, { message: 'Passing year is required' }),
 		hsc_institute: STRING_REQUIRED.min(1, { message: 'Institution is required' }),
+		hsc_roll_number: STRING_REQUIRED.regex(/^\d+$/, { message: 'HSC roll number must be numeric' }),
+		hsc_registration_number: STRING_REQUIRED.regex(/^\d+$/, {
+			message: 'HSC registration number must be numeric',
+		}),
 
 		bsc_name: STRING_NULLABLE,
 		bsc_cgpa: z.number().nullable(),

@@ -85,7 +85,7 @@ export const contactUSColumns = (
 ): ColumnDef<IContactUSTableData>[] => [
 	{
 		accessorKey: 'is_response',
-		header: 'Response',
+		header: 'Respond',
 		enableColumnFilter: true,
 		cell: (info) => (
 			<Switch checked={Number(info.getValue()) === 1} onCheckedChange={() => handleResponse(info.row)} />
