@@ -77,7 +77,7 @@ export type IFaculty = z.infer<typeof FACULTY_SCHEMA>;
 export const INFO_SCHEMA = z.object({
 	description: STRING_REQUIRED,
 	page_name: z.nativeEnum(PORTFOLIO_PAGE_NAME),
-
+	is_offer: BOOLEAN_OPTIONAL,
 	file: z
 		.instanceof(File)
 		.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -87,6 +87,7 @@ export const INFO_SCHEMA = z.object({
 
 export const INFO_NULL: Partial<IInfo> = {
 	description: '',
+	is_offer: false,
 	file: new File([''], 'filename') as File,
 	remarks: null,
 };

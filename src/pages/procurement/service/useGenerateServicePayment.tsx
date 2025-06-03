@@ -17,7 +17,7 @@ interface IGenerateFieldDefsProps {
 	isNew: boolean;
 }
 
-const useServicePayment = ({ data, copy, remove, isUpdate, isNew, form }: IGenerateFieldDefsProps): FieldDef[] => {
+const useServicePayment = ({ remove, form }: IGenerateFieldDefsProps): FieldDef[] => {
 	return [
 		{
 			header: 'Index',
@@ -37,20 +37,29 @@ const useServicePayment = ({ data, copy, remove, isUpdate, isNew, form }: IGener
 			accessorKey: 'next_due_date',
 			type: 'custom',
 			component: (index: number) => {
+				if (!form.watch(`end_date`) || !form.watch(`start_date`)) {
+					return null;
+				}
 				let paymentDate = form.watch(`start_date`);
 				paymentDate = paymentDate ? format(paymentDate, 'yyyy-MM-dd') : null;
 				if (!paymentDate) {
 					return null;
 				}
+
 				const frequency = form.watch(`frequency`);
+				if (!frequency) {
+					return null;
+				}
 				const addDueDate = addMonths(new Date(paymentDate), (12 / Number(frequency)) * (index + 1));
 				const endDate = form.watch(`end_date`);
 				let nextDueDate = addDueDate;
+
 				if (isBefore(new Date(endDate), addDueDate)) {
 					nextDueDate = new Date(endDate);
 				} else {
 					nextDueDate = new Date(addDueDate);
 				}
+
 				form.setValue(`service_payment.${index}.next_due_date`, nextDueDate);
 				return <DateTime date={nextDueDate} isTime={false} />;
 			},

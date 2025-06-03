@@ -57,7 +57,6 @@ const Info = () => {
 			<TableProvider
 				defaultVisibleColumns={{
 					created_by_name: false,
-					created_at: false,
 					updated_at: false,
 				}}
 				title={pageInfo.getTitle()}
