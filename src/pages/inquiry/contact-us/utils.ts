@@ -17,3 +17,14 @@ export const status = [
 		value: 'rejected',
 	},
 ];
+
+export const types = [
+	{
+		label: 'Respond',
+		value: true,
+	},
+	{
+		label: 'No Respond',
+		value: false,
+	},
+];

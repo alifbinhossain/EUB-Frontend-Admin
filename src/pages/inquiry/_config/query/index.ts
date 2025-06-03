@@ -17,10 +17,10 @@ export const useVisitorByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 
-export const useContactUs = <T>() =>
+export const useContactUs = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: inquiryQK.contactUs(),
-		url: `/portfolio/contact-us`,
+		queryKey: inquiryQK.contactUs(query),
+		url: query ? `/portfolio/contact-us?${query}` : `/portfolio/contact-us`,
 	});
 
 export const useContactUsByUUID = <T>(uuid: string) =>
