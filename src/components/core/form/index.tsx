@@ -9,6 +9,7 @@ import JoinInputUnit from './join-input-unit';
 import MultiSelect from './multi-select';
 import Otp from './otp';
 import Phone from './phone';
+import Radio from './radio';
 import ReactSelect from './react-select';
 import ReactSelectCreate from './react-select-create';
 import RichTextEditor from './rich-text-editor';
@@ -23,6 +24,7 @@ const Form = {
 	Textarea,
 	DatePicker,
 	Checkbox,
+	Radio,
 	Select,
 	MultiSelect,
 	ReactSelect,
