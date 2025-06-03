@@ -63,7 +63,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'cost_per_service',
-		header: 'Cost Per Service',
+		header: 'Cost/Service',
 		enableColumnFilter: true,
 	},
 	{
