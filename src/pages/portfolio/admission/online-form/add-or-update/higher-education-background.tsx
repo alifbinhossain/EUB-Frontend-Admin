@@ -18,14 +18,26 @@ const HigherEducationBackground = () => {
 				control={form.control}
 				name='hsc_group'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Group' placeholder='Select Group' options={groupOptions!} {...props} />
+					<CoreForm.ReactSelect
+						label='Group'
+						placeholder='Select Group'
+						menuPortalTarget={document.body}
+						options={groupOptions!}
+						{...props}
+					/>
 				)}
 			/>
 			<FormField
 				control={form.control}
 				name='hsc_grade'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Grade' placeholder='Select Grade' options={gradeOptions!} {...props} />
+					<CoreForm.ReactSelect
+						label='Grade'
+						placeholder='Select Grade'
+						menuPortalTarget={document.body}
+						options={gradeOptions!}
+						{...props}
+					/>
 				)}
 			/>
 			<FormField
@@ -37,7 +49,13 @@ const HigherEducationBackground = () => {
 				control={form.control}
 				name='hsc_board'
 				render={(props) => (
-					<CoreForm.ReactSelect label='Board' placeholder='Select Board' options={boardOptions!} {...props} />
+					<CoreForm.ReactSelect
+						label='Board'
+						placeholder='Select Board'
+						menuPortalTarget={document.body}
+						options={boardOptions!}
+						{...props}
+					/>
 				)}
 			/>
 			<FormField
