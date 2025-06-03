@@ -101,8 +101,6 @@ const Entry = () => {
 		// Remove fields with null value from formData
 		const formFields = [
 			'quotation_file',
-			'cs_file',
-			'monthly_meeting_file',
 			'work_order_file',
 			'delivery_statement_file',
 
@@ -702,35 +700,17 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_cs') && (
-					<div className='grid grid-cols-2 gap-4'>
-						<FormField
-							control={form.control}
-							name='cs_remarks'
-							render={(props) => (
-								<CoreForm.Textarea
-									label='Cs Remarks'
-									disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
-									{...props}
-								/>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='cs_file'
-							render={(props) => (
-								<CoreForm.FileUpload
-									label='File'
-									fileType='document'
-									errorText='File must be less than 10MB and of type pdf, doc, docx'
-									isUpdate={isUpdate}
-									options={{
-										maxSize: 10000000,
-									}}
-									{...props}
-								/>
-							)}
-						/>
-					</div>
+					<FormField
+						control={form.control}
+						name='cs_remarks'
+						render={(props) => (
+							<CoreForm.Textarea
+								label='Cs Remarks'
+								disabled={!(form.watch('is_cs') && form.watch('is_quotation'))}
+								{...props}
+							/>
+						)}
+					/>
 				)}
 			</CoreForm.Section>
 
@@ -786,41 +766,23 @@ const Entry = () => {
 				}
 			>
 				{form.watch('is_monthly_meeting') && (
-					<div className='grid grid-cols-2 gap-4'>
-						<FormField
-							control={form.control}
-							name='monthly_meeting_remarks'
-							render={(props) => (
-								<CoreForm.Textarea
-									label='Monthly Meeting Remarks'
-									disabled={
-										!(
-											form.watch('is_monthly_meeting') &&
-											form.watch('is_cs') &&
-											form.watch('is_quotation')
-										)
-									}
-									{...props}
-								/>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='monthly_meeting_file'
-							render={(props) => (
-								<CoreForm.FileUpload
-									label='File'
-									fileType='document'
-									errorText='File must be less than 10MB and of type pdf, doc, docx'
-									isUpdate={isUpdate}
-									options={{
-										maxSize: 10000000,
-									}}
-									{...props}
-								/>
-							)}
-						/>
-					</div>
+					<FormField
+						control={form.control}
+						name='monthly_meeting_remarks'
+						render={(props) => (
+							<CoreForm.Textarea
+								label='Monthly Meeting Remarks'
+								disabled={
+									!(
+										form.watch('is_monthly_meeting') &&
+										form.watch('is_cs') &&
+										form.watch('is_quotation')
+									)
+								}
+								{...props}
+							/>
+						)}
+					/>
 				)}
 			</CoreForm.Section>
 
@@ -917,7 +879,7 @@ const Entry = () => {
 						</div>
 						<FormField
 							control={form.control}
-							name='monthly_meeting_file'
+							name='work_order_file'
 							render={(props) => (
 								<CoreForm.FileUpload
 									label='File'
@@ -997,7 +959,7 @@ const Entry = () => {
 						/>
 						<FormField
 							control={form.control}
-							name='work_order_file'
+							name='delivery_statement_file'
 							render={(props) => (
 								<CoreForm.FileUpload
 									label='File'

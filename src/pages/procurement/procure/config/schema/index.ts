@@ -18,14 +18,6 @@ export const CAPITAL_SCHEMA = z
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
 
-		cs_file: z
-			.instanceof(File)
-			.refine((file) => file?.size !== 0, 'Please upload an file')
-			.or(STRING_NULLABLE),
-		monthly_meeting_file: z
-			.instanceof(File)
-			.refine((file) => file?.size !== 0, 'Please upload an file')
-			.or(STRING_NULLABLE),
 		work_order_file: z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')
@@ -132,8 +124,6 @@ export const CAPITAL_NULL: Partial<ICapital> = {
 	done: false,
 	done_date: '',
 
-	cs_file: null,
-	monthly_meeting_file: null,
 	work_order_file: null,
 	delivery_statement_file: null,
 
