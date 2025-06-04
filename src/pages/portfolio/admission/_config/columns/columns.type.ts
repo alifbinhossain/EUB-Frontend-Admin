@@ -61,6 +61,8 @@ export type IAdmissionTableData = {
 	father_name: string;
 	mother_name: string;
 	local_guardian: string;
+	nid_number: string;
+	birth_certificate_number: string;
 	date_of_birth: string;
 	nationality: string;
 	blood_group: 'A+' | 'O+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O-';
@@ -90,6 +92,8 @@ export type IAdmissionTableData = {
 		| 'Bangladesh Technical Education Board';
 	ssc_passing_year: number;
 	ssc_institute: string;
+	ssc_registration_number: string;
+	ssc_roll_number: string;
 	hsc_group: 'Science' | 'Business Group' | 'Humanities' | 'BM' | 'CSE' | 'EEE';
 	hsc_grade: 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D' | 'F';
 	hsc_gpa: string;
@@ -106,6 +110,8 @@ export type IAdmissionTableData = {
 		| 'Bangladesh Technical Education Board';
 	hsc_passing_year: number;
 	hsc_institute: string;
+	hsc_registration_number: string;
+	hsc_roll_number: string;
 	bsc_name: string;
 	bsc_cgpa: string;
 	bsc_passing_year: number;

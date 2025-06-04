@@ -45,7 +45,7 @@ const AddOrUpdate = () => {
 			const office_data = {
 				...values,
 				date_of_birth: format(new Date(values.date_of_birth), 'yyyy-MM-dd'),
-				semester: values.spring === true ? 'spring' : values.summer === true ? 'summer' : 'fall',
+				// semester: values.spring === true ? 'spring' : values.summer === true ? 'summer' : 'fall',
 				updated_at: getDateTime(),
 			};
 			const test_promise = await updateData.mutateAsync({
@@ -78,7 +78,7 @@ const AddOrUpdate = () => {
 			...values,
 			uuid: new_admission_uuid,
 			date_of_birth: format(new Date(values.date_of_birth), 'yyyy-MM-dd'),
-			semester: values.spring === true ? 'spring' : values.summer === true ? 'summer' : 'fall',
+			// semester: values.spring === true ? 'spring' : values.summer === true ? 'summer' : 'fall',
 			created_at,
 			created_by,
 		};

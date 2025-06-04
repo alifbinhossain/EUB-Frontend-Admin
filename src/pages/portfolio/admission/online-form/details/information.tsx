@@ -82,6 +82,14 @@ const Information: React.FC<{ data: IAdmissionTableData }> = ({ data }) => {
 				label: 'Nationality',
 				value: data.nationality,
 			},
+			{
+				label: 'NID No',
+				value: data.nid_number,
+			},
+			{
+				label: 'Birth Certificate No',
+				value: data.birth_certificate_number,
+			},
 		];
 	};
 
@@ -133,6 +141,14 @@ const Information: React.FC<{ data: IAdmissionTableData }> = ({ data }) => {
 				label: 'Institute',
 				value: data.ssc_institute,
 			},
+			{
+				label: 'Registrar Number',
+				value: data.ssc_registration_number,
+			},
+			{
+				label: 'Roll Number',
+				value: data.ssc_roll_number,
+			},
 		];
 	};
 	const renderHigherSchoolITems = (): ITableListItems => {
@@ -142,10 +158,6 @@ const Information: React.FC<{ data: IAdmissionTableData }> = ({ data }) => {
 				value: data.hsc_group,
 			},
 			{ label: 'Grade', value: data.hsc_grade },
-			{
-				label: 'Grade',
-				value: data.ssc_grade,
-			},
 			{
 				label: 'GPA',
 				value: data?.hsc_gpa,
@@ -161,6 +173,14 @@ const Information: React.FC<{ data: IAdmissionTableData }> = ({ data }) => {
 			{
 				label: 'Institute',
 				value: data.hsc_institute,
+			},
+			{
+				label: 'Registrar Number',
+				value: data.hsc_registration_number,
+			},
+			{
+				label: 'Roll Number',
+				value: data.hsc_roll_number,
 			},
 		];
 	};
