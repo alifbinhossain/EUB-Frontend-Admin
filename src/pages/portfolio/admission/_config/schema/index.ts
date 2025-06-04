@@ -5,6 +5,7 @@ import {
 	BOOLEAN_OPTIONAL,
 	BOOLEAN_REQUIRED,
 	EMAIL_REQUIRED,
+	PHONE_NUMBER,
 	PHONE_NUMBER_NULLABLE,
 	STRING_NULLABLE,
 	STRING_OPTIONAL,
@@ -152,9 +153,9 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		thana: STRING_REQUIRED.min(1, { message: 'Thana is required' }),
 		district: STRING_REQUIRED.min(1, { message: 'District is required' }),
 		nationality: STRING_REQUIRED.min(1, { message: 'Nationality is required' }),
-		phone_number: STRING_NULLABLE,
+		phone_number: PHONE_NUMBER_NULLABLE,
 		email: EMAIL_REQUIRED.min(1, { message: 'Email is required' }),
-		bkash: STRING_REQUIRED.min(1, { message: 'Bkash number is required' }),
+		bkash: PHONE_NUMBER.min(1, { message: 'Bkash number is required' }),
 		blood_group: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], { message: 'Select any blood group' }),
 
 		birth_certificate_number: STRING_REQUIRED.regex(/^\d+$/, {
