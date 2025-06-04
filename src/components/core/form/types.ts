@@ -42,6 +42,7 @@ export interface IFormSectionProps {
 export interface FormSelectProps extends IFieldProps {
 	options: IFormSelectOption[];
 	valueType?: 'string' | 'number';
+	isDisabled?: boolean;
 }
 
 // * form-react-select
@@ -58,6 +59,7 @@ export interface FormReactSelectProps extends IFieldProps {
 
 // * form-multi-select
 export interface FormMultiSelectProps extends IFieldProps {
+	isDisabled?: boolean;
 	options: IFormSelectOption[];
 }
 
@@ -82,7 +84,15 @@ export interface FormInputProps extends IFieldProps, InputProps {
 	icon?: React.ReactNode;
 }
 // * form-phone
-export type FormOtpProps = Omit<OTPInputProps, 'children'> & {};
+export type FormOtpProps = Omit<OTPInputProps, 'children'> & {
+	field: ControllerRenderProps<any, any>;
+	label?: string;
+	subLabel?: string;
+	placeholder?: string;
+	optional?: boolean;
+	disableLabel?: boolean;
+	disabled?: boolean;
+};
 
 // * form-file-upload
 export interface FormFileUploadProps extends IFieldProps, InputProps {
