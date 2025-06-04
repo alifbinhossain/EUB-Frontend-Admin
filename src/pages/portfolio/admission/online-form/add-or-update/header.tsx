@@ -12,6 +12,21 @@ const Header = () => {
 	const form = useFormContext<IAdmissionForm>();
 	const { data: programOption } = useOtherPrograms<IFormSelectOption[]>();
 
+	// const semesters: IFormSelectOption[] = [
+	// 	{
+	// 		label: 'Spring',
+	// 		value: 'spring',
+	// 	},
+	// 	{
+	// 		label: 'Summer',
+	// 		value: 'summer',
+	// 	},
+	// 	{
+	// 		label: 'Fall',
+	// 		value: 'fall',
+	// 	},
+	// ];
+
 	return (
 		<CoreForm.Section title={`Admission Form`}>
 			<FormField control={form.control} name='applicant_name' render={(props) => <CoreForm.Input {...props} />} />
@@ -22,11 +37,18 @@ const Header = () => {
 					<CoreForm.ReactSelect
 						label='Program'
 						placeholder='Select Program'
+						menuPortalTarget={document.body}
 						options={programOption!}
 						{...props}
 					/>
 				)}
 			/>
+			{/* <FormField
+				control={form.control}
+				name='semester'
+				render={(props) => <CoreForm.Radio label='Proposed Semester' options={semesters} {...props} />}
+			/> */}
+
 			<div className='flex space-x-1'>
 				<label className='font-semibold'>Proposed Semester*</label>
 				<FormField
@@ -34,7 +56,7 @@ const Header = () => {
 					name='spring'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={() => {
+							onCheckedChange={() => {
 								if (form.getValues('spring') === false) {
 									form.setValue('spring', true);
 									form.setValue('summer', false);
@@ -52,7 +74,7 @@ const Header = () => {
 					name='summer'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={() => {
+							onCheckedChange={() => {
 								if (form.getValues('summer') === false) {
 									form.setValue('spring', false);
 									form.setValue('summer', true);
@@ -70,9 +92,8 @@ const Header = () => {
 					name='fall'
 					render={(props) => (
 						<CoreForm.Checkbox
-							onChange={(event) => {
-								const e = event.target as HTMLInputElement;
-								if (e.checked) {
+							onCheckedChange={() => {
+								if (form.getValues('fall') === false) {
 									form.setValue('spring', false);
 									form.setValue('summer', false);
 									form.setValue('fall', true);

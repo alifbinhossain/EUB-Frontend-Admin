@@ -24,6 +24,7 @@ const PersonalInformation = () => {
 					<CoreForm.ReactSelect
 						label='Gender'
 						placeholder='Select Gender'
+						menuPortalTarget={document.body}
 						options={genderOptions!}
 						{...props}
 					/>
@@ -36,6 +37,7 @@ const PersonalInformation = () => {
 					<CoreForm.ReactSelect
 						label='Marital Status'
 						placeholder='Select Marital Status'
+						menuPortalTarget={document.body}
 						options={maritalStatusOptions!}
 						{...props}
 					/>
@@ -51,6 +53,7 @@ const PersonalInformation = () => {
 				name='phone_number'
 				render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
 			/>
+			<br />
 			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
@@ -60,6 +63,7 @@ const PersonalInformation = () => {
 					<CoreForm.ReactSelect
 						label='Blood Group'
 						placeholder='Select Blood Group'
+						menuPortalTarget={document.body}
 						options={bloodGroupOptions!}
 						{...props}
 					/>

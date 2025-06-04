@@ -1,3 +1,4 @@
+import { start } from 'repl';
 import { useEffect, useMemo } from 'react';
 import { TableProvider } from '@/context';
 import { addMonths, differenceInMonths, format, isBefore } from 'date-fns';
@@ -6,35 +7,42 @@ import { servicePaymentColumns } from '../config/columns';
 import { IServiceTableData } from '../config/columns/columns.type';
 
 const Table: React.FC<{ data: IServiceTableData; isLoading: boolean }> = ({ data, isLoading }) => {
+	let arraySize = 0;
 	const servicePayments = useMemo(() => {
 		if (!data) return;
 
-		const startDate = data.start_date;
-		const endDate = data.end_date;
+		const startDate = new Date(data.start_date);
+		const endDate = new Date(data.end_date);
 		const duration = differenceInMonths(endDate || new Date(), startDate || new Date());
 
 		const currentFrequency = data.frequency;
 
-		const arraySize = Math.ceil((duration ?? 0) / (12 / Number(currentFrequency)));
+		if (
+			(startDate?.getDate() !== endDate?.getDate() &&
+				Math.ceil(((duration ?? 0) + 1) % (12 / Number(currentFrequency))) === 0) ||
+			duration === 0
+		) {
+			arraySize = Math.ceil(((duration ?? 0) + 1) / (12 / Number(currentFrequency)));
+		} else {
+			arraySize = Math.ceil((duration ?? 0) / (12 / Number(currentFrequency)));
+		}
 
 		const newServicePayments = [];
 
 		for (let index = 0; index < arraySize; index++) {
-			if (!startDate) {
-				return;
-			}
-			const frequency = Number(data?.frequency);
-			if (!frequency || isNaN(frequency)) {
-				continue;
-			}
+			let paymentDate = data?.start_date;
+			paymentDate = format(paymentDate, 'yyyy-MM-dd');
 
-			const addDueDate = addMonths(startDate, (12 / Number(frequency)) * (index + 1));
+			const frequency = data.frequency;
 
-			let nextDueDate: Date | string;
-			if (endDate && isBefore(endDate, addDueDate)) {
-				nextDueDate = endDate;
+			const addDueDate = addMonths(new Date(paymentDate), (12 / Number(frequency)) * (index + 1));
+			const endDate = data?.end_date;
+			let nextDueDate = addDueDate;
+
+			if (isBefore(new Date(endDate), addDueDate)) {
+				nextDueDate = new Date(endDate);
 			} else {
-				nextDueDate = addDueDate;
+				nextDueDate = new Date(addDueDate);
 			}
 
 			newServicePayments.push({
@@ -46,7 +54,6 @@ const Table: React.FC<{ data: IServiceTableData; isLoading: boolean }> = ({ data
 		}
 		return newServicePayments;
 	}, [data]);
-
 	const columns = servicePaymentColumns();
 
 	return (
