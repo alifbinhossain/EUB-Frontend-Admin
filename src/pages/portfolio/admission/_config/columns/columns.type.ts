@@ -53,6 +53,10 @@ export type IFinancialInfoTableData = {
 //* Admission
 export type IAdmissionTableData = {
 	id: number;
+	year: number;
+	is_admitted: boolean;
+	student_id: string;
+	commencement_date: string;
 	uuid: string;
 	semester: 'spring' | 'summer' | 'fall';
 	program_uuid: string;
@@ -67,6 +71,8 @@ export type IAdmissionTableData = {
 	nationality: string;
 	blood_group: 'A+' | 'O+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O-';
 	phone_number: string;
+	parents_phone: string;
+	local_guardian_phone: string;
 	bkash: string;
 	email: string;
 	gender: 'Male' | 'Female' | 'Other';

@@ -28,7 +28,24 @@ const Header = () => {
 	];
 
 	return (
-		<CoreForm.Section title={`Admission Form`}>
+		<CoreForm.Section
+			title={`Admission Form`}
+			extraHeader={
+				<div className='text-white'>
+					<FormField
+						control={form.control}
+						name='is_admitted'
+						render={(props) => <CoreForm.Checkbox className='bg-white' label='Admitted' {...props} />}
+					/>
+				</div>
+			}
+		>
+			<FormField
+				control={form.control}
+				name='year'
+				render={(props) => <CoreForm.Input type='number' {...props} />}
+			/>
+			<FormField control={form.control} name='student_id' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField control={form.control} name='applicant_name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
@@ -48,7 +65,6 @@ const Header = () => {
 				name='semester'
 				render={(props) => <CoreForm.Radio label='Proposed Semester' options={semesters} {...props} />}
 			/>
-
 			{/* <div className='flex space-x-1'>
 				<label className='font-semibold'>Proposed Semester*</label>
 				<FormField
