@@ -1,7 +1,7 @@
 import { EUB_LOGO } from '@/assets/images/base64';
 import { checkBox, checkWithoutBox } from '@/assets/svg';
 import { IAdmissionTableData } from '@/pages/portfolio/admission/_config/columns/columns.type';
-import { format } from 'date-fns';
+import { format, formatDate } from 'date-fns';
 
 import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
@@ -14,6 +14,8 @@ const getDateFormate = (date: string): string => format(new Date(date), 'dd/MM/y
 export default function Index(data: IAdmissionTableData) {
 	const headerHeight = 20;
 	const footerHeight = 0;
+	const IDArray = data?.student_id?.split('');
+	console.log(IDArray);
 
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_PAGE({
@@ -116,7 +118,7 @@ export default function Index(data: IAdmissionTableData) {
 			},
 			{
 				table: {
-					widths: [110, 20, 70, 20, 70, 20, 70, 30, '*'],
+					widths: [110, 20, 70, 20, 70, 20, 70, '*'],
 					body: [
 						[
 							{
@@ -154,9 +156,8 @@ export default function Index(data: IAdmissionTableData) {
 								alignment: 'left',
 							},
 							{
-								text: 'Year',
+								text: `Year: ${data?.year}`,
 							},
-							{},
 						],
 					],
 				},
@@ -194,21 +195,13 @@ export default function Index(data: IAdmissionTableData) {
 											{
 												table: {
 													widths: ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-													body: [[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]],
-												},
-												layout: {
-													paddingTop: function () {
-														return 9;
-													},
-													paddingBottom: function () {
-														return 8;
-													},
+													body: [IDArray.map((id) => ({ text: id, alignment: 'center' }))],
 												},
 											},
 										],
 										[
 											{
-												text: 'Admitted/Not Admitted',
+												text: `Admission: ${data?.is_admitted ? 'Yes' : 'No'}`,
 												alignment: 'left',
 												colSpan: 2,
 											},
@@ -216,7 +209,7 @@ export default function Index(data: IAdmissionTableData) {
 										],
 										[
 											{
-												text: 'Commencement Date',
+												text: `Commencement Date: ${data?.commencement_date ? format(data?.commencement_date, 'dd-MM-yyyy') : ''}`,
 												alignment: 'left',
 												colSpan: 2,
 											},
@@ -373,22 +366,31 @@ export default function Index(data: IAdmissionTableData) {
 						[
 							{},
 							{
-								text: 'Phone/Cell (G):',
+								text: `Parents Phone/Cell: ${data?.parents_phone}`,
 								alignment: 'left',
 							},
 							{
 								text: `Dist: ${data?.district.toUpperCase()}`,
 							},
 						],
+
 						[
 							{},
 							{
 								text: `E-mail: ${data?.email}`,
 							},
 							{
-								text: `Phone/Cell (S): ${data?.phone_number}`,
+								text: `Phone/Cell: ${data?.phone_number}`,
 								alignment: 'left',
 							},
+						],
+						[
+							{},
+							{
+								text: `Local Guardian Phone/Cell: ${data?.local_guardian_phone}`,
+								alignment: 'left',
+							},
+							{},
 						],
 						[
 							{ text: '9.' },

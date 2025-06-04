@@ -26,7 +26,9 @@ const AddOrUpdate = () => {
 
 	const { url: admissionUrl, updateData, postData } = usePortfolioAdmission();
 
-	const { data, invalidateQuery: invalidateTestDetails } = usePortfolioAdmissionByUUID(uuid as string);
+	const { data, invalidateQuery: invalidateTestDetails } = usePortfolioAdmissionByUUID<IAdmissionForm>(
+		uuid as string
+	);
 
 	const form = useRHF(PORTFOLIO_ADMISSION_SCHEMA, PORTFOLIO_ADMISSION_NULL);
 
@@ -45,6 +47,11 @@ const AddOrUpdate = () => {
 			const office_data = {
 				...values,
 				date_of_birth: format(new Date(values.date_of_birth), 'yyyy-MM-dd'),
+				commencement_date: data?.is_admitted
+					? data?.commencement_date
+					: values?.is_admitted
+						? getDateTime()
+						: null,
 				// semester: values.spring === true ? 'spring' : values.summer === true ? 'summer' : 'fall',
 				updated_at: getDateTime(),
 			};

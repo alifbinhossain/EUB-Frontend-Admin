@@ -5,6 +5,7 @@ import {
 	BOOLEAN_OPTIONAL,
 	BOOLEAN_REQUIRED,
 	EMAIL_REQUIRED,
+	NUMBER_REQUIRED,
 	PHONE_NUMBER,
 	PHONE_NUMBER_NULLABLE,
 	STRING_NULLABLE,
@@ -138,7 +139,11 @@ export type IPortfolioFinancialInformation = z.infer<typeof FINANCIAL_INFORMATIO
 //* Admission
 export const PORTFOLIO_ADMISSION_SCHEMA = z
 	.object({
+		year: NUMBER_REQUIRED,
 		semester: STRING_OPTIONAL,
+		is_admitted: BOOLEAN_REQUIRED,
+		commencement_date: STRING_NULLABLE,
+		student_id: STRING_OPTIONAL,
 		program_uuid: STRING_REQUIRED.min(1, { message: 'Program is required' }),
 		applicant_name: STRING_REQUIRED.min(1, { message: 'Applicant name is required' }),
 		father_name: STRING_REQUIRED.min(1, { message: 'Fathers name is required' }),
@@ -156,12 +161,12 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		phone_number: PHONE_NUMBER_NULLABLE,
 		email: EMAIL_REQUIRED.min(1, { message: 'Email is required' }),
 		bkash: PHONE_NUMBER.min(1, { message: 'Bkash number is required' }),
+		parents_phone: PHONE_NUMBER_NULLABLE,
+		local_guardian_phone: PHONE_NUMBER_NULLABLE,
 		blood_group: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], { message: 'Select any blood group' }),
 
-		birth_certificate_number: STRING_REQUIRED.regex(/^\d+$/, {
-			message: 'Birth certificate number must be numeric',
-		}),
-		nid_number: STRING_REQUIRED.regex(/^\d+$/, { message: 'NID number must be numeric' }),
+		birth_certificate_number: STRING_OPTIONAL,
+		nid_number: STRING_OPTIONAL,
 
 		ssc_group: z.enum(['Science', 'Business Group', 'Humanities', 'Vocational'], { message: 'Select Group' }),
 		ssc_grade: z.enum(['Golden A+', 'A+', 'A', 'A-', 'B+', 'B', 'B+', 'B-', 'C+', 'C', 'C-', 'D', 'F'], {
@@ -280,16 +285,39 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 				path: ['hsc_passing_year'],
 			});
 		}
+		if (data?.is_admitted && !data?.student_id) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'Student ID is required',
+				path: ['student_id'],
+			});
+		}
+		if (data?.student_id && data?.student_id.length !== 10) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'Student ID must be 10 digits',
+				path: ['student_id'],
+			});
+		}
+		if (!data?.nid_number && !data?.birth_certificate_number) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'NID number or Birth certificate number is required',
+				path: ['nid_number', 'birth_certificate_number'],
+			});
+		}
 	});
 
 export const PORTFOLIO_ADMISSION_NULL: Partial<IAdmissionForm> = {
 	semester: '',
+	is_admitted: false,
 	// spring: false,
 	// summer: false,
 	// fall: false,
 
 	program_uuid: '',
 	applicant_name: '',
+	commencement_date: null,
 
 	father_name: '',
 	mother_name: '',
