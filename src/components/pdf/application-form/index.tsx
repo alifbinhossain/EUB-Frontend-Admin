@@ -116,7 +116,7 @@ export default function Index(data: IAdmissionTableData) {
 			},
 			{
 				table: {
-					widths: [100, '*', 25, '*', 25, '*', 25, '*', 25],
+					widths: [110, 20, 70, 20, 70, 20, 70, 30, '*'],
 					body: [
 						[
 							{
@@ -124,33 +124,33 @@ export default function Index(data: IAdmissionTableData) {
 								bold: true,
 							},
 							{
-								text: 'Spring',
-								alignment: 'right',
-							},
-							{
 								svg: data?.semester === 'spring' ? checkBox : checkWithoutBox,
 								width: 30,
 								height: 20,
-								alignment: 'left',
+								alignment: 'right',
 							},
 							{
-								text: 'Summer',
-								alignment: 'right',
+								text: 'Spring',
+								alignment: 'left',
 							},
 							{
 								svg: data?.semester === 'summer' ? checkBox : checkWithoutBox,
 								width: 30,
 								height: 20,
-								alignment: 'left',
+								alignment: 'right',
 							},
 							{
-								text: 'Fall',
-								alignment: 'right',
+								text: 'Summer',
+								alignment: 'left',
 							},
 							{
 								svg: data?.semester === 'fall' ? checkBox : checkWithoutBox,
 								width: 30,
 								height: 20,
+								alignment: 'right',
+							},
+							{
+								text: 'Fall',
 								alignment: 'left',
 							},
 							{
@@ -160,7 +160,7 @@ export default function Index(data: IAdmissionTableData) {
 						],
 					],
 				},
-				layout: 'noBorders',
+				layout: customTable,
 			},
 			{
 				table: {
@@ -274,41 +274,28 @@ export default function Index(data: IAdmissionTableData) {
 								alignment: 'left',
 							},
 						],
-					],
-				},
-				layout: customTable,
-			},
-			{
-				table: {
-					widths: [10, 150, 40, 25, 40, 25, 40, 25, 40, 25],
-					body: [
 						[
 							{ text: '5.' },
 							{
 								text: `Date of Birth: ${getDateFormate(data?.date_of_birth)}`,
 								alignment: 'left',
 							},
+						],
+					],
+				},
+				layout: customTable,
+			},
+			{
+				table: {
+					widths: [10, 50, 25, 40, 25, 40],
+					body: [
+						[
+							{ text: '6.' },
 							{
-								text: `Married`,
-								alignment: 'left',
+								text: `Gender:`,
 							},
 							{
-								svg: data?.marital_status === 'Married' ? checkBox : checkWithoutBox,
-								width: 30,
-								height: 20,
-								alignment: 'left',
-							},
-							{
-								text: `Single`,
-								alignment: 'left',
-							},
-							{
-								svg:
-									data?.marital_status === 'Single' ||
-									data?.marital_status === 'Divorced' ||
-									data?.marital_status === 'Widowed'
-										? checkBox
-										: checkWithoutBox,
+								svg: data?.gender === 'Male' ? checkBox : checkWithoutBox,
 								width: 30,
 								height: 20,
 								alignment: 'left',
@@ -318,7 +305,7 @@ export default function Index(data: IAdmissionTableData) {
 								alignment: 'left',
 							},
 							{
-								svg: data?.gender === 'Male' ? checkBox : checkWithoutBox,
+								svg: data?.gender === 'Female' ? checkBox : checkWithoutBox,
 								width: 30,
 								height: 20,
 								alignment: 'left',
@@ -327,10 +314,19 @@ export default function Index(data: IAdmissionTableData) {
 								text: `Female`,
 								alignment: 'left',
 							},
+						],
+					],
+				},
+				layout: customTable,
+			},
+			{
+				table: {
+					widths: [10, '*'],
+					body: [
+						[
+							{ text: '7.' },
 							{
-								svg: data?.gender === 'Female' ? checkBox : checkWithoutBox,
-								width: 30,
-								height: 20,
+								text: `Marital Status: ${data?.marital_status}`,
 								alignment: 'left',
 							},
 						],
@@ -343,13 +339,13 @@ export default function Index(data: IAdmissionTableData) {
 					widths: [16, '*', '*'],
 					body: [
 						[
-							{ text: '6.', rowSpan: 4 },
+							{ text: '8.', rowSpan: 4 },
 							{
-								text: `a) Present Address for Corresponding`,
+								text: `A) Present Address for Corresponding`,
 								alignment: 'left',
 							},
 							{
-								text: `b) Permanent Address (if Different)`,
+								text: `B) Permanent Address (if Different)`,
 							},
 						],
 						[
@@ -357,21 +353,21 @@ export default function Index(data: IAdmissionTableData) {
 							{ text: data?.present_address.toUpperCase(), rowSpan: 3 },
 
 							{
-								text: `Vill:${data?.village.toUpperCase()}`,
+								text: `Vill: ${data?.village.toUpperCase()}`,
 							},
 						],
 						[
 							{},
 							{},
 							{
-								text: `Post:${data?.post_office.toUpperCase()}`,
+								text: `Post: ${data?.post_office.toUpperCase()}`,
 							},
 						],
 						[
 							{},
 							{},
 							{
-								text: `Thana:${data?.thana.toUpperCase()}`,
+								text: `Thana: ${data?.thana.toUpperCase()}`,
 							},
 						],
 						[
@@ -395,23 +391,30 @@ export default function Index(data: IAdmissionTableData) {
 							},
 						],
 						[
-							{ text: '7.' },
+							{ text: '9.' },
 							{
 								text: `A) Nationality: ${data?.nationality}`,
 								alignment: 'left',
 							},
 							{
-								text: `B) NID/Birth Certificate No: `,
+								text: `B) NID No: ${data?.nid_number} `,
 							},
 						],
 						[
-							{ text: '8.' },
-							{
-								text: `Religion:`,
-								alignment: 'left',
-							},
 							{},
+							{},
+							{
+								text: `C) Birth Certificate No: ${data?.birth_certificate_number} `,
+							},
 						],
+						// [
+						// 	{ text: '10.' },
+						// 	{
+						// 		text: `Religion:`,
+						// 		alignment: 'left',
+						// 	},
+						// 	{},
+						// ],
 					],
 				},
 				layout: customTable,
@@ -421,7 +424,7 @@ export default function Index(data: IAdmissionTableData) {
 					widths: [16, 150, '*'],
 					body: [
 						[
-							{ text: '9.' },
+							{ text: '10.' },
 							{
 								text: `Intended Program of Study`,
 								alignment: 'left',
@@ -438,7 +441,7 @@ export default function Index(data: IAdmissionTableData) {
 					widths: [16, '*', '*'],
 					body: [
 						[
-							{ text: '10.', rowSpan: 3 },
+							{ text: '11.', rowSpan: 3 },
 							{
 								text: `Credit Transfer (if applicable):`,
 								alignment: 'left',
@@ -452,7 +455,7 @@ export default function Index(data: IAdmissionTableData) {
 							{ text: '(Credit Transfer From to be attached)', alignment: 'right' },
 						],
 						[{ text: '', pageBreak: 'after' }, {}, {}],
-						[{ text: '11.' }, { text: `Academic Qualifications:`, bold: true }, {}],
+						[{ text: '12.' }, { text: `Academic Qualifications:`, bold: true }, {}],
 					],
 				},
 				layout: customTable,
@@ -503,7 +506,7 @@ export default function Index(data: IAdmissionTableData) {
 					widths: [16, '*'],
 					body: [
 						[
-							{ text: '12.', rowSpan: 2 },
+							{ text: '13.', rowSpan: 2 },
 							{
 								text: 'I declare that, to the best of my knowledge, the information provided me, is true and completed.\n I acknowledge that EUB may change, any decision regrading admission or enrolment made on the basic of incorrect or incomplete information provided by me. ',
 								alignment: 'justify',
@@ -549,10 +552,10 @@ export default function Index(data: IAdmissionTableData) {
 			},
 			{
 				table: {
-					widths: [16, 100, 180, 80, 20, 100, '*'],
+					widths: [16, 100, 180, 20, 80, 20, 100],
 					body: [
 						[
-							{ text: '13.', rowSpan: 2 },
+							{ text: '14.', rowSpan: 2 },
 							{ text: 'Admission Process:' },
 							{ text: '(i) Interview and referred by:', colSpan: 4 },
 							{},
@@ -567,6 +570,12 @@ export default function Index(data: IAdmissionTableData) {
 								text: `(ii) Recommendation by Department: `,
 							},
 							{
+								svg: checkWithoutBox,
+								width: 30,
+								height: 20,
+								alignment: 'left',
+							},
+							{
 								text: `Recommended:`,
 							},
 							{
@@ -576,12 +585,6 @@ export default function Index(data: IAdmissionTableData) {
 								alignment: 'left',
 							},
 							{ text: 'Not Recommended:' },
-							{
-								svg: checkWithoutBox,
-								width: 30,
-								height: 20,
-								alignment: 'left',
-							},
 						],
 					],
 				},
@@ -589,12 +592,19 @@ export default function Index(data: IAdmissionTableData) {
 			},
 			{
 				table: {
-					widths: [16, 50, 25, 70, 25],
+					widths: [16, 25, 50, 25, 70],
 					body: [
-						[{ text: '14.', rowSpan: 2 }, { text: 'Decision:' }, {}, {}, {}],
+						[{ text: '15.', rowSpan: 2 }, { text: 'Decision:', colSpan: 2 }, {}, {}, {}],
 						[
 							{},
+							{
+								svg: checkWithoutBox,
+								width: 30,
+								height: 20,
+								alignment: 'left',
+							},
 							{ text: 'Approved' },
+
 							{
 								svg: checkWithoutBox,
 								width: 30,
@@ -603,12 +613,6 @@ export default function Index(data: IAdmissionTableData) {
 							},
 							{
 								text: `Not Approved`,
-							},
-							{
-								svg: checkWithoutBox,
-								width: 30,
-								height: 20,
-								alignment: 'left',
 							},
 						],
 					],

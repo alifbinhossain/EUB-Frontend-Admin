@@ -138,9 +138,6 @@ export type IPortfolioFinancialInformation = z.infer<typeof FINANCIAL_INFORMATIO
 export const PORTFOLIO_ADMISSION_SCHEMA = z
 	.object({
 		semester: STRING_OPTIONAL,
-		spring: BOOLEAN_OPTIONAL,
-		summer: BOOLEAN_OPTIONAL,
-		fall: BOOLEAN_OPTIONAL,
 		program_uuid: STRING_REQUIRED.min(1, { message: 'Program is required' }),
 		applicant_name: STRING_REQUIRED.min(5, { message: 'Applicant name is required' }),
 		father_name: STRING_REQUIRED.min(5, { message: 'Fathers name is required' }),
@@ -219,13 +216,13 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		bsc_institute: STRING_NULLABLE,
 	})
 	.superRefine((data, ctx) => {
-		if (!data.spring && !data.summer && !data.fall) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Select at least one program',
-				path: ['spring'],
-			});
-		}
+		// if (!data.spring && !data.summer && !data.fall) {
+		// 	ctx.addIssue({
+		// 		code: z.ZodIssueCode.custom,
+		// 		message: 'Select at least one program',
+		// 		path: ['spring'],
+		// 	});
+		// }
 		if (
 			data.bsc_name ||
 			(data.bsc_cgpa && data?.bsc_cgpa > 0) ||
@@ -286,9 +283,9 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 
 export const PORTFOLIO_ADMISSION_NULL: Partial<IAdmissionForm> = {
 	semester: '',
-	spring: false,
-	summer: false,
-	fall: false,
+	// spring: false,
+	// summer: false,
+	// fall: false,
 
 	program_uuid: '',
 	applicant_name: '',

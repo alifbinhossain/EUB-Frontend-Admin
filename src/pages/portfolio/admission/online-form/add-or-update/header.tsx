@@ -12,20 +12,20 @@ const Header = () => {
 	const form = useFormContext<IAdmissionForm>();
 	const { data: programOption } = useOtherPrograms<IFormSelectOption[]>();
 
-	// const semesters: IFormSelectOption[] = [
-	// 	{
-	// 		label: 'Spring',
-	// 		value: 'spring',
-	// 	},
-	// 	{
-	// 		label: 'Summer',
-	// 		value: 'summer',
-	// 	},
-	// 	{
-	// 		label: 'Fall',
-	// 		value: 'fall',
-	// 	},
-	// ];
+	const semesters: IFormSelectOption[] = [
+		{
+			label: 'Spring',
+			value: 'spring',
+		},
+		{
+			label: 'Summer',
+			value: 'summer',
+		},
+		{
+			label: 'Fall',
+			value: 'fall',
+		},
+	];
 
 	return (
 		<CoreForm.Section title={`Admission Form`}>
@@ -43,13 +43,13 @@ const Header = () => {
 					/>
 				)}
 			/>
-			{/* <FormField
+			<FormField
 				control={form.control}
 				name='semester'
 				render={(props) => <CoreForm.Radio label='Proposed Semester' options={semesters} {...props} />}
-			/> */}
+			/>
 
-			<div className='flex space-x-1'>
+			{/* <div className='flex space-x-1'>
 				<label className='font-semibold'>Proposed Semester*</label>
 				<FormField
 					control={form.control}
@@ -105,7 +105,7 @@ const Header = () => {
 						/>
 					)}
 				/>
-			</div>
+			</div> */}
 		</CoreForm.Section>
 	);
 };
