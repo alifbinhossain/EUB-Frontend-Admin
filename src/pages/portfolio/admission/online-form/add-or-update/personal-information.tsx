@@ -54,8 +54,10 @@ const PersonalInformation = () => {
 				render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
 			/>
 			<br />
-			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Phone {...props} />} />
+
 			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Phone {...props} />} />
+			<br />
 			<FormField
 				control={form.control}
 				name='blood_group'
