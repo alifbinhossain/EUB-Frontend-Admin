@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash';
 import FDERoutes from './fde';
 import HrRoutes from './hr';
 import inquiryRoutes from './inquiry';
+import LIBRoutes from './lib';
 import PortfolioRoutes from './portfollo';
 import procurementRoutes from './procurement';
 import ProfileRoutes from './profile';
@@ -14,6 +15,7 @@ const privateRoutes: IRoute[] = [
 	...inquiryRoutes,
 	...procurementRoutes,
 	...ProfileRoutes,
+	...LIBRoutes,
 	...FDERoutes,
 ];
 

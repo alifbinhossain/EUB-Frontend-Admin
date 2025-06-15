@@ -4,9 +4,13 @@ import { AxiosError } from 'axios';
 
 import '../columns/columns.type';
 
-import { ISemesterTableData } from '../columns/columns.type';
+import { ICourseTableData, ISemesterTableData } from '../columns/columns.type';
 
 //* Semester
 export interface ISemesterAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ISemesterTableData | null;
+}
+//* Course
+export interface ICourseAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: ICourseTableData | null;
 }

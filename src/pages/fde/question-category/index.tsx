@@ -5,17 +5,18 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { semesterTableColumns } from '../config/columns';
-import { ISemesterTableData } from '../config/columns/columns.type';
-import { useFDESemester } from '../config/query';
+import { questionCategoryColumns } from '../config/columns';
+import { IQuestionCategoryTableData } from '../config/columns/columns.type';
+import { useFDEQuestionCategory } from '../config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
-const Semester = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useFDESemester<ISemesterTableData[]>();
+const QuestionCategory = () => {
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
+		useFDEQuestionCategory<IQuestionCategoryTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Library/Semester', url, 'library__semester'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('FDE/Question Category', url, 'fde__question_category'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -24,8 +25,8 @@ const Semester = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ISemesterTableData | null>(null);
-	const handleUpdate = (row: Row<ISemesterTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IQuestionCategoryTableData | null>(null);
+	const handleUpdate = (row: Row<IQuestionCategoryTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -36,7 +37,7 @@ const Semester = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ISemesterTableData>) => {
+	const handleDelete = (row: Row<IQuestionCategoryTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
@@ -44,7 +45,7 @@ const Semester = () => {
 	};
 
 	// Table Columns
-	const columns = semesterTableColumns();
+	const columns = questionCategoryColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -85,4 +86,4 @@ const Semester = () => {
 	);
 };
 
-export default Semester;
+export default QuestionCategory;
