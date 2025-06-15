@@ -15,7 +15,14 @@ export default function Index(data: IAdmissionTableData) {
 	const headerHeight = 20;
 	const footerHeight = 0;
 	const IDArray = data?.student_id?.split('');
-	console.log(IDArray);
+	const student_id = data?.student_id
+		? {
+				table: {
+					widths: ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
+					body: [IDArray?.map((id) => ({ text: id, alignment: 'center' }))],
+				},
+			}
+		: { text: '' };
 
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_PAGE({
@@ -192,12 +199,7 @@ export default function Index(data: IAdmissionTableData) {
 												text: 'Student ID',
 												alignment: 'left',
 											},
-											{
-												table: {
-													widths: ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-													body: [IDArray.map((id) => ({ text: id, alignment: 'center' }))],
-												},
-											},
+											student_id,
 										],
 										[
 											{
