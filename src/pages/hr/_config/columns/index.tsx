@@ -2,7 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import PageAssign from '@/components/buttons/page-assign';
 import ResetPassword from '@/components/buttons/reset-password';
-import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
+import ColumnImage from '@/components/core/data-table/_views/column-image';
 import { Switch } from '@/components/ui/switch';
 
 import { UserColumnProps } from '../types';
@@ -35,7 +35,7 @@ export function userColumns(): ColumnDef<IUserTableData>[] {
 			accessorKey: 'image',
 			header: 'Image',
 			enableColumnFilter: false,
-			cell: (info) => <ColumnAvatar src={info.getValue() as string} alt={info.row.original.name} />,
+			cell: (info) => <ColumnImage src={info.getValue() as string} alt={info.row.original.name} />,
 		},
 
 		{
@@ -111,7 +111,7 @@ export function authColumns({
 			accessorKey: 'image',
 			header: 'Image',
 			enableColumnFilter: false,
-			cell: (info) => <ColumnAvatar src={info.getValue() as string} alt={info.row.original.name} />,
+			cell: (info) => <ColumnImage src={info.getValue() as string} alt={info.row.original.name} />,
 		},
 
 		{

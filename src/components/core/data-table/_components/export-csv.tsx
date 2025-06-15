@@ -4,11 +4,12 @@ import { CSVLink } from 'react-csv';
 
 import { buttonVariants } from '@/components/ui/button';
 
+import { cn } from '@/lib/utils';
 import { getFlatHeader } from '@/utils';
 
 import { TTableExportCSV } from '../types';
 
-const TableExportCSV = ({ start_date, end_date, table, title, isEntry }: TTableExportCSV) => {
+const TableExportCSV = ({ start_date, end_date, table, title, isEntry, className }: TTableExportCSV) => {
 	const filteredRows = table._getFilteredRowModel?.().rows || [];
 
 	const filteredCsvColumn = table
@@ -47,13 +48,13 @@ const TableExportCSV = ({ start_date, end_date, table, title, isEntry }: TTableE
 			className={buttonVariants({
 				variant: isEntry ? 'gradient-accent' : 'secondary',
 				size: 'sm',
-				className: 'h-7',
+				className: cn('h-7', className),
 			})}
 			data={csvData}
 			filename={filename}
 		>
 			<FileSpreadsheet className='size-4' />
-			<span className='hidden lg:block'>Excel</span>
+			<span className='hidden lg:inline'>Excel</span>
 		</CSVLink>
 	);
 };

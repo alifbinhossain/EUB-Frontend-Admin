@@ -12,6 +12,7 @@ export type TTableExportCSV = TStartEndDate & {
 	isEntry?: boolean;
 	title: string;
 	table: Table<any>;
+	className?: string;
 };
 
 export type TTableDateRange<T> = TStartEndDate & {
@@ -20,6 +21,9 @@ export type TTableDateRange<T> = TStartEndDate & {
 	onClear?: () => void;
 	isClear?: boolean;
 	isSSR?: boolean;
+	className?: string;
+	isModal?: boolean;
+	isMobile?: boolean;
 };
 
 export interface IDataTableEntryProps<TData, TValue> {

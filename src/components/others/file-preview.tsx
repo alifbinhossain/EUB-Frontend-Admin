@@ -9,13 +9,14 @@ const FilePreview: React.FC<{ preview: string | ArrayBuffer | null }> = ({ previ
 		<a
 			className={buttonVariants({
 				variant: 'gradient',
-				className: 'h-10 w-full gap-2',
+				className: 'gap-2',
+				size: 'sm',
 			})}
 			target='_blank'
 			href={(API_IMAGE_URL + preview) as string}
 		>
 			View File
-			<Eye className='size-5' />
+			<Eye className='size-4' />
 		</a>
 	);
 };

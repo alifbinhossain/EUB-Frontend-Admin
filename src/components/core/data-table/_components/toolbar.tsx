@@ -1,13 +1,15 @@
 import React, { useCallback } from 'react';
 import { IToolbarOptions } from '@/types';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { isValid } from 'date-fns';
-import { CirclePlus, SearchIcon } from 'lucide-react';
+import { ChevronDown, CirclePlus, SearchIcon } from 'lucide-react';
 import usePage from '@/hooks/usePage';
 import useTable from '@/hooks/useTable';
 
 import { Button } from '@/components/ui/button';
 import DebouncedInput from '@/components/ui/debounce-input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 
 import { cn } from '@/lib/utils';
@@ -49,6 +51,8 @@ ToolbarComponent.displayName = 'ToolbarComponent';
  */
 export function TableToolbar() {
 	const { createAccess } = usePage();
+	const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
+
 	const {
 		title,
 		subtitle,
@@ -87,83 +91,178 @@ export function TableToolbar() {
 	 * Renders the left section of the toolbar
 	 */
 	const renderLeftSection = useCallback(
-		() => (
-			<div className='flex flex-1 items-center space-x-2'>
-				<ToolbarComponent
-					option='all-filter'
-					render={() =>
-						table.getAllColumns().filter((column) => column.getCanFilter()).length > 0 && <TableAllFilter />
-					}
-				/>
-				<ToolbarComponent option='view' render={() => <TableViewOptions table={table} />} />
-				<ToolbarComponent
-					option='date-range'
-					render={() => (
-						<TableDateRange
-							table={table}
-							start_date={startDate}
-							end_date={endDate}
-							onUpdate={onUpdate}
-							onClear={onClear}
-							isClear={isClear}
-						/>
-					)}
-				/>
-				{otherToolBarComponents}
-				<ToolbarComponent
-					option='faceted-filter'
-					render={() =>
-						facetedFilters?.map((filter) => {
-							const column = table.getColumn(filter.id);
-							return column ? (
-								<TableFacetedFilter
-									key={filter.id}
-									column={column}
-									title={filter.title}
-									options={filter.options}
-								/>
-							) : null;
-						})
-					}
-				/>
-				<ToolbarComponent
-					option='advance-filter'
-					render={() =>
-						advanceFilters && advanceFilters?.length > 0 ? (
-							<TableAdvanceFilters filters={advanceFilters} />
-						) : null
-					}
-				/>
-				{isFiltered && (
-					<Button
-						aria-label='Reset filters'
-						variant='outline-destructive'
-						onClick={resetColumnFilters}
-						className='h-8'
-					>
-						Reset
-						<Cross2Icon className='size-4' />
-					</Button>
-				)}
-				<Separator orientation='vertical' className='h-6' />
+		() =>
+			isSmallDevice ? (
+				<div className='flex flex-1 items-center gap-2'>
+					<ToolbarComponent
+						option='all-filter'
+						render={() =>
+							table.getAllColumns().filter((column) => column.getCanFilter()).length > 0 && (
+								<TableAllFilter />
+							)
+						}
+					/>
 
-				<ToolbarComponent
-					option='export-csv'
-					render={() =>
-						isValid(startDate) &&
-						isValid(endDate) && (
-							<TableExportCSV
+					{isFiltered && (
+						<Button
+							aria-label='Reset filters'
+							variant='outline-destructive'
+							onClick={resetColumnFilters}
+							size={'icon'}
+						>
+							<Cross2Icon className='size-4' />
+						</Button>
+					)}
+
+					<Popover>
+						<PopoverTrigger>
+							<Button aria-label='More options' variant='gradient' size='icon'>
+								<ChevronDown className='size-4' />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent className='flex flex-col gap-2'>
+							<ToolbarComponent
+								option='date-range'
+								render={() => (
+									<TableDateRange
+										table={table}
+										start_date={startDate}
+										end_date={endDate}
+										onUpdate={onUpdate}
+										onClear={onClear}
+										isClear={isClear}
+									/>
+								)}
+							/>
+							<ToolbarComponent
+								option='view'
+								render={() => <TableViewOptions className='w-full' table={table} />}
+							/>
+
+							{otherToolBarComponents}
+							<ToolbarComponent
+								option='faceted-filter'
+								render={() =>
+									facetedFilters?.map((filter) => {
+										const column = table.getColumn(filter.id);
+										return column ? (
+											<TableFacetedFilter
+												key={filter.id}
+												column={column}
+												title={filter.title}
+												options={filter.options}
+											/>
+										) : null;
+									})
+								}
+							/>
+							<ToolbarComponent
+								option='advance-filter'
+								render={() =>
+									advanceFilters && advanceFilters?.length > 0 ? (
+										<TableAdvanceFilters filters={advanceFilters} />
+									) : null
+								}
+							/>
+						</PopoverContent>
+					</Popover>
+					<Separator orientation='vertical' className='h-6' />
+					<ToolbarComponent
+						option='export-csv'
+						render={() =>
+							isValid(startDate) &&
+							isValid(endDate) && (
+								<TableExportCSV
+									table={table}
+									title={title}
+									isEntry={isEntry}
+									start_date={startDate}
+									end_date={endDate}
+								/>
+							)
+						}
+					/>
+				</div>
+			) : (
+				<div className='flex flex-1 items-center gap-2'>
+					<ToolbarComponent
+						option='all-filter'
+						render={() =>
+							table.getAllColumns().filter((column) => column.getCanFilter()).length > 0 && (
+								<TableAllFilter />
+							)
+						}
+					/>
+					<ToolbarComponent option='view' render={() => <TableViewOptions table={table} />} />
+					<ToolbarComponent
+						option='date-range'
+						render={() => (
+							<TableDateRange
 								table={table}
-								title={title}
-								isEntry={isEntry}
 								start_date={startDate}
 								end_date={endDate}
+								onUpdate={onUpdate}
+								onClear={onClear}
+								isClear={isClear}
 							/>
-						)
-					}
-				/>
-			</div>
-		),
+						)}
+					/>
+					{otherToolBarComponents}
+					<ToolbarComponent
+						option='faceted-filter'
+						render={() =>
+							facetedFilters?.map((filter) => {
+								const column = table.getColumn(filter.id);
+								return column ? (
+									<TableFacetedFilter
+										key={filter.id}
+										column={column}
+										title={filter.title}
+										options={filter.options}
+									/>
+								) : null;
+							})
+						}
+					/>
+					<ToolbarComponent
+						option='advance-filter'
+						render={() =>
+							advanceFilters && advanceFilters?.length > 0 ? (
+								<TableAdvanceFilters filters={advanceFilters} />
+							) : null
+						}
+					/>
+					{isFiltered && (
+						<Button
+							aria-label='Reset filters'
+							variant='outline-destructive'
+							onClick={resetColumnFilters}
+							className='h-8'
+						>
+							Reset
+							<Cross2Icon className='size-4' />
+						</Button>
+					)}
+					<Separator orientation='vertical' className='h-6' />
+
+					<ToolbarComponent
+						option='export-csv'
+						render={() =>
+							isValid(startDate) &&
+							isValid(endDate) && (
+								<TableExportCSV
+									table={table}
+									title={title}
+									isEntry={isEntry}
+									start_date={startDate}
+									end_date={endDate}
+								/>
+							)
+						}
+					/>
+				</div>
+			),
+
 		[
 			table,
 			facetedFilters,
@@ -178,6 +277,7 @@ export function TableToolbar() {
 			isEntry,
 			title,
 			otherToolBarComponents,
+			isSmallDevice,
 		]
 	);
 
@@ -186,7 +286,7 @@ export function TableToolbar() {
 	 */
 	const renderRightSection = useCallback(
 		() => (
-			<div className='flex gap-4'>
+			<div className='flex gap-2 lg:gap-4'>
 				<TableRowDelete />
 				<ToolbarComponent
 					option='refresh'
@@ -234,6 +334,7 @@ export function TableToolbar() {
 					onChange={setGlobalFilter}
 					className={cn('bg-gradient-accent h-10 w-full border-accent/10 lg:max-w-[300px]')}
 					placeholder='Search...'
+					autoFocus={false}
 				/>
 			</div>
 		);
@@ -251,6 +352,7 @@ export function TableToolbar() {
 					onChange={setGlobalFilter}
 					className={cn('h-10 w-full lg:max-w-[300px]')}
 					placeholder='Search...'
+					autoFocus={false}
 				/>
 			</div>
 			{toolbarOptions === 'none' ? null : (

@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
-import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
+import ColumnImage from '@/components/core/data-table/_views/column-image';
 import { ContentModal, RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import { LinkWithRedirect } from '@/components/others/link';
@@ -405,7 +405,7 @@ export const departmentTeachersColumns = (): ColumnDef<IDepartmentTeachersTableD
 		accessorKey: 'teacher_image',
 		header: 'Image',
 		enableColumnFilter: false,
-		cell: (info) => <ColumnAvatar src={info.getValue() as string} alt={info.row.original.teacher_name} />,
+		cell: (info) => <ColumnImage src={info.getValue() as string} alt={info.row.original.teacher_name} />,
 	},
 	{
 		accessorKey: 'teacher_designation',
@@ -508,7 +508,7 @@ export const officeColumns = (): ColumnDef<IOfficeTableData>[] => [
 		header: 'Image',
 		enableColumnFilter: false,
 		cell: (info) => (
-			<ColumnAvatar
+			<ColumnImage
 				className='object-contain object-center'
 				src={info.getValue() as string}
 				alt={info.row.original.title}
