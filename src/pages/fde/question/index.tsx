@@ -2,20 +2,20 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 
-import { PageInfo } from '@/utils';
+import { getDateTime, PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { semesterTableColumns } from '../config/columns';
-import { ISemesterTableData } from '../config/columns/columns.type';
-import { useFDESemester } from '../config/query';
+import { questionColumns } from '../config/columns';
+import { IQuestionTableData } from '../config/columns/columns.type';
+import { useFDEQuestion } from '../config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Semester = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useFDESemester<ISemesterTableData[]>();
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useFDEQuestion<IQuestionTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Library/Semester', url, 'library__semester'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('FDE/Question', url, 'fde__question'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -24,8 +24,8 @@ const Semester = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<ISemesterTableData | null>(null);
-	const handleUpdate = (row: Row<ISemesterTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IQuestionTableData | null>(null);
+	const handleUpdate = (row: Row<IQuestionTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -36,15 +36,23 @@ const Semester = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<ISemesterTableData>) => {
+	const handleDelete = (row: Row<IQuestionTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.name,
 		});
 	};
+	const handleActive = async (row: Row<IQuestionTableData>) => {
+		const active = row?.original?.active ? false : true;
+		const updated_at = getDateTime();
 
+		await updateData.mutateAsync({
+			url: `/fda/question/${row?.original?.uuid}`,
+			updatedData: { active, updated_at },
+		});
+	};
 	// Table Columns
-	const columns = semesterTableColumns();
+	const columns = questionColumns({ handleActive });
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

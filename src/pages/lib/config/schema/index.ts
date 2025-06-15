@@ -29,3 +29,17 @@ export const SEMESTER_NULL: Partial<ISemester> = {
 };
 
 export type ISemester = z.infer<typeof SEMESTER_SCHEMA>;
+
+export const COURSE_SCHEMA = z.object({
+	name: STRING_REQUIRED,
+	code: STRING_REQUIRED,
+	remarks: STRING_NULLABLE,
+});
+
+export const COURSE_NULL: Partial<ICourse> = {
+	name: '',
+	code: '',
+	remarks: '',
+};
+
+export type ICourse = z.infer<typeof COURSE_SCHEMA>;

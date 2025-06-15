@@ -3,7 +3,7 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import DateTime from '@/components/ui/date-time';
 import { Switch } from '@/components/ui/switch';
 
-import { ISemesterTableData } from './columns.type';
+import { ICourseTableData, ISemesterTableData } from './columns.type';
 
 // * Semester Table Columns
 export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
@@ -38,4 +38,29 @@ export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
 	},
 ];
 
-//*
+//*Course
+export const courseTableColumns = (): ColumnDef<ICourseTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Course Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'code',
+		header: 'Course Code',
+		enableColumnFilter: true,
+	},
+];
+//* Course Section
+export const courseSectionTableColumns = (): ColumnDef<ICourseTableData>[] => [
+	{
+		accessorKey: 'course_name',
+		header: 'Course Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'name',
+		header: 'name',
+		enableColumnFilter: true,
+	},
+];
