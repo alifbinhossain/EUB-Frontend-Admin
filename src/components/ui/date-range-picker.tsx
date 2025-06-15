@@ -31,6 +31,12 @@ export interface DateRangePickerProps {
 	showCompare?: boolean;
 
 	onClear?: () => void;
+
+	isModal?: boolean;
+
+	isMobile?: boolean;
+
+	className?: string;
 }
 
 const formatDate = (date: Date, locale: string = 'en-us'): string => {
@@ -94,6 +100,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 	locale = 'en-US',
 	showCompare = false,
 	onClear,
+	isMobile,
 }): React.ReactNode => {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -350,9 +357,9 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 			}}
 		>
 			<PopoverTrigger asChild>
-				<Button aria-label='Open date range picker' size={'sm'} variant='gradient'>
+				<Button aria-label='Open date range picker' size={isMobile ? 'icon' : 'sm'} variant='gradient'>
 					<CalendarIcon className='size-4' />
-					<div className='text-right'>
+					<div className={cn('text-right', isMobile && 'hidden')}>
 						<div>
 							<div>{`${formatDate(range.from, locale)}${
 								range.to != null ? ' - ' + formatDate(range.to, locale) : ''

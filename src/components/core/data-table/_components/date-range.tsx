@@ -5,7 +5,18 @@ import { DateRangePicker } from '@/components/ui/date-range-picker';
 
 import { TTableDateRange } from '../types';
 
-const TableDateRange = ({ start_date, end_date, table, onUpdate, onClear, isClear, isSSR }: TTableDateRange<any>) => {
+const TableDateRange = ({
+	start_date,
+	end_date,
+	table,
+	onUpdate,
+	onClear,
+	isClear,
+	isSSR,
+	isModal,
+	isMobile,
+	className,
+}: TTableDateRange<any>) => {
 	const column = table.getColumn('created_at');
 
 	const { handleSearchParams } = useTableSSR();
@@ -34,6 +45,9 @@ const TableDateRange = ({ start_date, end_date, table, onUpdate, onClear, isClea
 				onUpdate({ range });
 			}}
 			onClear={!isClear && onUpdate && onClear ? onClear : undefined}
+			isModal={isModal}
+			isMobile={isMobile}
+			className={className}
 		/>
 	);
 };

@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
-import ColumnAvatar from '@/components/core/data-table/_views/column-avatar';
+import ColumnImage from '@/components/core/data-table/_views/column-image';
 import { RichTextModal } from '@/components/core/modal';
 import FilePreview from '@/components/others/file-preview';
 import DateTime from '@/components/ui/date-time';
@@ -122,7 +122,7 @@ export const newsColumns = (): ColumnDef<INewsTableData>[] => [
 		accessorKey: 'cover_image',
 		header: 'Cover Image',
 		enableColumnFilter: true,
-		cell: (info) => <ColumnAvatar alt={info.row.original.title} src={info.getValue() as string} />,
+		cell: (info) => <ColumnImage alt={info.row.original.title} src={info.getValue() as string} />,
 	},
 	{
 		accessorKey: 'published_date',

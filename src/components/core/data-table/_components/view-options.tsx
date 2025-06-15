@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Table } from '@tanstack/react-table';
+import { useClickAway } from '@uidotdev/usehooks';
 import { Columns2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -11,20 +13,41 @@ import {
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 
+import { cn } from '@/lib/utils';
+
 interface TableViewOptionsProps<TData> {
 	table: Table<TData>;
+	className?: string;
 }
 
-export function TableViewOptions<TData>({ table }: TableViewOptionsProps<TData>) {
+export function TableViewOptions<TData>({ table, className }: TableViewOptionsProps<TData>) {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const ref = useClickAway(() => {
+		setIsOpen(false);
+	});
+
+	const handleOpenModal = () => {
+		if (isOpen === false) {
+			return setIsOpen(true);
+		}
+	};
+
 	return (
-		<DropdownMenu>
+		<DropdownMenu open={isOpen}>
 			<DropdownMenuTrigger>
-				<Button aria-label='Column Options' variant='gradient' size='sm' className='hidden lg:flex'>
+				<Button
+					onClick={handleOpenModal}
+					aria-label='Column Options'
+					variant='gradient'
+					size='sm'
+					className={cn(className)}
+				>
 					<Columns2 className='size-4' />
-					Column
+					Columns
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align='end' className='max-h-[400px] w-fit overflow-auto'>
+			<DropdownMenuContent ref={ref as any} align='end' className='z-[999] max-h-[400px] w-fit overflow-auto'>
 				<DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				{table

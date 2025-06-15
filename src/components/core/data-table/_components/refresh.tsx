@@ -11,8 +11,9 @@ import { cn } from '@/lib/utils';
 
 interface TableRefreshProps {
 	handleRefetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IResponse<unknown>, Error>>;
+	isSmallScreen?: boolean;
 }
-const TableRefresh: React.FC<TableRefreshProps> = ({ handleRefetch }) => {
+const TableRefresh: React.FC<TableRefreshProps> = ({ handleRefetch, isSmallScreen }) => {
 	const [isFetching, setIsFetching] = useState(false);
 
 	const handleClick = async () => {
@@ -37,11 +38,12 @@ const TableRefresh: React.FC<TableRefreshProps> = ({ handleRefetch }) => {
 				aria-label='Refresh Data'
 				disabled={isFetching}
 				variant={'gradient'}
-				size={'sm'}
+				size={isSmallScreen ? 'icon' : 'sm'}
 				onClick={handleClick}
 			>
 				<RefreshCw className={cn('size-4', isFetching && 'animate-spin')} />
-				Refresh
+
+				<span className='hidden lg:inline'>Refresh</span>
 			</Button>
 		</TooltipWrapper>
 	);

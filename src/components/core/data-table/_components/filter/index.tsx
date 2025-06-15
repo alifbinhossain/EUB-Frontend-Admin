@@ -28,13 +28,13 @@ const TableAllFilter = () => {
 	return (
 		<Sheet>
 			<SheetTrigger>
-				<Button aria-label='Filters All Columns' variant='gradient' size='sm' className='hidden lg:flex'>
+				<Button aria-label='Filters All Columns' variant='gradient' size='sm'>
 					<MixerHorizontalIcon className='size-4' />
 					Filters
 				</Button>
 			</SheetTrigger>
-			<SheetContent className='flex flex-col'>
-				<SheetHeader className='border-b pb-2'>
+			<SheetContent className='flex flex-col p-0'>
+				<SheetHeader className='border-b px-3 py-2 lg:px-4 lg:py-3'>
 					<SheetTitle className='flex items-center gap-2'>
 						<MixerHorizontalIcon className='size-4' /> All Filters
 					</SheetTitle>
@@ -44,7 +44,7 @@ const TableAllFilter = () => {
 					</SheetDescription>
 				</SheetHeader>
 
-				<ScrollArea className='mt-4 flex-1'>
+				<ScrollArea className='mt-0 flex-1 px-3 lg:px-4'>
 					<div className='flex flex-col gap-4'>
 						{filteredColumns.length > 0 &&
 							filteredColumns.map((column) => (
