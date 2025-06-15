@@ -37,3 +37,5 @@ export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 ];
+
+//*

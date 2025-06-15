@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { IRoute } from '@/types';
 
-const Semester = lazy(() => import('@/pages/fde/lib/semester'));
+const Semester = lazy(() => import('@/pages/lib/semester'));
 
 const fdeRoutes: IRoute[] = [
 	{
