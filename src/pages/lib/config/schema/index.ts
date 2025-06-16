@@ -34,12 +34,26 @@ export const COURSE_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	code: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
+	course_section: z.array(
+		z.object({
+			uuid: STRING_OPTIONAL,
+			course_uuid: STRING_OPTIONAL,
+			name: STRING_REQUIRED,
+		})
+	),
 });
 
 export const COURSE_NULL: Partial<ICourse> = {
 	name: '',
 	code: '',
 	remarks: '',
+	course_section: [
+		{
+			uuid: '',
+			course_uuid: '',
+			name: '',
+		},
+	],
 };
 
 export type ICourse = z.infer<typeof COURSE_SCHEMA>;

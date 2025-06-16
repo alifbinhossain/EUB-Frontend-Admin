@@ -51,16 +51,3 @@ export const courseTableColumns = (): ColumnDef<ICourseTableData>[] => [
 		enableColumnFilter: true,
 	},
 ];
-//* Course Section
-export const courseSectionTableColumns = (): ColumnDef<ICourseTableData>[] => [
-	{
-		accessorKey: 'course_name',
-		header: 'Course Name',
-		enableColumnFilter: true,
-	},
-	{
-		accessorKey: 'name',
-		header: 'name',
-		enableColumnFilter: true,
-	},
-];
