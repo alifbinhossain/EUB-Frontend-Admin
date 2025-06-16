@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import RespondingStudent from './response-student';
+import AssignList from './assign-list';
 
 const Log = () => {
 	useEffect(() => {
@@ -8,7 +8,7 @@ const Log = () => {
 	}, []);
 	return (
 		<div>
-			<RespondingStudent />
+			<AssignList />
 		</div>
 	);
 };

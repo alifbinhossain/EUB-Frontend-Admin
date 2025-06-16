@@ -16,4 +16,7 @@ export const fdeQK = {
 	// * Course Assign
 
 	courseAssignByUUID: (uuid: string, query?: string) => ['course-assign', uuid, ...(query ? [query] : [])],
+
+	//*list
+	list: () => [...fdeQK.all(), 'list'],
 };

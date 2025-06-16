@@ -50,3 +50,10 @@ export const useCourseAssignByUUID = <T>(uuid: string, query?: string) =>
 		url: query ? `/lib/course-section-details/${uuid}?${query}` : `/lib/course-section-details/${uuid}`,
 		enabled: !!uuid,
 	});
+
+//* FDE Evolution
+export const useFDEList = <T>() =>
+	useTQuery<T>({
+		queryKey: fdeQK.list(),
+		url: `lib/sem-crs-thr-entry`,
+	});

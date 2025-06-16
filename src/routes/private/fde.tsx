@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import Form from '@/pages/fde/form';
 import FormEntry from '@/pages/fde/form/entry';
 import List from '@/pages/fde/list';
+import Log from '@/pages/fde/log';
 import Question from '@/pages/fde/question';
 import QuestionCategory from '@/pages/fde/question-category';
 import { IRoute } from '@/types';
@@ -49,10 +50,17 @@ const fdeRoutes: IRoute[] = [
 			},
 			{
 				name: 'Evaluation',
-				path: '/fde/list',
+				path: '/fde/evaluation',
 				element: <List />,
-				page_name: 'fde__list',
+				page_name: 'fde__evaluation',
 				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Log',
+				path: '/fde/log',
+				element: <Log />,
+				page_name: 'fde__log',
+				actions: ['create', 'read', 'update', 'delete', 'show_student_ID'],
 			},
 		],
 	},
