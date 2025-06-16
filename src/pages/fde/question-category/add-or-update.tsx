@@ -83,7 +83,11 @@ const AddOrUpdate: React.FC<IQuestionCategoryAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='index' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='index'
+				render={(props) => <CoreForm.Input type='number' {...props} />}
+			/>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}

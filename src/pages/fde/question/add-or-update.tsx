@@ -8,7 +8,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherCategory } from '@/lib/common-queries/other';
+import { useOtherQuestionCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -84,7 +84,12 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='index' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField control={form.control} name='active' render={(props) => <CoreForm.Checkbox {...props} />} />
+			<FormField
+				control={form.control}
+				name='index'
+				render={(props) => <CoreForm.Input type='number' {...props} />}
+			/>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}

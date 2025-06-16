@@ -114,3 +114,10 @@ export const useOtherItem = <T>() =>
 		queryKey: otherQK.item(),
 		url: `/other/procure/item/value/label`,
 	});
+
+//* GET OTHER QUESTION CATEGORY
+export const useOtherQuestionCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.questionCategory(),
+		url: `/other/fde/qns-category/value/label`,
+	});

@@ -28,3 +28,23 @@ export const useFDEQuestionByUUID = <T>(uuid: string) =>
 		url: `/fde/qns/${uuid}`,
 		enabled: !!uuid,
 	});
+//*Responding Student
+export const useFDERespondingStudent = <T>() =>
+	useTQuery<T>({
+		queryKey: fdeQK.respondingStudent(),
+		url: `/fde/respond-student`,
+	});
+
+export const useFDEFormFullResponse = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.formFullResponse(uuid),
+		url: `/fde/respond-student-details-with-evaluation/${uuid}`,
+		enabled: !!uuid,
+	});
+
+//* FDE Evolution
+export const useFDEList = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.list(query ? query : ''),
+		url: query ? `/lib/sem-crs-thr-entry?${query}` : `lib/sem-crs-thr-entry`,
+	});
