@@ -44,6 +44,12 @@ const otherQK = {
 	internalCostCenter: () => [...otherQK.all(), 'internalCostCenter'],
 	//* Item
 	item: () => [...otherQK.all(), 'item'],
+
+	// * Course
+	course: () => [...otherQK.all(), 'course'],
+
+	// * Semester
+	semester: () => [...otherQK.all(), 'semester'],
 };
 
 export default otherQK;

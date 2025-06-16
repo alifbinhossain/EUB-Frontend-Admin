@@ -114,3 +114,17 @@ export const useOtherItem = <T>() =>
 		queryKey: otherQK.item(),
 		url: `/other/procure/item/value/label`,
 	});
+
+// * GET OTHER COURSE
+export const useOtherCourse = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.course(),
+		url: `/other/lib/course/value/label`,
+	});
+
+// * GET OTHER SEMESTER
+export const useOtherSemester = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.semester(),
+		url: `/other/lib/semester/value/label`,
+	});
