@@ -28,3 +28,14 @@ export type ICourseAssignTableData = {
 	final_started_at: string;
 	ended_at: string;
 };
+//* FDE List
+export type IFDEListTableData = {
+	uuid: string;
+	semester_uuid: string;
+	semester_name: string;
+	course_section_uuid: string;
+	teacher_uuid: string;
+	class_size: number;
+	is_mid_evaluation_complete: boolean;
+	is_final_evaluation_complete: boolean;
+};

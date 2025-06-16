@@ -1,6 +1,7 @@
 import { lazy, useMemo } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import useAuth from '@/hooks/useAuth';
 
 import { getDateTime, PageInfo } from '@/utils';
 
@@ -9,9 +10,11 @@ import { IFDEListTableData } from '../config/columns/columns.type';
 import { useFDEList } from '../config/query';
 
 const Semester = () => {
-	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>();
+	const { user } = useAuth();
+	const query = `user_uuid=${user?.uuid}`;
+	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>(query);
 
-	const pageInfo = useMemo(() => new PageInfo('FDE/Evaluation', url, 'fde__list'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('FDE/Evaluation', url, 'fde__evaluation'), [url]);
 
 	const handleMidEvolution = async (row: Row<IFDEListTableData>) => {
 		const is_mid_evaluation_complete = row?.original?.is_mid_evaluation_complete ? false : true;

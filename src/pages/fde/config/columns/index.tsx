@@ -178,3 +178,44 @@ export const fdeListColumns = ({
 		},
 	},
 ];
+
+//* Responding Student
+export const respondingStudentLogColumns = ({
+	showStudentID,
+}: {
+	showStudentID?: boolean;
+}): ColumnDef<IRespondingStudentTableData>[] => [
+	{
+		accessorKey: 'id',
+		header: 'Student ID',
+		enableColumnFilter: true,
+		meta: {
+			hidden: !showStudentID,
+		},
+	},
+	{
+		accessorKey: 'semester_name',
+		header: 'Semester',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_name',
+		header: 'Course',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_section_name',
+		header: 'Section',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'evaluation_time',
+		header: 'Evaluation Time',
+		enableColumnFilter: true,
+	},
+];
