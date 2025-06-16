@@ -121,3 +121,16 @@ export const useOtherQuestionCategory = <T>() =>
 		queryKey: otherQK.questionCategory(),
 		url: `/other/fde/qns-category/value/label`,
 	});
+// * GET OTHER COURSE
+export const useOtherCourse = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.course(),
+		url: `/other/lib/course/value/label`,
+	});
+
+// * GET OTHER SEMESTER
+export const useOtherSemester = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.semester(),
+		url: `/other/lib/semester/value/label`,
+	});

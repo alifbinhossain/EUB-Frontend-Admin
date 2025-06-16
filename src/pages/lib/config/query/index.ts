@@ -27,16 +27,26 @@ export const useFDECourseByUUID = <T>(uuid: string) =>
 		url: `/lib/course/${uuid}`,
 		enabled: !!uuid,
 	});
-//* Course Section
 
-export const useFDECourseSection = <T>() =>
+//* Course Section
+export const useCourseSection = <T>() =>
 	useTQuery<T>({
 		queryKey: fdeQK.courseSection(),
 		url: `/lib/course-section`,
 	});
-export const useFDECourseSectionByUUID = <T>(uuid: string) =>
+
+export const useCourseSectionByUUID = <T>(uuid: string) =>
 	useTQuery<T>({
 		queryKey: fdeQK.courseSectionByUUID(uuid),
 		url: `/lib/course-section/${uuid}`,
+		enabled: !!uuid,
+	});
+
+// * course assign
+
+export const useCourseAssignByUUID = <T>(uuid: string, query?: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.courseAssignByUUID(uuid, query),
+		url: query ? `/lib/course-section-details/${uuid}?${query}` : `/lib/course-section-details/${uuid}`,
 		enabled: !!uuid,
 	});
