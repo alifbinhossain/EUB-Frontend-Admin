@@ -12,4 +12,8 @@ export const fdeQK = {
 	//*Course Section
 	courseSection: () => [...fdeQK.all(), 'course-section'],
 	courseSectionByUUID: (uuid: string) => [...fdeQK.courseSection(), uuid],
+
+	// * Course Assign
+
+	courseAssignByUUID: (uuid: string, query?: string) => ['course-assign', uuid, ...(query ? [query] : [])],
 };

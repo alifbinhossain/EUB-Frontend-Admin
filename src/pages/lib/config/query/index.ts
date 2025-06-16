@@ -41,3 +41,12 @@ export const useCourseSectionByUUID = <T>(uuid: string) =>
 		url: `/lib/course-section/${uuid}`,
 		enabled: !!uuid,
 	});
+
+// * course assign
+
+export const useCourseAssignByUUID = <T>(uuid: string, query?: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.courseAssignByUUID(uuid, query),
+		url: query ? `/lib/course-section-details/${uuid}?${query}` : `/lib/course-section-details/${uuid}`,
+		enabled: !!uuid,
+	});
