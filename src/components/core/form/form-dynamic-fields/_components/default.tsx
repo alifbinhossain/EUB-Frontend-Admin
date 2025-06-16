@@ -13,6 +13,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 	fields,
 	fieldName,
 	fieldDefs,
+	startIndex = 0,
 	form,
 	children,
 }) => {
@@ -63,10 +64,10 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'join-input-unit' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.JoinInputUnit
-																	unit={fieldDef.unit(fieldIndex)}
+																	unit={fieldDef.unit(fieldIndex + startIndex)}
 																	disableLabel
 																	disabled={fieldDef.disabled}
 																	type={fieldDef.inputType}
@@ -79,7 +80,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'text' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.Input
 																	type={'text'}
@@ -94,7 +95,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'checkbox' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.Checkbox
 																	disableLabel
@@ -108,7 +109,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'date' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.DatePicker
 																	disableLabel
@@ -122,7 +123,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'number' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.Input
 																	type='number'
@@ -137,7 +138,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'textarea' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.Textarea
 																	disableLabel
@@ -152,7 +153,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'select' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.ReactSelect
 																	menuPortalTarget={document.body}
@@ -168,11 +169,26 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															)}
 														/>
 													)}
+													{fieldDef.type === 'radio' && (
+														<FormField
+															control={form.control}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
+															render={(props) => (
+																<CoreForm.Radio
+																	options={fieldDef.options}
+																	placeholder={fieldDef.placeholder}
+																	disableLabel
+																	onChange={fieldDef.onChange}
+																	{...props}
+																/>
+															)}
+														/>
+													)}
 
 													{fieldDef.type === 'image' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.FileUpload
 																	disableLabel={true}
@@ -186,7 +202,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 													{fieldDef.type === 'file' && (
 														<FormField
 															control={form.control}
-															name={`${fieldName}.${fieldIndex}.${fieldDef.accessorKey}`}
+															name={`${fieldName}.${fieldIndex + startIndex}.${fieldDef.accessorKey}`}
 															render={(props) => (
 																<CoreForm.FileUpload
 																	fileType='document'

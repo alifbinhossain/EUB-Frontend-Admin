@@ -47,7 +47,7 @@ const Semester = () => {
 		const updated_at = getDateTime();
 
 		await updateData.mutateAsync({
-			url: `/fda/question/${row?.original?.uuid}`,
+			url: `/fde/qns/${row?.original?.uuid}`,
 			updatedData: { active, updated_at },
 		});
 	};

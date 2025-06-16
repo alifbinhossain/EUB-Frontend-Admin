@@ -8,4 +8,12 @@ export const fdeQK = {
 	//*Question
 	question: () => [...fdeQK.all(), 'question'],
 	questionByUUID: (uuid: string) => [...fdeQK.question(), uuid],
+
+	//*Responding Student
+	respondingStudent: () => [...fdeQK.all(), 'responding-student'],
+	respondingStudentByUUID: (uuid: string) => [...fdeQK.respondingStudent(), uuid],
+	formFullResponse: (uuid: string) => [...fdeQK.respondingStudent(), 'form-full-response', uuid],
+
+	//*Evolution
+	list: (query: string) => [...fdeQK.all(), 'list', query],
 };

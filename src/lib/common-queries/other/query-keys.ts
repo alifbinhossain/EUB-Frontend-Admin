@@ -50,6 +50,8 @@ const otherQK = {
 
 	// * Semester
 	semester: () => [...otherQK.all(), 'semester'],
+	//* Question Category
+	questionCategory: () => [...otherQK.all(), 'questionCategory'],
 };
 
 export default otherQK;

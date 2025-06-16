@@ -36,7 +36,13 @@ type FieldSelect = {
 	disabled?: boolean;
 	onChange?: (option?: any, field?: any) => void;
 };
-
+type FieldRadio = {
+	type: 'radio';
+	placeholder?: string;
+	options: IFormSelectOption[];
+	disabled?: boolean;
+	onChange?: (option?: any, field?: any) => void;
+};
 type FieldJoinInputUnit = {
 	type: 'join-input-unit';
 	placeholder?: string;
@@ -104,6 +110,7 @@ export type FieldDef = {
 	| FieldCheckbox
 	| FieldDate
 	| FieldFile
+	| FieldRadio
 );
 
 export interface DynamicFieldsProps {
@@ -118,4 +125,5 @@ export interface DynamicFieldsProps {
 	containerClassName?: string;
 	className?: string;
 	children?: React.ReactNode;
+	startIndex?: number;
 }

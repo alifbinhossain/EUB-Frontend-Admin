@@ -115,6 +115,12 @@ export const useOtherItem = <T>() =>
 		url: `/other/procure/item/value/label`,
 	});
 
+//* GET OTHER QUESTION CATEGORY
+export const useOtherQuestionCategory = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.questionCategory(),
+		url: `/other/fde/qns-category/value/label`,
+	});
 // * GET OTHER COURSE
 export const useOtherCourse = <T>() =>
 	useTQuery<T>({
