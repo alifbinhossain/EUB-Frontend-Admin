@@ -15,6 +15,7 @@ import ReactSelectCreate from './react-select-create';
 import RichTextEditor from './rich-text-editor';
 import Section from './section';
 import Select from './select';
+import StudentID from './student-id-box';
 import Submit from './submit';
 import Switch from './switch';
 import Textarea from './textarea';
@@ -40,6 +41,7 @@ const Form = {
 	Otp,
 	Phone,
 	ReactSelectCreate,
+	StudentID,
 };
 
 export default Form;

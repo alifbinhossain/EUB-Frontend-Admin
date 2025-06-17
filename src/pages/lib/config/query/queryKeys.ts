@@ -19,4 +19,5 @@ export const fdeQK = {
 
 	//*list
 	list: () => [...fdeQK.all(), 'list'],
+	semCrsThrEntryByUUID: (uuid: string) => [...fdeQK.list(), uuid],
 };

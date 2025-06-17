@@ -6,7 +6,7 @@ export const fdeQK = {
 	questionCategoryByUUID: (uuid: string) => [...fdeQK.questionCategory(), uuid],
 
 	//*Question
-	question: () => [...fdeQK.all(), 'question'],
+	question: (query?: string) => [...fdeQK.all(), 'question', query],
 	questionByUUID: (uuid: string) => [...fdeQK.question(), uuid],
 
 	//*Responding Student

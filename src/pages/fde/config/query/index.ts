@@ -16,10 +16,10 @@ export const useFDEQuestionCategoryByUUID = <T>(uuid: string) =>
 		enabled: !!uuid,
 	});
 //* Question
-export const useFDEQuestion = <T>() =>
+export const useFDEQuestion = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: fdeQK.question(),
-		url: `/fde/qns`,
+		queryKey: fdeQK.question(query ? query : ''),
+		url: query ? `/fde/qns?${query}` : `/fde/qns`,
 	});
 
 export const useFDEQuestionByUUID = <T>(uuid: string) =>

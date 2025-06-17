@@ -33,4 +33,6 @@ export type IFDEListTableData = {
 	class_size: number;
 	is_mid_evaluation_complete: boolean;
 	is_final_evaluation_complete: boolean;
+	mid_evaluation_response: number;
+	final_evaluation_response: number;
 };
