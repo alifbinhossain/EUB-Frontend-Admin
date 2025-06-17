@@ -26,9 +26,7 @@ const Entry = () => {
 	const { uuid, sem_crs_thr_entry_uuid, evaluation_time } = useParams();
 	const { data: teacher_course_entry } = useSemCrsThrEntryByUUID<any>(sem_crs_thr_entry_uuid as string);
 	const isUpdate = !!uuid;
-
 	const navigate = useNavigate();
-
 	const { user } = useAuth();
 
 	const { invalidateQuery } = useFDERespondingStudent<IRespondingStudentTableData[]>();

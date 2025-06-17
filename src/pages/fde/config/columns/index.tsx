@@ -142,6 +142,19 @@ export const fdeListColumns = ({
 		),
 	},
 	{
+		accessorKey: 'mid_evolution_link',
+		header: 'Mid Link',
+		enableColumnFilter: true,
+		cell: (info) => {
+			if (info.row.original.is_mid_evaluation_complete) return <span>Completed</span>;
+			const fullURL = window.location.href;
+			const slice = fullURL.split('f');
+			const baseURl = slice[0];
+			const link = `${baseURl}fde/${info.row.original.uuid}/mid`;
+			return <LinkWithRedirect title={'Link'} uri={link} baseUrlNeeded={false} showCopyButton={true} />;
+		},
+	},
+	{
 		accessorKey: 'is_final_evaluation_complete',
 		header: 'Final Evaluation',
 		enableColumnFilter: true,
@@ -156,19 +169,7 @@ export const fdeListColumns = ({
 			</div>
 		),
 	},
-	{
-		accessorKey: 'mid_evolution_link',
-		header: 'Mid Link',
-		enableColumnFilter: true,
-		cell: (info) => {
-			if (info.row.original.is_mid_evaluation_complete) return <span>Completed</span>;
-			const fullURL = window.location.href;
-			const slice = fullURL.split('f');
-			const baseURl = slice[0];
-			const link = `${baseURl}fde/${info.row.original.uuid}/mid`;
-			return <LinkWithRedirect title={'Link'} uri={link} baseUrlNeeded={false} showCopyButton={true} />;
-		},
-	},
+
 	{
 		accessorKey: 'final_evolution_link',
 		header: 'Final Link',
