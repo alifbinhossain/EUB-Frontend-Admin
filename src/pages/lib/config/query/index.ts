@@ -57,3 +57,9 @@ export const useFDEList = <T>() =>
 		queryKey: fdeQK.list(),
 		url: `lib/sem-crs-thr-entry`,
 	});
+export const useSemCrsThrEntryByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.semCrsThrEntryByUUID(uuid),
+		url: `/lib/sem-crs-thr-entry/${uuid}`,
+		enabled: !!uuid,
+	});

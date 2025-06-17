@@ -135,7 +135,10 @@ export const fdeListColumns = ({
 		header: 'MID Evaluation',
 		enableColumnFilter: true,
 		cell: (info) => (
-			<Switch checked={info.getValue() as boolean} onCheckedChange={() => handleMidEvolution(info.row)} />
+			<div className='flex flex-col'>
+				<Switch checked={info.getValue() as boolean} onCheckedChange={() => handleMidEvolution(info.row)} />
+				<span>{info.row.original.mid_evaluation_response + '/' + info.row.original.class_size}</span>
+			</div>
 		),
 	},
 	{
@@ -143,11 +146,14 @@ export const fdeListColumns = ({
 		header: 'Final Evaluation',
 		enableColumnFilter: true,
 		cell: (info) => (
-			<Switch
-				checked={info.getValue() as boolean}
-				onCheckedChange={() => handleFinalEvolution(info.row)}
-				disabled={!info.row.original.is_mid_evaluation_complete}
-			/>
+			<div className='flex flex-col'>
+				<Switch
+					checked={info.getValue() as boolean}
+					onCheckedChange={() => handleFinalEvolution(info.row)}
+					disabled={!info.row.original.is_mid_evaluation_complete}
+				/>
+				<span>{info.row.original.final_evaluation_response + '/' + info.row.original.class_size}</span>
+			</div>
 		),
 	},
 	{

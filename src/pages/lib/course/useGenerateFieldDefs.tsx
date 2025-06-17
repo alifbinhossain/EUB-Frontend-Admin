@@ -30,6 +30,14 @@ const useGenerateFieldDefs = ({
 }: IGenerateFieldDefsProps): FieldDef[] => {
 	return [
 		{
+			header: 'Index',
+			accessorKey: 'index',
+			type: 'custom',
+			component: (index: number) => {
+				return <span className='w-11'>{index + 1}</span>;
+			},
+		},
+		{
 			header: 'Name',
 			accessorKey: 'name',
 			type: 'text',
@@ -39,7 +47,7 @@ const useGenerateFieldDefs = ({
 			accessorKey: 'actions',
 			type: 'custom',
 			component: (index: number) => {
-				return <FieldActionButton handleCopy={copy} handleRemove={remove} index={index} />;
+				return <FieldActionButton handleRemove={remove} index={index} />;
 			},
 		},
 	];

@@ -65,7 +65,7 @@ const Entry = () => {
 					updatedData: courseUpdateData,
 				})
 				.then(() => {
-					const entryUpdatePromise = course_section.map((entry) => {
+					const entryUpdatePromise = course_section.map((entry, index) => {
 						if (entry.uuid) {
 							return updateData.mutateAsync({
 								url: `/lib/course-section/${entry.uuid}`,
@@ -74,6 +74,7 @@ const Entry = () => {
 						} else {
 							const entryData = {
 								...entry,
+								index: index,
 								course_uuid: uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
@@ -118,9 +119,10 @@ const Entry = () => {
 					newData: courseData,
 				})
 				.then(() => {
-					const entryPromise = course_section.map((entry) => {
+					const entryPromise = course_section.map((entry, index) => {
 						const entryData = {
 							...entry,
+							index: index,
 							course_uuid: courseData.uuid,
 							created_at: getDateTime(),
 							created_by: user?.uuid,

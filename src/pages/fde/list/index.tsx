@@ -12,7 +12,7 @@ import { useFDEList } from '../config/query';
 const Semester = () => {
 	const { user } = useAuth();
 	const query = `user_uuid=${user?.uuid}`;
-	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>(query);
+	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('FDE/Evaluation', url, 'fde__evaluation'), [url]);
 

@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { useSemCrsThrEntryByUUID } from '@/pages/lib/config/query';
+import { BanPage } from '@/pages/public/ban';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -22,14 +24,16 @@ import useGenerateFieldDefs from './useGenerateFieldDefs';
 
 const Entry = () => {
 	const { uuid, sem_crs_thr_entry_uuid, evaluation_time } = useParams();
+	const { data: teacher_course_entry } = useSemCrsThrEntryByUUID<any>(sem_crs_thr_entry_uuid as string);
 	const isUpdate = !!uuid;
+
 	const navigate = useNavigate();
 
 	const { user } = useAuth();
 
 	const { invalidateQuery } = useFDERespondingStudent<IRespondingStudentTableData[]>();
 	const { data } = useFDEFormFullResponse<any>(uuid as string);
-	const { data: question } = useFDEQuestion<any[]>();
+	const { data: question } = useFDEQuestion<any[]>(`is_active=true`);
 	const { data: questionCategory, postData, updateData } = useFDEQuestionCategory<any[]>();
 
 	const form = useRHF(FORM_SCHEMA, FORM_NULL);
@@ -160,6 +164,7 @@ const Entry = () => {
 		}
 	}
 
+	let startIndex: number;
 	const fliedDefs = useGenerateFieldDefs({
 		watch: form.watch,
 		set: form.setValue,
@@ -168,42 +173,63 @@ const Entry = () => {
 		data: form.getValues(),
 		form: form,
 	});
-	let startIndex: number;
-	return (
-		<CoreForm.AddEditWrapper
-			title={isUpdate ? 'Edit Faculty Department Evaluation' : 'Add Faculty Department Evaluation'}
-			form={form}
-			onSubmit={onSubmit}
-		>
-			<CoreForm.Section title={`Faculty Department Evaluation`}>
-				<FormField
-					control={form.control}
-					name='id'
-					render={(props) => <CoreForm.Input label='Student ID' disabled={isUpdate} {...props} />}
-				/>
-			</CoreForm.Section>
 
-			{questionCategory?.map((category, index) => {
-				startIndex =
-					index == 0
-						? 0
-						: startIndex +
-							fields.filter((item) => item?.qns_category_uuid === questionCategory[index - 1].uuid)
-								.length;
-				return (
-					<CoreForm.DynamicFields
-						title={category?.name}
-						form={form}
-						fieldName='qns'
-						fieldDefs={fliedDefs}
-						startIndex={startIndex}
-						fields={fields.filter((item) => item?.qns_category_uuid === category?.uuid)}
+	if (
+		teacher_course_entry &&
+		!isUpdate &&
+		evaluation_time === 'mid' &&
+		teacher_course_entry?.is_mid_evaluation_complete
+	) {
+		return <BanPage title='Link Expired' subtitle='The Mid Evaluation is already completed' />;
+	} else if (
+		teacher_course_entry &&
+		!isUpdate &&
+		evaluation_time === 'final' &&
+		(teacher_course_entry?.is_final_evaluation_complete || !teacher_course_entry?.is_mid_evaluation_complete)
+	) {
+		return (
+			<BanPage
+				title='Link Expired'
+				subtitle='The Final Evaluation is already completed or Mid Evaluation is not completed'
+			/>
+		);
+	} else {
+		return (
+			<CoreForm.AddEditWrapper
+				title={isUpdate ? 'Edit Faculty Department Evaluation' : 'Add Faculty Department Evaluation'}
+				form={form}
+				onSubmit={onSubmit}
+			>
+				<CoreForm.Section title={`Faculty Department Evaluation`}>
+					<FormField
+						control={form.control}
+						name='id'
+						render={(props) => <CoreForm.StudentID label='Student ID' disabled={isUpdate} {...props} />}
 					/>
-				);
-			})}
-			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
-		</CoreForm.AddEditWrapper>
-	);
-};
+				</CoreForm.Section>
 
+				{questionCategory?.map((category, index) => {
+					startIndex =
+						index == 0
+							? 0
+							: startIndex +
+								fields.filter((item) => item?.qns_category_uuid === questionCategory[index - 1].uuid)
+									.length;
+
+					return (
+						<CoreForm.DynamicFields
+							title={category?.name}
+							form={form}
+							fieldName='qns'
+							fieldDefs={fliedDefs}
+							startIndex={startIndex}
+							fields={fields.filter((item) => item?.qns_category_uuid === category?.uuid)}
+						/>
+					);
+				})}
+				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
+			</CoreForm.AddEditWrapper>
+		);
+	}
+};
 export default Entry;
