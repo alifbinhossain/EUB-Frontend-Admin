@@ -254,14 +254,7 @@ const Entry = () => {
 						<FormField
 							control={form.control}
 							name='id'
-							render={(props) => (
-								<CoreForm.StudentID
-									labelClassName='justify-center'
-									label='Student ID'
-									disabled={isUpdate}
-									{...props}
-								/>
-							)}
+							render={(props) => <CoreForm.StudentID label='Student ID' disabled={isUpdate} {...props} />}
 						/>
 					</div>
 					{/* Rating Scale */}
