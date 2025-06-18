@@ -2,19 +2,16 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherCategory, useOtherSubCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { useFDESemesterByUUID } from '../config/query';
 import { ISemester, SEMESTER_NULL, SEMESTER_SCHEMA } from '../config/schema';
 import { ISemesterAddOrUpdateProps } from '../config/types';
-import { type } from './utils';
 
 const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 	url,
@@ -29,8 +26,6 @@ const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useFDESemesterByUUID(updatedData?.uuid as string);
-	const { data: category } = useOtherCategory<IFormSelectOption[]>();
-	const { invalidateQuery: invalidateQuerySubCategory } = useOtherSubCategory();
 
 	const form = useRHF(SEMESTER_SCHEMA, SEMESTER_NULL);
 
@@ -60,7 +55,6 @@ const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
-			invalidateQuerySubCategory();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -73,7 +67,6 @@ const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
-			invalidateQuerySubCategory();
 		}
 	}
 	return (

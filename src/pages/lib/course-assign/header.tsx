@@ -18,38 +18,36 @@ const Header = () => {
 				value: data?.name,
 			},
 			{
-				label: 'Started At',
+				label: 'Started',
 				value: data?.started_at && formatDateTable(data.started_at),
 			},
 			{
-				label: 'Mid Started At',
+				label: 'Mid Started',
 				value: data?.mid_started_at && formatDateTable(data.mid_started_at),
 			},
 			{
-				label: 'Final Started At',
+				label: 'Final Started',
 				value: data?.final_started_at && formatDateTable(data.final_started_at),
 			},
 			{
-				label: 'Ended Started At',
+				label: 'Ended',
 				value: data?.ended_at && formatDateTable(data.ended_at),
 			},
-			{
-				label: 'Remarks',
-				value: data?.remarks,
-			},
+			// {
+			// 	label: 'Remarks',
+			// 	value: data?.remarks,
+			// },
 		];
 	};
 
 	if (isLoading) return <div>Loading...</div>;
 
 	return (
-		<>
-			<SectionContainer title={'Semester Information'}>
-				<div className='grid grid-cols-1 gap-4'>
-					<TableList items={renderHeaderITems()} />
-				</div>
-			</SectionContainer>
-		</>
+		<SectionContainer title={'Semester'}>
+			<div className='grid grid-cols-1 gap-4'>
+				<TableList items={renderHeaderITems()} />
+			</div>
+		</SectionContainer>
 	);
 };
 

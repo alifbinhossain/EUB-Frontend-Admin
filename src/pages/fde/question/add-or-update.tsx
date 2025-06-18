@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { placeholderCSS } from 'node_modules/react-select/dist/declarations/src/components/Placeholder';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -84,26 +83,28 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='active' render={(props) => <CoreForm.Checkbox {...props} />} />
+			<FormField control={form.control} name='active' render={(props) => <CoreForm.Switch {...props} />} />
+
 			<FormField
 				control={form.control}
 				name='index'
 				render={(props) => <CoreForm.Input type='number' {...props} />}
 			/>
-			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
 				name='qns_category_uuid'
 				render={(props) => (
 					<CoreForm.ReactSelect
-						label='Question Category'
-						placeholder='Select Question Category'
+						label='Category'
+						placeholder='Select Category'
 						menuPortalTarget={document.body}
 						options={questionCategoryOptions!}
 						{...props}
 					/>
 				)}
 			/>
+			<FormField control={form.control} name='name' render={(props) => <CoreForm.Textarea {...props} />} />
+
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);
