@@ -17,11 +17,12 @@ const FormOTP: React.FC<FormOtpProps> = ({
 	className,
 	disabled = false,
 	disableLabel,
+	labelClassName,
 }) => {
 	return (
 		<FormItem className='w-full space-y-1.5'>
 			{!disableLabel && (
-				<FormLabel className='flex items-center justify-between capitalize'>
+				<FormLabel className={cn('flex items-center justify-between capitalize', labelClassName)}>
 					<span>
 						{label || field.name.replace('_', ' ')}{' '}
 						{optional ? <span className='text-xs'>(Optional)</span> : ''}

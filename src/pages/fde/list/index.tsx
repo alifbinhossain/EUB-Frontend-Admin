@@ -20,7 +20,7 @@ const Semester = () => {
 	const [status, setStatus] = useState('pending');
 	const query = `user_uuid=${user?.uuid}&status=${status}`;
 	// const query = `status=${status}`;
-	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>(query);
+	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('FDE/Evaluation', url, 'fde__evaluation'), [url]);
 

@@ -12,7 +12,6 @@ export default {
 			fontFamily: {
 				inter: ['Inter', 'sans-serif'],
 			},
-
 			borderRadius: {
 				lg: '8px',
 				md: '6px',
@@ -21,7 +20,6 @@ export default {
 			colors: {
 				background: colors.BACKGROUND,
 				foreground: colors.FOREGROUND,
-
 				card: {
 					DEFAULT: colors.CARD,
 					foreground: colors.CARD_FOREGROUND,
@@ -60,13 +58,12 @@ export default {
 					foreground: colors.WARNING_FOREGROUND,
 				},
 				base: {
-					DEFAULT: colors.BASE_100,
 					150: colors.BASE_150,
 					200: colors.BASE_200,
 					300: colors.BASE_300,
+					DEFAULT: colors.BASE_100,
 					content: colors.BASE_CONTENT,
 				},
-
 				border: colors.BORDER,
 				input: colors.INPUT,
 				ring: colors.RING,
@@ -78,15 +75,36 @@ export default {
 					5: colors.CHART_5,
 				},
 			},
-
 			keyframes: {
 				shine: {
-					from: { backgroundPosition: '200% 0' },
-					to: { backgroundPosition: '-200% 0' },
+					from: {
+						backgroundPosition: '200% 0',
+					},
+					to: {
+						backgroundPosition: '-200% 0',
+					},
+				},
+				'accordion-down': {
+					from: {
+						height: '0',
+					},
+					to: {
+						height: 'var(--radix-accordion-content-height)',
+					},
+				},
+				'accordion-up': {
+					from: {
+						height: 'var(--radix-accordion-content-height)',
+					},
+					to: {
+						height: '0',
+					},
 				},
 			},
 			animation: {
 				shine: 'shine 8s ease-in-out infinite',
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out',
 			},
 		},
 	},
