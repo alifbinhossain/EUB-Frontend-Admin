@@ -134,3 +134,11 @@ export const useOtherSemester = <T>() =>
 		queryKey: otherQK.semester(),
 		url: `/other/lib/semester/value/label`,
 	});
+//* GET OTHER REQUESTED ITEMS
+export const useOtherRequestedItems = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: otherQK.requestedItems(query ? query : ''),
+		url: query
+			? `/other/procure/item-work-order-entry/value/label?${query}`
+			: `/other/procure/item-work-order-entry/value/label`,
+	});

@@ -2,7 +2,12 @@ import { IDefaultAddOrUpdateProps } from '@/types';
 
 import '../columns/columns.type';
 
-import { IItemRequisitionTableData, IITemTransferTableData, IItemWorkOrderTableData } from '../columns/columns.type';
+import {
+	IITemRequestTableData,
+	IItemRequisitionTableData,
+	IITemTransferTableData,
+	IItemWorkOrderTableData,
+} from '../columns/columns.type';
 
 //* Item Transfer
 export interface IItemTransferAddOrUpdateProps extends IDefaultAddOrUpdateProps {
@@ -15,4 +20,7 @@ export interface IItemWorkOrderAddOrUpdateProps extends IDefaultAddOrUpdateProps
 //* Item Requisition
 export interface IItemRequisitionAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IItemRequisitionTableData | null;
+}
+export interface IItemRequestAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IITemRequestTableData | null;
 }

@@ -10,7 +10,8 @@ import { IItemTableData, IItemVendorTableData } from './columns.type';
 export const itemColumns = (
 	actionTrxAccess: boolean,
 	handleTrx: (row: Row<IItemTableData>) => void,
-	handleDetails: (row: Row<IItemTableData>) => void
+	handleDetails: (row: Row<IItemTableData>) => void,
+	handleRequest: (row: Row<IItemTableData>) => void
 ): ColumnDef<IItemTableData>[] => [
 	{
 		accessorKey: 'index',
@@ -74,6 +75,16 @@ export const itemColumns = (
 		id: 'action_trx',
 		header: 'Item Transfer',
 		cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !actionTrxAccess,
+			disableFullFilter: true,
+		},
+	},
+	{
+		id: 'request_action_trx',
+		header: 'Request Item',
+		cell: (info) => <Transfer onClick={() => handleRequest(info.row)} />,
 		size: 40,
 		meta: {
 			hidden: !actionTrxAccess,

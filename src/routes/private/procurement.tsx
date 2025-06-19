@@ -4,7 +4,9 @@ import { IRoute } from '@/types';
 const Category = lazy(() => import('@/pages/procurement/category'));
 const SubCategory = lazy(() => import('@/pages/procurement/subcategory'));
 const PurchaseCostCenter = lazy(() => import('@/pages/procurement/purchaseCostCenter'));
+const ItemRequest = lazy(() => import('@/pages/procurement/item-request'));
 const Item = lazy(() => import('@/pages/procurement/item'));
+
 const ItemEntry = lazy(() => import('@/pages/procurement/item/entry'));
 const Process = lazy(() => import('@/pages/procurement/process'));
 const Vendor = lazy(() => import('@/pages/procurement/vendor'));
@@ -29,6 +31,9 @@ const WorkOrder = lazy(() => import('@/pages/procurement/pdf-make/work-order'));
 const ItemRequisitionFormCapital = lazy(() => import('@/pages/procurement/pdf-make/item-requistion-capital'));
 const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/comparitive-statement'));
 const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchase-cost-center'));
+const ProcureStore = lazy(() => import('@/pages/procurement/procure(store)'));
+const ProcureStoreEntry = lazy(() => import('@/pages/procurement/procure(store)/entry'));
+// const ProcureStoreDetails = lazy(() => import('@/pages/procurement/procure(store)/details'));
 
 const procurementRoutes: IRoute[] = [
 	{
@@ -251,12 +256,50 @@ const procurementRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
+				name: 'Procure (Store)',
+				path: '/procurement/procure-store',
+				element: <ProcureStore />,
+				page_name: 'procurement__procure_store',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure Entry (Store)',
+				path: '/procurement/procure-store/create',
+				element: <ProcureStoreEntry />,
+				hidden: true,
+				page_name: 'procurement__procure_store_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure Update (Store)',
+				path: '/procurement/procure-store/:uuid/update',
+				element: <ProcureStoreEntry />,
+				hidden: true,
+				page_name: 'procurement__procure_store_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
 				name: 'Log',
 				path: '/procurement/log',
 				element: <Log />,
 				page_name: 'procurement__log',
 				actions: ['read', 'update', 'delete'],
 			},
+			{
+				name: 'Item Request',
+				path: '/procurement/item-request',
+				element: <ItemRequest />,
+				page_name: 'procurement__item_request',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			// {
+			// 	name: 'Procure Details (Store)',
+			// 	path: '/procurement/procure-store-details/:uuid',
+			// 	element: <ProcureStoreDetails />,
+			// 	hidden: true,
+			// 	page_name: 'procurement__procure_store_details',
+			// 	actions: ['read'],
+			// },
 
 			{
 				name: 'Library',

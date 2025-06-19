@@ -3,7 +3,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusButton from '@/components/buttons/status';
 import DateTime from '@/components/ui/date-time';
 
-import { IItemRequisitionTableData, IITemTransferTableData, IItemWorkOrderTableData } from './columns.type';
+import {
+	IITemRequestTableData,
+	IItemRequisitionTableData,
+	IITemTransferTableData,
+	IItemWorkOrderTableData,
+} from './columns.type';
 
 // * Vendor
 export const vendorColumns = (): ColumnDef<IITemTransferTableData>[] => [
@@ -83,6 +88,25 @@ export const itemRequisitionColumns = (): ColumnDef<IItemRequisitionTableData>[]
 	{
 		accessorKey: 'provided_quantity',
 		header: 'Provided',
+		enableColumnFilter: true,
+	},
+];
+
+// * Item Request Table
+export const itemRequestColumns = (): ColumnDef<IITemRequestTableData>[] => [
+	{
+		accessorKey: 'item_work_order_id',
+		header: 'Item Work Order ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'item_name',
+		header: 'Item Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'request_quantity',
+		header: 'Request Quantity',
 		enableColumnFilter: true,
 	},
 ];

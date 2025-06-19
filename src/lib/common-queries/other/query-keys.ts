@@ -52,6 +52,8 @@ const otherQK = {
 	semester: () => [...otherQK.all(), 'semester'],
 	//* Question Category
 	questionCategory: () => [...otherQK.all(), 'questionCategory'],
+	//* Requested Items
+	requestedItems: (query: string) => [...otherQK.all(), 'requestedItems', ...(query ? [query] : [])],
 };
 
 export default otherQK;

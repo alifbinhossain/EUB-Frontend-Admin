@@ -10,9 +10,10 @@ import renderSuspenseModals from '@/utils/renderSuspenseModals';
 import { itemColumns } from './config/columns';
 import { IItemTableData } from './config/columns/columns.type';
 import { useItem } from './config/query';
-import { IItemTransfer } from './config/schema';
+import { IItemTransfer, IRequest } from './config/schema';
 
 const ItemTrx = lazy(() => import('./trx-against-order'));
+const ItemRequest = lazy(() => import('./request'));
 const Details = lazy(() => import('./details'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
@@ -54,6 +55,8 @@ const Designation = () => {
 	};
 	const [isOpenActionTrxModal, setIsOpenActionTrxModal] = useState(false);
 	const [updateActionTrxData, setUpdateActionTrxData] = useState<IItemTransfer | null>(null);
+	const [isOpenRequestTrxModal, setIsOpenRequestTrxModal] = useState(false);
+	const [updateRequestTrxData, setUpdateRequestTrxData] = useState<IRequest | null>(null);
 
 	const handleTrx = (row: Row<IItemTableData>) => {
 		setUpdateActionTrxData({
@@ -62,12 +65,21 @@ const Designation = () => {
 			remarks: null,
 			reason: 'emergency',
 		});
-
 		setIsOpenActionTrxModal(true);
+	};
+	const handleRequest = (row: Row<IItemTableData>) => {
+		setUpdateRequestTrxData({
+			request_quantity: row.original.quantity,
+			item_uuid: row.original.uuid,
+			remarks: null,
+			reason: 'emergency',
+		});
+
+		setIsOpenRequestTrxModal(true);
 	};
 
 	// Table Columns
-	const columns = itemColumns(actionITemTrxAccess, handleTrx, handleDetails);
+	const columns = itemColumns(actionITemTrxAccess, handleTrx, handleDetails, handleRequest);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -101,6 +113,17 @@ const Designation = () => {
 							postData,
 							updateData,
 							url: '/procure/item-transfer',
+						}}
+					/>,
+					<ItemRequest
+						{...{
+							open: isOpenRequestTrxModal,
+							setOpen: setIsOpenRequestTrxModal,
+							updatedData: updateRequestTrxData,
+							setUpdatedData: setUpdateRequestTrxData,
+							postData,
+							updateData,
+							url: '/procure/item-work-order-entry',
 						}}
 					/>,
 					<Details
