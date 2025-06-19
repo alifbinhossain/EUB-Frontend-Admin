@@ -33,6 +33,7 @@ const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/com
 const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchase-cost-center'));
 const ProcureStore = lazy(() => import('@/pages/procurement/procure(store)'));
 const ProcureStoreEntry = lazy(() => import('@/pages/procurement/procure(store)/entry'));
+const Bank = lazy(() => import('@/pages/procurement/bank'));
 // const ProcureStoreDetails = lazy(() => import('@/pages/procurement/procure(store)/details'));
 
 const procurementRoutes: IRoute[] = [
@@ -304,6 +305,13 @@ const procurementRoutes: IRoute[] = [
 			{
 				name: 'Library',
 				children: [
+					{
+						name: 'Bank',
+						path: '/procurement/bank',
+						element: <Bank />,
+						page_name: 'procurement__bank',
+						actions: ['create', 'read', 'update', 'delete'],
+					},
 					{
 						name: 'Cost Center',
 						path: '/procurement/cost-center',
