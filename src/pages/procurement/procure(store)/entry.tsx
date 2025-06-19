@@ -12,7 +12,7 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
 
-import { useOtherRequestedItems, useOtherVendor } from '@/lib/common-queries/other';
+import { useOtherBill, useOtherRequestedItems, useOtherVendor } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
@@ -41,6 +41,7 @@ const Entry = () => {
 
 	const { invalidateQuery } = useItemWorkOrder<IProcureStoreTableData[]>();
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
+	const { data: billList } = useOtherBill<IFormSelectOption[]>();
 	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>();
 
 	const form = useRHF(PROCURE_REQUEST_SCHEMA, PROCURE_REQUEST_NULL);
@@ -107,7 +108,10 @@ const Entry = () => {
 		isNew: false,
 		form: form,
 	});
-	console.log(form.getValues());
+	const totalItemAmount = form.watch('item_work_order_entry')?.reduce((acc, curr) => {
+		acc += Number(curr.provided_quantity) * Number(curr.unit_price);
+		return acc;
+	}, 0);
 	async function onSubmit(values: IProcureRequest) {
 		const { item_work_order_entry, ...rest } = values;
 		if (item_work_order_entry.length === 0) {
@@ -162,7 +166,7 @@ const Entry = () => {
 						const entryUpdateData = {
 							...entry,
 							uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_work_order_entry_uuid,
-							item_work_order_entry_uuid: uuid,
+							item_work_order_uuid: uuid,
 							updated_at: getDateTime(),
 						};
 						return updateData.mutateAsync({
@@ -200,7 +204,7 @@ const Entry = () => {
 						const entryData = {
 							...entry,
 							uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_work_order_entry_uuid,
-							item_work_order_entry_uuid: new_uuid,
+							item_work_order_uuid: new_uuid,
 							updated_at: getDateTime(),
 						};
 						return updateData.mutateAsync({
@@ -279,7 +283,8 @@ const Entry = () => {
 							render={(props) => (
 								<CoreForm.ReactSelect
 									label='Bill'
-									options={vendorList!}
+									options={billList!}
+									isDisabled={true}
 									menuPortalTarget={document.body}
 									{...props}
 								/>
@@ -317,7 +322,16 @@ const Entry = () => {
 				fieldDefs={fieldDefsItems}
 				fields={itemsFields}
 				handleAdd={handleAddItems}
-			/>
+			>
+				<tr>
+					<td className='border-t text-right font-semibold' colSpan={4}>
+						Grand Total:
+					</td>
+
+					<td className='border-t px-3 py-2'>{totalItemAmount}</td>
+					<td className='border-t px-3 py-2'></td>
+				</tr>
+			</CoreForm.DynamicFields>
 			<CoreForm.Section
 				title={`Delivery Statement`}
 				className='grid gap-4 lg:grid-cols-1'

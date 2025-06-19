@@ -4,6 +4,8 @@ import StatusButton from '@/components/buttons/status';
 import FilePreview from '@/components/others/file-preview';
 import { Badge } from '@/components/ui/badge';
 import DateTime from '@/components/ui/date-time';
+import { FormField } from '@/components/ui/form';
+import CoreForm from '@core/form';
 
 import { cn } from '@/lib/utils';
 
@@ -12,16 +14,16 @@ import { IProcureStoreTableData } from './columns.type';
 // * Capital
 export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStoreTableData>) => void
 : ColumnDef<IProcureStoreTableData>[] => [
-	// {
-	// 	accessorKey: 'item_work_order_id',
-	// 	header: 'ID',
-	// 	enableColumnFilter: true,
-	// 	cell: (info) => (
-	// 		<span onClick={() => handleDetails(info.row)} className='bold text-primary underline'>
-	// 			{info.getValue() as string}
-	// 		</span>
-	// 	),
-	// },
+	{
+		accessorKey: 'item_work_order_id',
+		header: 'ID',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'total_amount',
+		header: 'Total Amount',
+		enableColumnFilter: true,
+	},
 	{
 		accessorKey: 'bill_name',
 		header: 'Bill',
@@ -32,27 +34,9 @@ export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStore
 		header: 'Vendor',
 		enableColumnFilter: true,
 	},
-	// {
-	// 	accessorKey: 'status',
-	// 	header: 'Status',
-	// 	enableColumnFilter: true,
-	// 	cell: (info) => (
-	// 		<Badge
-	// 			className={cn(
-	// 				info.getValue() === 'Requested' && 'bg-red-500 text-white',
-	// 				info.getValue() === 'Pipeline' && 'bg-yellow-500 text-white',
-	// 				info.getValue() === 'Decided' && 'bg-blue-500 text-white',
-	// 				info.getValue() === 'Committed' && 'bg-teal-500 text-white',
-	// 				info.getValue() === 'Paid' && 'bg-green-500 text-white'
-	// 			)}
-	// 		>
-	// 			{info.getValue() as string}
-	// 		</Badge>
-	// 	),
-	// },
 	{
 		accessorKey: 'work_order_file',
-		header: 'Value',
+		header: 'Work Order File',
 		enableColumnFilter: true,
 		cell: (info) => <FilePreview preview={info.getValue() as string} />,
 	},

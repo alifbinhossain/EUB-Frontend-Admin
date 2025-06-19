@@ -96,10 +96,10 @@ export const useOtherSubPurchaseCostCenter = <T>(query?: string) =>
 	});
 
 // * GET OTHER VENDOR
-export const useOtherVendor = <T>() =>
+export const useOtherVendor = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: otherQK.vendor(),
-		url: `/other/procure/vendor/value/label`,
+		queryKey: otherQK.vendor(query ? query : ''),
+		url: query ? `/other/procure/vendor/value/label?${query}` : `/other/procure/vendor/value/label`,
 	});
 
 // * GET OTHER INTERNAL COST CENTER
@@ -141,4 +141,24 @@ export const useOtherRequestedItems = <T>(query?: string) =>
 		url: query
 			? `/other/procure/item-work-order-entry/value/label?${query}`
 			: `/other/procure/item-work-order-entry/value/label`,
+	});
+//* GET OTHER ITEM WORK ORDER
+export const useOtherItemWorkOrder = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: otherQK.itemWorkOrder(query ? query : ''),
+		url: query
+			? `/other/procure/item-work-order/value/label?${query}`
+			: `/other/procure/item-work-order/value/label`,
+	});
+//* GET OTHER BANK
+export const useOtherBank = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.bank(),
+		url: `/other/procure/bank/value/label`,
+	});
+//* GET OTHER Bill
+export const useOtherBill = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: otherQK.bill(query ? query : ''),
+		url: query ? `/other/procure/bill/value/label?${query}` : `/other/procure/bill/value/label`,
 	});

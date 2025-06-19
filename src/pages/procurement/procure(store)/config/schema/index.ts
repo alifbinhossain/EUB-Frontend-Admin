@@ -14,6 +14,7 @@ import {
 // Capital Schema
 export const PROCURE_REQUEST_SCHEMA = z
 	.object({
+		uuid: STRING_OPTIONAL,
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
 		bill_uuid: STRING_NULLABLE,

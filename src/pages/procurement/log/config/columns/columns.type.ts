@@ -11,7 +11,7 @@ export type IITemTransferTableData = {
 
 // *Item work Order Entry
 
-export type IItemWorkOrderTableData = {
+export type IItemWorkOrderEntryTableData = {
 	uuid: string;
 	item_work_order_name: string;
 	item_name: string;
@@ -36,4 +36,5 @@ export type IITemRequestTableData = {
 	item_uuid: string;
 	item_name: string;
 	request_quantity: number;
+	item_work_order_uuid: string;
 };

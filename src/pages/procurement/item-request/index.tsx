@@ -21,10 +21,6 @@ const Vendor = () => {
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
-	const handleCreate = () => {
-		setIsOpenAddModal(true);
-	};
-
 	const [updatedData, setUpdatedData] = useState<IITemRequestTableData | null>(null);
 	const handleUpdate = (row: Row<IITemRequestTableData>) => {
 		setUpdatedData(row.original);
@@ -45,7 +41,7 @@ const Vendor = () => {
 	};
 
 	// Table Columns
-	const columns = itemRequestColumns();
+	const columns = itemRequestColumns({ updateAcess: true, deleteAccess: true });
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -54,10 +50,10 @@ const Vendor = () => {
 				columns={columns}
 				data={data ?? []}
 				isLoading={isLoading}
-				handleCreate={handleCreate}
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				enableDefaultColumns={false}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

@@ -40,6 +40,7 @@ const useGenerateItemWorkOrder = ({
 	const query = isUpdate ? '' : `item_work_order_uuid=null`;
 	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>(query);
 	const fieldName = 'item_work_order_entry';
+	const selectedValues = form.watch('item_work_order_entry')?.map((item: any) => item.item_uuid) || [];
 
 	const handleCopy = (index: number) => {
 		const reqQuantity = form.getValues(`${fieldName}.${index}.request_quantity`);
@@ -64,12 +65,14 @@ const useGenerateItemWorkOrder = ({
 								disableLabel={true}
 								options={itemList!}
 								menuPortalTarget={document.body}
+								unique={true}
+								excludeOptions={selectedValues}
 								onChange={(e: ICustomItemSelectOptions) => {
 									set(`${fieldName}.${index}.item_uuid`, String(e?.value));
 									set(`${fieldName}.${index}.request_quantity`, e?.request_quantity);
 								}}
 								placeholder='Select Item'
-								isDisabled={isUpdate}
+								isDisabled={isUpdate && form.watch(`${fieldName}.${index}.item_uuid`) !== ''}
 								{...props}
 							/>
 						)}
@@ -128,6 +131,18 @@ const useGenerateItemWorkOrder = ({
 			header: 'Unit Price',
 			accessorKey: 'unit_price',
 			type: 'number',
+		},
+		{
+			header: 'Amount',
+			accessorKey: 'amount',
+			type: 'custom',
+			component: (index: number) => {
+				const providedQuantity = watch ? watch(`${fieldName}.${index}.provided_quantity`) : 0;
+				const unitPrice = watch ? watch(`${fieldName}.${index}.unit_price`) : 0;
+
+				const amount = Number(providedQuantity) * Number(unitPrice);
+				return <span>{amount.toFixed(2)}</span>;
+			},
 		},
 		{
 			header: 'Actions',

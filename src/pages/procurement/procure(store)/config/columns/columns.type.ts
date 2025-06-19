@@ -5,6 +5,7 @@ export type IProcureStoreTableData = {
 	remarks: string;
 	bill_uuid: string;
 	vendor_uuid: string;
+	total_amount: number;
 
 	done: boolean;
 	is_delivery_statement: boolean;

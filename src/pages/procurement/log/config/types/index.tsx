@@ -6,7 +6,7 @@ import {
 	IITemRequestTableData,
 	IItemRequisitionTableData,
 	IITemTransferTableData,
-	IItemWorkOrderTableData,
+	IItemWorkOrderEntryTableData,
 } from '../columns/columns.type';
 
 //* Item Transfer
@@ -15,7 +15,7 @@ export interface IItemTransferAddOrUpdateProps extends IDefaultAddOrUpdateProps 
 }
 //* Item Work Order Entry
 export interface IItemWorkOrderAddOrUpdateProps extends IDefaultAddOrUpdateProps {
-	updatedData?: IItemWorkOrderTableData | null;
+	updatedData?: IItemWorkOrderEntryTableData | null;
 }
 //* Item Requisition
 export interface IItemRequisitionAddOrUpdateProps extends IDefaultAddOrUpdateProps {

@@ -33,6 +33,8 @@ const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/com
 const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchase-cost-center'));
 const ProcureStore = lazy(() => import('@/pages/procurement/procure(store)'));
 const ProcureStoreEntry = lazy(() => import('@/pages/procurement/procure(store)/entry'));
+const Bill = lazy(() => import('@/pages/procurement/bill'));
+const BillEntry = lazy(() => import('@/pages/procurement/bill/add-or-update'));
 const Bank = lazy(() => import('@/pages/procurement/bank'));
 // const ProcureStoreDetails = lazy(() => import('@/pages/procurement/procure(store)/details'));
 
@@ -277,6 +279,29 @@ const procurementRoutes: IRoute[] = [
 				element: <ProcureStoreEntry />,
 				hidden: true,
 				page_name: 'procurement__procure_store_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill',
+				path: '/procurement/bill',
+				element: <Bill />,
+				page_name: 'procurement__bill',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill Entry',
+				path: '/procurement/bill/create',
+				element: <BillEntry />,
+				hidden: true,
+				page_name: 'procurement__bill_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill Update',
+				path: '/procurement/bill/:uuid/update',
+				element: <BillEntry />,
+				hidden: true,
+				page_name: 'procurement__bill_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
