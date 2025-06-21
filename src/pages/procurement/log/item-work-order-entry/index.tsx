@@ -5,8 +5,8 @@ import { Row } from '@tanstack/react-table';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { itemWorkOrderColumns } from '../config/columns';
-import { IItemWorkOrderTableData } from '../config/columns/columns.type';
+import { itemWorkOrderEntryColumns } from '../config/columns';
+import { IItemWorkOrderEntryTableData } from '../config/columns/columns.type';
 import { useItemWorkOrderEntry } from '../config/query';
 
 const AddOrUpdate = lazy(() => import('./add-or-update'));
@@ -14,7 +14,7 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Vendor = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useItemWorkOrderEntry<IItemWorkOrderTableData[]>();
+		useItemWorkOrderEntry<IItemWorkOrderEntryTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('Procurement/Procure Entry Log', url, 'procurement__log'), [url]);
 
@@ -25,8 +25,8 @@ const Vendor = () => {
 		setIsOpenAddModal(true);
 	};
 
-	const [updatedData, setUpdatedData] = useState<IItemWorkOrderTableData | null>(null);
-	const handleUpdate = (row: Row<IItemWorkOrderTableData>) => {
+	const [updatedData, setUpdatedData] = useState<IItemWorkOrderEntryTableData | null>(null);
+	const handleUpdate = (row: Row<IItemWorkOrderEntryTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);
 	};
@@ -37,7 +37,7 @@ const Vendor = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IItemWorkOrderTableData>) => {
+	const handleDelete = (row: Row<IItemWorkOrderEntryTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
 			name: row?.original?.item_name,
@@ -45,7 +45,7 @@ const Vendor = () => {
 	};
 
 	// Table Columns
-	const columns = itemWorkOrderColumns();
+	const columns = itemWorkOrderEntryColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>

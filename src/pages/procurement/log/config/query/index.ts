@@ -41,3 +41,15 @@ export const useItemRequisitionByUUID = <T>(uuid: string) =>
 		url: `/procure/item-requisition/${uuid}`,
 		enabled: !!uuid,
 	});
+//* ITem Requested
+export const useItemRequested = <T>() =>
+	useTQuery<T>({
+		queryKey: ItemTransferQK.itemRequested(),
+		url: `/procure/item-work-order-entry`,
+	});
+export const useItemRequestedByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: ItemTransferQK.itemRequestedByUUID(uuid),
+		url: `/procure/item-work-order-entry/${uuid}`,
+		enabled: !!uuid,
+	});

@@ -38,7 +38,7 @@ const otherQK = {
 	subPurchaseCostCenter: () => [...otherQK.all(), 'subPurchaseCostCenter'],
 
 	//* Vendor
-	vendor: () => [...otherQK.all(), 'vendor'],
+	vendor: (query: string) => [...otherQK.all(), 'vendor', ...(query ? [query] : [])],
 
 	//* Internal Cost Center
 	internalCostCenter: () => [...otherQK.all(), 'internalCostCenter'],
@@ -52,6 +52,14 @@ const otherQK = {
 	semester: () => [...otherQK.all(), 'semester'],
 	//* Question Category
 	questionCategory: () => [...otherQK.all(), 'questionCategory'],
+	//* Requested Items
+	requestedItems: (query: string) => [...otherQK.all(), 'requestedItems', ...(query ? [query] : [])],
+	//*ITem Work Order
+	itemWorkOrder: (query: string) => [...otherQK.all(), 'itemWorkOrder', ...(query ? [query] : [])],
+	//* Bank
+	bank: () => [...otherQK.all(), 'bank'],
+	//*bill
+	bill: (query: string) => [...otherQK.all(), 'bill', ...(query ? [query] : [])],
 };
 
 export default otherQK;

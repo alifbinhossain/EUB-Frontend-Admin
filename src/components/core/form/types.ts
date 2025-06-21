@@ -54,6 +54,7 @@ export interface FormReactSelectProps extends IFieldProps {
 	menuPortalTarget?: any;
 	valueType?: 'string' | 'number';
 	isDisabled?: boolean;
+	value?: any;
 	onChange?: (option?: any, field?: any) => void;
 }
 

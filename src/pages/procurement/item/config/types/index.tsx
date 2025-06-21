@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import '../columns/columns.type';
 
 import { IItemTableData } from '../columns/columns.type';
-import { IItemTransfer } from '../schema';
+import { IItemTransfer, IRequest } from '../schema';
 
 //* Visitor
 export interface IItemAddOrUpdateProps extends IDefaultAddOrUpdateProps {
@@ -13,4 +13,8 @@ export interface IItemAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 }
 export interface IItemTransferAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: IItemTransfer | null;
+}
+
+export interface IItemRequestAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IRequest | null;
 }

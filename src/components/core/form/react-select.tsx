@@ -17,6 +17,7 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 	disableLabel,
 	isMulti = false,
 	menuPortalTarget,
+	value,
 	valueType = 'string',
 	onChange = () => {},
 }) => {
@@ -33,7 +34,7 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 					isMulti={isMulti}
 					options={
 						unique
-							? options.filter(
+							? options?.filter(
 									(item: IFormSelectOption) => !excludeOptions?.includes(item.value as string)
 								)
 							: options
@@ -46,13 +47,15 @@ const FormReactSelect: React.FC<FormReactSelectProps> = ({
 					}}
 					{...field}
 					value={
-						isMulti
-							? isArray(field.value)
-								? field.value.map((item: any) => {
-										return options.find((option: IFormSelectOption) => option.value === item);
-									})
-								: []
-							: options?.filter((item: IFormSelectOption) => item.value === field.value)
+						value
+							? value
+							: isMulti
+								? isArray(field.value)
+									? field.value.map((item: any) => {
+											return options.find((option: IFormSelectOption) => option.value === item);
+										})
+									: []
+								: options?.filter((item: IFormSelectOption) => item.value === field.value)
 					}
 					onChange={(option: any) => {
 						if (option === null) {
