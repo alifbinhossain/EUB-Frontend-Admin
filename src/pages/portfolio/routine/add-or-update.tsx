@@ -121,11 +121,19 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 							/>
 						)}
 
-					<FormField
-						control={form.control}
-						name='description'
-						render={(props) => <CoreForm.RichTextEditor rows={4} {...props} />}
-					/>
+					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) === PORTFOLIO_ROUTINE_TYPE.ABOUT_US ? (
+						<FormField
+							control={form.control}
+							name='description'
+							render={(props) => <CoreForm.RichTextEditor rows={4} {...props} />}
+						/>
+					) : (
+						<FormField
+							control={form.control}
+							name='description'
+							render={(props) => <CoreForm.Textarea rows={4} {...props} />}
+						/>
+					)}
 
 					<FormField
 						control={form.control}
