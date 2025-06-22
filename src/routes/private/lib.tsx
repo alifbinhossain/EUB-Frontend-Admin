@@ -1,4 +1,7 @@
 import { lazy } from 'react';
+import Room from '@/pages/lib/room';
+import RoomAllocation from '@/pages/lib/room-allocation';
+import RoomAllocationEntry from '@/pages/lib/room-allocation/entry';
 import { IRoute } from '@/types';
 
 const Semester = lazy(() => import('@/pages/lib/semester'));
@@ -18,6 +21,29 @@ const fdeRoutes: IRoute[] = [
 				path: '/lib/semester',
 				element: <Semester />,
 				page_name: 'library__semester',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Room',
+				path: '/lib/room',
+				element: <Room />,
+				page_name: 'library__room',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+
+			{
+				name: 'Room Allocation',
+				path: '/lib/room-allocation',
+				element: <RoomAllocation />,
+				page_name: 'library__room_allocation',
+				actions: ['create', 'read', 'update'],
+			},
+			{
+				name: 'Course Assign Create',
+				path: '/lib/room-allocation/:uuid/create',
+				element: <RoomAllocationEntry />,
+				hidden: true,
+				page_name: 'library__room_allocation_create',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{

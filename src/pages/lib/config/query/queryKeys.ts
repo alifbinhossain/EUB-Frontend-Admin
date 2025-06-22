@@ -5,6 +5,10 @@ export const fdeQK = {
 	semester: () => [...fdeQK.all(), 'semester'],
 	semesterByUUID: (uuid: string) => [...fdeQK.semester(), uuid],
 
+	// * Room
+	room: () => [...fdeQK.all(), 'room'],
+	roomByUUID: (uuid: string) => [...fdeQK.room(), uuid],
+
 	//*Course
 	course: () => [...fdeQK.all(), 'course'],
 	courseByUUID: (uuid: string) => [...fdeQK.course(), uuid],
