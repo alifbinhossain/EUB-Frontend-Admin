@@ -105,7 +105,8 @@ export const ROUTINE_SCHEMA = z
 		file: z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')
-			.or(STRING_REQUIRED),
+			.or(STRING_OPTIONAL)
+			.optional(),
 		remarks: STRING_NULLABLE,
 	})
 	.superRefine((data, ctx) => {
@@ -123,7 +124,7 @@ export const ROUTINE_NULL: Partial<IRoutine> = {
 	description: '',
 	programs: PORTFOLIO_PROGRAM_TYPE.NONE,
 	is_global: false,
-	file: new File([''], 'filename') as File,
+	file: undefined,
 	remarks: null,
 };
 

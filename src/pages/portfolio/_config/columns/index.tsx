@@ -324,6 +324,7 @@ export const routineColumns = (): ColumnDef<IRoutineTableData>[] => [
 		accessorKey: 'description',
 		header: 'Description',
 		enableColumnFilter: true,
+		cell: (info) => <RichTextModal title='Description' content={info.getValue() as string} />,
 	},
 	// {
 	// 	accessorKey: 'is_global',
