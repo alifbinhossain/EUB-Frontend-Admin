@@ -22,6 +22,7 @@ export enum PORTFOLIO_ROUTINE_TYPE {
 	CLASS_ROUTINE = 'class_routine',
 	EXAM_SCHEDULE = 'exam_schedule',
 	COURSE_OFFER = 'course_offer',
+	ABOUT_US = 'about_us',
 }
 
 // TABLE TYPE ENUM

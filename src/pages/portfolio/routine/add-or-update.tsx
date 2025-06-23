@@ -58,6 +58,9 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 	// Submit handler
 	async function onSubmit(values: IRoutine) {
 		const formData = Formdata<IRoutine>(values);
+		if (formData.get('type') === 'about_us') {
+			formData.delete('file');
+		}
 
 		if (isUpdate) {
 			formData.append('updated_at', getDateTime());
@@ -107,19 +110,30 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 						name='type'
 						render={(props) => <CoreForm.ReactSelect label='Type' options={types!} {...props} />}
 					/>
-					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) !== PORTFOLIO_ROUTINE_TYPE.NOTICES && (
+					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) !== PORTFOLIO_ROUTINE_TYPE.NOTICES &&
+						(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) !== PORTFOLIO_ROUTINE_TYPE.ABOUT_US && (
+							<FormField
+								control={form.control}
+								name='programs'
+								render={(props) => (
+									<CoreForm.ReactSelect label='Programs' options={programs!} {...props} />
+								)}
+							/>
+						)}
+
+					{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) === PORTFOLIO_ROUTINE_TYPE.ABOUT_US ? (
 						<FormField
 							control={form.control}
-							name='programs'
-							render={(props) => <CoreForm.ReactSelect label='Programs' options={programs!} {...props} />}
+							name='description'
+							render={(props) => <CoreForm.RichTextEditor rows={4} {...props} />}
+						/>
+					) : (
+						<FormField
+							control={form.control}
+							name='description'
+							render={(props) => <CoreForm.Textarea rows={4} {...props} />}
 						/>
 					)}
-
-					<FormField
-						control={form.control}
-						name='description'
-						render={(props) => <CoreForm.Textarea rows={4} {...props} />}
-					/>
 
 					<FormField
 						control={form.control}
@@ -136,22 +150,24 @@ const AddOrUpdate: React.FC<IRoutineAddOrUpdateProps> = ({
 					)}
 				</div>
 
-				<FormField
-					control={form.control}
-					name='file'
-					render={(props) => (
-						<CoreForm.FileUpload
-							label='File'
-							fileType='document'
-							errorText='File must be less than 10MB and of type pdf, doc, docx'
-							isUpdate={isUpdate}
-							options={{
-								maxSize: 10000000,
-							}}
-							{...props}
-						/>
-					)}
-				/>
+				{(form.watch('type') as PORTFOLIO_ROUTINE_TYPE) !== PORTFOLIO_ROUTINE_TYPE.ABOUT_US && (
+					<FormField
+						control={form.control}
+						name='file'
+						render={(props) => (
+							<CoreForm.FileUpload
+								label='File'
+								fileType='document'
+								errorText='File must be less than 10MB and of type pdf, doc, docx'
+								isUpdate={isUpdate}
+								options={{
+									maxSize: 10000000,
+								}}
+								{...props}
+							/>
+						)}
+					/>
+				)}
 			</div>
 		</AddModal>
 	);
