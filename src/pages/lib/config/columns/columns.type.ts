@@ -10,6 +10,18 @@ export type ISemesterTableData = {
 	remarks: string;
 };
 
+//* RoomTableData
+export type IRoomTableData = {
+	uuid: string;
+	name: string;
+	type: string;
+	location: string;
+	created_by: string;
+	created_at: string;
+	updated_at: string;
+	remarks: string;
+};
+
 //* CourseTableData
 export type ICourseTableData = {
 	id: number;

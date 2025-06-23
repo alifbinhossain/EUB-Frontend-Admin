@@ -32,6 +32,24 @@ export const SEMESTER_NULL: Partial<ISemester> = {
 
 export type ISemester = z.infer<typeof SEMESTER_SCHEMA>;
 
+//* Room Schema
+export const ROOM_SCHEMA = z.object({
+	name: STRING_REQUIRED,
+	type: z.enum(['general', 'lab']),
+	location: STRING_NULLABLE,
+	remarks: STRING_NULLABLE,
+});
+
+export const ROOM_NULL: Partial<IRoom> = {
+	name: '',
+	type: 'general',
+	location: null,
+	remarks: null,
+};
+
+export type IRoom = z.infer<typeof ROOM_SCHEMA>;
+
+//* Course Schema
 export const COURSE_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	code: STRING_REQUIRED,
