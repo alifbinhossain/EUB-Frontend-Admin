@@ -13,6 +13,6 @@ export const ItemTransferQK = {
 	itemRequisitionByUUID: (uuid: string) => [...ItemTransferQK.itemRequisition(), uuid],
 
 	//* Item Requested
-	itemRequested: () => [...ItemTransferQK.all(), 'item-requested'],
+	itemRequested: (query?: string) => [...ItemTransferQK.all(), 'item-requested', query],
 	itemRequestedByUUID: (uuid: string) => [...ItemTransferQK.itemRequested(), uuid],
 };

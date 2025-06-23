@@ -2,6 +2,9 @@ import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
 
+import { ToolbarComponent } from '@/components/core/data-table/_components/toolbar';
+import ReactSelect from '@/components/ui/react-select';
+
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
@@ -13,8 +16,16 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Vendor = () => {
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } =
-		useItemRequested<IITemRequestTableData[]>();
+	const [status, setStatus] = useState('');
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItemRequested<
+		IITemRequestTableData[]
+	>(`status=${status}`);
+
+	const statusList = [
+		{ value: '', label: 'All' },
+		{ value: 'pending', label: 'Pending' },
+		{ value: 'complete', label: 'Complete' },
+	];
 
 	const pageInfo = useMemo(() => new PageInfo('Procurement/Item Request', url, 'procurement__item_request'), [url]);
 
@@ -54,6 +65,24 @@ const Vendor = () => {
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
 				enableDefaultColumns={false}
+				otherToolBarComponents={
+					<ToolbarComponent
+						option='other'
+						render={() => (
+							<ReactSelect
+								options={statusList || []}
+								value={statusList?.find((option) => option.value === status)}
+								menuPortalTarget={document.body}
+								styles={{
+									menuPortal: (base) => ({ ...base, zIndex: 999 }),
+								}}
+								onChange={(e: any) => {
+									setStatus(e?.value);
+								}}
+							/>
+						)}
+					/>
+				}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

@@ -207,6 +207,8 @@ const AddOrUpdate = () => {
 			uuid: '',
 			type: 'full',
 			amount: 0,
+			payment_date: getDateTime(),
+			payment_method: 'cash',
 		});
 	};
 
@@ -259,6 +261,8 @@ const AddOrUpdate = () => {
 		append({
 			type: field.type,
 			amount: field.amount,
+			payment_date: field.payment_date,
+			payment_method: field.payment_method,
 		});
 	};
 	const total = useCallback(

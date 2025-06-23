@@ -101,16 +101,18 @@ const useGenerateItemWorkOrder = ({
 								unit={unit}
 								{...props}
 							>
-								<Button
-									className='rounded-full'
-									onClick={() => handleCopy(index)}
-									type='button'
-									size={'icon'}
-									variant={'ghost'}
-									title='Copy to Provided Quantity'
-								>
-									<Copy className='size-4' />
-								</Button>
+								{!data?.is_delivery_statement && (
+									<Button
+										className='rounded-full'
+										onClick={() => handleCopy(index)}
+										type='button'
+										size={'icon'}
+										variant={'ghost'}
+										title='Copy to Provided Quantity'
+									>
+										<Copy className='size-4' />
+									</Button>
+								)}
 							</CoreForm.JoinInputUnit>
 						)}
 					/>
@@ -126,11 +128,13 @@ const useGenerateItemWorkOrder = ({
 				const itemUuid = watch ? watch(`${fieldName}.${index}.item_uuid`) : '';
 				return itemList?.find((item) => item.value === itemUuid)?.unit ?? '';
 			},
+			disabled: data?.is_delivery_statement,
 		},
 		{
 			header: 'Unit Price',
 			accessorKey: 'unit_price',
 			type: 'number',
+			disabled: data?.is_delivery_statement,
 		},
 		{
 			header: 'Amount',

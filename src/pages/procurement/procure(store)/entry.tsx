@@ -89,15 +89,20 @@ const Entry = () => {
 	// * REMOVE ITEMS
 	const handleRemoveItems = (index: number) => {
 		if (itemsFields[index].uuid) {
-			setDeleteItem({
-				type: 'items',
-				id: itemsFields[index].uuid,
-				name: itemsFields[index].uuid,
+			const removeData = {
+				uuid: itemsFields[index].uuid,
+				item_work_order_uuid: null,
+				updated_at: getDateTime(),
+			};
+			updateData.mutateAsync({
+				url: `/procure/item-work-order-entry/${itemsFields[index].uuid}`,
+				updatedData: removeData,
 			});
 		} else {
 			removeItems(index);
 		}
 	};
+
 	const fieldDefsItems = useGenerateItemWorkOrder({
 		data: form.getValues(),
 		copy: handleCopyItems,
@@ -248,7 +253,7 @@ const Entry = () => {
 							render={(props) => (
 								<CoreForm.Switch
 									labelClassName='text-slate-100'
-									label='Paid'
+									label='Done'
 									onCheckedChange={(e) => {
 										if (e) {
 											form.setValue('done_date', getDateTime());
