@@ -21,7 +21,7 @@ export const questionCategoryColumns = (): ColumnDef<IQuestionCategoryTableData>
 	},
 	{
 		accessorKey: 'name',
-		header: 'Semester Name',
+		header: 'Name',
 		enableColumnFilter: true,
 	},
 ];

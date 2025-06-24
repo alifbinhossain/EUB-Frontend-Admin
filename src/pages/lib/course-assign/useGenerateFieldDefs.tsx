@@ -35,8 +35,22 @@ const useGenerateFieldDefs = ({
 		{
 			header: 'Section',
 			accessorKey: 'course_section_name',
-			type: 'text',
-			disabled: true,
+			type: 'custom',
+			component: (index: number) => {
+				if (form.watch(`sem_crs_thr_entry.${index}.teacher_uuid`) == null) {
+					return (
+						<span className='rounded-sm bg-red-400 p-1'>
+							{form.watch(`sem_crs_thr_entry.${index}.course_section_name`)}
+						</span>
+					);
+				} else {
+					return (
+						<span className='rounded-sm bg-green-400 p-1'>
+							{form.watch(`sem_crs_thr_entry.${index}.course_section_name`)}
+						</span>
+					);
+				}
+			},
 		},
 		{
 			header: 'Teacher',

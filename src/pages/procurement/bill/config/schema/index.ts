@@ -35,6 +35,8 @@ export const BILL_SCHEMA = z.object({
 			bill_uuid: STRING_OPTIONAL,
 			type: z.enum(['partial', 'full']),
 			amount: NUMBER_REQUIRED,
+			payment_method: z.enum(['cash', 'cheque']),
+			payment_date: STRING_OPTIONAL,
 		})
 	),
 });
