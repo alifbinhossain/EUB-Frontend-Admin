@@ -45,7 +45,12 @@ const Header = () => {
 				name='year'
 				render={(props) => <CoreForm.Input type='number' {...props} />}
 			/>
-			<FormField control={form.control} name='student_id' render={(props) => <CoreForm.Input {...props} />} />
+			{/* <FormField control={form.control} name='student_id' render={(props) => <CoreForm.Input {...props} />} /> */}
+			<FormField
+				control={form.control}
+				name='student_id'
+				render={(props) => <CoreForm.Otp label='Student ID' maxLength={9} {...props} />}
+			/>
 			<FormField control={form.control} name='applicant_name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}

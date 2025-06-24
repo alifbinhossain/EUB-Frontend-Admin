@@ -184,13 +184,13 @@ const Entry = () => {
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Course' : 'Add Course'} form={form} onSubmit={onSubmit}>
-			<CoreForm.Section title={`Course Section`}>
+			<CoreForm.Section title={`Course`}>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='code' render={(props) => <CoreForm.Input {...props} />} />
 			</CoreForm.Section>
 
 			<CoreForm.DynamicFields
-				title='Course Semester Entry'
+				title='Section Entry'
 				form={form}
 				fieldName='course_section'
 				fieldDefs={useGenerateFieldDefs({
