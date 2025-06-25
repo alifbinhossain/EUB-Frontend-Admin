@@ -10,3 +10,11 @@ export type IReportItemTableData = {
 	updated_at: string;
 	created_by_name: string;
 };
+
+//* Pipeline
+export type IPipelineTableData = {
+	item_name: string;
+	item_uuid: string;
+	req_quantity: string;
+	provided_quantity: string;
+};

@@ -26,6 +26,7 @@ const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entr
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
 const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
+const ReportPipeline = lazy(() => import('@/pages/procurement/report/pipeline'));
 const GeneralStatement = lazy(() => import('@/pages/procurement/pdf-make/index'));
 const WorkOrder = lazy(() => import('@/pages/procurement/pdf-make/work-order'));
 const ItemRequisitionFormCapital = lazy(() => import('@/pages/procurement/pdf-make/item-requistion-capital'));
@@ -51,6 +52,13 @@ const procurementRoutes: IRoute[] = [
 						path: '/portfolio/report/item',
 						element: <ReportItem />,
 						page_name: 'portfolio__report_item',
+						actions: ['read'],
+					},
+					{
+						name: 'Pipeline',
+						path: '/portfolio/report/pipeline',
+						element: <ReportPipeline />,
+						page_name: 'portfolio__report_pipeline',
 						actions: ['read'],
 					},
 				],
