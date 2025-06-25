@@ -42,6 +42,7 @@ export const questionColumns = ({
 		accessorKey: 'index',
 		header: 'Index',
 		enableColumnFilter: true,
+		size: 20,
 	},
 	{
 		accessorKey: 'name',
@@ -52,6 +53,7 @@ export const questionColumns = ({
 		accessorKey: 'qns_category_name',
 		header: 'Question Category',
 		enableColumnFilter: true,
+		size: 20,
 	},
 ];
 

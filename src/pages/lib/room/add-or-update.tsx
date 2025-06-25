@@ -2,20 +2,18 @@ import { useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { AddModal } from '@core/modal';
 
-import { useOtherQuestionCategory } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { useFDEQuestion, useFDEQuestionByUUID } from '../config/query';
-import { IQuestion, QUESTION_NULL, QUESTION_SCHEMA } from '../config/schema';
-import { IQuestionAddOrUpdateProps } from '../config/types';
+import { useFDERoomByUUID } from '../config/query';
+import { IRoom, ROOM_NULL, ROOM_SCHEMA } from '../config/schema';
+import { IRoomAddOrUpdateProps } from '../config/types';
 
-const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
+const AddOrUpdate: React.FC<IRoomAddOrUpdateProps> = ({
 	url,
 	open,
 	setOpen,
@@ -27,15 +25,13 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 	const isUpdate = !!updatedData;
 
 	const { user } = useAuth();
-	const { data } = useFDEQuestionByUUID(updatedData?.uuid as string);
-	const { data: questionCategoryOptions } = useOtherQuestionCategory<IFormSelectOption[]>();
-	const { invalidateQuery: invalidateQuerySubCategory } = useFDEQuestion();
+	const { data } = useFDERoomByUUID(updatedData?.uuid as string);
 
-	const form = useRHF(QUESTION_SCHEMA, QUESTION_NULL);
+	const form = useRHF(ROOM_SCHEMA, ROOM_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
-		form.reset(QUESTION_NULL);
+		form.reset(ROOM_NULL);
 		setOpen((prev) => !prev);
 	};
 
@@ -48,7 +44,7 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 	}, [data, isUpdate]);
 
 	// Submit handler
-	async function onSubmit(values: IQuestion) {
+	async function onSubmit(values: IRoom) {
 		if (isUpdate) {
 			// UPDATE ITEM
 			updateData.mutateAsync({
@@ -59,7 +55,6 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
-			invalidateQuerySubCategory();
 		} else {
 			// ADD NEW ITEM
 			postData.mutateAsync({
@@ -72,39 +67,37 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 				},
 				onClose,
 			});
-			invalidateQuerySubCategory();
 		}
 	}
 	return (
 		<AddModal
 			open={open}
 			setOpen={onClose}
-			title={isUpdate ? 'Update Question' : 'Add New Question'}
+			title={isUpdate ? 'Update Room' : 'Add New Room'}
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<FormField control={form.control} name='active' render={(props) => <CoreForm.Switch {...props} />} />
-
+			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 			<FormField
 				control={form.control}
-				name='index'
-				render={(props) => <CoreForm.Input type='number' {...props} />}
-			/>
-			<FormField
-				control={form.control}
-				name='qns_category_uuid'
+				name='type'
 				render={(props) => (
 					<CoreForm.ReactSelect
-						label='Category'
-						placeholder='Select Category'
-						menuPortalTarget={document.body}
-						options={questionCategoryOptions!}
+						options={[
+							{
+								value: 'general',
+								label: 'General',
+							},
+							{
+								value: 'lab',
+								label: 'Lab',
+							},
+						]}
 						{...props}
 					/>
 				)}
 			/>
-			<FormField control={form.control} name='name' render={(props) => <CoreForm.Textarea {...props} />} />
-
+			<FormField control={form.control} name='location' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);

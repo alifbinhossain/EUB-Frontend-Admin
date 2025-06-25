@@ -1,14 +1,10 @@
-import { spawn } from 'child_process';
 import { Suspense, useEffect, useState } from 'react';
-import { da } from 'date-fns/locale';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import { IFormSelectOption } from '@/components/core/form/types';
-import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
 
@@ -139,7 +135,7 @@ const Entry = () => {
 						/>
 					</div>
 				) : (
-					<div className='col-span-2 flex items-center justify-center rounded-md bg-red-100'>
+					<div className='col-span-2 flex items-center justify-center rounded-md bg-gray-300'>
 						Please select a course to assign.
 					</div>
 				)}

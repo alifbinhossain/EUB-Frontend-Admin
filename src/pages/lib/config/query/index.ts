@@ -15,6 +15,21 @@ export const useFDESemesterByUUID = <T>(uuid: string) =>
 		url: `/lib/semester/${uuid}`,
 		enabled: !!uuid,
 	});
+
+// * Room
+export const useFDERoom = <T>() =>
+	useTQuery<T>({
+		queryKey: fdeQK.room(),
+		url: `/lib/room`,
+	});
+
+export const useFDERoomByUUID = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.roomByUUID(uuid),
+		url: `/lib/room/${uuid}`,
+		enabled: !!uuid,
+	});
+
 //* Course
 export const useFDECourse = <T>() =>
 	useTQuery<T>({

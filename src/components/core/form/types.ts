@@ -93,6 +93,7 @@ export type FormOtpProps = Omit<OTPInputProps, 'children'> & {
 	optional?: boolean;
 	disableLabel?: boolean;
 	disabled?: boolean;
+	labelClassName?: string;
 };
 
 // * form-file-upload

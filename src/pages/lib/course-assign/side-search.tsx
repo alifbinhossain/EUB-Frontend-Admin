@@ -1,6 +1,4 @@
-'use client';
-
-import * as React from 'react';
+import { useState } from 'react';
 import { Check } from 'lucide-react';
 
 import { IFormSelectOption } from '@/components/core/form/types';
@@ -10,17 +8,17 @@ import { useOtherCourse } from '@/lib/common-queries/other';
 import { cn } from '@/lib/utils';
 
 export function SideSearch({ form }: { form?: any }) {
-	const [value, setValue] = React.useState('');
+	const [value, setValue] = useState('');
 	const { data: courseData } = useOtherCourse<IFormSelectOption[]>();
 
 	return (
 		<Command className=''>
 			<div className='rounded-md border'>
-				<CommandInput placeholder='Search course...' className='h-9' />
+				<CommandInput placeholder='Search Course...' className='h-9' />
 			</div>
 			<CommandList className='max-h-60'>
-				<CommandEmpty>No course found.</CommandEmpty>
-				<CommandGroup className=''>
+				<CommandEmpty>No course found</CommandEmpty>
+				<CommandGroup>
 					{courseData?.map((course) => (
 						<CommandItem
 							className='mt-2 rounded-md border'

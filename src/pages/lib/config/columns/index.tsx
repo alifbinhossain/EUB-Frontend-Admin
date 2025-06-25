@@ -1,9 +1,14 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 import DateTime from '@/components/ui/date-time';
-import { Switch } from '@/components/ui/switch';
 
-import { ICourseAssignTableData, ICourseTableData, IFDEListTableData, ISemesterTableData } from './columns.type';
+import {
+	ICourseAssignTableData,
+	ICourseTableData,
+	IFDEListTableData,
+	IRoomTableData,
+	ISemesterTableData,
+} from './columns.type';
 
 // * Semester Table Columns
 export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
@@ -35,6 +40,25 @@ export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
 		header: 'Ended At',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+];
+
+// * Room Table Columns
+export const roomTableColumns = (): ColumnDef<IRoomTableData>[] => [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'type',
+		header: 'Type',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'location',
+		header: 'Location',
+		enableColumnFilter: true,
 	},
 ];
 

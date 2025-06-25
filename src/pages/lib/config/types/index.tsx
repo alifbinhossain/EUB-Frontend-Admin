@@ -1,14 +1,17 @@
-import { IDefaultAddOrUpdateProps, IDefaultFileAddOrUpdateProps, IToast } from '@/types';
-import { UseMutationResult } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IDefaultAddOrUpdateProps } from '@/types';
 
 import '../columns/columns.type';
 
-import { ICourseTableData, ISemesterTableData } from '../columns/columns.type';
+import { ICourseTableData, IRoomTableData, ISemesterTableData } from '../columns/columns.type';
 
 //* Semester
 export interface ISemesterAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ISemesterTableData | null;
+}
+
+//* Room
+export interface IRoomAddOrUpdateProps extends IDefaultAddOrUpdateProps {
+	updatedData?: IRoomTableData | null;
 }
 //* Course
 export interface ICourseAddOrUpdateProps extends IDefaultAddOrUpdateProps {
