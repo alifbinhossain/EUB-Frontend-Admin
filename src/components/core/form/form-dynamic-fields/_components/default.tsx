@@ -113,7 +113,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															render={(props) => (
 																<CoreForm.DatePicker
 																	disableLabel
-																	// disabled={fieldDef.disabled}
+																	disabled={fieldDef.disabled}
 																	{...props}
 																/>
 															)}
