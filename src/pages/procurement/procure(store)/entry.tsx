@@ -1,6 +1,4 @@
-import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
-import { update } from 'lodash';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
@@ -32,7 +30,6 @@ const Entry = () => {
 	const {
 		data,
 		updateData,
-		postData,
 		deleteData,
 		imagePostData,
 		imageUpdateData,
@@ -167,10 +164,11 @@ const Entry = () => {
 				.then(() => {
 					// * UPDATE FOR ITEMS
 
-					const itemsPromise = item_work_order_entry?.map((entry) => {
+					const itemsPromise = item_work_order_entry?.map((entry, index) => {
 						const entryUpdateData = {
 							...entry,
-							uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_work_order_entry_uuid,
+							index: index + 1,
+							item_uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_uuid,
 							item_work_order_uuid: uuid,
 							updated_at: getDateTime(),
 						};
@@ -205,10 +203,11 @@ const Entry = () => {
 				.then(() => {
 					// * ENTRY FOR ITEMS
 
-					const itemsPromise = item_work_order_entry?.map((entry) => {
+					const itemsPromise = item_work_order_entry?.map((entry, index) => {
 						const entryData = {
 							...entry,
-							uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_work_order_entry_uuid,
+							index: index + 1,
+							item_uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_uuid,
 							item_work_order_uuid: new_uuid,
 							updated_at: getDateTime(),
 						};
@@ -278,6 +277,7 @@ const Entry = () => {
 									label='Vendor'
 									menuPortalTarget={document.body}
 									options={vendorList!}
+									isDisabled={data?.is_delivery_statement || data?.done}
 									{...props}
 								/>
 							)}
@@ -299,7 +299,7 @@ const Entry = () => {
 						<FormField
 							control={form.control}
 							name='work_order_remarks'
-							render={(props) => <CoreForm.Textarea label='Work Order Remarks' {...props} />}
+							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Remarks' {...props} />}
 						/>
 					</div>
 					<FormField
@@ -311,6 +311,7 @@ const Entry = () => {
 								fileType='document'
 								errorText='File must be less than 10MB and of type pdf, doc, docx'
 								isUpdate={isUpdate}
+								disabled={data?.done}
 								options={{
 									maxSize: 10000000,
 								}}
@@ -326,10 +327,10 @@ const Entry = () => {
 				fieldName='item_work_order_entry'
 				fieldDefs={fieldDefsItems}
 				fields={itemsFields}
-				handleAdd={handleAddItems}
+				handleAdd={data?.is_delivery_statement ? undefined : handleAddItems}
 			>
 				<tr>
-					<td className='border-t text-right font-semibold' colSpan={4}>
+					<td className='border-t text-right font-semibold' colSpan={5}>
 						Grand Total:
 					</td>
 
@@ -362,6 +363,7 @@ const Entry = () => {
 								<CoreForm.Switch
 									label='Delivery Statement'
 									labelClassName='text-slate-100'
+									disabled={data?.done}
 									onCheckedChange={(e) => {
 										if (e) {
 											form.setValue('delivery_statement_date', getDateTime());
@@ -381,13 +383,7 @@ const Entry = () => {
 						<FormField
 							control={form.control}
 							name='delivery_statement_remarks'
-							render={(props) => (
-								<CoreForm.Textarea
-									label='Delivery Statement Remarks'
-									disabled={!form.watch('is_delivery_statement')}
-									{...props}
-								/>
-							)}
+							render={(props) => <CoreForm.Textarea label='Remarks' disabled={data?.done} {...props} />}
 						/>
 						<FormField
 							control={form.control}
@@ -398,6 +394,7 @@ const Entry = () => {
 									fileType='document'
 									errorText='File must be less than 10MB and of type pdf, doc, docx'
 									isUpdate={isUpdate}
+									disabled={data?.done}
 									options={{
 										maxSize: 10000000,
 									}}

@@ -16,7 +16,7 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Vendor = () => {
-	const [status, setStatus] = useState('');
+	const [status, setStatus] = useState('pending');
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItemRequested<
 		IITemRequestTableData[]
 	>(`status=${status}`);
@@ -87,7 +87,7 @@ const Vendor = () => {
 				{renderSuspenseModals([
 					<AddOrUpdate
 						{...{
-							url,
+							url: `/procure/item-work-order-entry`,
 							open: isOpenAddModal,
 							setOpen: setIsOpenAddModal,
 							updatedData,

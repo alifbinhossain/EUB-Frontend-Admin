@@ -13,8 +13,8 @@ import { useReportItem } from '../config/query';
 
 const ReportItem = () => {
 	const [dateRange, setDateRange] = useState<{ from: string; to: string }>({
-		from: '2025-01-01',
-		to: '2025-01-01',
+		from: format(new Date(), 'yyyy-MM-dd'),
+		to: format(new Date(), 'yyyy-MM-dd'),
 	});
 
 	const { data, isLoading, url, refetch } = useReportItem<IReportItemTableData[]>(dateRange);
