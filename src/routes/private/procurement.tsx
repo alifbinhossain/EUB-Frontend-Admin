@@ -54,13 +54,13 @@ const procurementRoutes: IRoute[] = [
 						page_name: 'portfolio__report_item',
 						actions: ['read'],
 					},
-					{
-						name: 'Pipeline',
-						path: '/portfolio/report/pipeline',
-						element: <ReportPipeline />,
-						page_name: 'portfolio__report_pipeline',
-						actions: ['read'],
-					},
+					// {
+					// 	name: 'Pipeline',
+					// 	path: '/portfolio/report/pipeline',
+					// 	element: <ReportPipeline />,
+					// 	page_name: 'portfolio__report_pipeline',
+					// 	actions: ['read'],
+					// },
 				],
 			},
 			{

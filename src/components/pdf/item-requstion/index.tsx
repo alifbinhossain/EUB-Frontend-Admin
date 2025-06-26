@@ -216,7 +216,7 @@ export default function Index(data: IRequisitionTableData) {
 								text:
 									nodeItem.field === 'index'
 										? index + 1
-										: nodeItem.field === 'prev_provided_date'
+										: nodeItem.field === 'prev_provided_date' && item?.prev_provided_date
 											? format(item?.prev_provided_date, 'MMM dd, yyyy')
 											: (item as any)[nodeItem.field],
 								style: nodeItem.cellStyle,
