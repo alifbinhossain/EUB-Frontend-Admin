@@ -15,6 +15,7 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 import Formdata from '@/utils/formdata';
 
+import { useItem } from '../item/config/query';
 import { IProcureStoreTableData } from './config/columns/columns.type';
 import { useItemWorkOrder, useItemWorkOrderByDetails } from './config/query';
 import { IProcureRequest, PROCURE_REQUEST_NULL, PROCURE_REQUEST_SCHEMA } from './config/schema';
@@ -40,6 +41,7 @@ const Entry = () => {
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 	const { data: billList } = useOtherBill<IFormSelectOption[]>();
 	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>();
+	const { invalidateQuery: invalidQueryItem } = useItem();
 
 	const form = useRHF(PROCURE_REQUEST_SCHEMA, PROCURE_REQUEST_NULL);
 
@@ -181,6 +183,7 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidQueryItem();
 					invalidateCapitalDetails();
 					navigate('/procurement/procure-store');
 				})
@@ -220,6 +223,7 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidQueryItem();
 					invalidateCapitalDetails();
 					navigate('/procurement/procure-store');
 				})
