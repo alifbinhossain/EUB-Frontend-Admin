@@ -43,35 +43,15 @@ const PersonalInformation = () => {
 					/>
 				)}
 			/>
+
 			<FormField
 				control={form.control}
 				name='date_of_birth'
 				render={(props) => <CoreForm.DatePicker label='Date of Birth' {...props} />}
 			/>
-			<FormField
-				control={form.control}
-				name='phone_number'
-				render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
-			/>
-			<br />
 
-			<FormField
-				control={form.control}
-				name='parents_phone'
-				render={(props) => <CoreForm.Phone label='Parents Phone Number' {...props} />}
-			/>
-			<br />
-			<br />
-			<FormField
-				control={form.control}
-				name='local_guardian_phone'
-				render={(props) => <CoreForm.Phone label='Local Guardian Phone Number' {...props} />}
-			/>
-			<br />
-			<br />
 			<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
-			<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Phone {...props} />} />
-			<br />
+
 			<FormField
 				control={form.control}
 				name='blood_group'
@@ -96,6 +76,25 @@ const PersonalInformation = () => {
 				name='nid_number'
 				render={(props) => <CoreForm.Input label='NID Number' {...props} />}
 			/>
+			<br />
+			<div className='flex flex-col gap-4'>
+				<FormField
+					control={form.control}
+					name='phone_number'
+					render={(props) => <CoreForm.Phone label='Phone Number' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='parents_phone'
+					render={(props) => <CoreForm.Phone label='Parents Phone Number' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='local_guardian_phone'
+					render={(props) => <CoreForm.Phone label='Local Guardian Phone Number' {...props} />}
+				/>
+				<FormField control={form.control} name='bkash' render={(props) => <CoreForm.Phone {...props} />} />
+			</div>
 		</CoreForm.Section>
 	);
 };
