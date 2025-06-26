@@ -211,6 +211,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 																	options={{
 																		maxSize: 10000000,
 																	}}
+																	small={true}
 																	isUpdate={fieldDef.isUpdate}
 																	{...props}
 																/>
