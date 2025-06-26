@@ -14,8 +14,13 @@ dist-ssr
 *.tsbuildinfo
 tsconfig.app.tsbuildinfo
 tsconfig.node.tsbuildinfo
+
+.env
 .env.development
 .env.production
+.env*.local
+!.env.example
+
 
 # Editor directories and files
 .idea
@@ -25,4 +30,5 @@ tsconfig.node.tsbuildinfo
 *.njsproj
 *.sln
 *.sw?
+
 
