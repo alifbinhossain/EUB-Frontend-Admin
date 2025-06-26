@@ -2,9 +2,12 @@ import { ImagePlus } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-const ImagePreview: React.FC<{ preview: string | ArrayBuffer | null }> = ({ preview }) => {
+const ImagePreview: React.FC<{ preview: string | ArrayBuffer | null; className?: string }> = ({
+	preview,
+	className,
+}) => {
 	return (
-		<div className='size-full h-[180px]'>
+		<div className={cn('size-full max-h-[200px]', className)}>
 			{preview ? (
 				<img className='size-full rounded-lg object-contain' src={preview as string} alt='User image' />
 			) : (
