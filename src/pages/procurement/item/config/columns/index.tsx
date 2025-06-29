@@ -71,16 +71,16 @@ export const itemColumns = (
 		header: 'Unit',
 		enableColumnFilter: true,
 	},
-	{
-		id: 'action_trx',
-		header: 'Item Transfer',
-		cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
-		size: 40,
-		meta: {
-			hidden: !actionTrxAccess,
-			disableFullFilter: true,
-		},
-	},
+	// {
+	// 	id: 'action_trx',
+	// 	header: 'Item Transfer',
+	// 	cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
+	// 	size: 40,
+	// 	meta: {
+	// 		hidden: !actionTrxAccess,
+	// 		disableFullFilter: true,
+	// 	},
+	// },
 	{
 		id: 'request_action_trx',
 		header: 'Request Item',

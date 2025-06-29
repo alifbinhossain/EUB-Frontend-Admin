@@ -8,5 +8,5 @@ export interface ICustomItemSelectOptions {
 	value: number | string;
 	request_quantity: number;
 	unit: string;
-	item_work_order_entry_uuid: string;
+	item_uuid: string;
 }

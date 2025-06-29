@@ -15,7 +15,7 @@ interface IGenerateFieldDefsProps {
 	form: any;
 }
 
-const useGenerateFieldDefs = ({ remove, copy, watch }: IGenerateFieldDefsProps): FieldDef[] => {
+const useGenerateFieldDefs = ({ remove, copy, watch, set }: IGenerateFieldDefsProps): FieldDef[] => {
 	return [
 		{
 			header: 'No',
@@ -48,7 +48,13 @@ const useGenerateFieldDefs = ({ remove, copy, watch }: IGenerateFieldDefsProps):
 		{
 			header: 'Total Price',
 			accessorKey: 'total_price',
-			type: 'number',
+			type: 'custom',
+			component: (index: number) => {
+				const quantity = watch(`product.${index}.quantity`) || 0;
+				const unitPrice = watch(`product.${index}.unit_price`) || 0;
+				set(`product.${index}.total_price`, quantity * unitPrice);
+				return <span>{quantity * unitPrice}</span>;
+			},
 		},
 		{
 			header: 'Actions',

@@ -7,9 +7,9 @@ import { DateRangePicker } from '@/components/ui/date-range-picker';
 
 import { PageInfo } from '@/utils';
 
-import { reportItemColumns } from '../config/columns';
-import { IReportItemTableData } from '../config/columns/columns.type';
-import { useReportItem } from '../config/query';
+import { reportPipelineColumns } from '../config/columns';
+import { IPipelineTableData } from '../config/columns/columns.type';
+import { useReportPipeline } from '../config/query';
 
 const ReportItem = () => {
 	const [dateRange, setDateRange] = useState<{ from: string; to: string }>({
@@ -17,16 +17,19 @@ const ReportItem = () => {
 		to: format(new Date(), 'yyyy-MM-dd'),
 	});
 
-	const { data, isLoading, url, refetch } = useReportItem<IReportItemTableData[]>(dateRange);
+	const { data, isLoading, url, refetch } = useReportPipeline<IPipelineTableData[]>(dateRange);
 
 	useEffect(() => {
 		refetch();
 	}, [dateRange, refetch]);
 
-	const pageInfo = useMemo(() => new PageInfo('Procurement/Item Report', url, 'portfolio__report_item'), [url]);
+	const pageInfo = useMemo(
+		() => new PageInfo('Procurement/Pipeline Report', url, 'portfolio__report_pipeline'),
+		[url]
+	);
 
 	// Table Columns
-	const columns = reportItemColumns();
+	const columns = reportPipelineColumns();
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
 			<TableProvider

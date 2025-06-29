@@ -33,7 +33,7 @@ const AddOrUpdate: React.FC<IItemWorkOrderAddOrUpdateProps> = ({
 		form.reset(ITEM_WORK_ORDER_NULL);
 		setOpen((prev) => !prev);
 	};
-
+	console.log(form.formState.errors);
 	// Reset form values when data is updated
 	useEffect(() => {
 		if (data && isUpdate) {

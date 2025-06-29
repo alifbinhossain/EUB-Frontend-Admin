@@ -195,6 +195,7 @@ const Entry = () => {
 						<CoreForm.ReactSelect
 							label='Category'
 							placeholder='Select Category'
+							menuPortalTarget={document.body}
 							options={purchases!}
 							{...props}
 						/>
@@ -207,6 +208,7 @@ const Entry = () => {
 						<CoreForm.ReactSelect
 							label='Sub Category'
 							placeholder='Select Sub Category'
+							menuPortalTarget={document.body}
 							options={subPurchases!}
 							{...props}
 						/>

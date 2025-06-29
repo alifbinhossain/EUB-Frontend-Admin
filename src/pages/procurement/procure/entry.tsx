@@ -125,9 +125,9 @@ const Entry = () => {
 		});
 
 		// * Filtered entries
-		const filteredItems = items.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
+		const filteredItems = items?.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
 
-		if (subCategory === 'Items' && filteredItems.length === 0) {
+		if (subCategory === 'Items' && filteredItems?.length === 0) {
 			toast.warning('please add at least one item entry');
 			return;
 		}
@@ -154,7 +154,7 @@ const Entry = () => {
 				.then(() => {
 					// * UPDATE FOR QUOTATIONS
 					if (quotations.length > 0) {
-						const quotationsUpdatePromise = quotations.map((entry) => {
+						const quotationsUpdatePromise = quotations.map((entry, index) => {
 							const formData = Formdata(entry);
 
 							// Remove fields with null value from generalNotesFormData
@@ -170,6 +170,7 @@ const Entry = () => {
 
 							if (entry.uuid) {
 								formData.append('updated_at', getDateTime());
+								formData.append('index', index.toString());
 
 								return imageUpdateData.mutateAsync({
 									url: `/procure/capital-vendor/${entry.uuid}`,
@@ -192,8 +193,8 @@ const Entry = () => {
 					}
 
 					// * UPDATE FOR ITEMS
-					if (filteredItems.length > 0) {
-						const itemsPromise = filteredItems.map((entry) => {
+					if ((filteredItems ?? []).length > 0) {
+						const itemsPromise = (filteredItems ?? []).map((entry) => {
 							if (entry.uuid) {
 								const entryUpdateData = {
 									...entry,
@@ -219,7 +220,7 @@ const Entry = () => {
 								});
 							}
 						});
-						Promise.all([...itemsPromise]);
+						Promise.all([...(itemsPromise || [])]);
 					}
 
 					// * UPDATE FOR GENERAL NOTES
@@ -284,7 +285,7 @@ const Entry = () => {
 					// * ENTRY FOR QUOTATIONS
 
 					if (quotations.length > 0) {
-						const quotationsPromise = quotations.map((entry) => {
+						const quotationsPromise = quotations.map((entry, index: number) => {
 							const formData = Formdata(entry);
 
 							// Remove fields with null value from generalNotesFormData
@@ -297,7 +298,7 @@ const Entry = () => {
 									formData.delete(field);
 								}
 							});
-
+							formData.append('index', index.toString());
 							formData.append('capital_uuid', new_uuid);
 							formData.append('created_at', getDateTime());
 							formData.append('created_by', user?.uuid || '');
@@ -312,8 +313,8 @@ const Entry = () => {
 					}
 
 					// * ENTRY FOR ITEMS
-					if (filteredItems.length > 0) {
-						const itemsPromise = filteredItems.map((entry) => {
+					if ((filteredItems ?? []).length > 0) {
+						const itemsPromise = filteredItems?.map((entry) => {
 							const entryData = {
 								...entry,
 								received_date: entry.is_received ? getDateTime() : null,
@@ -327,7 +328,7 @@ const Entry = () => {
 								newData: entryData,
 							});
 						});
-						Promise.all([...itemsPromise]);
+						Promise.all([...(itemsPromise || [])]);
 					}
 
 					// * ENTRY FOR GENERAL NOTES
@@ -460,13 +461,16 @@ const Entry = () => {
 
 	// * COPY ITEMS
 	const handleCopyItems = (index: number) => {
-		const field = form.watch('items')[index];
-		appendItems({
-			item_uuid: field.item_uuid,
-			quantity: field.quantity,
-			is_received: field.is_received,
-			received_date: field.received_date,
-		});
+		const items = form.watch('items') ?? [];
+		const field = items[index];
+		if (field) {
+			appendItems({
+				item_uuid: field.item_uuid,
+				quantity: field.quantity,
+				is_received: field.is_received,
+				received_date: field.received_date,
+			});
+		}
 	};
 
 	// * COPY GENERAL NOTES
@@ -499,7 +503,7 @@ const Entry = () => {
 	});
 
 	useEffect(() => {
-		if (min.min_quotation > 0) {
+		if (min.min_quotation > 0 && form.watch('is_quotation')) {
 			form.setValue('quotations', []);
 			const toAdd = min.min_quotation;
 			if (toAdd > 0) {
@@ -508,7 +512,7 @@ const Entry = () => {
 				}
 			}
 		}
-	}, [min]);
+	}, [min, form.watch('is_quotation')]);
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Update Procure' : 'Add Procure'} form={form} onSubmit={onSubmit}>
@@ -600,6 +604,7 @@ const Entry = () => {
 							render={(props) => (
 								<CoreForm.Switch
 									labelClassName='text-slate-100'
+									disabled={form.watch('sub_category_uuid') === ''}
 									onCheckedChange={(e) => {
 										if (e) {
 											form.setValue('quotation_date', getDateTime());
@@ -766,7 +771,7 @@ const Entry = () => {
 										if (!value) {
 											form.setValue(
 												'items',
-												form.getValues('items').map((item) => ({
+												form.getValues('items')?.map((item) => ({
 													...item,
 													is_received: false,
 													received_date: null,

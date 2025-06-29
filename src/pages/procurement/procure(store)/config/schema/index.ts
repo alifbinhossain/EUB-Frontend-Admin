@@ -18,7 +18,6 @@ export const PROCURE_REQUEST_SCHEMA = z
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
 		bill_uuid: STRING_NULLABLE,
-
 		work_order_file: z
 			.instanceof(File)
 			.refine((file) => file?.size !== 0, 'Please upload an file')

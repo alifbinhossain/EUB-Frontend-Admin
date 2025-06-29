@@ -162,6 +162,7 @@ const Entry = () => {
 				.then(() => {
 					invalidateQuery();
 					invalidateService();
+					invalidateService();
 					invalidateServiceDetails();
 					navigate('/procurement/service');
 				})
@@ -226,6 +227,7 @@ const Entry = () => {
 				.then(() => {
 					invalidateQuery();
 					invalidateServiceDetails();
+					invalidateService();
 					invalidateService();
 					navigate('/procurement/service');
 				})

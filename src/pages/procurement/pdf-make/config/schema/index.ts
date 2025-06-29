@@ -1,7 +1,13 @@
 import { it } from 'node:test';
 import { z } from 'zod';
 
-import { BOOLEAN_REQUIRED, NUMBER_REQUIRED, STRING_REQUIRED } from '@/utils/validators';
+import {
+	BOOLEAN_REQUIRED,
+	NUMBER_OPTIONAL,
+	NUMBER_REQUIRED,
+	STRING_OPTIONAL,
+	STRING_REQUIRED,
+} from '@/utils/validators';
 
 // Sub Category Schema
 export const GENERAL_STATEMENT_SCHEMA = z.object({
@@ -27,7 +33,7 @@ export const WORK_ORDER_SCHEMA = z.object({
 			description: STRING_REQUIRED,
 			quantity: NUMBER_REQUIRED.gt(0),
 			unit_price: NUMBER_REQUIRED.gt(0),
-			total_price: NUMBER_REQUIRED.gt(0),
+			total_price: NUMBER_OPTIONAL,
 		})
 	),
 	payment: z.array(
@@ -35,8 +41,8 @@ export const WORK_ORDER_SCHEMA = z.object({
 			condition: STRING_REQUIRED,
 		})
 	),
-	grand_total: NUMBER_REQUIRED.gt(0),
-	in_words: STRING_REQUIRED,
+	grand_total: NUMBER_OPTIONAL,
+	in_words: STRING_OPTIONAL,
 	body_ending: STRING_REQUIRED,
 	completion_date: STRING_REQUIRED,
 });
