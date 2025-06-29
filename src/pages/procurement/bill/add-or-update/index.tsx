@@ -204,7 +204,7 @@ const AddOrUpdate = () => {
 
 	const handleAdd = () => {
 		append({
-			uuid: '',
+			uuid: undefined,
 			type: 'full',
 			amount: 0,
 			payment_date: getDateTime(),
@@ -215,7 +215,6 @@ const AddOrUpdate = () => {
 	const handleItemWorkOrderAppend = () => {
 		itemWorkOrderAppend({
 			uuid: '',
-
 			total_amount: 0,
 		});
 	};
@@ -304,6 +303,7 @@ const AddOrUpdate = () => {
 				item_work_order={data?.item_work_order || []}
 				bill_payment={data?.bill_payment || []}
 				completed_date={data?.completed_date}
+				isUpdate={isUpdate}
 			/>
 			<CoreForm.DynamicFields
 				title='Item Work Order'
@@ -324,8 +324,9 @@ const AddOrUpdate = () => {
 						Grand Total:
 					</td>
 
-					<td className='border-t px-3 py-2'>{totalItemAmount()?.grand_total_amount}</td>
-					<td className='border-t px-3 py-2'></td>
+					<td className='border-t px-3 py-2' colSpan={2}>
+						{totalItemAmount()?.grand_total_amount}
+					</td>
 				</tr>
 			</CoreForm.DynamicFields>
 			<CoreForm.DynamicFields
@@ -347,8 +348,9 @@ const AddOrUpdate = () => {
 						Grand Total:
 					</td>
 
-					<td className='border-t px-3 py-2'>{total()?.grand_total_amount}</td>
-					<td className='border-t px-3 py-2'></td>
+					<td className='border-t px-3 py-2' colSpan={5}>
+						{total()?.grand_total_amount}
+					</td>
 				</tr>
 			</CoreForm.DynamicFields>
 			<Suspense fallback={null}>

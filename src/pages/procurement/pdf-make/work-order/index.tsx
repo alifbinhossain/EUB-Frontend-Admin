@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import useRHF from '@/hooks/useRHF';
 
@@ -5,6 +6,8 @@ import { ShowLocalToast } from '@/components/others/toast';
 import Pdf from '@/components/pdf/work-order';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
+
+import { TakaToWord } from '@/lib/NumToWords';
 
 import { IWorkOrder, WORK_ORDER_NULL, WORK_ORDER_SCHEMA } from '../config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
@@ -78,6 +81,18 @@ const Entry = () => {
 		});
 	};
 
+	const grandTotal = useCallback((values: IWorkOrder) => {
+		let total = 0;
+		values.product.forEach((product) => {
+			total += (product.quantity || 0) * (product.unit_price || 0);
+		});
+		return total;
+	}, []);
+	useEffect(() => {
+		form.setValue('grand_total', grandTotal(form.getValues()));
+		form.setValue('in_words', TakaToWord(grandTotal(form.getValues())));
+	}, [grandTotal(form.getValues())]);
+
 	return (
 		<CoreForm.AddEditWrapper title='Work Order Form' form={form} onSubmit={onSubmit}>
 			<CoreForm.Section title={`To`}>
@@ -134,25 +149,13 @@ const Entry = () => {
 							<td colSpan={5} className='text-right font-bold'>
 								Grand Total:
 							</td>
-							<td colSpan={2}>
-								<FormField
-									control={form.control}
-									name='grand_total'
-									render={(props) => <CoreForm.Input disableLabel={true} type='number' {...props} />}
-								/>
-							</td>
+							<td colSpan={2}>{grandTotal(form.getValues())}</td>
 						</tr>
 						<tr>
 							<td colSpan={1} className='text-right font-bold'>
 								In Words:
 							</td>
-							<td colSpan={6}>
-								<FormField
-									control={form.control}
-									name='in_words'
-									render={(props) => <CoreForm.Input disableLabel={true} {...props} />}
-								/>
-							</td>
+							<td colSpan={6}>{TakaToWord(grandTotal(form.getValues()))}</td>
 						</tr>
 					</CoreForm.DynamicFields>
 				</div>

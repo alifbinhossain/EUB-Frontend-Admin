@@ -43,18 +43,21 @@ export const CAPITAL_SCHEMA = z
 			})
 		),
 
-		items: z.array(
-			z.object({
-				uuid: STRING_OPTIONAL,
-				item_uuid: STRING_OPTIONAL,
-				quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
-					message: 'Must be greater than 0',
-				}),
-				unit_price: NUMBER_OPTIONAL,
-				is_received: BOOLEAN_REQUIRED.default(false),
-				received_date: STRING_NULLABLE,
-			})
-		),
+		items: z
+			.array(
+				z.object({
+					uuid: STRING_OPTIONAL,
+					item_uuid: STRING_OPTIONAL,
+					quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
+						message: 'Must be greater than 0',
+					}),
+					unit_price: NUMBER_OPTIONAL,
+					is_received: BOOLEAN_REQUIRED.default(false),
+					received_date: STRING_NULLABLE,
+				})
+			)
+			.optional()
+			.nullable(),
 
 		is_cs: BOOLEAN_REQUIRED.default(false),
 		cs_date: STRING_OPTIONAL.nullable(),

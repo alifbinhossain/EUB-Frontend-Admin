@@ -44,7 +44,7 @@ const useGenerateItemWorkOrder = ({
 			options: itemData || [],
 			unique: true,
 			excludeOptions:
-				data.items.map((item) => item.item_uuid).filter((uuid): uuid is string => uuid !== undefined) || [],
+				data.items?.map((item) => item.item_uuid).filter((uuid): uuid is string => uuid !== undefined) || [],
 			// onChange(option, field) {
 			// 	// const index = field.name.split('.')[1];
 			// 	// set(`items.${index}.unit_price`, option?.unit_price);

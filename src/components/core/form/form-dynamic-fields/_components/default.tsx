@@ -113,7 +113,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															render={(props) => (
 																<CoreForm.DatePicker
 																	disableLabel
-																	// disabled={fieldDef.disabled}
+																	disabled={fieldDef.disabled}
 																	{...props}
 																/>
 															)}
@@ -211,6 +211,7 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 																	options={{
 																		maxSize: 10000000,
 																	}}
+																	small={true}
 																	isUpdate={fieldDef.isUpdate}
 																	{...props}
 																/>

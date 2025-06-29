@@ -26,6 +26,7 @@ const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entr
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
 const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
+const ReportPipeline = lazy(() => import('@/pages/procurement/report/pipeline'));
 const GeneralStatement = lazy(() => import('@/pages/procurement/pdf-make/index'));
 const WorkOrder = lazy(() => import('@/pages/procurement/pdf-make/work-order'));
 const ItemRequisitionFormCapital = lazy(() => import('@/pages/procurement/pdf-make/item-requistion-capital'));
@@ -53,7 +54,44 @@ const procurementRoutes: IRoute[] = [
 						page_name: 'portfolio__report_item',
 						actions: ['read'],
 					},
+					// {
+					// 	name: 'Pipeline',
+					// 	path: '/portfolio/report/pipeline',
+					// 	element: <ReportPipeline />,
+					// 	page_name: 'portfolio__report_pipeline',
+					// 	actions: ['read'],
+					// },
 				],
+			},
+			{
+				name: 'Bill',
+				path: '/procurement/bill',
+				element: <Bill />,
+				page_name: 'procurement__bill',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill Entry',
+				path: '/procurement/bill/create',
+				element: <BillEntry />,
+				hidden: true,
+				page_name: 'procurement__bill_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill Update',
+				path: '/procurement/bill/:uuid/update',
+				element: <BillEntry />,
+				hidden: true,
+				page_name: 'procurement__bill_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure (Store)',
+				path: '/procurement/procure-store',
+				element: <ProcureStore />,
+				page_name: 'procurement__procure_store',
+				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
 				name: 'Procure (Capital)',
@@ -161,6 +199,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item',
 				actions: ['create', 'read', 'update', 'delete', 'click_item_trx'],
 			},
+
 			{
 				name: 'Item Entry',
 				path: '/procurement/item/create',
@@ -177,7 +216,13 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-
+			{
+				name: 'Item Request',
+				path: '/procurement/item-request',
+				element: <ItemRequest />,
+				page_name: 'procurement__item_request',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
 			{
 				name: 'Requisition',
 				path: '/procurement/requisition',
@@ -258,13 +303,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__pdf_form_comparative_statement',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-			{
-				name: 'Procure (Store)',
-				path: '/procurement/procure-store',
-				element: <ProcureStore />,
-				page_name: 'procurement__procure_store',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
+
 			{
 				name: 'Procure Entry (Store)',
 				path: '/procurement/procure-store/create',
@@ -281,29 +320,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__procure_store_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-			{
-				name: 'Bill',
-				path: '/procurement/bill',
-				element: <Bill />,
-				page_name: 'procurement__bill',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Bill Entry',
-				path: '/procurement/bill/create',
-				element: <BillEntry />,
-				hidden: true,
-				page_name: 'procurement__bill_entry',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Bill Update',
-				path: '/procurement/bill/:uuid/update',
-				element: <BillEntry />,
-				hidden: true,
-				page_name: 'procurement__bill_update',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
+
 			{
 				name: 'Log',
 				path: '/procurement/log',
@@ -311,13 +328,7 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__log',
 				actions: ['read', 'update', 'delete'],
 			},
-			{
-				name: 'Item Request',
-				path: '/procurement/item-request',
-				element: <ItemRequest />,
-				page_name: 'procurement__item_request',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
+
 			// {
 			// 	name: 'Procure Details (Store)',
 			// 	path: '/procurement/procure-store-details/:uuid',

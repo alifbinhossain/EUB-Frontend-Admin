@@ -168,13 +168,6 @@ const Entry = () => {
 
 	const handleAdd = () => {
 		// TODO: Update field names
-		if (form.watch('is_received')) {
-			ShowLocalToast({
-				toastType: 'error',
-				message: 'You cannot add new item if the requisition is received',
-			});
-			return;
-		}
 
 		newAppend({
 			item_uuid: '',
@@ -274,14 +267,16 @@ const Entry = () => {
 					fields={fields}
 				/>
 			)}
-			<CoreForm.DynamicFields
-				title='New Item Requisition'
-				form={form}
-				fieldName='new_item_requisition'
-				fieldDefs={newFieldDef}
-				handleAdd={handleAdd}
-				fields={newFields}
-			/>
+			{!data?.is_received && (
+				<CoreForm.DynamicFields
+					title='New Item Requisition'
+					form={form}
+					fieldName='new_item_requisition'
+					fieldDefs={newFieldDef}
+					handleAdd={data?.is_received ? undefined : handleAdd}
+					fields={newFields}
+				/>
+			)}
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{

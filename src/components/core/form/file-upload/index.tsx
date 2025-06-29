@@ -24,6 +24,7 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 	isUpdate,
 	fileType = 'image',
 	errorText = 'Image must be less than 1MB and of type png, jpg, or jpeg',
+	small = false,
 	className,
 	previewClassName,
 }) => {
@@ -101,9 +102,11 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 							className
 						)}
 					>
-						{fileType === 'image' && <ImagePreview preview={preview} className={previewClassName} />}
-						{fileType === 'video' && <VideoPreview preview={preview} />}
-						{fileType === 'document' && <DocumentPreview preview={preview} />}
+						{fileType === 'image' && (
+							<ImagePreview preview={preview} small={small} className={previewClassName} />
+						)}
+						{fileType === 'video' && <VideoPreview preview={preview} small={small} />}
+						{fileType === 'document' && <DocumentPreview preview={preview} small={small} />}
 
 						<Input disabled={disabled} {...getInputProps()} type='file' className='hidden' />
 					</label>

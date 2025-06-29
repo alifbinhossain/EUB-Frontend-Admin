@@ -60,13 +60,11 @@ export type IItemRequisition = z.infer<typeof ITEM_REQUISITION_SCHEMA>;
 export const REQUEST_SCHEMA = z.object({
 	item_uuid: STRING_OPTIONAL,
 	request_quantity: z.number().int().positive(),
-	reason: z.enum(['emergency']),
 	remarks: STRING_NULLABLE,
 });
 export const REQUEST_NULL: Partial<IRequest> = {
 	item_uuid: undefined,
 	request_quantity: 0,
-	reason: 'emergency',
 	remarks: '',
 };
 export type IRequest = z.infer<typeof REQUEST_SCHEMA>;

@@ -102,6 +102,7 @@ export interface FormFileUploadProps extends IFieldProps, InputProps {
 	isUpdate?: boolean;
 	fileType?: 'image' | 'document' | 'all' | 'video' | 'audio';
 	errorText?: string;
+	small?: boolean;
 	previewClassName?: string;
 }
 

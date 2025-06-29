@@ -4,18 +4,16 @@ import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { IFormSelectOption } from '@core/form/types';
 
-import { useOtherBank, useOtherItemWorkOrder, useOtherVendor } from '@/lib/common-queries/other';
+import { useOtherBank, useOtherVendor } from '@/lib/common-queries/other';
 import { getDateTime } from '@/utils';
 
 import { IBill } from '../config/schema';
 
-const Header = (data: IBill) => {
+const Header = (data: IBill & { isUpdate: boolean }) => {
 	const form = useFormContext<IBill>();
+	const query = data?.isUpdate ? `` : `item_work_uuid=$true`;
 	const { data: bankOptions } = useOtherBank<IFormSelectOption[]>();
-	const { data: vendorOptions } = useOtherVendor<IFormSelectOption[]>();
-	const { data: ItemWorkOrderOptions } = useOtherItemWorkOrder<IFormSelectOption[]>(
-		`vendor_uuid=${form.watch('vendor_uuid') || ''}`
-	);
+	const { data: vendorOptions } = useOtherVendor<IFormSelectOption[]>(query);
 	const isComplete = data?.is_completed || false;
 
 	return (
@@ -60,7 +58,7 @@ const Header = (data: IBill) => {
 						menuPortalTarget={document.body}
 						options={vendorOptions!}
 						placeholder='Select Vendor'
-						isDisabled={isComplete}
+						isDisabled={isComplete || data?.isUpdate}
 						{...props}
 					/>
 				)}
