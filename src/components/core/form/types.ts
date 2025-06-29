@@ -103,6 +103,7 @@ export interface FormFileUploadProps extends IFieldProps, InputProps {
 	fileType?: 'image' | 'document' | 'all' | 'video' | 'audio';
 	errorText?: string;
 	small?: boolean;
+	previewClassName?: string;
 }
 
 // * form-date-picker

@@ -133,7 +133,7 @@ const AddOrUpdate: React.FC<IFeatureAddOrUpdateProps> = ({
 							<CoreForm.FileUpload
 								subLabel={
 									form.watch('type') === 'hero'
-										? 'Recommend ratio 16:9 (1920x1080)'
+										? 'Recommend size (1905x723)'
 										: 'Recommend ratio 1:1 (300x300)'
 								}
 								className='h-full'

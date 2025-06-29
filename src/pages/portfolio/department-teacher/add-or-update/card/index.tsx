@@ -46,14 +46,14 @@ export const Card = ({
 			<div
 				data-before={updateData.uuid || '-1'}
 				data-column={column}
-				className='my-0.5 h-0.5 w-full bg-violet-400 opacity-0'
+				className='my-1 h-0.5 w-full bg-accent opacity-0'
 			/>
 			<m.div
 				layout
 				layoutId={updateData.uuid}
 				draggable='true'
 				onDragStart={(e: any) => handleDragStart!(e, data)}
-				className='cursor-grab rounded border border-neutral-700 bg-secondary/10 p-3 active:cursor-grabbing'
+				className='cursor-grab rounded-md border bg-base p-3 active:cursor-grabbing'
 			>
 				<div className='flex'>
 					<div className='text-sm'>#{(index ?? 0) + 1}&emsp;</div>

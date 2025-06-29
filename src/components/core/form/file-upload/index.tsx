@@ -8,6 +8,7 @@ import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/f
 import { Input } from '@/components/ui/input';
 
 import { API_IMAGE_URL } from '@/lib/secret';
+import { cn } from '@/lib/utils';
 
 import { FormFileUploadProps } from '../types';
 import { DocumentPreview, ImagePreview, VideoPreview } from './previews';
@@ -24,7 +25,10 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 	fileType = 'image',
 	errorText = 'Image must be less than 1MB and of type png, jpg, or jpeg',
 	small = false,
+	className,
+	previewClassName,
 }) => {
+	const [update, setUpdate] = useState(isUpdate);
 	const form = useFormContext();
 
 	const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
@@ -46,6 +50,7 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 		(acceptedFiles: File[]) => {
 			const reader = new FileReader();
 			try {
+				setUpdate(false);
 				reader.onload = () => setPreview(reader.result);
 				reader.readAsDataURL(acceptedFiles[0]);
 				field.onChange(acceptedFiles[0]);
@@ -61,12 +66,12 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 	);
 
 	useEffect(() => {
-		if (isUpdate) {
-			if (field.value) {
+		if (update) {
+			if (field.value && typeof field.value === 'string' && field.value !== '') {
 				setPreview(API_IMAGE_URL + field.value);
 			}
 		}
-	}, [isUpdate, field.value]);
+	}, [update, field.value]);
 
 	const { getRootProps, getInputProps, fileRejections, inputRef } = useDropzone({
 		onDrop,
@@ -84,17 +89,22 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 						{label || field.name.replace('_', ' ')}{' '}
 						{optional ? <span className='text-xs'>(Optional)</span> : ''}
 					</span>
-					{subLabel && <span className='text-xs'>{subLabel}</span>}
+					{subLabel && <span className='text-xs font-normal text-foreground'>{subLabel}</span>}
 				</FormLabel>
 			)}
 
 			<FormControl>
-				<div {...getRootProps()} className='flex flex-1 items-center justify-center'>
+				<div {...getRootProps()} className={cn('flex flex-1 items-center justify-center')}>
 					<label
 						htmlFor='dropzone-file'
-						className='border-300 relative flex size-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500'
+						className={cn(
+							'border-300 relative flex size-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500',
+							className
+						)}
 					>
-						{fileType === 'image' && <ImagePreview preview={preview} small={small} />}
+						{fileType === 'image' && (
+							<ImagePreview preview={preview} small={small} className={previewClassName} />
+						)}
 						{fileType === 'video' && <VideoPreview preview={preview} small={small} />}
 						{fileType === 'document' && <DocumentPreview preview={preview} small={small} />}
 
@@ -105,7 +115,7 @@ const FormFileUpload: React.FC<FormFileUploadProps> = ({
 			<FormMessage>{fileRejections.length !== 0 && errorText}</FormMessage>
 
 			{preview && (
-				<div className='absolute bottom-2 right-2 z-50 size-10'>
+				<div className='absolute bottom-3 right-3 z-50 size-fit'>
 					<Button
 						type={'button'}
 						variant={'default'}

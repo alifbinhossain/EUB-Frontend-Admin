@@ -85,50 +85,77 @@ const AddOrUpdate: React.FC<IUserAddOrUpdateProps> = ({
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField
-					control={form.control}
-					name='department_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Department'
-							placeholder='Select Department'
-							options={departmentData!}
-							{...props}
-						/>
-					)}
-				/>
+			<div className='grid grid-cols-1 gap-y-4 lg:grid-cols-4 lg:gap-4'>
+				<div className='sm:max-w-[300px]'>
+					<FormField
+						control={form.control}
+						name='image'
+						render={(props) => (
+							<CoreForm.FileUpload
+								fileType='image'
+								isUpdate={isUpdate}
+								subLabel='Recommended Size : 591x709'
+								className='aspect-passport'
+								previewClassName='max-h-full '
+								{...props}
+							/>
+						)}
+					/>
+				</div>
 
-				<FormField
-					control={form.control}
-					name='designation_uuid'
-					render={(props) => (
-						<CoreForm.ReactSelect
-							label='Designation'
-							placeholder='Select Designation'
-							options={designationData!}
-							{...props}
+				<div className='col-span-3 space-y-4'>
+					<div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+						<FormField
+							control={form.control}
+							name='name'
+							render={(props) => <CoreForm.Input {...props} />}
 						/>
-					)}
-				/>
-			</div>
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
-				<FormField control={form.control} name='email' render={(props) => <CoreForm.Input {...props} />} />
+						<FormField
+							control={form.control}
+							name='email'
+							render={(props) => <CoreForm.Input {...props} />}
+						/>
+
+						<div className='lg:col-span-2'>
+							<FormField
+								control={form.control}
+								name='phone'
+								render={(props) => <CoreForm.Phone {...props} />}
+							/>
+						</div>
+
+						<FormField
+							control={form.control}
+							name='department_uuid'
+							render={(props) => (
+								<CoreForm.ReactSelect
+									label='Department'
+									placeholder='Select Department'
+									options={departmentData!}
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='designation_uuid'
+							render={(props) => (
+								<CoreForm.ReactSelect
+									label='Designation'
+									placeholder='Select Designation'
+									options={designationData!}
+									{...props}
+								/>
+							)}
+						/>
+					</div>
+
+					<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
+				</div>
 			</div>
 
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField control={form.control} name='phone' render={(props) => <CoreForm.Phone {...props} />} />
-				<FormField control={form.control} name='office' render={(props) => <CoreForm.Input {...props} />} />
-			</div>
-			<div className='grid grid-cols-2 gap-4'>
-				<FormField
-					control={form.control}
-					name='image'
-					render={(props) => <CoreForm.FileUpload fileType='image' isUpdate={isUpdate} {...props} />}
-				/>
-				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
-			</div>
+			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>
 	);
 };

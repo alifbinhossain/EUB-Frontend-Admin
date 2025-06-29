@@ -101,6 +101,9 @@ export default {
 					},
 				},
 			},
+			aspectRatio: {
+				passport: '531/650',
+			},
 			animation: {
 				shine: 'shine 8s ease-in-out infinite',
 				'accordion-down': 'accordion-down 0.2s ease-out',
