@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import useTable from '@/hooks/useTable';
 
@@ -11,7 +12,7 @@ import TableSkeleton from './_components/skeleton';
 import { TableToolbar } from './_components/toolbar';
 import { getCommonPinningStyles } from './_helpers/getCommonPinningStyle';
 
-function DataTable() {
+function DataTable({ children }: { children: ReactNode }) {
 	const { table, isLoading, isEntry } = useTable();
 
 	return (
@@ -83,6 +84,7 @@ function DataTable() {
 								</TableCell>
 							</TableRow>
 						)}
+						{children}
 					</TableBody>
 				</TableComponent>
 

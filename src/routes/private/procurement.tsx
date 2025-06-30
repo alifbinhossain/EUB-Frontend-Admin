@@ -35,6 +35,7 @@ const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchas
 const ProcureStore = lazy(() => import('@/pages/procurement/procure(store)'));
 const ProcureStoreEntry = lazy(() => import('@/pages/procurement/procure(store)/entry'));
 const Bill = lazy(() => import('@/pages/procurement/bill'));
+const BillDetails = lazy(() => import('@/pages/procurement/bill/details'));
 const BillEntry = lazy(() => import('@/pages/procurement/bill/add-or-update'));
 const Bank = lazy(() => import('@/pages/procurement/bank'));
 // const ProcureStoreDetails = lazy(() => import('@/pages/procurement/procure(store)/details'));
@@ -68,6 +69,13 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/bill',
 				element: <Bill />,
 				page_name: 'procurement__bill',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Bill',
+				path: '/procurement/bill/:uuid/details',
+				element: <BillDetails />,
+				page_name: 'procurement__bill_details',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{

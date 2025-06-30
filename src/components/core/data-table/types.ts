@@ -32,6 +32,7 @@ export interface IDataTableEntryProps<TData, TValue> {
 	data: TData[];
 	toolbarOptions?: 'none' | IToolbarOptions[];
 	defaultVisibleColumns?: any;
+	children?: React.ReactNode;
 }
 
 interface TDefaultColumn<TData, TValue> {
