@@ -34,6 +34,7 @@ const ComparativeStatement = lazy(() => import('@/pages/procurement/pdf-make/com
 const SubPurchaseCostCenter = lazy(() => import('@/pages/procurement/sub-purchase-cost-center'));
 const ProcureStore = lazy(() => import('@/pages/procurement/procure(store)'));
 const ProcureStoreEntry = lazy(() => import('@/pages/procurement/procure(store)/entry'));
+const ProcureStoreDetails = lazy(() => import('@/pages/procurement/procure(store)/details'));
 const Bill = lazy(() => import('@/pages/procurement/bill'));
 const BillDetails = lazy(() => import('@/pages/procurement/bill/details'));
 const BillEntry = lazy(() => import('@/pages/procurement/bill/add-or-update'));
@@ -76,6 +77,7 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/bill/:uuid/details',
 				element: <BillDetails />,
 				page_name: 'procurement__bill_details',
+				hidden: true,
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
@@ -99,6 +101,30 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/procure-store',
 				element: <ProcureStore />,
 				page_name: 'procurement__procure_store',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure (Store)',
+				path: '/procurement/procure-store/:uuid/details',
+				element: <ProcureStoreDetails />,
+				hidden: true,
+				page_name: 'procurement__procure_store_details',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure Entry (Store)',
+				path: '/procurement/procure-store/create',
+				element: <ProcureStoreEntry />,
+				hidden: true,
+				page_name: 'procurement__procure_store_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Procure Update (Store)',
+				path: '/procurement/procure-store/:uuid/update',
+				element: <ProcureStoreEntry />,
+				hidden: true,
+				page_name: 'procurement__procure_store_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
@@ -309,23 +335,6 @@ const procurementRoutes: IRoute[] = [
 				element: <ComparativeStatement />,
 				hidden: true,
 				page_name: 'procurement__pdf_form_comparative_statement',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-
-			{
-				name: 'Procure Entry (Store)',
-				path: '/procurement/procure-store/create',
-				element: <ProcureStoreEntry />,
-				hidden: true,
-				page_name: 'procurement__procure_store_entry',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
-			{
-				name: 'Procure Update (Store)',
-				path: '/procurement/procure-store/:uuid/update',
-				element: <ProcureStoreEntry />,
-				hidden: true,
-				page_name: 'procurement__procure_store_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 

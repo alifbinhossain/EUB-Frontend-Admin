@@ -18,14 +18,14 @@ const Information: React.FC<{ data: IBillTableData }> = ({ data }) => {
 				label: 'Bank',
 				value: data.bank_name,
 			},
-		];
-	};
-	const renderHeaderItems2 = (): ITableListItems => {
-		return [
 			{
 				label: 'Remarks',
 				value: data.remarks,
 			},
+		];
+	};
+	const renderHeaderItems2 = (): ITableListItems => {
+		return [
 			{
 				label: 'Created By',
 				value: data.created_by_name,
