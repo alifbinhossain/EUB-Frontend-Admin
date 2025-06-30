@@ -14,6 +14,7 @@ export type IItemWorkOrderTableData = {
 
 // * bill
 export type IBillTableData = {
+	is_completed: boolean;
 	bill_id: string;
 	uuid: string;
 	vendor_uuid: string;

@@ -23,6 +23,7 @@ const ServiceDetails = lazy(() => import('@/pages/procurement/service/details'))
 const InternalCostCenter = lazy(() => import('@/pages/procurement/internal-cost-center'));
 const Requisition = lazy(() => import('@/pages/procurement/requisition'));
 const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
+const RequisitionDetails = lazy(() => import('@/pages/procurement/requisition/details'));
 const RequisitionProvided = lazy(() => import('@/pages/procurement/requisition/provided'));
 const Log = lazy(() => import('@/pages/procurement/log'));
 const ReportItem = lazy(() => import('@/pages/procurement/report/item/index'));
@@ -274,6 +275,14 @@ const procurementRoutes: IRoute[] = [
 					'click_store_received_override',
 					'click_store_received',
 				],
+			},
+			{
+				name: 'Requisition Details',
+				path: '/procurement/requisition/:uuid/details',
+				element: <RequisitionDetails />,
+				hidden: true,
+				page_name: 'procurement__requisition_details',
+				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
 				name: 'Requisition Entry',

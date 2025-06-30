@@ -8,27 +8,38 @@ import DateTime from '@/components/ui/date-time';
 
 import { formatDateTable } from '@/utils/formatDate';
 
-import { IProcureStoreTableData } from '../config/columns/columns.type'; // TODO: update data type
+import { IRequisitionTableData } from '../config/columns/columns.type'; // TODO: update data type
 
-const Information: React.FC<{ data: IProcureStoreTableData }> = ({ data }) => {
+const Information: React.FC<{ data: IRequisitionTableData }> = ({ data }) => {
 	const renderHeaderItems = (): ITableListItems => {
 		return [
 			{
-				label: 'Done',
-				value: <StatusButton value={data?.done as boolean} />,
+				label: 'ID',
+				value: data.requisition_id,
 			},
 			{
-				label: 'Vendor',
-				value: data.vendor_name,
+				label: 'Store Received',
+				value: <StatusButton value={data?.is_store_received as boolean} />,
 			},
 			{
-				label: 'Bill ID',
-				value: data.bill_id,
+				label: 'Store Received Date',
+				value: data.store_received_date && (
+					<DateTime date={new Date(data.store_received_date)} isTime={false} />
+				),
 			},
 			{
-				label: 'Date',
-				value: data.done_date && <DateTime date={new Date(data.done_date)} isTime={false} />,
+				label: 'PI Generated Number',
+				value: data.pi_generated_number,
 			},
+			{
+				label: 'Received',
+				value: <StatusButton value={data?.is_received as boolean} />,
+			},
+			{
+				label: 'Received Date',
+				value: data.received_date && <DateTime date={new Date(data.received_date)} isTime={false} />,
+			},
+
 			{
 				label: 'Remarks',
 				value: data.remarks,
@@ -51,34 +62,13 @@ const Information: React.FC<{ data: IProcureStoreTableData }> = ({ data }) => {
 			},
 		];
 	};
-	const renderHeaderItems3 = (): ITableListItems => {
-		return [
-			{
-				label: 'Completed',
-				value: <StatusButton value={data?.is_delivery_statement as boolean} />,
-			},
-			{
-				label: 'Remarks',
-				value: data.delivery_statement_remarks,
-			},
-			{
-				label: 'Date',
-				value: data.delivery_statement_date ? (
-					<DateTime date={new Date(data.delivery_statement_date)} isTime={false} />
-				) : (
-					'-'
-				),
-			},
-		];
-	};
 
 	return (
 		<>
 			<SectionContainer title={'General Information'}>
-				<div className='grid grid-cols-3 gap-2'>
+				<div className='grid grid-cols-2 gap-2'>
 					<TableList title='Work Order' items={renderHeaderItems()} />
 					<TableList title='Created and Updated Information' items={renderHeaderItems2()} />
-					<TableList title='Delivery Information' items={renderHeaderItems3()} />
 				</div>
 			</SectionContainer>
 		</>

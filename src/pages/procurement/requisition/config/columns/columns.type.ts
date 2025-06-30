@@ -6,6 +6,7 @@ export type IItemRequisitionTableData = {
 	requisition_name: string;
 	req_quantity: number;
 	provided_quantity: number;
+	prev_provided_quantity: number;
 	created_by_name: string;
 	prev_provided_date: string;
 };
@@ -21,6 +22,7 @@ export type IRequisitionTableData = {
 	received_date: string;
 	created_at: string;
 	created_by_name: string;
+	updated_at: string;
 	designation: string;
 
 	department:

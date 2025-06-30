@@ -3,10 +3,11 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import Transfer from '@/components/buttons/transfer';
 import TableCellAction from '@/components/core/data-table/_components/cell-action';
 import HoverCardWrapper from '@/components/others/hover-card-wrapper';
+import { CustomLink } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
 import { Switch } from '@/components/ui/switch';
 
-import { IRequisitionTableData } from './columns.type';
+import { IItemRequisitionTableData, IRequisitionTableData } from './columns.type';
 
 // * Requisition Table Columns
 export const requisitionColumns = (
@@ -27,10 +28,12 @@ export const requisitionColumns = (
 		header: 'ID',
 		enableColumnFilter: true,
 		cell: (info) => (
-			<button className='underline' onClick={() => handlePdf(info.row)}>
-				{info.getValue() as string}
-			</button>
+			<CustomLink
+				label={info.getValue() as string}
+				url={`/procurement/requisition/${info.row.original.uuid}/details`}
+			/>
 		),
+		size: 180,
 	},
 	{
 		accessorKey: 'is_store_received',
@@ -156,6 +159,47 @@ export const requisitionColumns = (
 		meta: {
 			hidden: !updateAccess && !deleteAccess,
 			disableFullFilter: true,
+		},
+	},
+];
+
+export const itemRequisition = (): ColumnDef<IItemRequisitionTableData>[] => [
+	{
+		accessorKey: 'item_name',
+		header: 'Item',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'req_quantity',
+		header: 'Req. Qty',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'provided_quantity',
+		header: 'Prov. Qty',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'provided_quantity',
+		header: 'Prov. Qty',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'prev_provided_quantity',
+		header: 'Prev.Prov. Qty',
+		enableColumnFilter: true,
+		cell: (info) => {
+			return (
+				<div>
+					<span>{info.row.original.prev_provided_quantity}</span>
+					<DateTime
+						date={
+							info.row.original.prev_provided_date ? new Date(info.row.original.prev_provided_date) : null
+						}
+						isTime={false}
+					/>
+				</div>
+			);
 		},
 	},
 ];

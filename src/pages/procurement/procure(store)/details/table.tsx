@@ -13,7 +13,12 @@ const Table: React.FC<{ data: IProcureStoreTableData; isLoading: boolean }> = ({
 
 	return (
 		<div className='flex flex-col gap-4'>
-			<DataTableEntry title={'Item Work Order Entry'} columns={columnsQ} data={data?.item_work_order_entry ?? []}>
+			<DataTableEntry
+				title={'Item Work Order Entry'}
+				columns={columnsQ}
+				data={data?.item_work_order_entry ?? []}
+				defaultVisibleColumns={{ created_by_name: false, created_at: false, updated_at: false }}
+			>
 				<tr>
 					<td colSpan={4} className='text-right font-semibold'>
 						Grand Total:

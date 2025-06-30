@@ -1,5 +1,6 @@
 import React from 'react';
 
+import StatusButton from '@/components/buttons/status';
 import SectionContainer from '@/components/others/section-container';
 import TableList, { ITableListItems } from '@/components/others/table-list';
 
@@ -10,6 +11,10 @@ import { IBillTableData } from '../config/columns/columns.type'; // TODO: update
 const Information: React.FC<{ data: IBillTableData }> = ({ data }) => {
 	const renderHeaderItems = (): ITableListItems => {
 		return [
+			{
+				label: 'Completed',
+				value: <StatusButton value={data?.is_completed as boolean} />,
+			},
 			{
 				label: 'Vendor',
 				value: data.vendor_name,
@@ -45,8 +50,8 @@ const Information: React.FC<{ data: IBillTableData }> = ({ data }) => {
 		<>
 			<SectionContainer title={'General Information'}>
 				<div className='grid grid-cols-2 gap-2'>
-					<TableList title='Basic Information' items={renderHeaderItems()} />
-					<TableList title='Basic Information' items={renderHeaderItems2()} />
+					<TableList items={renderHeaderItems()} />
+					<TableList items={renderHeaderItems2()} />
 				</div>
 			</SectionContainer>
 		</>
