@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import useAccess from '@/hooks/useAccess';
 import useAuth from '@/hooks/useAuth';
 
+import { ToolbarComponent } from '@/components/core/data-table/_components/toolbar';
 import Pdf from '@/components/pdf/item-requstion';
+import ReactSelect from '@/components/ui/react-select';
 
 import { getDateTime, PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -19,6 +21,14 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const Requisition = () => {
 	const navigate = useNavigate();
+	const [status, setStatus] = useState('pending');
+	const statusList = [
+		{ value: undefined, label: 'All' },
+		{ value: 'pending', label: 'Pending' },
+		{ value: 'store_not_received', label: 'Requisition Not Received' },
+		{ value: 'completed', label: 'Complete' },
+	];
+
 	const { user } = useAuth();
 	const pageAccess = useAccess('procurement__requisition') as string[];
 	const providedAccess = pageAccess.includes('click_provided');
@@ -29,10 +39,12 @@ const Requisition = () => {
 	const updateAccess = pageAccess.includes('update');
 	const deleteAccess = pageAccess.includes('delete');
 	const showAll = pageAccess.includes('show_all');
+
 	const [pdfUuid, setPdfUuid] = useState<string | null>(null);
 	const { data, isLoading, url, deleteData, refetch, updateData } = useRequisition<IRequisitionTableData[]>(
 		showAll,
-		user?.uuid
+		user?.uuid,
+		status
 	);
 	const { data: pdfData, isLoading: pdfLoading } = useRequisitionAndItemByUUID<IRequisitionTableData>(
 		pdfUuid as string
@@ -121,6 +133,24 @@ const Requisition = () => {
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
 				enableDefaultColumns={false}
+				otherToolBarComponents={
+					<ToolbarComponent
+						option='other'
+						render={() => (
+							<ReactSelect
+								options={statusList || []}
+								value={statusList?.find((option) => option.value === status)}
+								menuPortalTarget={document.body}
+								styles={{
+									menuPortal: (base) => ({ ...base, zIndex: 999 }),
+								}}
+								onChange={(e: any) => {
+									setStatus(e?.value);
+								}}
+							/>
+						)}
+					/>
+				}
 			>
 				{renderSuspenseModals([
 					<DeleteModal
