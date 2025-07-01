@@ -38,7 +38,7 @@ const Entry = () => {
 		invalidateQuery: invalidateQueryRequisition,
 	} = useRequisitionAndItemByUUID<IRequisitionTableData>(uuid as string);
 
-	const { invalidateQuery } = useRequisition<IRequisitionTableData[]>(showAll, user?.uuid);
+	const { invalidateQuery } = useRequisition<IRequisitionTableData[]>(showAll, user?.uuid, 'pending');
 	const { data: internalCostCenter, invalidateQuery: invalidateQueryInternalCostCenter } =
 		useOtherInternalCostCenter<IFormSelectOption[]>();
 
