@@ -5,12 +5,17 @@ export type IItemsWorkOrderEntryTableData = {
 	request_quantity: number;
 	provided_quantity: number;
 	unit_price: number;
+	total_price?: number;
 };
 // * capital
 
 export type IProcureStoreTableData = {
 	uuid: string;
+	subject: string;
 	vendor_name: string;
+	vendor_address: string;
+	vendor_phone: string;
+	estimated_date: string;
 	bill_id: string;
 	bank_name: string;
 	remarks: string;

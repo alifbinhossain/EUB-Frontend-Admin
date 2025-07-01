@@ -346,8 +346,12 @@ const AddOrUpdate = () => {
 						Grand Total:
 					</td>
 
-					<td className='border-t px-3 py-2' colSpan={5}>
-						{total()?.grand_total_amount}
+					<td className='border-t px-3 py-2'>{total()?.grand_total_amount}</td>
+					<td className='border-t text-right font-semibold' colSpan={1}>
+						Due:
+					</td>
+					<td className='border-t px-3 py-2' colSpan={3}>
+						{totalItemAmount()?.grand_total_amount - total()?.grand_total_amount}
 					</td>
 				</tr>
 			</CoreForm.DynamicFields>

@@ -183,6 +183,8 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateQuery();
+					invalidQueryItem();
 					invalidQueryItem();
 					invalidateCapitalDetails();
 					navigate('/procurement/procure-store');
@@ -223,6 +225,8 @@ const Entry = () => {
 				})
 				.then(() => {
 					invalidateQuery();
+					invalidateQuery();
+					invalidQueryItem();
 					invalidQueryItem();
 					invalidateCapitalDetails();
 					navigate('/procurement/procure-store');
@@ -282,6 +286,24 @@ const Entry = () => {
 									menuPortalTarget={document.body}
 									options={vendorList!}
 									isDisabled={data?.is_delivery_statement || data?.done}
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='subject'
+							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Subject' {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='estimated_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									label='Estimate Delivery'
+									placeholder='Estimate Delivery'
+									disabled={data?.done}
 									{...props}
 								/>
 							)}

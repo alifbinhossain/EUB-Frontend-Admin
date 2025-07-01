@@ -17,6 +17,8 @@ export const PROCURE_REQUEST_SCHEMA = z
 		uuid: STRING_OPTIONAL,
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
+		subject: STRING_REQUIRED,
+		estimated_date: STRING_REQUIRED,
 		bill_uuid: STRING_NULLABLE,
 		work_order_file: z
 			.instanceof(File)

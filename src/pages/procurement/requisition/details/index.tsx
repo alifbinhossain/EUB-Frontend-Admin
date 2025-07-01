@@ -14,8 +14,8 @@ const Index = () => {
 	useEffect(() => {
 		document.title = 'Requisition Details';
 	}, []);
-	const [data2, setData] = useState('');
 
+	const [data2, setData] = useState('');
 	useEffect(() => {
 		if (data) {
 			OrderSheetPdf(data)?.getDataUrl((dataUrl) => {
@@ -23,7 +23,9 @@ const Index = () => {
 			});
 		}
 	}, [data]);
+
 	if (isLoading) return <div>Loading...</div>;
+
 	return (
 		<div className='space-y-8'>
 			<iframe src={data2} className='h-[40rem] w-full rounded-md border-none' />
