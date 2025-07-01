@@ -1,11 +1,9 @@
-import { it } from 'node:test';
 import { lazy, Suspense, use, useCallback, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import DataTableEntry from '@/components/core/data-table/entry';
 import { ShowLocalToast } from '@/components/others/toast';
 import CoreForm from '@core/form';
 

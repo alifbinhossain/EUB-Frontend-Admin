@@ -261,8 +261,7 @@ function TableProvider<TData, TValue>({
 
 	return (
 		<TableContext.Provider value={value}>
-			<DataTable />
-			{children}
+			<DataTable children={children} />
 		</TableContext.Provider>
 	);
 }

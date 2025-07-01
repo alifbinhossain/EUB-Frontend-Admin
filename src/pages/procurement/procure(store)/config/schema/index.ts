@@ -54,6 +54,13 @@ export const PROCURE_REQUEST_SCHEMA = z
 					path: [`item_work_order_entry.${index}.provided_quantity`],
 				});
 			}
+			if (data?.is_delivery_statement && (item?.unit_price === undefined || item?.unit_price <= 0)) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: 'Unit Price must be greater than 0',
+					path: [`item_work_order_entry.${index}.unit_price`],
+				});
+			}
 		});
 	});
 

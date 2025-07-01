@@ -101,7 +101,7 @@ const Vendor = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: `/procure/item-work-order-entry`,
 							deleteData,
 						}}
 					/>,

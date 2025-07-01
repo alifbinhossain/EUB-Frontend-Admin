@@ -1,23 +1,26 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import FilePreview from '@/components/others/file-preview';
-import { Badge } from '@/components/ui/badge';
+import { CustomLink } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
-import { FormField } from '@/components/ui/form';
-import CoreForm from '@core/form';
 
-import { cn } from '@/lib/utils';
+import { IItemsWorkOrderEntryTableData, IProcureStoreTableData } from './columns.type';
 
-import { IProcureStoreTableData } from './columns.type';
-
-// * Capital
+// * Procure Store
 export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStoreTableData>) => void
 : ColumnDef<IProcureStoreTableData>[] => [
 	{
 		accessorKey: 'item_work_order_id',
 		header: 'ID',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<CustomLink
+				label={info.getValue() as string}
+				url={`/procurement/procure-store/${info.row.original.uuid}/details`}
+			/>
+		),
+		size: 180,
 	},
 	{
 		accessorKey: 'total_amount',
@@ -79,5 +82,34 @@ export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStore
 		header: 'Done Date',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+];
+
+export const itemWorkOrderEntry = (): ColumnDef<IItemsWorkOrderEntryTableData>[] => [
+	{
+		accessorKey: 'item_name',
+		header: 'Item',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'request_quantity',
+		header: 'Request Quantity',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'provided_quantity',
+		header: 'Provided Quantity',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'unit_price',
+		header: 'Unit Price',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'total_amount',
+		header: 'Total Amount',
+		enableColumnFilter: true,
+		cell: (info) => <span>{info.row.original.provided_quantity * info.row.original.unit_price}</span>,
 	},
 ];
