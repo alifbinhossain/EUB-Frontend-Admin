@@ -28,9 +28,15 @@ export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStore
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'bill_name',
+		accessorKey: 'bill_id',
 		header: 'Bill',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<CustomLink
+				label={info.getValue() as string}
+				url={`/procurement/bill/${info.row.original.bill_uuid}/details`}
+			/>
+		),
 	},
 	{
 		accessorKey: 'vendor_name',
