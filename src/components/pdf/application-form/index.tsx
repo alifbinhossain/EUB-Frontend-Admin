@@ -368,7 +368,7 @@ export default function Index(data: IAdmissionTableData) {
 						[
 							{},
 							{
-								text: `Parents Phone/Cell: ${data?.parents_phone}`,
+								text: `Parents Phone/Cell: ${data?.parents_phone ? data?.parents_phone : ''}`,
 								alignment: 'left',
 							},
 							{
@@ -389,7 +389,7 @@ export default function Index(data: IAdmissionTableData) {
 						[
 							{},
 							{
-								text: `Local Guardian Phone/Cell: ${data?.local_guardian_phone}`,
+								text: `Local Guardian Phone/Cell: ${data?.local_guardian_phone ? data?.local_guardian_phone : ''}`,
 								alignment: 'left',
 							},
 							{},

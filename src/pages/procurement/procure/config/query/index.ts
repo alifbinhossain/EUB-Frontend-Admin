@@ -2,10 +2,10 @@ import useTQuery from '@/hooks/useTQuery';
 
 import { capitalQK } from './queryKeys';
 
-export const useCapital = <T>() =>
+export const useCapital = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: capitalQK.capital(),
-		url: `/procure/capital`,
+		queryKey: capitalQK.capital(query ? query : ''),
+		url: query ? `/procure/capital?${query}` : `/procure/capital`,
 	});
 
 export const useQuotations = <T>(uuid: string) =>
@@ -35,4 +35,10 @@ export const useItemByVendor = <T>(uuid: string, query?: string) =>
 		queryKey: capitalQK.itemByVendor(uuid, query),
 		url: query ? `/procure/item/by/vendor-uuid/${uuid}?${query}` : `/procure/item/by/vendor-uuid/${uuid}`,
 		enabled: !!uuid,
+	});
+//* summery
+export const useCapitalSummery = <T>() =>
+	useTQuery<T>({
+		queryKey: capitalQK.capitalSummery(),
+		url: `/procure/capital-summary-by-status`,
 	});

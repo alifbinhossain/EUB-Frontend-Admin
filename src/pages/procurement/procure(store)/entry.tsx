@@ -275,59 +275,57 @@ const Entry = () => {
 					</div>
 				}
 			>
-				<div className='grid grid-cols-2 gap-4'>
-					<div className='flex flex-col gap-4'>
-						<FormField
-							control={form.control}
-							name='vendor_uuid'
-							render={(props) => (
-								<CoreForm.ReactSelect
-									label='Vendor'
-									menuPortalTarget={document.body}
-									options={vendorList!}
-									isDisabled={data?.is_delivery_statement || data?.done}
-									{...props}
-								/>
-							)}
-						/>
+				<div className='grid grid-cols-3 gap-4'>
+					<FormField
+						control={form.control}
+						name='vendor_uuid'
+						render={(props) => (
+							<CoreForm.ReactSelect
+								label='Vendor'
+								menuPortalTarget={document.body}
+								options={vendorList!}
+								isDisabled={data?.is_delivery_statement || data?.done}
+								{...props}
+							/>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name='subject'
-							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Subject' {...props} />}
-						/>
-						<FormField
-							control={form.control}
-							name='estimated_date'
-							render={(props) => (
-								<CoreForm.DatePicker
-									label='Estimate Delivery'
-									placeholder='Estimate Delivery'
-									disabled={data?.done}
-									{...props}
-								/>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='bill_uuid'
-							render={(props) => (
-								<CoreForm.ReactSelect
-									label='Bill'
-									options={billList!}
-									isDisabled={true}
-									menuPortalTarget={document.body}
-									{...props}
-								/>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name='estimated_date'
+						render={(props) => (
+							<CoreForm.DatePicker
+								label='Estimate Delivery'
+								placeholder='Estimate Delivery'
+								disabled={data?.done}
+								{...props}
+							/>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='bill_uuid'
+						render={(props) => (
+							<CoreForm.ReactSelect
+								label='Bill'
+								options={billList!}
+								isDisabled={true}
+								menuPortalTarget={document.body}
+								{...props}
+							/>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='subject'
+						render={(props) => <CoreForm.Textarea disabled={data?.done} label='Subject' {...props} />}
+					/>
+					<FormField
+						control={form.control}
+						name='work_order_remarks'
+						render={(props) => <CoreForm.Textarea disabled={data?.done} label='Remarks' {...props} />}
+					/>
 
-						<FormField
-							control={form.control}
-							name='work_order_remarks'
-							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Remarks' {...props} />}
-						/>
-					</div>
 					<FormField
 						control={form.control}
 						name='work_order_file'
@@ -338,6 +336,7 @@ const Entry = () => {
 								errorText='File must be less than 10MB and of type pdf, doc, docx'
 								isUpdate={isUpdate}
 								disabled={data?.done}
+								small={true}
 								options={{
 									maxSize: 10000000,
 								}}
@@ -424,6 +423,7 @@ const Entry = () => {
 									options={{
 										maxSize: 10000000,
 									}}
+									small={true}
 									{...props}
 								/>
 							)}

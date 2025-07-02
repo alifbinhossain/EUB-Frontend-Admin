@@ -130,12 +130,16 @@ const Entry = () => {
 			return;
 		}
 
-		if (min.min_quotation > 0 && quotations.length < min.min_quotation) {
+		if (values?.is_quotation && min.min_quotation > 0 && quotations.length < min.min_quotation) {
 			toast.warning(`Please add at least ${min.min_quotation} quotation entries`);
 			return;
 		}
 
-		if (min.min_amount > 0 && quotations.reduce((acc, curr) => acc + curr.amount, 0) < min.min_amount) {
+		if (
+			values?.is_quotation &&
+			min.min_amount > 0 &&
+			quotations.reduce((acc, curr) => acc + curr.amount, 0) < min.min_amount
+		) {
 			toast.warning(`Please add at least total of ${min.min_amount} quotation amount`);
 			return;
 		}
@@ -601,6 +605,7 @@ const Entry = () => {
 							name='is_quotation'
 							render={(props) => (
 								<CoreForm.Switch
+									label='Quotation'
 									labelClassName='text-slate-100'
 									disabled={form.watch('sub_category_uuid') === ''}
 									onCheckedChange={(e) => {
