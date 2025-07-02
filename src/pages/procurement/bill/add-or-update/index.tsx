@@ -296,7 +296,7 @@ const AddOrUpdate = () => {
 		>
 			<Header
 				vendor_uuid={data?.vendor_uuid || ''}
-				bank_uuid={data?.bank_uuid || ''}
+				// bank_uuid={data?.bank_uuid || ''}
 				is_completed={data?.is_completed || false}
 				item_work_order={data?.item_work_order || []}
 				bill_payment={data?.bill_payment || []}

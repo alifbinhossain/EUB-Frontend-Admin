@@ -19,10 +19,10 @@ const Information: React.FC<{ data: IBillTableData }> = ({ data }) => {
 				label: 'Vendor',
 				value: data.vendor_name,
 			},
-			{
-				label: 'Bank',
-				value: data.bank_name,
-			},
+			// {
+			// 	label: 'Bank',
+			// 	value: data.bank_name,
+			// },
 			{
 				label: 'Remarks',
 				value: data.remarks,

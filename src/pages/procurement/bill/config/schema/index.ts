@@ -19,7 +19,7 @@ import {
 // Capital Schema
 export const BILL_SCHEMA = z.object({
 	vendor_uuid: STRING_REQUIRED,
-	bank_uuid: STRING_REQUIRED,
+	// bank_uuid: STRING_REQUIRED,
 	is_completed: BOOLEAN_REQUIRED,
 	completed_date: STRING_OPTIONAL.nullable(),
 	item_work_order: z.array(
@@ -45,7 +45,7 @@ export const BILL_NULL: Partial<IBill> = {
 	vendor_uuid: '',
 	is_completed: false,
 	completed_date: null,
-	bank_uuid: '',
+	// bank_uuid: '',
 	bill_payment: [],
 };
 
