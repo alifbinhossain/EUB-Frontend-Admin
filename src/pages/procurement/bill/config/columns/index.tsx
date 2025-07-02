@@ -21,11 +21,11 @@ export const billColumns = (): ColumnDef<IBillTableData>[] => [
 		header: 'Vendor',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'bank_name',
-		header: 'Bank',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'bank_name',
+	// 	header: 'Bank',
+	// 	enableColumnFilter: true,
+	// },
 	{
 		accessorKey: 'total_amount',
 		header: 'Total Bill',
