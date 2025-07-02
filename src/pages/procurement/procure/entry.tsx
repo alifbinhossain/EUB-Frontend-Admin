@@ -601,6 +601,7 @@ const Entry = () => {
 							name='is_quotation'
 							render={(props) => (
 								<CoreForm.Switch
+									label='Quotation'
 									labelClassName='text-slate-100'
 									disabled={form.watch('sub_category_uuid') === ''}
 									onCheckedChange={(e) => {
