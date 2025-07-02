@@ -82,7 +82,7 @@ const Designation = () => {
 		/>,
 		...(Array.isArray(summery)
 			? summery
-					.filter((item: any) => status === 'All' || item.status === status)
+					.filter((item: any) => status === undefined || item.status === status)
 					.map((item: any) => (
 						<ToolbarComponent
 							option='other'
