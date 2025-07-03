@@ -22,6 +22,7 @@ export const short_names = [
 	{ label: 'LLB', value: 'llb' },
 	{ label: 'LLM', value: 'llm' },
 	{ label: 'MA English', value: 'ma-english' },
+	{ label: 'MA English 2 Year', value: 'ma-english-two-year' },
 	{ label: 'MGDS One Year', value: 'mgds-one-year' },
 	{ label: 'MSS Economics', value: 'mss-economics' },
 	{ label: 'Physics', value: 'physics' },

@@ -194,36 +194,36 @@ const Entry = () => {
 						Promise.all([...quotationsUpdatePromise]);
 					}
 
-					// // * UPDATE FOR ITEMS
-					// if ((filteredItems ?? []).length > 0) {
-					// 	const itemsPromise = (filteredItems ?? []).map((entry) => {
-					// 		if (entry.uuid) {
-					// 			const entryUpdateData = {
-					// 				...entry,
-					// 				received_date: entry.is_received ? getDateTime() : null,
-					// 				updated_at: getDateTime(),
-					// 			};
-					// 			return updateData.mutateAsync({
-					// 				url: `/procure/item-work-order-entry/${entry.uuid}`,
-					// 				updatedData: entryUpdateData,
-					// 			});
-					// 		} else {
-					// 			const entryData = {
-					// 				...entry,
-					// 				received_date: entry.is_received ? getDateTime() : null,
-					// 				capital_uuid: uuid,
-					// 				created_at: getDateTime(),
-					// 				created_by: user?.uuid,
-					// 				uuid: nanoid(),
-					// 			};
-					// 			return postData.mutateAsync({
-					// 				url: `/procure/item-work-order-entry`,
-					// 				newData: entryData,
-					// 			});
-					// 		}
-					// 	});
-					// 	Promise.all([...(itemsPromise || [])]);
-					// }
+					// * UPDATE FOR ITEMS
+					if ((filteredItems ?? []).length > 0) {
+						const itemsPromise = (filteredItems ?? []).map((entry) => {
+							if (entry.uuid) {
+								const entryUpdateData = {
+									...entry,
+									// received_date: entry.is_received ? getDateTime() : null,
+									updated_at: getDateTime(),
+								};
+								return updateData.mutateAsync({
+									url: `/procure/capital-item/${entry.uuid}`,
+									updatedData: entryUpdateData,
+								});
+							} else {
+								const entryData = {
+									...entry,
+									// received_date: entry.is_received ? getDateTime() : null,
+									capital_uuid: uuid,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+								};
+								return postData.mutateAsync({
+									url: `/procure/capital-item`,
+									newData: entryData,
+								});
+							}
+						});
+						Promise.all([...(itemsPromise || [])]);
+					}
 
 					// * UPDATE FOR GENERAL NOTES
 					if (general_notes.length > 0) {
@@ -314,24 +314,24 @@ const Entry = () => {
 						Promise.all([...quotationsPromise]);
 					}
 
-					// // * ENTRY FOR ITEMS
-					// if ((filteredItems ?? []).length > 0) {
-					// 	const itemsPromise = filteredItems?.map((entry) => {
-					// 		const entryData = {
-					// 			...entry,
-					// 			received_date: entry.is_received ? getDateTime() : null,
-					// 			capital_uuid: new_uuid,
-					// 			created_at: getDateTime(),
-					// 			created_by: user?.uuid,
-					// 			uuid: nanoid(),
-					// 		};
-					// 		return postData.mutateAsync({
-					// 			url: `/procure/item-work-order-entry`,
-					// 			newData: entryData,
-					// 		});
-					// 	});
-					// 	Promise.all([...(itemsPromise || [])]);
-					// }
+					// * ENTRY FOR ITEMS
+					if ((filteredItems ?? []).length > 0) {
+						const itemsPromise = filteredItems?.map((entry) => {
+							const entryData = {
+								...entry,
+								// received_date: entry.is_received ? getDateTime() : null,
+								capital_uuid: new_uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
+							return postData.mutateAsync({
+								url: `/procure/capital-item`,
+								newData: entryData,
+							});
+						});
+						Promise.all([...(itemsPromise || [])]);
+					}
 
 					// * ENTRY FOR GENERAL NOTES
 					if (general_notes.length > 0) {
@@ -391,7 +391,7 @@ const Entry = () => {
 			item_uuid: '',
 			quantity: 0,
 			is_received: false,
-			received_date: null,
+			// received_date: null,
 		});
 	};
 
@@ -470,7 +470,7 @@ const Entry = () => {
 				item_uuid: field.item_uuid,
 				quantity: field.quantity,
 				is_received: field.is_received,
-				received_date: field.received_date,
+				// received_date: field.received_date,
 			});
 		}
 	};
