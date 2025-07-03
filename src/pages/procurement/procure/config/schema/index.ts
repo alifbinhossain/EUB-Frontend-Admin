@@ -53,7 +53,7 @@ export const CAPITAL_SCHEMA = z
 					}),
 					unit_price: NUMBER_OPTIONAL,
 					is_received: BOOLEAN_REQUIRED.default(false),
-					received_date: STRING_NULLABLE,
+					// received_date: STRING_NULLABLE,
 				})
 			)
 			.optional()
