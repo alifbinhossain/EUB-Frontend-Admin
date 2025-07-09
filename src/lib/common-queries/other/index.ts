@@ -162,3 +162,9 @@ export const useOtherBill = <T>(query?: string) =>
 		queryKey: otherQK.bill(query ? query : ''),
 		url: query ? `/other/procure/bill/value/label?${query}` : `/other/procure/bill/value/label`,
 	});
+
+export const useOtherTeacherSemesterSection = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: otherQK.teacherSemesterSection(query ? query : ''),
+		url: query ? `/other/lib/sem-crs-thr-entry/value/label?${query}` : `/other/lib/sem-crs-thr-entry/value/label`,
+	});

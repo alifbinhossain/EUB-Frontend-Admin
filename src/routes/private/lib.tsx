@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import Room from '@/pages/lib/room';
 import RoomAllocation from '@/pages/lib/room-allocation';
-import RoomAllocationEntry from '@/pages/lib/room-allocation/entry';
+import RoomAllocationEntry from '@/pages/lib/room-allocation/entry-3';
 import { IRoute } from '@/types';
 
 const Semester = lazy(() => import('@/pages/lib/semester'));

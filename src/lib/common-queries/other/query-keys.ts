@@ -60,6 +60,8 @@ const otherQK = {
 	bank: () => [...otherQK.all(), 'bank'],
 	//*bill
 	bill: (query: string) => [...otherQK.all(), 'bill', ...(query ? [query] : [])],
+	//*teacher semester section
+	teacherSemesterSection: (query?: string) => [...otherQK.all(), 'teacherSemesterSection', ...(query ? [query] : [])],
 };
 
 export default otherQK;

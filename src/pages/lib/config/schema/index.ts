@@ -48,6 +48,13 @@ export const ROOM_NULL: Partial<IRoom> = {
 };
 
 export type IRoom = z.infer<typeof ROOM_SCHEMA>;
+export const ROOM_ALLOCATION_SCHEMA = z.object({
+	sem_crs_thr_entry_uuid: STRING_REQUIRED,
+});
+export const ROOM_ALLOCATION_NULL: Partial<IRoomAllocation> = {
+	sem_crs_thr_entry_uuid: '',
+};
+export type IRoomAllocation = z.infer<typeof ROOM_ALLOCATION_SCHEMA>;
 
 //* Course Schema
 export const COURSE_SCHEMA = z.object({

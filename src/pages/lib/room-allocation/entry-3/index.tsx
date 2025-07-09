@@ -2,11 +2,14 @@
 
 import { useCallback, useState } from 'react';
 import { AlertCircle, Building2, Settings } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+
+import { useOtherBank } from '@/lib/common-queries/other';
 
 import { AllocationSummary } from './_components/allocation-summary';
 import { GlobalSettingsDialog } from './_components/global-settings-dialog';
@@ -19,7 +22,7 @@ import { useRoomAllocation } from './hooks/use-room-allocation';
 import type { Weekday } from './lib/types';
 
 export default function RoomAllocationPage() {
-	const semesterId = 'default-semester';
+	const { uuid: semesterId } = useParams();
 
 	const {
 		rooms,
@@ -31,7 +34,8 @@ export default function RoomAllocationPage() {
 		selectRoom,
 		setSelectedDay,
 		deleteAllocation,
-	} = useRoomAllocation(semesterId);
+	} = useRoomAllocation(semesterId as string);
+	const { deleteData } = useOtherBank();
 
 	const { settings, updateSettings, resetToDefaults, isLoaded } = useGlobalSettings();
 
@@ -156,13 +160,14 @@ export default function RoomAllocationPage() {
 								onTimeRangeSelect={handleTimeRangeSelect}
 								room={selectedRoom}
 								day={selectedDay}
-								semesterId={semesterId}
+								semesterId={semesterId as string}
 								onAssignment={handleAssignment}
 								globalSettings={settings}
 							/>
 							<AllocationSummary
 								allocations={allocations}
 								selectedDay={selectedDay}
+								deleteData={deleteData}
 								onDeleteAllocation={handleDeleteAllocation}
 							/>
 						</div>
