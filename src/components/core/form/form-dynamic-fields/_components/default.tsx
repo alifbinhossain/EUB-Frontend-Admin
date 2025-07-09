@@ -18,8 +18,8 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 	children,
 }) => {
 	return (
-		<div className='rounded-b-md border border-t-0'>
-			<Table className='overflow-x-auto'>
+		<div className='overflow-x-auto rounded-b-md border border-t-0'>
+			<Table className='w-full'>
 				<TableHeader>
 					<TableRow className='h-8 divide-x-[1px]'>
 						{fieldDefs
@@ -53,6 +53,20 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 										} else {
 											return (
 												<TableCell
+													style={{
+														width:
+															typeof fieldDef.width === 'string'
+																? `${fieldDef.width}px`
+																: fieldDef.width,
+														maxWidth:
+															typeof fieldDef.maxWidth === 'string'
+																? `${fieldDef.maxWidth}px`
+																: fieldDef.maxWidth,
+														minWidth:
+															typeof fieldDef.minWidth === 'string'
+																? `${fieldDef.minWidth}px`
+																: fieldDef.minWidth,
+													}}
 													className={cn('first:pl-2 last:pr-2', fieldDef.className)}
 													key={fieldDef.accessorKey}
 												>

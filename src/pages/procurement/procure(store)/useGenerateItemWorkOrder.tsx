@@ -49,6 +49,7 @@ const useGenerateItemWorkOrder = ({ remove, watch, data, form }: IGenerateFieldD
 					/>
 				);
 			},
+			minWidth: 210,
 		},
 
 		{
