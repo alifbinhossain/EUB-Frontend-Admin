@@ -62,6 +62,10 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															typeof fieldDef.maxWidth === 'string'
 																? `${fieldDef.maxWidth}px`
 																: fieldDef.maxWidth,
+														minWidth:
+															typeof fieldDef.minWidth === 'string'
+																? `${fieldDef.minWidth}px`
+																: fieldDef.minWidth,
 													}}
 													className={cn('first:pl-2 last:pr-2', fieldDef.className)}
 													key={fieldDef.accessorKey}

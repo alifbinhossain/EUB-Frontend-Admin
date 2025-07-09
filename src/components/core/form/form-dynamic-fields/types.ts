@@ -96,6 +96,7 @@ export type FieldDef = {
 	hidden?: boolean;
 	width?: string | number;
 	maxWidth?: string | number;
+	minWidth?: string | number;
 } & (
 	| FieldText
 	| FieldNumber
