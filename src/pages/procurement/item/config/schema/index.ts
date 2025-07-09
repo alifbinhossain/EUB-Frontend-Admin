@@ -14,6 +14,7 @@ import {
 // Item Schema
 export const ITEM_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	store: STRING_REQUIRED,
 	purchase_cost_center_uuid: STRING_REQUIRED,
 	sub_purchase_cost_center_uuid: STRING_NULLABLE,
 	threshold: NUMBER_REQUIRED.min(1, 'Threshold must be greater than 0'),

@@ -17,15 +17,31 @@ const ItemRequest = lazy(() => import('./request'));
 const Details = lazy(() => import('./details'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
+const getAccess = (pageAccess: string[]) => {
+	if (pageAccess.includes('show_maintenance')) {
+		return 'store_type=maintenance';
+	} else if (pageAccess.includes('show_general')) {
+		return 'store_type=general';
+	} else if (pageAccess.includes('show_it_store')) {
+		return 'store_type=it_store';
+	} else {
+		return '';
+	}
+};
+
 const Designation = () => {
 	const navigate = useNavigate();
-	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>();
+	const pageAccess = useAccess('procurement__item') as string[];
+
+	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>(
+		getAccess(pageAccess)
+	);
 	const [itemUuid, setItemUuid] = useState<string | null>(null);
 
 	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);
 
 	// Add/Update Modal state
-	const pageAccess = useAccess(pageInfo.getTab() as string) as string[];
+
 	const actionITemTrxAccess = pageAccess.includes('click_item_trx');
 
 	const handleCreate = () => {

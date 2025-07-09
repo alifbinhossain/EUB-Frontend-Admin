@@ -29,6 +29,11 @@ export const itemColumns = (
 		),
 	},
 	{
+		accessorKey: 'store',
+		header: 'Store',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'purchase_cost_center_name',
 		header: 'Category',
 		enableColumnFilter: true,

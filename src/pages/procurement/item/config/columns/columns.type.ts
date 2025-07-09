@@ -3,6 +3,7 @@ export type IItemTableData = {
 	index: number;
 	uuid: string;
 	name: string;
+	store: string;
 	quantity: number;
 	threshold: number;
 	lead_time: number;

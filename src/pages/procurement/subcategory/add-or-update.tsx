@@ -95,12 +95,7 @@ const AddOrUpdate: React.FC<ISubCategoryAddOrUpdateProps> = ({
 				control={form.control}
 				name='category_uuid'
 				render={(props) => (
-					<CoreForm.ReactSelect
-						label='Category'
-						placeholder='Select category'
-						options={category!}
-						{...props}
-					/>
+					<CoreForm.ReactSelect label='Segment' placeholder='Select segment' options={category!} {...props} />
 				)}
 			/>
 			<FormField

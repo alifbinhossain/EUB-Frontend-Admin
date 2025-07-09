@@ -24,3 +24,18 @@ export const type = [
 		value: 'range_4',
 	},
 ];
+
+export const stores = [
+	{
+		label: 'Maintenance',
+		value: 'maintenance',
+	},
+	{
+		label: 'General',
+		value: 'general',
+	},
+	{
+		label: 'IT Store',
+		value: 'it_store',
+	},
+];
