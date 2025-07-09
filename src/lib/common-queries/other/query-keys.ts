@@ -43,7 +43,7 @@ const otherQK = {
 	//* Internal Cost Center
 	internalCostCenter: () => [...otherQK.all(), 'internalCostCenter'],
 	//* Item
-	item: () => [...otherQK.all(), 'item'],
+	item: (query?: string) => [...otherQK.all(), 'item', ...(query ? [query] : [])],
 
 	// * Course
 	course: () => [...otherQK.all(), 'course'],

@@ -18,6 +18,7 @@ import { useItem, useItemAndVendorByUUID } from './config/query';
 import { IItem, ITEM_NULL, ITEM_SCHEMA } from './config/schema';
 import { IItemAddOrUpdateProps } from './config/types';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
+import { stores } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -188,6 +189,19 @@ const Entry = () => {
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Item' : 'Add Item'} form={form} onSubmit={onSubmit}>
 			<CoreForm.Section title={`Items`}>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField
+					control={form.control}
+					name='store'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Store'
+							placeholder='Select Store'
+							menuPortalTarget={document.body}
+							options={stores!}
+							{...props}
+						/>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name='purchase_cost_center_uuid'

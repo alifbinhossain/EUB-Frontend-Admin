@@ -109,10 +109,10 @@ export const useOtherInternalCostCenter = <T>() =>
 		url: `/other/procure/internal-cost-center/value/label`,
 	});
 // * GET OTHER ITEM
-export const useOtherItem = <T>() =>
+export const useOtherItem = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: otherQK.item(),
-		url: `/other/procure/item/value/label`,
+		queryKey: otherQK.item(query),
+		url: query ? `/other/procure/item/value/label?${query}` : `/other/procure/item/value/label`,
 	});
 
 //* GET OTHER QUESTION CATEGORY

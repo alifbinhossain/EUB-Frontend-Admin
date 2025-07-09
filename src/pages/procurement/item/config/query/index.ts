@@ -3,10 +3,10 @@ import useTQuery from '@/hooks/useTQuery';
 import { itemQK } from './queryKeys';
 
 // * ITEM
-export const useItem = <T>() =>
+export const useItem = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: itemQK.item(),
-		url: `/procure/item`,
+		queryKey: itemQK.item(query),
+		url: query ? `/procure/item?${query}` : `/procure/item`,
 	});
 
 export const useItemByUUID = <T>(uuid: string) =>

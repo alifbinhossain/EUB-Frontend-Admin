@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import useAccess from '@/hooks/useAccess';
 
 import { ToolbarComponent } from '@/components/core/data-table/_components/toolbar';
 import ReactSelect from '@/components/ui/react-select';
@@ -15,11 +16,24 @@ import { useItemRequested } from '../log/config/query';
 const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
+const getAccess = (pageAccess: string[]) => {
+	if (pageAccess.includes('show_maintenance')) {
+		return '&store_type=maintenance';
+	} else if (pageAccess.includes('show_general')) {
+		return '&store_type=general';
+	} else if (pageAccess.includes('show_it_store')) {
+		return '&store_type=it_store';
+	} else {
+		return '';
+	}
+};
+
 const Vendor = () => {
+	const pageAccess = useAccess('procurement__item_request') as string[];
 	const [status, setStatus] = useState('pending');
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItemRequested<
 		IITemRequestTableData[]
-	>(`status=${status}`);
+	>(`status=${status}${getAccess(pageAccess)}`);
 
 	const statusList = [
 		{ value: '', label: 'All' },

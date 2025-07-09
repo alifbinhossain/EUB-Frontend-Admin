@@ -1,5 +1,6 @@
 import { Copy } from 'lucide-react';
 import { UseFormWatch } from 'react-hook-form';
+import useAccess from '@/hooks/useAccess';
 
 import FieldActionButton from '@/components/buttons/field-action';
 import { IFormSelectOption } from '@/components/core/form/types';
@@ -23,6 +24,18 @@ interface IGenerateFieldDefsProps {
 	isNew?: boolean;
 }
 
+const getAccess = (pageAccess: string[]) => {
+	if (pageAccess.includes('show_maintenance')) {
+		return 'store_type=maintenance';
+	} else if (pageAccess.includes('show_general')) {
+		return 'store_type=general';
+	} else if (pageAccess.includes('show_it_store')) {
+		return 'store_type=it_store';
+	} else {
+		return '';
+	}
+};
+
 const useGenerateFieldDefs = ({
 	data,
 	remove,
@@ -32,7 +45,10 @@ const useGenerateFieldDefs = ({
 	watch,
 	form,
 }: IGenerateFieldDefsProps): FieldDef[] => {
-	const { data: itemList } = useOtherItem<IFormSelectOption[]>();
+	const pageAccess = useAccess('procurement__requisition') as string[];
+
+	const { data: itemList } = useOtherItem<IFormSelectOption[]>(getAccess(pageAccess));
+
 	const fieldName = isNew ? 'new_item_requisition' : 'item_requisition';
 	// Copy req_quantity to provided_quantity for the given index
 	const handleCopy = (index: number) => {

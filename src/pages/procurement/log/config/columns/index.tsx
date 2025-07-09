@@ -106,6 +106,11 @@ export const itemRequestColumns = ({ updateAccess, deleteAccess }: any): ColumnD
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'store',
+		header: 'Store',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'request_quantity',
 		header: 'Request Quantity',
 		enableColumnFilter: true,
