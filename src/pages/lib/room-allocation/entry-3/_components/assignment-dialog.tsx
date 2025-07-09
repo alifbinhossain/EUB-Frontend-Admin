@@ -139,7 +139,6 @@ export function AssignmentDialog({
 
 							{/* Room Information */}
 							<Card className='border-slate-200'>
-								xx
 								<CardContent className='p-4'>
 									<div className='mb-3 flex items-start justify-between'>
 										<div className='flex items-center gap-2'>
@@ -249,9 +248,4 @@ export function AssignmentDialog({
 			</DialogContent>
 		</Dialog>
 	);
-}
-{
-	/* <div className='space-y-3'>{children}</div>
-									<CoreForm.Submit className='w-full' title='Save' />
-									<DevTool control={form.control} placement='top-left' /> */
 }
