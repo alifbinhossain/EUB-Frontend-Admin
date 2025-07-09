@@ -63,7 +63,7 @@ const Header = (data: IBill & { isUpdate: boolean }) => {
 					/>
 				)}
 			/>
-			<FormField
+			{/* <FormField
 				control={form.control}
 				name='bank_uuid'
 				render={(props) => (
@@ -76,7 +76,7 @@ const Header = (data: IBill & { isUpdate: boolean }) => {
 						{...props}
 					/>
 				)}
-			/>
+			/> */}
 		</CoreForm.Section>
 	);
 };

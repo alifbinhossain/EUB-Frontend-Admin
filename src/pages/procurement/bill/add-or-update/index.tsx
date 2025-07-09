@@ -1,11 +1,9 @@
-import { it } from 'node:test';
 import { lazy, Suspense, use, useCallback, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
-import DataTableEntry from '@/components/core/data-table/entry';
 import { ShowLocalToast } from '@/components/others/toast';
 import CoreForm from '@core/form';
 
@@ -298,7 +296,7 @@ const AddOrUpdate = () => {
 		>
 			<Header
 				vendor_uuid={data?.vendor_uuid || ''}
-				bank_uuid={data?.bank_uuid || ''}
+				// bank_uuid={data?.bank_uuid || ''}
 				is_completed={data?.is_completed || false}
 				item_work_order={data?.item_work_order || []}
 				bill_payment={data?.bill_payment || []}
@@ -348,8 +346,12 @@ const AddOrUpdate = () => {
 						Grand Total:
 					</td>
 
-					<td className='border-t px-3 py-2' colSpan={5}>
-						{total()?.grand_total_amount}
+					<td className='border-t px-3 py-2'>{total()?.grand_total_amount}</td>
+					<td className='border-t text-right font-semibold' colSpan={1}>
+						Due:
+					</td>
+					<td className='border-t px-3 py-2' colSpan={3}>
+						{totalItemAmount()?.grand_total_amount - total()?.grand_total_amount}
 					</td>
 				</tr>
 			</CoreForm.DynamicFields>

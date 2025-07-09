@@ -1,9 +1,7 @@
-import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { array } from 'zod';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
@@ -132,12 +130,16 @@ const Entry = () => {
 			return;
 		}
 
-		if (min.min_quotation > 0 && quotations.length < min.min_quotation) {
+		if (values?.is_quotation && min.min_quotation > 0 && quotations.length < min.min_quotation) {
 			toast.warning(`Please add at least ${min.min_quotation} quotation entries`);
 			return;
 		}
 
-		if (min.min_amount > 0 && quotations.reduce((acc, curr) => acc + curr.amount, 0) < min.min_amount) {
+		if (
+			values?.is_quotation &&
+			min.min_amount > 0 &&
+			quotations.reduce((acc, curr) => acc + curr.amount, 0) < min.min_amount
+		) {
 			toast.warning(`Please add at least total of ${min.min_amount} quotation amount`);
 			return;
 		}
@@ -198,24 +200,24 @@ const Entry = () => {
 							if (entry.uuid) {
 								const entryUpdateData = {
 									...entry,
-									received_date: entry.is_received ? getDateTime() : null,
+									// received_date: entry.is_received ? getDateTime() : null,
 									updated_at: getDateTime(),
 								};
 								return updateData.mutateAsync({
-									url: `/procure/item-work-order-entry/${entry.uuid}`,
+									url: `/procure/capital-item/${entry.uuid}`,
 									updatedData: entryUpdateData,
 								});
 							} else {
 								const entryData = {
 									...entry,
-									received_date: entry.is_received ? getDateTime() : null,
+									// received_date: entry.is_received ? getDateTime() : null,
 									capital_uuid: uuid,
 									created_at: getDateTime(),
 									created_by: user?.uuid,
 									uuid: nanoid(),
 								};
 								return postData.mutateAsync({
-									url: `/procure/item-work-order-entry`,
+									url: `/procure/capital-item`,
 									newData: entryData,
 								});
 							}
@@ -317,14 +319,14 @@ const Entry = () => {
 						const itemsPromise = filteredItems?.map((entry) => {
 							const entryData = {
 								...entry,
-								received_date: entry.is_received ? getDateTime() : null,
+								// received_date: entry.is_received ? getDateTime() : null,
 								capital_uuid: new_uuid,
 								created_at: getDateTime(),
 								created_by: user?.uuid,
 								uuid: nanoid(),
 							};
 							return postData.mutateAsync({
-								url: `/procure/item-work-order-entry`,
+								url: `/procure/capital-item`,
 								newData: entryData,
 							});
 						});
@@ -389,7 +391,7 @@ const Entry = () => {
 			item_uuid: '',
 			quantity: 0,
 			is_received: false,
-			received_date: null,
+			// received_date: null,
 		});
 	};
 
@@ -468,7 +470,7 @@ const Entry = () => {
 				item_uuid: field.item_uuid,
 				quantity: field.quantity,
 				is_received: field.is_received,
-				received_date: field.received_date,
+				// received_date: field.received_date,
 			});
 		}
 	};
@@ -603,6 +605,7 @@ const Entry = () => {
 							name='is_quotation'
 							render={(props) => (
 								<CoreForm.Switch
+									label='Quotation'
 									labelClassName='text-slate-100'
 									disabled={form.watch('sub_category_uuid') === ''}
 									onCheckedChange={(e) => {

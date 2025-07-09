@@ -17,6 +17,8 @@ export const PROCURE_REQUEST_SCHEMA = z
 		uuid: STRING_OPTIONAL,
 		done: BOOLEAN_REQUIRED.default(false),
 		done_date: STRING_OPTIONAL.nullable(),
+		subject: STRING_REQUIRED,
+		estimated_date: STRING_REQUIRED,
 		bill_uuid: STRING_NULLABLE,
 		work_order_file: z
 			.instanceof(File)
@@ -52,6 +54,13 @@ export const PROCURE_REQUEST_SCHEMA = z
 					code: z.ZodIssueCode.custom,
 					message: 'Provided Quantity must be less than or equal to Requested Quantity',
 					path: [`item_work_order_entry.${index}.provided_quantity`],
+				});
+			}
+			if (data?.is_delivery_statement && (item?.unit_price === undefined || item?.unit_price <= 0)) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: 'Unit Price must be greater than 0',
+					path: [`item_work_order_entry.${index}.unit_price`],
 				});
 			}
 		});

@@ -3,10 +3,16 @@ import useTQuery from '@/hooks/useTQuery';
 import { requisitionQK } from './queryKeys';
 
 // * REQUISITION
-export const useRequisition = <T>(showAll?: boolean, uuid?: string) =>
+export const useRequisition = <T>(showAll?: boolean, uuid?: string, status?: string) =>
 	useTQuery<T>({
-		queryKey: requisitionQK.requisition(),
-		url: showAll ? `/procure/requisition` : `/procure/requisition?user_uuid=${uuid}`,
+		queryKey: requisitionQK.requisition(uuid, status),
+		url: showAll
+			? status == undefined
+				? `/procure/requisition`
+				: `/procure/requisition?status=${status}`
+			: status == 'undefined'
+				? `/procure/requisition?user_uuid=${uuid}`
+				: `/procure/requisition?user_uuid=${uuid}&status=${status}`,
 		enabled: !!showAll || !!uuid,
 	});
 

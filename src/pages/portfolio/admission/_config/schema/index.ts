@@ -176,6 +176,7 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		ssc_board: z.enum([
 			'Dhaka',
 			'Chittagong',
+			'Barisal',
 			'Jessore',
 			'Dinajpur',
 			'Khulna',
@@ -201,6 +202,7 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 		hsc_board: z.enum([
 			'Dhaka',
 			'Chittagong',
+			'Barisal',
 			'Jessore',
 			'Dinajpur',
 			'Khulna',
@@ -292,10 +294,10 @@ export const PORTFOLIO_ADMISSION_SCHEMA = z
 				path: ['student_id'],
 			});
 		}
-		if (data?.student_id && data?.student_id.length !== 10) {
+		if (data?.student_id && data?.student_id.length !== 9) {
 			ctx.addIssue({
 				code: z.ZodIssueCode.custom,
-				message: 'Student ID must be 10 digits',
+				message: 'Student ID must be 9 digits',
 				path: ['student_id'],
 			});
 		}
