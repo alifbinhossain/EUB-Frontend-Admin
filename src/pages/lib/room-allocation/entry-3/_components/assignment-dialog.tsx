@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRoomAllocationData } from '@/pages/lib/config/query';
 import { ROOM_ALLOCATION_NULL, ROOM_ALLOCATION_SCHEMA } from '@/pages/lib/config/schema';
 import { DevTool } from '@hookform/devtools';
+import { ro } from 'date-fns/locale';
 import { BookOpen, Building2, Calendar, CheckCircle2, Clock, Loader2, MapPin, Users } from 'lucide-react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
@@ -57,6 +59,10 @@ export function AssignmentDialog({
 	const { data: sectionOptions, postData } = useOtherTeacherSemesterSection<IFormSelectOption[]>(
 		`semester_uuid=${semesterId}`
 	);
+	const { invalidateQuery: invalidateRoomAllocation } = useRoomAllocationData(
+		`room_uuid=${room.uuid}&semester_uuid=${semesterId}`
+	);
+
 	const form = useRHF(ROOM_ALLOCATION_SCHEMA, ROOM_ALLOCATION_NULL);
 
 	const { data: semesters } = useOtherSemester<IFormSelectOption[]>();
@@ -98,20 +104,23 @@ export function AssignmentDialog({
 
 	const handleConfirm = async (values: { sem_crs_thr_entry_uuid: string }) => {
 		form.trigger();
-		postData.mutateAsync({
-			url: '/lib/room-allocation',
-			newData: {
-				...values,
-				room_uuid: room.uuid,
-				day: day,
-				from: startTime,
-				to: endTime,
-				created_at: getDateTime(),
-				created_by: user?.uuid,
-				uuid: nanoid(),
-			},
-			onClose,
-		});
+		postData
+			.mutateAsync({
+				url: '/lib/room-allocation',
+				newData: {
+					...values,
+					room_uuid: room.uuid,
+					day: day,
+					from: startTime,
+					to: endTime,
+					created_at: getDateTime(),
+					created_by: user?.uuid,
+					uuid: nanoid(),
+				},
+
+				onClose,
+			})
+			.then(() => invalidateRoomAllocation());
 	};
 
 	return (
@@ -231,16 +240,11 @@ export function AssignmentDialog({
 							>
 								Cancel
 							</Button>
-							<CoreForm.Submit title='Save' disabled={isSubmitting} className='h-9 min-w-[120px]'>
-								{isSubmitting ? (
-									<>
-										<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-										Assigning...
-									</>
-								) : (
-									'Confirm'
-								)}
-							</CoreForm.Submit>
+							<CoreForm.Submit
+								title='Save'
+								disabled={isSubmitting}
+								className='h-9 min-w-[120px]'
+							></CoreForm.Submit>
 							<DevTool control={form.control} placement='top-left' />
 						</DialogFooter>
 					</form>

@@ -11,6 +11,8 @@ import { Separator } from '@/components/ui/separator';
 
 import { useOtherBank } from '@/lib/common-queries/other';
 
+import { useRoomAllocationData } from '../../config/query';
+import { IRoom, IRoomAllocation } from '../../config/schema';
 import { AllocationSummary } from './_components/allocation-summary';
 import { GlobalSettingsDialog } from './_components/global-settings-dialog';
 import { RoomSelector } from './_components/room-list';
@@ -19,22 +21,16 @@ import { WeekdaySelector } from './_components/weekday-selector';
 import { WeeklyScheduleCalendar } from './_components/weekly-schedule-calendar';
 import { useGlobalSettings } from './hooks/use-global-settings';
 import { useRoomAllocation } from './hooks/use-room-allocation';
-import type { Weekday } from './lib/types';
+import type { RoomAllocation, Weekday } from './lib/types';
 
 export default function RoomAllocationPage() {
 	const { uuid: semesterId } = useParams();
 
-	const {
-		rooms,
-		allocations,
-		selectedRoom,
-		selectedDay,
-		loading,
-		error,
-		selectRoom,
-		setSelectedDay,
-		deleteAllocation,
-	} = useRoomAllocation(semesterId as string);
+	const { rooms, selectedRoom, selectedDay, loading, error, selectRoom, setSelectedDay, deleteAllocation } =
+		useRoomAllocation(semesterId as string);
+	const { data } = useRoomAllocationData<RoomAllocation[]>(
+		`room_uuid=${selectedRoom?.uuid}&semester_uuid=${semesterId}`
+	);
 	const { deleteData } = useOtherBank();
 
 	const { settings, updateSettings, resetToDefaults, isLoaded } = useGlobalSettings();
@@ -155,7 +151,7 @@ export default function RoomAllocationPage() {
 						<Separator className='bg-slate-200' />
 						<div className='grid gap-5 lg:grid-cols-2'>
 							<TimeRangePicker
-								allocations={allocations}
+								allocations={data?.filter((allocation) => allocation.day === selectedDay) || []}
 								selectedDay={selectedDay}
 								onTimeRangeSelect={handleTimeRangeSelect}
 								room={selectedRoom}
@@ -165,7 +161,7 @@ export default function RoomAllocationPage() {
 								globalSettings={settings}
 							/>
 							<AllocationSummary
-								allocations={allocations}
+								allocations={data?.filter((allocation) => allocation.day === selectedDay) || []}
 								selectedDay={selectedDay}
 								deleteData={deleteData}
 								onDeleteAllocation={handleDeleteAllocation}
@@ -179,7 +175,7 @@ export default function RoomAllocationPage() {
 					<>
 						<Separator className='bg-slate-200' />
 						<WeeklyScheduleCalendar
-							allocations={allocations}
+							allocations={data || []}
 							roomName={selectedRoom.name}
 							globalSettings={settings}
 						/>

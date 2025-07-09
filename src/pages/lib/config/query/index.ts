@@ -78,3 +78,9 @@ export const useSemCrsThrEntryByUUID = <T>(uuid: string) =>
 		url: `/lib/sem-crs-thr-entry/${uuid}`,
 		enabled: !!uuid,
 	});
+//* Room Allocation
+export const useRoomAllocationData = <T>(query?: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.roomAllocation(query ? query : ''),
+		url: query ? `/lib/room-allocation?${query}` : `/lib/room-allocation`,
+	});

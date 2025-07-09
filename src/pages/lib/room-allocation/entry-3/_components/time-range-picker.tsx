@@ -147,7 +147,7 @@ export function TimeRangePicker({
 		},
 		[pendingStartTime, calculateEndTimeFromDuration, onTimeRangeSelect]
 	);
-
+	console.log(timeSlots);
 	const handleSlotClick = useCallback(
 		(slot: TimeSlot) => {
 			if (!slot.available) return;
@@ -158,7 +158,6 @@ export function TimeRangePicker({
 			if (!selectedStart) {
 				// First selection - set start time
 				if (!hasAvailableEndSlots(slot.start)) {
-					// Show duration dialog for single slot
 					setPendingStartTime(slot.start);
 					setShowDurationDialog(true);
 				} else {
@@ -168,7 +167,6 @@ export function TimeRangePicker({
 			} else if (!selectedEnd) {
 				// Second selection - try to set end time
 				if (slot.start <= selectedStart) {
-					// If clicked slot is before or same as start, reset to new start
 					if (!hasAvailableEndSlots(slot.start)) {
 						setPendingStartTime(slot.start);
 						setShowDurationDialog(true);
@@ -177,20 +175,8 @@ export function TimeRangePicker({
 						setSelectedEnd(null);
 					}
 				} else {
-					// Calculate actual end time
-					const slotIndex = timeSlots.findIndex((s) => s.start === slot.start);
-					let actualEndTime = slot.start;
-
-					if (slotIndex < timeSlots.length - 1) {
-						actualEndTime = timeSlots[slotIndex + 1].start;
-					} else {
-						const [hours, minutes] = slot.start.split(':').map(Number);
-						const endMinutes = minutes + 10;
-						actualEndTime =
-							endMinutes >= 60
-								? `${(hours + 1).toString().padStart(2, '0')}:${(endMinutes - 60).toString().padStart(2, '0')}`
-								: `${hours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
-					}
+					// Use the selected slot time directly as end time
+					const actualEndTime = slot.start;
 
 					if (isValidRange(selectedStart, slot.start)) {
 						setSelectedEnd(slot.start);

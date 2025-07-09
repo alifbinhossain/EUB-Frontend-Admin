@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useRoomAllocationData } from '@/pages/lib/config/query';
 
 import { api } from '@/lib/api';
 import { BASE_API } from '@/lib/secret';
@@ -12,6 +13,7 @@ export function useRoomAllocation(semesterId: string) {
 	const [selectedDay, setSelectedDay] = useState<Weekday | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const { data } = useRoomAllocationData(`room_uuid=${selectedRoom?.uuid}&semester_uuid=${semesterId}`);
 
 	const fetchRooms = useCallback(async () => {
 		setLoading(true);
@@ -30,13 +32,10 @@ export function useRoomAllocation(semesterId: string) {
 		async (roomId: string) => {
 			setLoading(true);
 			try {
-				// Replace with actual API call
+				// Replace with actual API callx
 
-				const response = await api.get(
-					`${BASE_API}/lib/room-allocation?room_uuid=${roomId}&semester_uuid=${semesterId}`
-				);
 				// response.data is the actual data
-				setAllocations(response.data);
+				setAllocations(data as RoomAllocation[]);
 			} catch (err: any) {
 				console.error('Failed to fetch room allocations:', err);
 				setError(`Failed to fetch room allocations: ${err?.message || err}`);
@@ -44,7 +43,7 @@ export function useRoomAllocation(semesterId: string) {
 				setLoading(false);
 			}
 		},
-		[semesterId]
+		[semesterId, data]
 	);
 
 	const deleteAllocation = useCallback(async (allocationId: string) => {
