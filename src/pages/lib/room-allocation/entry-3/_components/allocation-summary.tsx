@@ -14,9 +14,15 @@ interface AllocationSummaryProps {
 	allocations: RoomAllocation[];
 	selectedDay: string;
 	onDeleteAllocation?: (allocationId: string) => Promise<void>;
+	deleteData: any;
 }
 
-export function AllocationSummary({ allocations, selectedDay, onDeleteAllocation }: AllocationSummaryProps) {
+export function AllocationSummary({
+	allocations,
+	selectedDay,
+	onDeleteAllocation,
+	deleteData,
+}: AllocationSummaryProps) {
 	const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
 
 	const dayAllocations = allocations.filter((allocation) => allocation.day === selectedDay);
@@ -24,7 +30,9 @@ export function AllocationSummary({ allocations, selectedDay, onDeleteAllocation
 	const handleDelete = useCallback(
 		async (allocationId: string) => {
 			if (!onDeleteAllocation) return;
-
+			await deleteData.mutateAsync({
+				url: `/lib/room-allocation/${allocationId}`,
+			});
 			setDeletingIds((prev) => new Set(prev).add(allocationId));
 			try {
 				await onDeleteAllocation(allocationId);

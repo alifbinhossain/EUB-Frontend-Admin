@@ -28,16 +28,6 @@ export function DeleteAllocationDialog({ open, onOpenChange, allocation, onConfi
 
 	const handleConfirm = async () => {
 		if (!allocation) return;
-
-		setIsDeleting(true);
-		try {
-			await onConfirm(allocation.uuid);
-			onOpenChange(false);
-		} catch (error) {
-			console.error('Delete failed:', error);
-		} finally {
-			setIsDeleting(false);
-		}
 	};
 
 	if (!allocation) return null;
