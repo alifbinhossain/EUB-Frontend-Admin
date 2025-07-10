@@ -12,8 +12,10 @@ export interface RoomAllocation {
 	sem_crs_thr_entry_uuid: string;
 	teacher_name?: string;
 	room_name?: string;
+	semester_uuid?: string;
+	course_code?: string;
 	course_name?: string;
-	section_name?: string;
+	course_section?: string;
 	day: 'sat' | 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri';
 	from: string; // HH:MM format
 	to: string; // HH:MM format

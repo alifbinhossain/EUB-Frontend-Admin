@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { Calendar, Clock, Trash2 } from 'lucide-react';
+import { useRoomAllocationData } from '@/pages/lib/config/query';
+import { PersonIcon } from '@radix-ui/react-icons';
+import { Book, Calendar, Clock, Section, Trash2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,32 +26,24 @@ export function AllocationSummary({
 	deleteData,
 }: AllocationSummaryProps) {
 	const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
-
-	const dayAllocations = allocations.filter((allocation) => allocation.day === selectedDay);
+	const { invalidateQuery: invalidateRoomAllocation } = useRoomAllocationData<RoomAllocation[]>(
+		`room_uuid=${allocations[0]?.room_uuid}&semester_uuid=${allocations[0]?.semester_uuid}`
+	);
+	const dayAllocations = allocations?.filter((allocation) => allocation.day === selectedDay);
 
 	const handleDelete = useCallback(
 		async (allocationId: string) => {
 			if (!onDeleteAllocation) return;
-			await deleteData.mutateAsync({
-				url: `/lib/room-allocation/${allocationId}`,
-			});
-			setDeletingIds((prev) => new Set(prev).add(allocationId));
-			try {
-				await onDeleteAllocation(allocationId);
-			} catch (error) {
-				console.error('Failed to delete allocation:', error);
-			} finally {
-				setDeletingIds((prev) => {
-					const newSet = new Set(prev);
-					newSet.delete(allocationId);
-					return newSet;
-				});
-			}
+			await deleteData
+				.mutateAsync({
+					url: `/lib/room-allocation/${allocationId}`,
+				})
+				.then(() => invalidateRoomAllocation());
 		},
 		[onDeleteAllocation]
 	);
 
-	if (dayAllocations.length === 0) {
+	if (dayAllocations?.length === 0) {
 		return (
 			<Card className='border-slate-200 shadow-sm'>
 				<CardHeader className='pb-4'>
@@ -71,21 +65,35 @@ export function AllocationSummary({
 					Current Allocations
 				</CardTitle>
 				<CardDescription className='text-sm text-slate-600'>
-					{dayAllocations.length} allocation{dayAllocations.length !== 1 ? 's' : ''} scheduled
+					{dayAllocations?.length} allocation{dayAllocations?.length !== 1 ? 's' : ''} scheduled
 				</CardDescription>
 			</CardHeader>
 			<CardContent className='pt-0'>
 				<div className='space-y-2'>
-					{dayAllocations.map((allocation) => (
+					{allocations?.map((allocation) => (
 						<div
 							key={allocation.uuid}
 							className='flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 p-3 transition-colors hover:bg-slate-100'
 						>
-							<div className='flex items-center gap-2.5'>
-								<Clock className='h-3.5 w-3.5 text-slate-500' />
-								<span className='text-sm font-medium text-slate-800'>
-									{formatTime(allocation.from)} - {formatTime(allocation.to)}
-								</span>
+							<div className='flex flex-col gap-2.5'>
+								<div className='flex items-center gap-2'>
+									<Book className='h-3.5 w-3.5 text-slate-500' />
+									<span className='text-sm font-medium text-slate-800'>
+										{allocation.course_code} - {allocation.course_section}
+									</span>
+								</div>
+								<div className='flex items-center gap-2'>
+									<PersonIcon className='h-3.5 w-3.5 text-slate-500' />
+									<span className='text-sm font-medium text-slate-800'>
+										{allocation.teacher_name}
+									</span>
+								</div>
+								<div className='flex items-center gap-2'>
+									<Clock className='h-3.5 w-3.5 text-slate-500' />
+									<span className='text-sm font-medium text-slate-800'>
+										{formatTime(allocation.from)} - {formatTime(allocation.to)}
+									</span>
+								</div>
 							</div>
 							<div className='flex items-center gap-2'>
 								<Badge

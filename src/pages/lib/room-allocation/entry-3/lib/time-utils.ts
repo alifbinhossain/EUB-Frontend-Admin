@@ -27,7 +27,7 @@ export function generateTimeSlots(settings?: GlobalSettings): string[] {
 }
 
 export function isTimeInRange(time: string, start: string, end: string): boolean {
-	return time >= start && time < end;
+	return time >= start && time <= end;
 }
 
 export function getAvailableTimeSlots(
@@ -36,12 +36,12 @@ export function getAvailableTimeSlots(
 	settings?: GlobalSettings
 ): TimeSlot[] {
 	const allSlots = generateTimeSlots(settings);
-	const dayAllocations = allocations.filter((allocation) => allocation.day === selectedDay);
+	const dayAllocations = allocations?.filter((allocation) => allocation.day === selectedDay);
 
 	return allSlots.map((slot, index) => {
 		// For the last slot, there's no "next slot", so we use it as both start and end
 		const nextSlot = index < allSlots.length - 1 ? allSlots[index + 1] : slot;
-		const isAvailable = !dayAllocations.some((allocation) => isTimeInRange(slot, allocation.from, allocation.to));
+		const isAvailable = !dayAllocations?.some((allocation) => isTimeInRange(slot, allocation.from, allocation.to));
 
 		return {
 			start: slot,

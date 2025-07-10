@@ -9,6 +9,10 @@ export const fdeQK = {
 	room: () => [...fdeQK.all(), 'room'],
 	roomByUUID: (uuid: string) => [...fdeQK.room(), uuid],
 
+	//*Room Allocation
+	roomAllocation: (query?: string) => [...fdeQK.all(), 'room-allocation', ...(query ? [query] : [])],
+	roomAllocationByUUID: (uuid: string) => [...fdeQK.roomAllocation(), uuid],
+
 	//*Course
 	course: () => [...fdeQK.all(), 'course'],
 	courseByUUID: (uuid: string) => [...fdeQK.course(), uuid],
