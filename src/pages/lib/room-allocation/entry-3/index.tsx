@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { AlertCircle, Building2, Settings } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
+import Pdf from '@/components/pdf/room-allocation';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,9 +13,9 @@ import { Separator } from '@/components/ui/separator';
 import { useOtherBank } from '@/lib/common-queries/other';
 
 import { useRoomAllocationData } from '../../config/query';
-import { IRoom, IRoomAllocation } from '../../config/schema';
+// import { IRoom, IRoomAllocation } from '../../config/schema';
 import { AllocationSummary } from './_components/allocation-summary';
-import { GlobalSettingsDialog } from './_components/global-settings-dialog';
+// import { GlobalSettingsDialog } from './_components/global-settings-dialog';
 import { RoomSelector } from './_components/room-list';
 import { TimeRangePicker } from './_components/time-range-picker';
 import { WeekdaySelector } from './_components/weekday-selector';
@@ -97,13 +98,23 @@ export default function RoomAllocationPage() {
 				<Button
 					variant='outline'
 					size='sm'
+					onClick={() => Pdf(data || [])?.print()}
+					className='h-9 px-3'
+					title='Global Settings'
+				>
+					<Settings className='mr-2 h-4 w-4' />
+					Generate PDF
+				</Button>
+				{/* <Button
+					variant='outline'
+					size='sm'
 					onClick={() => setShowGlobalSettings(true)}
 					className='h-9 px-3'
 					title='Global Settings'
 				>
 					<Settings className='mr-2 h-4 w-4' />
 					Settings
-				</Button>
+				</Button> */}
 			</div>
 
 			{error && (
@@ -184,13 +195,13 @@ export default function RoomAllocationPage() {
 			</div>
 
 			{/* Global Settings Dialog */}
-			<GlobalSettingsDialog
+			{/*<GlobalSettingsDialog
 				open={showGlobalSettings}
 				onOpenChange={setShowGlobalSettings}
 				settings={settings}
 				onSettingsChange={updateSettings}
 				onReset={resetToDefaults}
-			/>
+			/>*/}
 		</div>
 	);
 }

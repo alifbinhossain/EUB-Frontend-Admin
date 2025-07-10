@@ -350,7 +350,8 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 																		isFullscreen ? 'mb-1 text-xs' : 'text-[10px]'
 																	)}
 																>
-																	Room Booking
+																	{allocation.allocation.course_code} -
+																	{allocation.allocation.course_section}
 																</div>
 																<div
 																	className={cn(
@@ -360,12 +361,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 																			: 'mt-0.5 text-[9px]'
 																	)}
 																>
-																	ID:{' '}
-																	{allocation.allocation.sem_crs_thr_entry_uuid.slice(
-																		0,
-																		isFullscreen ? 8 : 6
-																	)}
-																	...
+																	{allocation.allocation.teacher_name}
 																</div>
 																<div
 																	className={cn(
@@ -376,7 +372,24 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 																	{formatTime(allocation.allocation.from)} -{' '}
 																	{formatTime(allocation.allocation.to)}
 																</div>
-																{isFullscreen && allocation.duration > 3 && (
+																<div
+																	className={cn(
+																		'truncate opacity-80',
+																		isFullscreen
+																			? 'mb-1 text-xs'
+																			: 'mt-0.5 text-[9px]'
+																	)}
+																>
+																	Duration:{' '}
+																	{Math.round(
+																		((allocation.duration *
+																			(globalSettings?.timeSlotDuration || 10)) /
+																			60) *
+																			10
+																	) / 10}
+																	h
+																</div>
+																{/* {allocation.duration > 3 && (
 																	<div className='mt-1 truncate text-xs opacity-60'>
 																		Duration:{' '}
 																		{Math.round(
@@ -388,7 +401,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 																		) / 10}
 																		h
 																	</div>
-																)}
+																)} */}
 															</div>
 															{allocation.hasConflict && (
 																<div
