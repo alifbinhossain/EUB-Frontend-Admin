@@ -5,6 +5,8 @@ import List from '@/pages/fde/list';
 import Log from '@/pages/fde/log';
 import Question from '@/pages/fde/question';
 import QuestionCategory from '@/pages/fde/question-category';
+import ReportTeacherEvaluation from '@/pages/fde/report/teacher-evaluation-semester';
+import ReportTeacherEvaluationTeacher from '@/pages/fde/report/teacher-evaluation-teacher';
 import { IRoute } from '@/types';
 
 const fdeRoutes: IRoute[] = [
@@ -61,6 +63,25 @@ const fdeRoutes: IRoute[] = [
 				element: <Log />,
 				page_name: 'fde__log',
 				actions: ['create', 'read', 'update', 'delete', 'show_student_ID'],
+			},
+			{
+				name: 'Report',
+				children: [
+					{
+						name: 'Teacher Evaluation (Semester)',
+						path: '/fde/report/teacher-evaluation',
+						element: <ReportTeacherEvaluation />,
+						page_name: 'fde__report_teacher_evaluation_semester',
+						actions: ['read'],
+					},
+					{
+						name: 'Teacher Evaluation (Teacher)',
+						path: '/fde/report/teacher-evaluation-teacher',
+						element: <ReportTeacherEvaluationTeacher />,
+						page_name: 'fde__report_teacher_evaluation_teacher',
+						actions: ['read'],
+					},
+				],
 			},
 		],
 	},
