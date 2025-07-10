@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { AlertCircle, Building2, Settings } from 'lucide-react';
+import { AlertCircle, Book, Building2, Settings } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
 import Pdf from '@/components/pdf/room-allocation';
+import PdfV2 from '@/components/pdf/room-allocation-v2';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -95,16 +96,28 @@ export default function RoomAllocationPage() {
 						<p className='text-sm text-slate-600'>Select a room, choose a day, and pick your time slot</p>
 					</div>
 				</div>
-				<Button
-					variant='outline'
-					size='sm'
-					onClick={() => Pdf(data || [])?.print()}
-					className='h-9 px-3'
-					title='Global Settings'
-				>
-					<Settings className='mr-2 h-4 w-4' />
-					Generate PDF
-				</Button>
+				<div className='flex gap-2'>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => Pdf(data || [])?.print()}
+						className='h-9 px-3'
+						title='PDF'
+					>
+						<Book className='mr-2 h-4 w-4' />
+						PDF
+					</Button>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => PdfV2(data || [])?.print()}
+						className='h-9 px-3'
+						title='PDF V2'
+					>
+						<Book className='mr-2 h-4 w-4' />
+						PDF V2
+					</Button>
+				</div>
 				{/* <Button
 					variant='outline'
 					size='sm'

@@ -11,7 +11,7 @@ export interface GlobalSettings {
 const DEFAULT_SETTINGS: GlobalSettings = {
 	timeSlotDuration: 10, // 10 minutes
 	startHour: 9, // 9 AM
-	endHour: 19, // 7 PM
+	endHour: 23, // 11 PM
 };
 
 export function useGlobalSettings() {

@@ -40,14 +40,12 @@ const WEEKDAYS_FULL: { key: Weekday; label: string }[] = [
 	{ key: 'sat', label: 'SATURDAY' },
 ];
 
-// Generate time slots from settings
+// Generate time slots including the final HH:00 row
 const generateTimeSlots = (settings?: GlobalSettings): string[] => {
-	const config = settings || { timeSlotDuration: 10, startHour: 9, endHour: 19 };
+	const { timeSlotDuration = 10, startHour = 9, endHour = 23 } = settings ?? {};
 	const slots: string[] = [];
-
-	for (let hour = config.startHour; hour <= config.endHour; hour++) {
-		const maxMinutes = hour === config.endHour ? 0 : 60;
-		for (let minute = 0; minute < maxMinutes; minute += config.timeSlotDuration) {
+	for (let hour = startHour; hour < endHour; hour++) {
+		for (let minute = 0; minute < 60; minute += timeSlotDuration) {
 			const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 			slots.push(timeString);
 		}
@@ -65,9 +63,11 @@ interface ScheduleBlock {
 export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }: WeeklyScheduleCalendarProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { isFullscreen, isSupported, toggleFullscreen } = useFullscreen();
+
+	// Memoize time slots
 	const timeSlots = useMemo(() => generateTimeSlots(globalSettings), [globalSettings]);
 
-	// Use full day names in fullscreen mode
+	// Choose header labels based on fullscreen
 	const weekdaysToShow = isFullscreen ? WEEKDAYS_FULL : WEEKDAYS;
 
 	// Process allocations into schedule blocks
@@ -82,97 +82,69 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 			sat: [],
 		};
 
-		// Group allocations by day and process them
 		allocations.forEach((allocation) => {
-			const startIndex = timeSlots.findIndex((slot) => slot === allocation.from);
+			const startIndex = timeSlots.findIndex((s) => s === allocation.from);
+			if (startIndex === -1) return;
 
-			if (startIndex !== -1) {
-				// Calculate duration in time slots
-				let duration = 1; // Default to 1 slot
-				const endIndex = timeSlots.findIndex((slot) => slot === allocation.to);
-
-				if (endIndex !== -1) {
-					duration = Math.max(1, endIndex - startIndex);
-				} else {
-					// If end time is not in our slots, calculate based on time difference
-					const [startHour, startMin] = allocation.from.split(':').map(Number);
-					const [endHour, endMin] = allocation.to.split(':').map(Number);
-					const diffMinutes = endHour * 60 + endMin - (startHour * 60 + startMin);
-					const slotDuration = globalSettings?.timeSlotDuration || 10;
-					duration = Math.max(1, Math.ceil(diffMinutes / slotDuration));
-				}
-
-				const block: ScheduleBlock = {
-					allocation,
-					startSlot: startIndex,
-					duration: Math.min(duration, timeSlots.length - startIndex),
-				};
-
-				schedule[allocation.day].push(block);
+			// Determine duration in slots
+			let duration: number;
+			const endIndex = timeSlots.findIndex((s) => s === allocation.to);
+			if (endIndex !== -1) {
+				duration = Math.max(1, endIndex - startIndex + 1);
+			} else {
+				const [sh, sm] = allocation.from.split(':').map(Number);
+				const [eh, em] = allocation.to.split(':').map(Number);
+				const diff = eh * 60 + em - (sh * 60 + sm);
+				const slotDur = globalSettings?.timeSlotDuration || 10;
+				duration = Math.max(1, Math.ceil(diff / slotDur));
 			}
+
+			schedule[allocation.day].push({
+				allocation,
+				startSlot: startIndex,
+				duration: Math.min(duration, timeSlots.length - startIndex),
+			});
 		});
 
-		// Check for conflicts and sort by start time
-		Object.keys(schedule).forEach((day) => {
-			const daySchedule = schedule[day as Weekday];
-
-			// Sort blocks by start time
+		// Sort and detect conflicts
+		Object.values(schedule).forEach((daySchedule) => {
 			daySchedule.sort((a, b) => a.startSlot - b.startSlot);
-
-			// Check for conflicts
-			daySchedule.forEach((block, index) => {
-				const hasOverlap = daySchedule.some((otherBlock, otherIndex) => {
-					if (index === otherIndex) return false;
-					const blockEnd = block.startSlot + block.duration;
-					const otherBlockEnd = otherBlock.startSlot + otherBlock.duration;
-					return (
-						(block.startSlot < otherBlockEnd && blockEnd > otherBlock.startSlot) ||
-						(otherBlock.startSlot < blockEnd && otherBlockEnd > block.startSlot)
-					);
+			daySchedule.forEach((block, i) => {
+				block.hasConflict = daySchedule.some((other, j) => {
+					if (i === j) return false;
+					const endA = block.startSlot + block.duration;
+					const endB = other.startSlot + other.duration;
+					return block.startSlot < endB && endA > other.startSlot;
 				});
-				block.hasConflict = hasOverlap;
 			});
 		});
 
 		return schedule;
 	}, [allocations, timeSlots, globalSettings]);
 
-	// Get allocation for a specific time slot and day
-	const getAllocationAtSlot = (day: Weekday, slotIndex: number): ScheduleBlock | null => {
-		const daySchedule = scheduleData[day] || [];
-		return (
-			daySchedule.find((block) => slotIndex >= block.startSlot && slotIndex < block.startSlot + block.duration) ||
-			null
-		);
-	};
+	// Helpers for rendering
+	const getAllocationAtSlot = (day: Weekday, idx: number) =>
+		scheduleData[day].find((b) => idx >= b.startSlot && idx < b.startSlot + b.duration) || null;
 
-	// Check if a slot is the start of an allocation
-	const isStartOfAllocation = (day: Weekday, slotIndex: number): boolean => {
-		const daySchedule = scheduleData[day] || [];
-		return daySchedule.some((block) => block.startSlot === slotIndex);
-	};
+	const isStartOfAllocation = (day: Weekday, idx: number) => scheduleData[day].some((b) => b.startSlot === idx);
 
-	// Check if a slot should be hidden (part of a multi-slot booking but not the start)
-	const shouldHideSlot = (day: Weekday, slotIndex: number): boolean => {
-		const allocation = getAllocationAtSlot(day, slotIndex);
-		return allocation !== null && !isStartOfAllocation(day, slotIndex);
+	const shouldHideSlot = (day: Weekday, idx: number) => {
+		const a = getAllocationAtSlot(day, idx);
+		return a !== null && !isStartOfAllocation(day, idx);
 	};
 
 	const totalAllocations = allocations.length;
 	const conflictCount = Object.values(scheduleData)
 		.flat()
-		.filter((block) => block.hasConflict).length;
+		.filter((b) => b.hasConflict).length;
 
 	const handleFullscreenToggle = async () => {
-		if (containerRef.current) {
-			await toggleFullscreen(containerRef.current);
-		}
+		if (containerRef.current) await toggleFullscreen(containerRef.current);
 	};
 
-	// Dynamic sizing based on fullscreen state
+	// Styling constants
 	const cellHeight = isFullscreen ? 'h-12' : 'h-8';
 	const blockHeightMultiplier = isFullscreen ? 48 : 32;
-	const maxBlockHeight = isFullscreen ? 300 : 200;
 	const timeColumnWidth = isFullscreen ? 'w-28 min-w-[112px]' : 'w-20 min-w-[80px]';
 	const dayColumnWidth = isFullscreen ? 'min-w-[160px]' : 'min-w-[100px]';
 	const textSize = isFullscreen ? 'text-sm' : 'text-xs';
@@ -202,7 +174,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 								<span
 									className={cn('font-normal text-slate-600', isFullscreen ? 'text-xl' : 'text-base')}
 								>
-									- {roomName}
+									– {roomName}
 								</span>
 							)}
 						</h2>
@@ -250,13 +222,13 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 				</div>
 			</div>
 
-			{/* Table Container */}
+			{/* Table */}
 			<div className={cn('pt-0', !isFullscreen && 'px-6 pb-6')}>
 				<div className='overflow-hidden rounded-lg border border-slate-200'>
 					<div className={cn('overflow-auto', isFullscreen ? 'max-h-[calc(100vh-200px)]' : 'max-h-96')}>
 						<Table>
 							<TableHeader className='sticky top-0 z-10'>
-								<TableRow className='border-b border-slate-200 bg-slate-50 hover:bg-slate-50'>
+								<TableRow className='border-b border-slate-200 bg-slate-50'>
 									<TableHead
 										className={cn(
 											'sticky left-0 z-20 border-r border-slate-200 bg-slate-50 font-medium text-slate-700',
@@ -266,31 +238,31 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 									>
 										Time
 									</TableHead>
-									{weekdaysToShow.map((day) => (
+									{weekdaysToShow.map((d) => (
 										<TableHead
-											key={day.key}
+											key={d.key}
 											className={cn(
 												'bg-slate-50 text-center font-medium text-slate-700',
 												dayColumnWidth,
 												headerTextSize
 											)}
 										>
-											{day.label}
+											{d.label}
 										</TableHead>
 									))}
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{timeSlots.map((timeSlot, slotIndex) => (
+								{timeSlots.map((slot, idx) => (
 									<TableRow
-										key={timeSlot}
+										key={slot}
 										className={cn(
-											'hover:bg-slate-25 border-b border-slate-100 transition-colors',
+											'hover:bg-slate-25 border-b border-slate-100',
 											cellHeight,
-											slotIndex % 2 === 0 ? 'bg-white' : 'bg-slate-25'
+											idx % 2 === 0 ? 'bg-white' : 'bg-slate-25'
 										)}
 									>
-										{/* Time Column - Sticky */}
+										{/* Time */}
 										<TableCell
 											className={cn(
 												'border-r border-slate-200 bg-inherit font-medium text-slate-600',
@@ -306,30 +278,30 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 														isFullscreen ? 'h-4 w-4' : 'h-3 w-3'
 													)}
 												/>
-												<span className='truncate'>{formatTime(timeSlot)}</span>
+												<span className='truncate'>{formatTime(slot)}</span>
 											</div>
 										</TableCell>
 
 										{/* Day Columns */}
-										{weekdaysToShow.map((day) => {
-											const allocation = getAllocationAtSlot(day.key, slotIndex);
-											const isStart = isStartOfAllocation(day.key, slotIndex);
-											const shouldHide = shouldHideSlot(day.key, slotIndex);
+										{weekdaysToShow.map((d) => {
+											const a = getAllocationAtSlot(d.key, idx);
+											const start = isStartOfAllocation(d.key, idx);
+											const hide = shouldHideSlot(d.key, idx);
 
 											return (
 												<TableCell
-													key={`${day.key}-${slotIndex}`}
+													key={`${d.key}-${idx}`}
 													className={cn(
 														'relative bg-inherit',
 														dayColumnWidth,
 														isFullscreen ? 'p-2' : 'p-1'
 													)}
 												>
-													{allocation && isStart && (
+													{a && start && (
 														<div
 															className={cn(
 																'absolute flex items-center justify-center overflow-hidden rounded-sm border px-1 font-medium shadow-sm transition-all',
-																allocation.hasConflict
+																a.hasConflict
 																	? 'border-red-300 bg-red-100 text-red-800'
 																	: 'border-blue-300 bg-blue-100 text-blue-800',
 																isFullscreen
@@ -339,42 +311,42 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 															)}
 															style={{
 																top: isFullscreen ? '4px' : '2px',
-																height: `${Math.min(allocation.duration * blockHeightMultiplier - (isFullscreen ? 8 : 4), maxBlockHeight)}px`,
+																height: `${a.duration * blockHeightMultiplier}px`,
 																zIndex: 5,
 															}}
 														>
 															<div className='w-full text-center leading-tight'>
 																<div
 																	className={cn(
-																		'truncate font-semibold uppercase tracking-wide',
+																		'font-semibold uppercase tracking-wide',
 																		isFullscreen ? 'mb-1 text-xs' : 'text-[10px]'
 																	)}
 																>
-																	{allocation.allocation.course_code} -
-																	{allocation.allocation.course_section}
+																	{a.allocation.course_code} -{' '}
+																	{a.allocation.course_section}
 																</div>
 																<div
 																	className={cn(
-																		'truncate opacity-80',
+																		'opacity-80',
 																		isFullscreen
 																			? 'mb-1 text-xs'
 																			: 'mt-0.5 text-[9px]'
 																	)}
 																>
-																	{allocation.allocation.teacher_name}
+																	{a.allocation.teacher_name}
 																</div>
 																<div
 																	className={cn(
-																		'truncate opacity-70',
+																		'whitespace-nowrap opacity-70',
 																		isFullscreen ? 'text-xs' : 'text-[9px]'
 																	)}
 																>
-																	{formatTime(allocation.allocation.from)} -{' '}
-																	{formatTime(allocation.allocation.to)}
+																	{formatTime(a.allocation.from)} –{' '}
+																	{formatTime(a.allocation.to)}
 																</div>
 																<div
 																	className={cn(
-																		'truncate opacity-80',
+																		'opacity-80',
 																		isFullscreen
 																			? 'mb-1 text-xs'
 																			: 'mt-0.5 text-[9px]'
@@ -382,28 +354,15 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 																>
 																	Duration:{' '}
 																	{Math.round(
-																		((allocation.duration *
+																		((a.duration *
 																			(globalSettings?.timeSlotDuration || 10)) /
 																			60) *
 																			10
 																	) / 10}
 																	h
 																</div>
-																{/* {allocation.duration > 3 && (
-																	<div className='mt-1 truncate text-xs opacity-60'>
-																		Duration:{' '}
-																		{Math.round(
-																			((allocation.duration *
-																				(globalSettings?.timeSlotDuration ||
-																					10)) /
-																				60) *
-																				10
-																		) / 10}
-																		h
-																	</div>
-																)} */}
 															</div>
-															{allocation.hasConflict && (
+															{a.hasConflict && (
 																<div
 																	className={cn(
 																		'absolute flex items-center justify-center rounded-full bg-red-500',
@@ -422,7 +381,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 															)}
 														</div>
 													)}
-													{allocation && !isStart && shouldHide && (
+													{a && !start && hide && (
 														<div
 															className={cn(
 																'absolute bottom-0 top-0 border-l-2 border-blue-300 bg-blue-50 opacity-30',
@@ -440,7 +399,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 					</div>
 				</div>
 
-				{/* Legend */}
+				{/* Legend & Empty State */}
 				<div className={cn('mt-4 flex items-center justify-between', textSize)}>
 					<div className='flex flex-wrap items-center gap-4'>
 						<div className='flex items-center gap-1.5'>
@@ -449,7 +408,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 									'flex-shrink-0 rounded border border-blue-300 bg-blue-100',
 									isFullscreen ? 'h-4 w-4' : 'h-3 w-3'
 								)}
-							></div>
+							/>
 							<span className='text-slate-600'>Booked</span>
 						</div>
 						<div className='flex items-center gap-1.5'>
@@ -458,7 +417,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 									'flex-shrink-0 rounded border border-red-300 bg-red-100',
 									isFullscreen ? 'h-4 w-4' : 'h-3 w-3'
 								)}
-							></div>
+							/>
 							<span className='text-slate-600'>Conflict</span>
 						</div>
 						<div className='flex items-center gap-1.5'>
@@ -467,7 +426,7 @@ export function WeeklyScheduleCalendar({ allocations, roomName, globalSettings }
 									'flex-shrink-0 rounded border-2 border-slate-200 bg-white',
 									isFullscreen ? 'h-4 w-4' : 'h-3 w-3'
 								)}
-							></div>
+							/>
 							<span className='text-slate-600'>Available</span>
 						</div>
 					</div>
