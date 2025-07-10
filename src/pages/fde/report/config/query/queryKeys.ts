@@ -28,4 +28,11 @@ export const fdeQK = {
 		departmentUuid,
 		teacherUuid,
 	],
+	reportDepartmentEvaluationSemester: (uuid: string) => [
+		...fdeQK.all(),
+		'report',
+		'department-evaluation',
+		'semester-wise',
+		uuid,
+	],
 };

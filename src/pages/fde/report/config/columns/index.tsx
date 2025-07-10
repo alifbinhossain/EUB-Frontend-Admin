@@ -9,6 +9,7 @@ import {
 	IFDEListTableData,
 	IQuestionCategoryTableData,
 	IQuestionTableData,
+	IReportDepartmentEvaluationSemesterTableData,
 	IReportTeacherEvaluationTableData,
 	IReportTeacherEvaluationTeacherTableData,
 	IRespondingStudentTableData,
@@ -391,4 +392,15 @@ export const teacherEvaluationTeacherColumns = (): ColumnDef<IReportTeacherEvalu
 			);
 		},
 	},
+];
+
+// * Department Evaluation Semester
+export const departmentEvaluationSemesterColumns = (
+	accessors: string[]
+): ColumnDef<IReportDepartmentEvaluationSemesterTableData>[] => [
+	...accessors.map((accessor) => ({
+		accessorKey: accessor,
+		header: accessor.split('_').join(' ').toUpperCase(),
+		enableColumnFilter: true,
+	})),
 ];

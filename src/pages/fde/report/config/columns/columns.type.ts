@@ -75,3 +75,6 @@ export type IReportTeacherEvaluationTeacherTableData = {
 		}[];
 	}[];
 };
+
+// * Department Evaluation Semester
+export type IReportDepartmentEvaluationSemesterTableData = {};

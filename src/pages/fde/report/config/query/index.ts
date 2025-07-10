@@ -66,3 +66,11 @@ export const useFDEReportTeacherEvaluationTeacher = <T>(departmentUuid: string, 
 		url: `/report/fde/teachers-evaluation-teacher-wise?department_uuid=${departmentUuid}&teacher_uuid=${teacherUuid}`,
 		enabled: !!departmentUuid && !!teacherUuid,
 	});
+
+// * Department Evaluation Semester
+export const useFDEReportDepartmentEvaluationSemester = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.reportDepartmentEvaluationSemester(uuid),
+		url: `/report/fde/teachers-evaluation-department-wise?department_uuid=${uuid}`,
+		enabled: !!uuid,
+	});
