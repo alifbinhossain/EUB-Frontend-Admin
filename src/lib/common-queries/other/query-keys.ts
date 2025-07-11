@@ -19,7 +19,7 @@ const otherQK = {
 	userByQuery: (query: string) => [...otherQK.all(), 'byUserQuery', query],
 
 	//* Teachers
-	teachers: () => [...otherQK.all(), 'teachers'],
+	teachers: (query?: string) => [...otherQK.all(), 'teachers', ...(query ? [query] : [])],
 
 	//* Programs
 	programs: () => [...otherQK.all(), 'programs'],

@@ -9,6 +9,9 @@ import {
 	IFDEListTableData,
 	IQuestionCategoryTableData,
 	IQuestionTableData,
+	IReportDepartmentEvaluationSemesterTableData,
+	IReportTeacherEvaluationTableData,
+	IReportTeacherEvaluationTeacherTableData,
 	IRespondingStudentTableData,
 } from './columns.type';
 
@@ -227,4 +230,177 @@ export const respondingStudentLogColumns = ({
 		header: 'Evaluation Time',
 		enableColumnFilter: true,
 	},
+];
+
+// ? Report
+//* Teacher Evaluation
+export const teacherEvaluationColumns = (): ColumnDef<IReportTeacherEvaluationTableData>[] => [
+	{
+		accessorKey: 'semester_name',
+		header: 'Semester',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'appointment_date',
+		header: () => (
+			<>
+				Appointment <br /> Date
+			</>
+		),
+		enableColumnFilter: true,
+		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
+	},
+	{
+		accessorKey: 'performance_key',
+		header: 'Performance Key',
+		enableColumnFilter: false,
+		columns: [
+			{
+				accessorKey: 'performance_key.organization_of_the_lessons',
+				header: () => (
+					<>
+						Organization Of <br /> The Lessons
+					</>
+				),
+				enableColumnFilter: true,
+			},
+			{
+				accessorKey: 'performance_key.interpretation_of_teaching_materials',
+				header: () => (
+					<>
+						Interpretation Of <br /> Teaching Materials
+					</>
+				),
+				enableColumnFilter: true,
+			},
+			{
+				accessorKey: 'performance_key.presentation_of_teaching_materials',
+				header: () => (
+					<>
+						Presentation Of <br /> Teaching Materials
+					</>
+				),
+				enableColumnFilter: true,
+			},
+			{
+				accessorKey: 'performance_key.interpersonal_discussion_inside_the_classroom',
+				header: () => (
+					<>
+						Interpersonal Discussion <br /> Inside The Classroom
+					</>
+				),
+				enableColumnFilter: true,
+			},
+			{
+				accessorKey: 'performance_key.interpersonal_discussion_outside_the_classroom',
+				header: () => (
+					<>
+						Interpersonal Discussion <br /> Outside The Classroom
+					</>
+				),
+				enableColumnFilter: true,
+			},
+			{
+				accessorKey: 'performance_key.exam_related_discussion',
+				header: () => (
+					<>
+						Exam Related <br /> Discussion
+					</>
+				),
+				enableColumnFilter: true,
+			},
+		],
+	},
+	{
+		accessorKey: 'mid_performance_percentage',
+		header: () => <>Mid (%)</>,
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'final_performance_percentage',
+		header: () => <>Final (%)</>,
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'average_performance_percentage',
+		header: () => <>Average (%)</>,
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'change_in_performance_percentage',
+		header: () => <>Change in (%)</>,
+		enableColumnFilter: true,
+	},
+];
+
+//* Teacher Evaluation Teacher
+export const teacherEvaluationTeacherColumns = (): ColumnDef<IReportTeacherEvaluationTeacherTableData>[] => [
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'year',
+		header: 'Year',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const { year } = info.row.original;
+
+			return (
+				<div className='flex gap-4'>
+					{year.map((y) => (
+						<table className='table w-full border-2 align-top'>
+							<thead>
+								<tr>
+									<th colSpan={y.semester.length} className='border-2 bg-slate-200 py-1 text-center'>
+										Semester - {y.semester_year}
+									</th>
+								</tr>
+								<tr className='border-2'>
+									{y.semester.map((s) => (
+										<th className='border-2 bg-slate-100 py-1 text-center text-xs'>{s.name}</th>
+									))}
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									{y.semester.map((s) => (
+										<td className='border-2 py-1 text-center'>
+											<strong>Mid:</strong>
+											{` ${s.score.mid_performance_percentage}%`}
+											<br />
+											<strong>Final:</strong>
+											{` ${s.score.final_performance_percentage}%`}
+										</td>
+									))}
+								</tr>
+							</tbody>
+						</table>
+					))}
+				</div>
+			);
+		},
+	},
+];
+
+// * Department Evaluation Semester
+export const departmentEvaluationSemesterColumns = (
+	accessors: string[]
+): ColumnDef<IReportDepartmentEvaluationSemesterTableData>[] => [
+	...accessors.map((accessor) => ({
+		accessorKey: accessor,
+		header: accessor.split('_').join(' ').toUpperCase(),
+		enableColumnFilter: true,
+	})),
 ];
