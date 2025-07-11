@@ -1,3 +1,5 @@
+import { all } from 'axios';
+
 import type { GlobalSettings } from '../hooks/use-global-settings';
 import type { RoomAllocation, TimeSlot } from './types';
 
@@ -21,7 +23,7 @@ export function generateTimeSlots(settings?: GlobalSettings): string[] {
 	}
 
 	// Add the final end hour slot
-	slots.push(`${config.endHour.toString().padStart(2, '0')}:00`);
+	// slots.push(`${config.endHour.toString().padStart(2, '0')}:00`);
 
 	return slots;
 }

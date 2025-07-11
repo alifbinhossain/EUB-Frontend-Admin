@@ -43,6 +43,17 @@ export function DEFAULT_A4_PAGE({ xMargin = 30, headerHeight = 0, footerHeight =
 		// ... other properties
 	};
 }
+export function DEFAULT_A4_Landscape_PAGE({ xMargin = 30, headerHeight = 0, footerHeight = 0 }): TDocumentDefinitions {
+	return {
+		pageSize: 'A4',
+		pageOrientation: 'landscape', // use a valid literal
+		pageMargins: [xMargin, headerHeight, xMargin, footerHeight],
+		content: [],
+		defaultStyle,
+
+		// ... other properties
+	};
+}
 
 export const DEFAULT_LETTER_PAGE = ({ xMargin, headerHeight, footerHeight }: PageProps) => ({
 	pageSize: 'LETTER',
