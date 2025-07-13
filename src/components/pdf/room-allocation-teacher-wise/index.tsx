@@ -18,7 +18,8 @@ interface PDFCell {
 }
 
 export default function generateClassRoutinePDF(data: RoomAllocation[]) {
-	const { semester, room, schedule } = convertScheduleWithRowspan(data);
+	const { semester, teacher, teacher_designation, teacher_phone, teacher_email, teacher_department, schedule } =
+		convertScheduleWithRowspan(data);
 	const slots = generateAllSlots();
 
 	// Track which cells are spanned (will be empty placeholders)
@@ -96,12 +97,12 @@ export default function generateClassRoutinePDF(data: RoomAllocation[]) {
 							{ image: EUB_LOGO, width: 60, height: 60 },
 							{
 								text: [
-									{ text: 'European University of Bangladesh\n', style: 'universityName' },
+									{ text: `${teacher}\n`, style: 'universityName' },
 									{
-										text: 'Permanent Campus: 2/4 ,Gabtoli, Mirpur, Dhaka-1216\n',
+										text: `${teacher_designation} , Department of ${teacher_department}\n`,
 										style: 'addressName',
 									},
-									{ text: 'Cell: 01968-774927, E-mail: info@eub.edu.bd 30392', style: 'contactInfo' },
+									{ text: `Cell: ${teacher_phone}, E-mail: ${teacher_email}`, style: 'contactInfo' },
 								],
 								alignment: 'center',
 							},
@@ -116,7 +117,7 @@ export default function generateClassRoutinePDF(data: RoomAllocation[]) {
 				layout: 'noBorders',
 			},
 			{
-				text: `${room} Schedule (${semester})`,
+				text: `Schedule (${semester})`,
 				style: 'scheduleTitle',
 			},
 			{
@@ -138,7 +139,7 @@ export default function generateClassRoutinePDF(data: RoomAllocation[]) {
 		],
 
 		styles: {
-			universityName: { fontSize: 20, bold: true, color: '#023020' },
+			universityName: { fontSize: 20, bold: true },
 			addressName: { fontSize: 12, bold: true, color: '#1f1f1f' },
 			contactInfo: { fontSize: 10, color: '#666666' },
 			scheduleTitle: { fontSize: 14, bold: true, alignment: 'center' },

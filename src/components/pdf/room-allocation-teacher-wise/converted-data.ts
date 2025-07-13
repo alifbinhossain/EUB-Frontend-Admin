@@ -4,7 +4,11 @@ import { addMinutes, format, getHours, getMinutes, isWithinInterval, parse, star
 
 export interface ConvertedSchedule {
 	semester: string;
-	room: string;
+	teacher: string;
+	teacher_department?: string;
+	teacher_designation?: string;
+	teacher_email?: string;
+	teacher_phone?: string;
 	schedule: {
 		[timeSlot: string]: {
 			[day: string]: string;
@@ -57,11 +61,16 @@ function getSlotsInRange(from: string, to: string, allSlots: string[]): string[]
 /** Build schedule indexed by timeSlot → day → content */
 export function convertScheduleWithRowspan(data: RoomAllocation[]): ConvertedSchedule {
 	if (data.length === 0) {
-		return { semester: 'Unknown', room: 'Unknown', schedule: {} };
+		return { semester: 'Unknown', teacher: 'Unknown', schedule: {} };
 	}
 
 	const semester = data[0].semester_name!;
-	const room = data[0].room_name;
+	const teacher = data[0].teacher_name!;
+	const teacher_department = data[0].teacher_department!;
+	const teacher_designation = data[0].teacher_designation!;
+	const teacher_email = data[0].teacher_email!;
+	const teacher_phone = data[0].teacher_phone!;
+
 	const slots = generateAllSlots();
 
 	// Initialize empty schedule
@@ -91,5 +100,5 @@ export function convertScheduleWithRowspan(data: RoomAllocation[]): ConvertedSch
 		});
 	});
 
-	return { semester, room, schedule };
+	return { semester, teacher, teacher_department, teacher_designation, teacher_email, teacher_phone, schedule };
 }
