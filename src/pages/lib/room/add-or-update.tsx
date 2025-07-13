@@ -97,6 +97,11 @@ const AddOrUpdate: React.FC<IRoomAddOrUpdateProps> = ({
 					/>
 				)}
 			/>
+			<FormField
+				control={form.control}
+				name='capacity'
+				render={(props) => <CoreForm.Input type='number' {...props} />}
+			/>
 			<FormField control={form.control} name='location' render={(props) => <CoreForm.Textarea {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 		</AddModal>

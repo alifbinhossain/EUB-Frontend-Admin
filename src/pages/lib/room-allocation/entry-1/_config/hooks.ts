@@ -75,9 +75,7 @@ export function useSlotOperations({
 		[getSlotForDayAndTime, isSlotSelected, timeSlots, setSelectedSlots]
 	);
 
-	const handleEditSlot = useCallback((day: string, timeSlotId: string) => {
-		console.log('Edit slot:', day, timeSlotId);
-	}, []);
+	const handleEditSlot = useCallback((day: string, timeSlotId: string) => {}, []);
 
 	const handleDeleteSlot = useCallback(
 		(day: string, timeSlotId: string) => {

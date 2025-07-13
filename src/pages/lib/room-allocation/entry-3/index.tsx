@@ -1,9 +1,12 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { lazy, useCallback, useState } from 'react';
+import { se } from 'date-fns/locale';
 import { AlertCircle, Book, Building2, Settings } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
+// import { IRoom, IRoomAllocation } from '../../config/schema';
+import { IFormSelectOption } from '@/components/core/form/types';
 import Pdf from '@/components/pdf/room-allocation';
 import PdfV2 from '@/components/pdf/room-allocation-v2';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -11,12 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-import { useOtherBank } from '@/lib/common-queries/other';
+import { useOtherBank, useOtherTeachers } from '@/lib/common-queries/other';
+// import { GlobalSettingsDialog } from './_components/global-settings-dialog';
+import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { useRoomAllocationData } from '../../config/query';
-// import { IRoom, IRoomAllocation } from '../../config/schema';
 import { AllocationSummary } from './_components/allocation-summary';
-// import { GlobalSettingsDialog } from './_components/global-settings-dialog';
 import { RoomSelector } from './_components/room-list';
 import { TimeRangePicker } from './_components/time-range-picker';
 import { WeekdaySelector } from './_components/weekday-selector';
@@ -25,12 +28,18 @@ import { useGlobalSettings } from './hooks/use-global-settings';
 import { useRoomAllocation } from './hooks/use-room-allocation';
 import type { RoomAllocation, Weekday } from './lib/types';
 
+const AddOrUpdate = lazy(() => import('./teachers-wise-room-allocation'));
+
 export default function RoomAllocationPage() {
 	const { uuid: semesterId } = useParams();
+	const { data: teachersList, invalidateQuery: invalidateTeachers } = useOtherTeachers<IFormSelectOption[]>(
+		`semester_uuid=${semesterId}&is_room_allocation=true`
+	);
+	const [open, setOpen] = useState(false);
 
 	const { rooms, selectedRoom, selectedDay, loading, error, selectRoom, setSelectedDay, deleteAllocation } =
 		useRoomAllocation(semesterId as string);
-	const { data } = useRoomAllocationData<RoomAllocation[]>(
+	const { data, invalidateQuery: invalidateRoomAllocation } = useRoomAllocationData<RoomAllocation[]>(
 		`room_uuid=${selectedRoom?.uuid}&semester_uuid=${semesterId}`
 	);
 	const { deleteData } = useOtherBank();
@@ -48,15 +57,15 @@ export default function RoomAllocationPage() {
 		if (selectedRoom && selectedDay && selectedTimeRange) {
 			await new Promise((resolve) => setTimeout(resolve, 2000));
 
-			console.log('Room assigned:', {
-				roomId: selectedRoom.uuid,
-				roomName: selectedRoom.name,
-				day: selectedDay,
-				from: selectedTimeRange.from,
-				to: selectedTimeRange.to,
-				semesterId: semesterId,
-				timestamp: new Date().toISOString(),
-			});
+			// console.log('Room assigned:', {
+			// 	roomId: selectedRoom.uuid,
+			// 	roomName: selectedRoom.name,
+			// 	day: selectedDay,
+			// 	from: selectedTimeRange.from,
+			// 	to: selectedTimeRange.to,
+			// 	semesterId: semesterId,
+			// 	timestamp: new Date().toISOString(),
+			// });
 
 			setSelectedTimeRange(null);
 			alert('Room assigned successfully!');
@@ -116,6 +125,16 @@ export default function RoomAllocationPage() {
 					>
 						<Book className='mr-2 h-4 w-4' />
 						PDF V2
+					</Button>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => setOpen(true)}
+						className='h-9 px-3'
+						title='PDF V2'
+					>
+						<Book className='mr-2 h-4 w-4' />
+						Teacher Wise PDF
 					</Button>
 				</div>
 				{/* <Button
@@ -187,6 +206,8 @@ export default function RoomAllocationPage() {
 							<AllocationSummary
 								allocations={data?.filter((allocation) => allocation.day === selectedDay) || []}
 								selectedDay={selectedDay}
+								invalidateRoomAllocation={invalidateRoomAllocation}
+								invalidateTeachers={invalidateTeachers}
 								deleteData={deleteData}
 								onDeleteAllocation={handleDeleteAllocation}
 							/>
@@ -206,6 +227,16 @@ export default function RoomAllocationPage() {
 					</>
 				)}
 			</div>
+			{renderSuspenseModals([
+				<AddOrUpdate
+					{...{
+						open: open,
+						setOpen: setOpen,
+						teachersList: teachersList,
+						semester_uuid: semesterId as string,
+					}}
+				/>,
+			])}
 
 			{/* Global Settings Dialog */}
 			{/*<GlobalSettingsDialog

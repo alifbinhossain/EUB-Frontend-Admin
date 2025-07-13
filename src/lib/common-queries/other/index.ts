@@ -46,7 +46,7 @@ export const useOtherUserQuery = <T>(query: string = '') =>
 //* GET OTHER Teachers
 export const useOtherTeachers = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: otherQK.teachers(query),
+		queryKey: otherQK.teachers(query ? query : ''),
 		url: query ? `/other/portfolio/teachers/value/label?${query}` : `/other/portfolio/teachers/value/label`,
 	});
 

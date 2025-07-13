@@ -60,6 +60,11 @@ export const roomTableColumns = (): ColumnDef<IRoomTableData>[] => [
 		header: 'Location',
 		enableColumnFilter: true,
 	},
+	{
+		accessorKey: 'capacity',
+		header: 'Capacity',
+		enableColumnFilter: true,
+	},
 ];
 
 //*Course

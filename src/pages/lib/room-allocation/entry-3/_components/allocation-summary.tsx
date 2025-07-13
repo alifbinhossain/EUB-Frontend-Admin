@@ -15,6 +15,8 @@ import type { RoomAllocation } from '../lib/types';
 interface AllocationSummaryProps {
 	allocations: RoomAllocation[];
 	selectedDay: string;
+	invalidateRoomAllocation: () => void;
+	invalidateTeachers: () => void;
 	onDeleteAllocation?: (allocationId: string) => Promise<void>;
 	deleteData: any;
 }
@@ -23,12 +25,12 @@ export function AllocationSummary({
 	allocations,
 	selectedDay,
 	onDeleteAllocation,
+	invalidateRoomAllocation,
+	invalidateTeachers,
 	deleteData,
 }: AllocationSummaryProps) {
 	const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
-	const { invalidateQuery: invalidateRoomAllocation } = useRoomAllocationData<RoomAllocation[]>(
-		`room_uuid=${allocations[0]?.room_uuid}&semester_uuid=${allocations[0]?.semester_uuid}`
-	);
+
 	const dayAllocations = allocations?.filter((allocation) => allocation.day === selectedDay);
 
 	const handleDelete = useCallback(
@@ -38,7 +40,10 @@ export function AllocationSummary({
 				.mutateAsync({
 					url: `/lib/room-allocation/${allocationId}`,
 				})
-				.then(() => invalidateRoomAllocation());
+				.then(() => {
+					invalidateRoomAllocation();
+					invalidateTeachers();
+				});
 		},
 		[onDeleteAllocation]
 	);

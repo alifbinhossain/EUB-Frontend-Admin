@@ -35,6 +35,7 @@ export type ISemester = z.infer<typeof SEMESTER_SCHEMA>;
 //* Room Schema
 export const ROOM_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	capacity: NUMBER_REQUIRED,
 	type: z.enum(['general', 'lab']),
 	location: STRING_NULLABLE,
 	remarks: STRING_NULLABLE,
@@ -42,6 +43,7 @@ export const ROOM_SCHEMA = z.object({
 
 export const ROOM_NULL: Partial<IRoom> = {
 	name: '',
+	capacity: 0,
 	type: 'general',
 	location: null,
 	remarks: null,
@@ -121,3 +123,11 @@ export const COURSE_ASSIGN_NULL: Partial<ICourseAssign> = {
 	sem_crs_thr_entry: [],
 };
 export type ICourseAssign = z.infer<typeof COURSE_ASSIGN_SCHEMA>;
+
+export const TEACHER_ROOM_ALLOCATION_PDF_SCHEMA = z.object({
+	teachers_uuid: STRING_REQUIRED,
+});
+export const TEACHER_ROOM_ALLOCATION_PDF_NULL: Partial<IRoomAllocationTeacherPDF> = {
+	teachers_uuid: '',
+};
+export type IRoomAllocationTeacherPDF = z.infer<typeof TEACHER_ROOM_ALLOCATION_PDF_SCHEMA>;

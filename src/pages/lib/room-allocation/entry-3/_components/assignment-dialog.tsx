@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRoomAllocationData } from '@/pages/lib/config/query';
 import { ROOM_ALLOCATION_NULL, ROOM_ALLOCATION_SCHEMA } from '@/pages/lib/config/schema';
 import { DevTool } from '@hookform/devtools';
-import { ro } from 'date-fns/locale';
 import { BookOpen, Building2, Calendar, CheckCircle2, Clock, Loader2, MapPin, Users } from 'lucide-react';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
@@ -25,7 +24,7 @@ import { Form, FormField } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import CoreForm from '@core/form';
 
-import { useOtherSemester, useOtherTeacherSemesterSection } from '@/lib/common-queries/other';
+import { useOtherSemester, useOtherTeachers, useOtherTeacherSemesterSection } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { cn } from '@/lib/utils';
 import { getDateTime } from '@/utils';
@@ -58,6 +57,9 @@ export function AssignmentDialog({
 	const { user } = useAuth();
 	const { data: sectionOptions, postData } = useOtherTeacherSemesterSection<IFormSelectOption[]>(
 		`semester_uuid=${semesterId}`
+	);
+	const { invalidateQuery: invalidateTeachers } = useOtherTeachers<IFormSelectOption[]>(
+		`semester_uuid=${semesterId}&is_room_allocation=true`
 	);
 	const { invalidateQuery: invalidateRoomAllocation } = useRoomAllocationData(
 		`room_uuid=${room.uuid}&semester_uuid=${semesterId}`
@@ -120,7 +122,10 @@ export function AssignmentDialog({
 
 				onClose,
 			})
-			.then(() => invalidateRoomAllocation());
+			.then(() => {
+				invalidateRoomAllocation();
+				invalidateTeachers();
+			});
 	};
 
 	return (
