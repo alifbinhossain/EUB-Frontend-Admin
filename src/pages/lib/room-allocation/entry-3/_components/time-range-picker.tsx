@@ -147,7 +147,7 @@ export function TimeRangePicker({
 		},
 		[pendingStartTime, calculateEndTimeFromDuration, onTimeRangeSelect]
 	);
-	console.log(timeSlots);
+
 	const handleSlotClick = useCallback(
 		(slot: TimeSlot) => {
 			if (!slot.available) return;

@@ -44,10 +44,10 @@ export const useOtherUserQuery = <T>(query: string = '') =>
 	});
 
 //* GET OTHER Teachers
-export const useOtherTeachers = <T>() =>
+export const useOtherTeachers = <T>(query?: string) =>
 	useTQuery<T>({
-		queryKey: otherQK.teachers(),
-		url: `/other/portfolio/teachers/value/label`,
+		queryKey: otherQK.teachers(query ? query : ''),
+		url: query ? `/other/portfolio/teachers/value/label?${query}` : `/other/portfolio/teachers/value/label`,
 	});
 
 //* GET OTHER PROGRAMS
