@@ -11,6 +11,10 @@ export interface RoomAllocation {
 	room_uuid: string;
 	sem_crs_thr_entry_uuid: string;
 	teacher_name?: string;
+	teacher_department?: string;
+	teacher_designation?: string;
+	teacher_email?: string;
+	teacher_phone?: string;
 	room_name: string;
 	semester_uuid?: string;
 	semester_name: string;
