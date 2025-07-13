@@ -16,4 +16,23 @@ export const fdeQK = {
 
 	//*Evolution
 	list: (query: string) => [...fdeQK.all(), 'list', query],
+
+	// ? Report
+	// * Teacher Evaluation
+	reportTeacherEvaluation: (uuid: string) => [...fdeQK.all(), 'report', 'teacher-evaluation', 'semester-wise', uuid],
+	reportTeacherEvaluationTeacher: (departmentUuid: string, teacherUuid: string) => [
+		...fdeQK.all(),
+		'report',
+		'teacher-evaluation',
+		'teacher-wise',
+		departmentUuid,
+		teacherUuid,
+	],
+	reportDepartmentEvaluationSemester: (uuid: string) => [
+		...fdeQK.all(),
+		'report',
+		'department-evaluation',
+		'semester-wise',
+		uuid,
+	],
 };

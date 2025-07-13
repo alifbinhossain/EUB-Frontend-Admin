@@ -48,3 +48,29 @@ export const useFDEList = <T>(query?: string) =>
 		queryKey: fdeQK.list(query ? query : ''),
 		url: query ? `/lib/sem-crs-thr-entry?${query}` : `lib/sem-crs-thr-entry`,
 	});
+
+// ? Report
+
+// * Teacher Evaluation Semester
+export const useFDEReportTeacherEvaluation = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.reportTeacherEvaluation(uuid),
+		url: `/report/fde/teachers-evaluation-semester-wise?semester_uuid=${uuid}`,
+		enabled: !!uuid,
+	});
+
+// * Teacher Evaluation Teacher
+export const useFDEReportTeacherEvaluationTeacher = <T>(departmentUuid: string, teacherUuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.reportTeacherEvaluationTeacher(departmentUuid, teacherUuid),
+		url: `/report/fde/teachers-evaluation-teacher-wise?department_uuid=${departmentUuid}&teacher_uuid=${teacherUuid}`,
+		enabled: !!departmentUuid && !!teacherUuid,
+	});
+
+// * Department Evaluation Semester
+export const useFDEReportDepartmentEvaluationSemester = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: fdeQK.reportDepartmentEvaluationSemester(uuid),
+		url: `/report/fde/teachers-evaluation-department-wise?department_uuid=${uuid}`,
+		enabled: !!uuid,
+	});
