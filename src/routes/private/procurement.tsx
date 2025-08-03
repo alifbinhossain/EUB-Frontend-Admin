@@ -265,7 +265,7 @@ const procurementRoutes: IRoute[] = [
 				path: '/procurement/item-request',
 				element: <ItemRequest />,
 				page_name: 'procurement__item_request',
-				actions: ['create', 'read', 'update', 'delete', 'show_maintenance', 'show_general', 'show_it_store'],
+				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
 				name: 'Requisition',
@@ -283,9 +283,6 @@ const procurementRoutes: IRoute[] = [
 					'click_received_override',
 					'click_store_received_override',
 					'click_store_received',
-					'show_maintenance',
-					'show_general',
-					'show_it_store',
 				],
 			},
 			{

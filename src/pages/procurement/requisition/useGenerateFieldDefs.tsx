@@ -25,15 +25,19 @@ interface IGenerateFieldDefsProps {
 }
 
 const getAccess = (pageAccess: string[]) => {
+	const types: string[] = [];
+
 	if (pageAccess.includes('show_maintenance')) {
-		return 'store_type=maintenance';
-	} else if (pageAccess.includes('show_general')) {
-		return 'store_type=general';
-	} else if (pageAccess.includes('show_it_store')) {
-		return 'store_type=it_store';
-	} else {
-		return '';
+		types.push('maintenance');
 	}
+	if (pageAccess.includes('show_general')) {
+		types.push('general');
+	}
+	if (pageAccess.includes('show_it_store')) {
+		types.push('it_store');
+	}
+
+	return types.length > 0 ? `store_type=${types.join(',')}` : '';
 };
 
 const useGenerateFieldDefs = ({
@@ -45,7 +49,7 @@ const useGenerateFieldDefs = ({
 	watch,
 	form,
 }: IGenerateFieldDefsProps): FieldDef[] => {
-	const pageAccess = useAccess('procurement__requisition') as string[];
+	const pageAccess = useAccess('procurement__item') as string[];
 
 	const { data: itemList } = useOtherItem<IFormSelectOption[]>(getAccess(pageAccess));
 
