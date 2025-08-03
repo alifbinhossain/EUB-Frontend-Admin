@@ -127,6 +127,10 @@ const Designation = () => {
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
 				otherToolBarComponents={toolbar}
+				defaultVisibleColumns={{
+					created_by_name: false,
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<DeleteModal

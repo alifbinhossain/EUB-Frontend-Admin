@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import { AxiosError } from 'axios';
+import { RotateCw } from 'lucide-react';
 import useTable from '@/hooks/useTable';
 
 import {
@@ -94,7 +94,7 @@ const DeleteAllModal: React.FC<IDeleteAllModalProps> = ({ deleteItems, setDelete
 						disabled={isLoading || !deleteItems?.filter((item) => item.checked).length}
 						onClick={handleConfirm}
 					>
-						{isLoading && <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />}
+						{isLoading && <RotateCw className='mr-2 h-4 w-4 animate-spin' />}
 						{isLoading ? 'Please wait...' : 'Confirm'}
 					</AlertDialogAction>
 				</AlertDialogFooter>

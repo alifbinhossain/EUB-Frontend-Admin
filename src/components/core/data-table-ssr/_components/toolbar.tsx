@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { TableFilterProvider } from '@/context';
 import { ITableFilter } from '@/context/TableFilterContext';
-import { Cross2Icon } from '@radix-ui/react-icons';
 import { isValid } from 'date-fns';
-import { CirclePlus } from 'lucide-react';
+import { CirclePlus, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import usePage from '@/hooks/usePage';
 import useTableSSR from '@/hooks/useTableSSR';
@@ -81,7 +80,7 @@ const Toolbar = () => {
 						className='h-8'
 					>
 						Reset
-						<Cross2Icon className='size-4' />
+						<X className='size-4' />
 					</Button>
 				)}
 

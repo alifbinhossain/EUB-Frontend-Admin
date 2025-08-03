@@ -97,12 +97,12 @@ export const itemRequisitionColumns = (): ColumnDef<IItemRequisitionTableData>[]
 export const itemRequestColumns = ({ updateAccess, deleteAccess }: any): ColumnDef<IITemRequestTableData>[] => [
 	{
 		accessorKey: 'item_work_order_id',
-		header: 'Item Work Order ID',
+		header: 'ID',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'item_name',
-		header: 'Item Name',
+		header: 'Item',
 		enableColumnFilter: true,
 	},
 	{

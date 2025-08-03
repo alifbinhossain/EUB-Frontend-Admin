@@ -1,4 +1,4 @@
-import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { Check, CirclePlus } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ export function TableFacetedFilter<TData, TValue>({ column, title, options }: Ta
 		<Popover>
 			<PopoverTrigger>
 				<Button aria-label={title} variant='gradient' size='sm' className='h-8 border-dashed'>
-					<PlusCircledIcon className='mr-2 h-4 w-4' />
+					<CirclePlus className='mr-2 h-4 w-4' />
 					{title}
 					{selectedValues?.size > 0 && (
 						<>
@@ -87,7 +87,7 @@ export function TableFacetedFilter<TData, TValue>({ column, title, options }: Ta
 													: 'opacity-50 [&_svg]:invisible'
 											)}
 										>
-											<CheckIcon className={cn('h-4 w-4')} />
+											<Check className={cn('h-4 w-4')} />
 										</div>
 										{option.icon && <option.icon className='mr-2 h-4 w-4 text-muted-foreground' />}
 										<span>{option.label}</span>

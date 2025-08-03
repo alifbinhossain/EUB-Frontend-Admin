@@ -129,12 +129,7 @@ export function authColumns({
 		{
 			accessorKey: 'reset_pass_actions',
 			id: 'reset_pass_actions',
-			header: () => (
-				<span>
-					Reset <br />
-					Password
-				</span>
-			),
+			header: 'Reset\nPassword',
 			enableColumnFilter: false,
 			enableSorting: false,
 			cell: (info) => <ResetPassword onClick={() => handleResetPassword(info.row)} />,
@@ -148,12 +143,7 @@ export function authColumns({
 		{
 			accessorKey: 'page_assign_actions',
 			id: 'page_assign_actions',
-			header: () => (
-				<span>
-					Page <br />
-					Assign
-				</span>
-			),
+			header: 'Page\nAssign',
 			enableColumnFilter: false,
 			enableSorting: false,
 			cell: (info) => <PageAssign onClick={() => handlePageAssign(info.row)} />,

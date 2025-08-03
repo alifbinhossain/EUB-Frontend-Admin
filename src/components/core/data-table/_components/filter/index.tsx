@@ -1,5 +1,4 @@
-import { MixerHorizontalIcon } from '@radix-ui/react-icons';
-import { X } from 'lucide-react';
+import { SlidersHorizontal, X } from 'lucide-react';
 import useTable from '@/hooks/useTable';
 
 import { Button } from '@/components/ui/button';
@@ -29,14 +28,14 @@ const TableAllFilter = () => {
 		<Sheet>
 			<SheetTrigger>
 				<Button aria-label='Filters All Columns' variant='gradient' size='sm'>
-					<MixerHorizontalIcon className='size-4' />
+					<SlidersHorizontal className='size-4' />
 					Filters
 				</Button>
 			</SheetTrigger>
 			<SheetContent className='flex flex-col p-0'>
 				<SheetHeader className='border-b px-3 py-2 lg:px-4 lg:py-3'>
 					<SheetTitle className='flex items-center gap-2'>
-						<MixerHorizontalIcon className='size-4' /> All Filters
+						<SlidersHorizontal className='size-4' /> All Filters
 					</SheetTitle>
 					<SheetDescription className='sr-only'>
 						This action cannot be undone. This will permanently delete your account and remove your data

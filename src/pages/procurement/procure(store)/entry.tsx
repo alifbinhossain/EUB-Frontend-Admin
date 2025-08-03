@@ -19,6 +19,7 @@ import { useItem } from '../item/config/query';
 import { IProcureStoreTableData } from './config/columns/columns.type';
 import { useItemWorkOrder, useItemWorkOrderByDetails } from './config/query';
 import { IProcureRequest, PROCURE_REQUEST_NULL, PROCURE_REQUEST_SCHEMA } from './config/schema';
+import ItemRequestTable from './item-request-table';
 import useGenerateItemWorkOrder from './useGenerateItemWorkOrder';
 import { ICustomItemSelectOptions } from './utils';
 
@@ -242,110 +243,116 @@ const Entry = () => {
 			form={form}
 			onSubmit={onSubmit}
 		>
-			<CoreForm.Section
-				title={`Work Order`}
-				className='grid gap-4 lg:grid-cols-1'
-				extraHeader={
-					<div className='flex items-center justify-center gap-4'>
+			<div className='grid grid-cols-2 gap-4'>
+				<CoreForm.Section
+					title={`Work Order`}
+					className='grid gap-4 lg:grid-cols-1'
+					extraHeader={
+						<div className='flex items-center justify-center gap-4'>
+							<FormField
+								control={form.control}
+								name='done_date'
+								render={(props) => (
+									<CoreForm.DatePicker disableLabel placeholder='Done Date' disabled {...props} />
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='done'
+								render={(props) => (
+									<CoreForm.Switch
+										labelClassName='text-slate-100'
+										label='Done'
+										onCheckedChange={(e) => {
+											if (e) {
+												form.setValue('done_date', getDateTime());
+											} else {
+												form.setValue('done_date', null);
+											}
+										}}
+										{...props}
+									/>
+								)}
+							/>
+						</div>
+					}
+				>
+					<div className='grid grid-cols-3 gap-4'>
 						<FormField
 							control={form.control}
-							name='done_date'
+							name='vendor_uuid'
 							render={(props) => (
-								<CoreForm.DatePicker disableLabel placeholder='Done Date' disabled {...props} />
+								<CoreForm.ReactSelect
+									label='Vendor'
+									menuPortalTarget={document.body}
+									options={vendorList!}
+									isDisabled={data?.is_delivery_statement || data?.done}
+									{...props}
+								/>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='estimated_date'
+							render={(props) => (
+								<CoreForm.DatePicker
+									label='Estimate Delivery'
+									placeholder='Estimate Delivery'
+									disabled={data?.done}
+									{...props}
+								/>
 							)}
 						/>
 						<FormField
 							control={form.control}
-							name='done'
+							name='bill_uuid'
 							render={(props) => (
-								<CoreForm.Switch
-									labelClassName='text-slate-100'
-									label='Done'
-									onCheckedChange={(e) => {
-										if (e) {
-											form.setValue('done_date', getDateTime());
-										} else {
-											form.setValue('done_date', null);
-										}
+								<CoreForm.ReactSelect
+									label='Bill'
+									options={billList!}
+									isDisabled={true}
+									menuPortalTarget={document.body}
+									{...props}
+								/>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='subject'
+							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Subject' {...props} />}
+						/>
+						<FormField
+							control={form.control}
+							name='work_order_remarks'
+							render={(props) => <CoreForm.Textarea disabled={data?.done} label='Remarks' {...props} />}
+						/>
+
+						<FormField
+							control={form.control}
+							name='work_order_file'
+							render={(props) => (
+								<CoreForm.FileUpload
+									label='File'
+									fileType='document'
+									errorText='File must be less than 10MB and of type pdf, doc, docx'
+									isUpdate={isUpdate}
+									disabled={data?.done}
+									small={true}
+									options={{
+										maxSize: 10000000,
 									}}
 									{...props}
 								/>
 							)}
 						/>
 					</div>
-				}
-			>
-				<div className='grid grid-cols-3 gap-4'>
-					<FormField
-						control={form.control}
-						name='vendor_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect
-								label='Vendor'
-								menuPortalTarget={document.body}
-								options={vendorList!}
-								isDisabled={data?.is_delivery_statement || data?.done}
-								{...props}
-							/>
-						)}
-					/>
+				</CoreForm.Section>
 
-					<FormField
-						control={form.control}
-						name='estimated_date'
-						render={(props) => (
-							<CoreForm.DatePicker
-								label='Estimate Delivery'
-								placeholder='Estimate Delivery'
-								disabled={data?.done}
-								{...props}
-							/>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='bill_uuid'
-						render={(props) => (
-							<CoreForm.ReactSelect
-								label='Bill'
-								options={billList!}
-								isDisabled={true}
-								menuPortalTarget={document.body}
-								{...props}
-							/>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='subject'
-						render={(props) => <CoreForm.Textarea disabled={data?.done} label='Subject' {...props} />}
-					/>
-					<FormField
-						control={form.control}
-						name='work_order_remarks'
-						render={(props) => <CoreForm.Textarea disabled={data?.done} label='Remarks' {...props} />}
-					/>
-
-					<FormField
-						control={form.control}
-						name='work_order_file'
-						render={(props) => (
-							<CoreForm.FileUpload
-								label='File'
-								fileType='document'
-								errorText='File must be less than 10MB and of type pdf, doc, docx'
-								isUpdate={isUpdate}
-								disabled={data?.done}
-								small={true}
-								options={{
-									maxSize: 10000000,
-								}}
-								{...props}
-							/>
-						)}
-					/>
+				<div className='rounded-md border bg-slate-100 p-2'>
+					<ItemRequestTable />
 				</div>
-			</CoreForm.Section>
+			</div>
 			<CoreForm.DynamicFields
 				title='Items Work Order'
 				form={form}

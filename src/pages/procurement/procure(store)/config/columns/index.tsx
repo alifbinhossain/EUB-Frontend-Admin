@@ -20,12 +20,13 @@ export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStore
 				url={`/procurement/procure-store/${info.row.original.uuid}/details`}
 			/>
 		),
-		size: 180,
+		size: 100,
 	},
 	{
 		accessorKey: 'total_amount',
-		header: 'Total Amount',
+		header: 'Total \nAmount',
 		enableColumnFilter: true,
+		size: 100,
 	},
 	{
 		accessorKey: 'bill_id',
@@ -45,36 +46,36 @@ export const itemWorkOrderColumns = () // handleDetails: (row: Row<IProcureStore
 	},
 	{
 		accessorKey: 'work_order_file',
-		header: 'Work Order File',
+		header: 'Work Order \nFile',
 		enableColumnFilter: true,
 		cell: (info) => <FilePreview preview={info.getValue() as string} />,
 	},
 	{
 		accessorKey: 'work_order_remarks',
-		header: 'Work Order Remarks',
+		header: 'Work Order \nRemarks',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'is_delivery_statement',
-		header: 'Delivery Statement',
+		header: 'Delivery \nStatement',
 		enableColumnFilter: true,
 		cell: (info) => <StatusButton value={info.getValue() as boolean} />,
 	},
 	{
 		accessorKey: 'delivery_statement_date',
-		header: 'Work Order Remarks',
+		header: 'Delivery \nStatement Date',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 	{
 		accessorKey: 'delivery_statement_file',
-		header: 'Delivery Statement File',
+		header: 'Delivery \nStatement File',
 		enableColumnFilter: true,
 		cell: (info) => <FilePreview preview={info.getValue() as string} />,
 	},
 	{
 		accessorKey: 'delivery_statement_remarks',
-		header: 'Delivery Statement Remarks',
+		header: 'Delivery \nStatement Remarks',
 		enableColumnFilter: true,
 	},
 	{

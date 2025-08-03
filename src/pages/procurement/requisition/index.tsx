@@ -151,6 +151,10 @@ const Requisition = () => {
 						)}
 					/>
 				}
+				defaultVisibleColumns={{
+					created_by_name: false,
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<DeleteModal

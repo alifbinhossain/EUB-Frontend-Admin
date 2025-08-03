@@ -1,5 +1,4 @@
-import { ArrowDownIcon, ArrowUpIcon, CaretSortIcon, EyeNoneIcon } from '@radix-ui/react-icons';
-import { ListFilter, Pin, PinOff } from 'lucide-react';
+import { ChevronDown, ChevronsUpDown, ChevronUp, EyeOff, Pin, PinOff, Search } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,10 +16,26 @@ import { TableColumnHeaderProps } from '../types';
 import TableColumnFilter from './filter/column';
 
 export function TableColumnHeader<TData, TValue>({ column, className, isSSR }: TableColumnHeaderProps<TData, TValue>) {
-	const title = column.columnDef.header as string;
+	let title: string[] = [];
+
+	if (typeof column.columnDef.header === 'string') {
+		// here if the header is a string like 'Cost \nService'
+		// then it will return array ['Cost', 'Service']
+		// which will be used in the column header
+		title = column.columnDef.header.split('\n');
+	}
 
 	if (!column.getCanSort()) {
-		return <div className={cn(className)}>{title}</div>;
+		return (
+			<div className={cn(className)}>
+				{/* // here the array ['Cost', 'Service'] will be used in the column header
+					// we are mapping the array to display each word in a new line
+				*/}
+				{title.map((e, index) => (
+					<div key={index}>{e}</div>
+				))}
+			</div>
+		);
 	}
 
 	return (
@@ -31,15 +46,22 @@ export function TableColumnHeader<TData, TValue>({ column, className, isSSR }: T
 						aria-label='Sort Column'
 						variant='ghost'
 						size='sm'
-						className='-ml-3 h-7 active:scale-100 data-[state=open]:bg-base-300'
+						className='-ml-3 active:scale-100 data-[state=open]:bg-base-300'
 					>
-						<span>{title}</span>
+						<span className='flex flex-col items-start'>
+							{/* // here the array ['Cost', 'Service'] will be used in the column header
+								// we are mapping the array to display each word in a new line
+							*/}
+							{title.map((e, index) => (
+								<div key={index}>{e}</div>
+							))}
+						</span>
 						{column.getIsSorted() === 'desc' ? (
-							<ArrowDownIcon className='size-4' />
+							<ChevronDown className='size-4' />
 						) : column.getIsSorted() === 'asc' ? (
-							<ArrowUpIcon className='size-4' />
+							<ChevronUp className='size-4' />
 						) : (
-							<CaretSortIcon className='size-4' />
+							<ChevronsUpDown className='size-4' />
 						)}
 					</Button>
 				</DropdownMenuTrigger>
@@ -47,11 +69,11 @@ export function TableColumnHeader<TData, TValue>({ column, className, isSSR }: T
 					{!isSSR && (
 						<>
 							<DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-								<ArrowUpIcon className='mr-2 size-3.5 text-muted-foreground/70' />
+								<ChevronUp className='mr-2 size-3.5 text-muted-foreground/70' />
 								Asc
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-								<ArrowDownIcon className='mr-2 size-3.5 text-muted-foreground/70' />
+								<ChevronDown className='mr-2 size-3.5 text-muted-foreground/70' />
 								Desc
 							</DropdownMenuItem>
 
@@ -80,7 +102,7 @@ export function TableColumnHeader<TData, TValue>({ column, className, isSSR }: T
 
 					{column.getCanHide() && (
 						<DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-							<EyeNoneIcon className='mr-2 size-3.5 text-muted-foreground/70' />
+							<EyeOff className='mr-2 size-3.5 text-muted-foreground/70' />
 							Hide
 						</DropdownMenuItem>
 					)}
@@ -91,7 +113,7 @@ export function TableColumnHeader<TData, TValue>({ column, className, isSSR }: T
 				<Popover>
 					<PopoverTrigger>
 						<Button aria-label='Column Filter' variant='ghost' size={'icon'}>
-							<ListFilter className='size-4' />
+							<Search className='size-4' />
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent className='w-fit bg-background p-2'>

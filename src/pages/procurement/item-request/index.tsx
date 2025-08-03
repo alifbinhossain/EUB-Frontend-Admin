@@ -17,19 +17,23 @@ const AddOrUpdate = lazy(() => import('./add-or-update'));
 const DeleteModal = lazy(() => import('@core/modal/delete'));
 
 const getAccess = (pageAccess: string[]) => {
+	const types: string[] = [];
+
 	if (pageAccess.includes('show_maintenance')) {
-		return '&store_type=maintenance';
-	} else if (pageAccess.includes('show_general')) {
-		return '&store_type=general';
-	} else if (pageAccess.includes('show_it_store')) {
-		return '&store_type=it_store';
-	} else {
-		return '';
+		types.push('maintenance');
 	}
+	if (pageAccess.includes('show_general')) {
+		types.push('general');
+	}
+	if (pageAccess.includes('show_it_store')) {
+		types.push('it_store');
+	}
+
+	return types.length > 0 ? `&store_type=${types.join(',')}` : '';
 };
 
 const Vendor = () => {
-	const pageAccess = useAccess('procurement__item_request') as string[];
+	const pageAccess = useAccess('procurement__item') as string[];
 	const [status, setStatus] = useState('pending');
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItemRequested<
 		IITemRequestTableData[]
@@ -97,6 +101,9 @@ const Vendor = () => {
 						)}
 					/>
 				}
+				defaultVisibleColumns={{
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

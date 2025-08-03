@@ -19,6 +19,11 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'store',
+		header: 'Store',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'name',
 		header: 'Name',
 		enableColumnFilter: true,
@@ -29,20 +34,15 @@ export const itemColumns = (
 		),
 	},
 	{
-		accessorKey: 'store',
-		header: 'Store',
-		enableColumnFilter: true,
-	},
-	{
 		accessorKey: 'purchase_cost_center_name',
 		header: 'Category',
 		enableColumnFilter: true,
 	},
-	{
-		accessorKey: 'sub_purchase_cost_center_name',
-		header: 'Sub Category',
-		enableColumnFilter: true,
-	},
+	// {
+	// 	accessorKey: 'sub_purchase_cost_center_name',
+	// 	header: 'Sub Category',
+	// 	enableColumnFilter: true,
+	// },
 	// {
 	// 	accessorKey: 'vendor_price',
 	// 	header: 'Vendor Price',
@@ -61,6 +61,22 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'unit',
+		header: 'Unit',
+		enableColumnFilter: true,
+		size: 80,
+	},
+	{
+		id: 'request_action_trx',
+		header: 'Request \nItem',
+		cell: (info) => <Transfer onClick={() => handleRequest(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !actionTrxAccess,
+			disableFullFilter: true,
+		},
+	},
+	{
 		accessorKey: 'threshold',
 		header: 'Threshold',
 		enableColumnFilter: true,
@@ -71,11 +87,6 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 
-	{
-		accessorKey: 'unit',
-		header: 'Unit',
-		enableColumnFilter: true,
-	},
 	// {
 	// 	id: 'action_trx',
 	// 	header: 'Item Transfer',
@@ -86,16 +97,6 @@ export const itemColumns = (
 	// 		disableFullFilter: true,
 	// 	},
 	// },
-	{
-		id: 'request_action_trx',
-		header: 'Request Item',
-		cell: (info) => <Transfer onClick={() => handleRequest(info.row)} />,
-		size: 40,
-		meta: {
-			hidden: !actionTrxAccess,
-			disableFullFilter: true,
-		},
-	},
 ];
 // * vendor
 export const vendorColumns = (): ColumnDef<IItemVendorTableData>[] => [
