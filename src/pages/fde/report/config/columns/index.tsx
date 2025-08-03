@@ -252,11 +252,7 @@ export const teacherEvaluationColumns = (): ColumnDef<IReportTeacherEvaluationTa
 	},
 	{
 		accessorKey: 'appointment_date',
-		header: () => (
-			<>
-				Appointment <br /> Date
-			</>
-		),
+		header: 'Appointment \nDate',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
@@ -267,78 +263,54 @@ export const teacherEvaluationColumns = (): ColumnDef<IReportTeacherEvaluationTa
 		columns: [
 			{
 				accessorKey: 'performance_key.organization_of_the_lessons',
-				header: () => (
-					<>
-						Organization Of <br /> The Lessons
-					</>
-				),
+				header: 'Organization Of \nThe Lessons',
 				enableColumnFilter: true,
 			},
 			{
 				accessorKey: 'performance_key.interpretation_of_teaching_materials',
-				header: () => (
-					<>
-						Interpretation Of <br /> Teaching Materials
-					</>
-				),
+				header: 'Interpretation Of \nTeaching Materials',
 				enableColumnFilter: true,
 			},
 			{
 				accessorKey: 'performance_key.presentation_of_teaching_materials',
-				header: () => (
-					<>
-						Presentation Of <br /> Teaching Materials
-					</>
-				),
+				header: 'Presentation Of \nTeaching Materials',
 				enableColumnFilter: true,
 			},
 			{
 				accessorKey: 'performance_key.interpersonal_discussion_inside_the_classroom',
-				header: () => (
-					<>
-						Interpersonal Discussion <br /> Inside The Classroom
-					</>
-				),
+				header: 'Interpersonal Discussion \nInside The Classroom',
 				enableColumnFilter: true,
 			},
 			{
 				accessorKey: 'performance_key.interpersonal_discussion_outside_the_classroom',
-				header: () => (
-					<>
-						Interpersonal Discussion <br /> Outside The Classroom
-					</>
-				),
+				header: 'Interpersonal Discussion \nOutside The Classroom',
 				enableColumnFilter: true,
 			},
 			{
 				accessorKey: 'performance_key.exam_related_discussion',
-				header: () => (
-					<>
-						Exam Related <br /> Discussion
-					</>
-				),
+				header: 'Exam Related \nDiscussion',
 				enableColumnFilter: true,
 			},
 		],
 	},
 	{
 		accessorKey: 'mid_performance_percentage',
-		header: () => <>Mid (%)</>,
+		header: 'Mid (%)',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'final_performance_percentage',
-		header: () => <>Final (%)</>,
+		header: 'Final (%)',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'average_performance_percentage',
-		header: () => <>Average (%)</>,
+		header: 'Average (%)',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'change_in_performance_percentage',
-		header: () => <>Change in (%)</>,
+		header: 'Change in (%)',
 		enableColumnFilter: true,
 	},
 ];

@@ -40,7 +40,7 @@ const Designation = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useItem<IItemTableData[]>(
 		getAccess(pageAccess)
 	);
-	console.log(getAccess(pageAccess));
+
 	const [itemUuid, setItemUuid] = useState<string | null>(null);
 
 	const pageInfo = useMemo(() => new PageInfo('Item', url, 'procurement__item'), [url]);

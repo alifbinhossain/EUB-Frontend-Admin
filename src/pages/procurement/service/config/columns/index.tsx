@@ -19,6 +19,7 @@ export const serviceColumns = (
 				{info.getValue() as string}
 			</span>
 		),
+		size: 100,
 	},
 	{
 		accessorKey: 'name',
@@ -27,7 +28,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'vendor_name',
-		header: 'Vendor Name',
+		header: 'Vendor',
 		enableColumnFilter: true,
 	},
 	{
@@ -37,7 +38,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'frequency',
-		header: 'Frequency/Year',
+		header: 'Frequency /\nYear',
 		enableColumnFilter: true,
 	},
 	{
@@ -54,7 +55,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'next_due_date',
-		header: 'Next Due Date',
+		header: 'Next \nDue Date',
 		enableColumnFilter: true,
 		cell: (info) => {
 			const date = info.getValue() as Date;
@@ -63,12 +64,12 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'cost_per_service',
-		header: 'Cost/Service',
+		header: 'Cost /\nService',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'payment_terms',
-		header: 'Payment Terms',
+		header: 'Payment\nTerms',
 		enableColumnFilter: false,
 	},
 	{
@@ -78,7 +79,7 @@ export const serviceColumns = (
 	},
 	{
 		accessorKey: 'approval_required',
-		header: 'Approval Required',
+		header: 'Approval\nRequired',
 		enableColumnFilter: false,
 		cell: (info) => <StatusButton value={info?.getValue() as boolean} />,
 	},

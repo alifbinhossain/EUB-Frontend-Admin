@@ -97,6 +97,9 @@ const Vendor = () => {
 						)}
 					/>
 				}
+				defaultVisibleColumns={{
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

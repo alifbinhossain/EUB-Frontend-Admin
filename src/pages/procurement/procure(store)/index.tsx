@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import { create } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 
 import { PageInfo } from '@/utils';
@@ -57,6 +58,10 @@ const Designation = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				defaultVisibleColumns={{
+					created_by_name: false,
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<DeleteModal

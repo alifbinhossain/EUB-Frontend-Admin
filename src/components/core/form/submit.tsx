@@ -1,4 +1,4 @@
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { RotateCw } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 
 import { Button, ButtonProps } from '@/components/ui/button';
@@ -13,7 +13,7 @@ const FormSubmit: React.FC<
 	} = useFormContext();
 	return (
 		<Button aria-label='Submit Form' disabled={!isDirty || isSubmitting} type='submit' {...props}>
-			{isSubmitting && <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />}
+			{isSubmitting && <RotateCw className='mr-2 h-4 w-4 animate-spin' />}
 			{isSubmitting ? `Please wait...` : title}
 		</Button>
 	);

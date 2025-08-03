@@ -54,6 +54,10 @@ const Bill = () => {
 				handleRefetch={refetch}
 				// TODO: Update facetedFilters (OPTIONAL)
 				facetedFilters={type1FacetedFilters}
+				defaultVisibleColumns={{
+					created_by_name: false,
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<DeleteModal

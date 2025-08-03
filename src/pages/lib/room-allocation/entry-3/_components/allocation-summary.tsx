@@ -2,8 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useRoomAllocationData } from '@/pages/lib/config/query';
-import { PersonIcon } from '@radix-ui/react-icons';
-import { Book, Calendar, Clock, Section, Trash2 } from 'lucide-react';
+import { Book, Calendar, Clock, Trash2, UserRound } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -88,7 +87,7 @@ export function AllocationSummary({
 									</span>
 								</div>
 								<div className='flex items-center gap-2'>
-									<PersonIcon className='h-3.5 w-3.5 text-slate-500' />
+									<UserRound className='h-3.5 w-3.5 text-slate-500' />
 									<span className='text-sm font-medium text-slate-800'>
 										{allocation.teacher_name}
 									</span>

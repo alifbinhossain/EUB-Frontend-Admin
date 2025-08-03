@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { IToolbarOptions } from '@/types';
-import { Cross2Icon } from '@radix-ui/react-icons';
 import { useMediaQuery } from '@uidotdev/usehooks';
 import { isValid } from 'date-fns';
-import { ChevronDown, CirclePlus, SearchIcon } from 'lucide-react';
+import { ChevronDown, CirclePlus, SearchIcon, X } from 'lucide-react';
 import usePage from '@/hooks/usePage';
 import useTable from '@/hooks/useTable';
 
@@ -110,7 +109,7 @@ export function TableToolbar() {
 							onClick={resetColumnFilters}
 							size={'icon'}
 						>
-							<Cross2Icon className='size-4' />
+							<X className='size-4' />
 						</Button>
 					)}
 
@@ -240,7 +239,7 @@ export function TableToolbar() {
 							className='h-8'
 						>
 							Reset
-							<Cross2Icon className='size-4' />
+							<X className='size-4' />
 						</Button>
 					)}
 					<Separator orientation='vertical' className='h-6' />

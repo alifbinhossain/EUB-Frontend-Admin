@@ -33,7 +33,7 @@ export const requisitionColumns = (
 				url={`/procurement/requisition/${info.row.original.uuid}/details`}
 			/>
 		),
-		size: 180,
+		size: 40,
 	},
 	{
 		accessorKey: 'is_store_received',

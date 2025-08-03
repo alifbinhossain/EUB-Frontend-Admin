@@ -57,6 +57,10 @@ const Designation = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				defaultVisibleColumns={{
+					created_by_name: false,
+					updated_at: false,
+				}}
 			>
 				{renderSuspenseModals([
 					<DeleteModal
