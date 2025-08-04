@@ -35,19 +35,25 @@ export interface ConvertedSchedule {
 }
 
 // Fixed 12-hour slots
-const FIXED_SLOTS = [
-	'09:00 AM-10:50 AM',
-	'11:00 AM-12:50 PM',
-	'01:00 PM-02:50 PM',
-	'03:00 PM-04:50 PM',
-	'05:00 PM-06:50 PM',
-	'07:00 PM-08:50 PM',
-	'09:00 PM-10:50 PM',
-];
+// const FIXED_SLOTS = [
+//     '09:00 AM-10:20 AM',
+//     '10:30 AM-11:50 AM',
+//     '12:00 PM-1:20 PM',
+//     '1:30 PM-2:50 PM',
+//     '03:00 PM-04:20 PM',
+//     '04:30 PM-05:50 PM',
+//     '06:00 PM-07:20 PM',
+//     '07:30 PM-08:50 PM',
+//     '09:00 PM-10:20 PM',
+// ];
 
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export function convertScheduleWithFixedSlots12H(data: RoomAllocation[]): ConvertedSchedule {
+export function convertScheduleWithFixedSlots12H(
+	data: RoomAllocation[],
+	FIXED_SLOTS: string[],
+	DAYS: string[]
+): ConvertedSchedule {
 	if (!data || data.length === 0) {
 		return {
 			semester: 'Unknown Semester',
@@ -110,7 +116,7 @@ export function convertScheduleWithFixedSlots12H(data: RoomAllocation[]): Conver
 		const to = entry.to;
 		const from12 = to12h(from);
 		const to12 = to12h(to);
-		const info = [entry.course_code, entry.course_section, entry.teacher_name, `(${from12}-${to12})`].join('\n');
+		const info = [entry.course_code, entry.course_section, `(${from12}-${to12})`].join('\n');
 
 		const overlapping = getOverlappingSlots(from, to);
 		for (const slot of overlapping) {

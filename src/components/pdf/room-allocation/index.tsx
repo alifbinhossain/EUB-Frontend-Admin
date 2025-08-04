@@ -19,29 +19,28 @@ export default function generateClassRoutinePDF(data: RoomAllocation[]) {
 	console.log(data);
 	const headerHeight = 100;
 	const footerHeight = 50;
-	const convertedData = convertScheduleWithFixedSlots12H(data);
-	console.log(convertedData);
 
 	// Time slots and days
 	const timeSlots = [
-		'09:00 AM-10:50 AM',
-		'11:00 AM-12:50 PM',
-		'01:00 PM-02:50 PM',
-		'03:00 PM-04:50 PM',
-		'05:00 PM-06:50 PM',
-		'07:00 PM-08:50 PM',
-		'09:00 PM-10:50 PM',
+		'09:00 AM-10:20 AM',
+		'10:30 AM-11:50 AM',
+		'12:00 PM-1:20 PM',
+		'1:30 PM-2:50 PM',
+		'03:00 PM-04:20 PM',
+		'04:30 PM-05:50 PM',
+		'06:00 PM-07:20 PM',
+		'07:30 PM-08:50 PM',
+		'09:00 PM-10:20 PM',
 	];
 
 	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	const convertedData = convertScheduleWithFixedSlots12H(data, timeSlots, days);
 
 	// Create enhanced table structure with colSpan
 	const tableStructure = createTableWithColspan(convertedData.schedule, timeSlots, days);
 
 	// Convert to PDFMake format
 	const tableBody = convertTableStructureToPdfMake(tableStructure);
-
-	console.log('Table structure with colSpan:', tableStructure);
 
 	const pdfDocGenerator = pdfMake.createPdf({
 		...DEFAULT_A4_Landscape_PAGE({
@@ -94,7 +93,7 @@ export default function generateClassRoutinePDF(data: RoomAllocation[]) {
 			{
 				table: {
 					headerRows: 1,
-					widths: ['auto', '*', '*', '*', '*', '*', '*', '*'],
+					widths: ['auto', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
 					body: tableBody,
 				},
 				layout: {
