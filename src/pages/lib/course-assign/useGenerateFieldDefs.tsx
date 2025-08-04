@@ -57,11 +57,11 @@ const useGenerateFieldDefs = ({
 			accessorKey: 'teachers_uuid',
 			type: 'select',
 			options: teachersList || [],
-			unique: true,
-			excludeOptions:
-				data.sem_crs_thr_entry
-					.map((item) => item.teachers_uuid)
-					.filter((uuid): uuid is string => uuid !== undefined) || [],
+			// unique: true,
+			// excludeOptions:
+			// 	data.sem_crs_thr_entry
+			// 		.map((item) => item.teachers_uuid)
+			// 		.filter((uuid): uuid is string => uuid !== undefined) || [],
 		},
 		{
 			header: 'Class Size',
