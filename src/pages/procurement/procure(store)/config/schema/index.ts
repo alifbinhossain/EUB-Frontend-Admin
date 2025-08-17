@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 import {
 	BOOLEAN_REQUIRED,
+	NUMBER_DOUBLE_OPTIONAL,
 	NUMBER_OPTIONAL,
 	NUMBER_REQUIRED,
 	STRING_NULLABLE,
@@ -37,7 +38,7 @@ export const PROCURE_REQUEST_SCHEMA = z
 					message: 'Must be greater than 0',
 				}),
 				provided_quantity: NUMBER_REQUIRED.min(1, 'Provided Quantity must be greater than 0'),
-				unit_price: NUMBER_OPTIONAL,
+				unit_price: NUMBER_DOUBLE_OPTIONAL,
 			})
 		),
 		work_order_remarks: STRING_NULLABLE,
