@@ -45,9 +45,20 @@ export type IFDEListTableData = {
 	uuid: string;
 	semester_uuid: string;
 	semester_name: string;
+	course_name: string;
 	course_section_uuid: string;
 	teacher_uuid: string;
 	class_size: number;
 	is_mid_evaluation_complete: boolean;
 	is_final_evaluation_complete: boolean;
+};
+
+//* RoomAllocationLogTableData
+export type IRoomAllocationTableData = {
+	uuid: string;
+	room_uuid: string;
+	room_name: string;
+	day: string;
+	start_time: string;
+	end_time: string;
 };
