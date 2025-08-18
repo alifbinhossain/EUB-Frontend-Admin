@@ -6,6 +6,7 @@ import {
 	ICourseAssignTableData,
 	ICourseTableData,
 	IFDEListTableData,
+	IRoomAllocationTableData,
 	IRoomTableData,
 	ISemesterTableData,
 } from './columns.type';
@@ -139,6 +140,59 @@ export const fdeListColumns = (): ColumnDef<IFDEListTableData>[] => [
 	{
 		accessorKey: 'class_size',
 		header: 'Class Size',
+		enableColumnFilter: true,
+	},
+];
+
+export const RoomAllocationColumns = (): ColumnDef<IRoomAllocationTableData>[] => [
+	{
+		accessorKey: 'semester_name',
+		header: 'Semester',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_name',
+		header: 'Course',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_code',
+		header: 'Course Code',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_section',
+		header: 'Section',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'room_name',
+		header: 'Room',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'class_size',
+		header: 'Class Size',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'day',
+		header: 'Day',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'from',
+		header: 'From',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'to',
+		header: 'To',
 		enableColumnFilter: true,
 	},
 ];

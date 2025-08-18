@@ -7,14 +7,14 @@ import { DeleteModal } from '@/components/core/modal';
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
-import { fdeListColumns } from '../../config/columns';
-import { IFDEListTableData } from '../../config/columns/columns.type';
-import { useFDEList } from '../../config/query';
+import { RoomAllocationColumns } from '../../config/columns';
+import { IRoomAllocationTableData } from '../../config/columns/columns.type';
+import { useRoomAllocationData } from '../../config/query';
 
 const Semester = () => {
-	const { data, isLoading, url, refetch, deleteData } = useFDEList<IFDEListTableData[]>();
+	const { data, isLoading, url, refetch, deleteData } = useRoomAllocationData<IRoomAllocationTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Library/Course Assign Log', url, 'library__log'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Library/Room Allocation Log', url, 'library__log'), [url]);
 
 	// Delete Modal state
 	const [deleteItem, setDeleteItem] = useState<{
@@ -22,15 +22,15 @@ const Semester = () => {
 		name: string;
 	} | null>(null);
 
-	const handleDelete = (row: Row<IFDEListTableData>) => {
+	const handleDelete = (row: Row<IRoomAllocationTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
-			name: row?.original?.course_name,
+			name: row?.original?.room_name,
 		});
 	};
 
 	// Table Columns
-	const columns = fdeListColumns();
+	const columns = RoomAllocationColumns();
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
