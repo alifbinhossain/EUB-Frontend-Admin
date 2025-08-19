@@ -12,6 +12,8 @@ const Log = () => {
 		<div>
 			{/* <ItemTransferLog />
 			<hr className='border-secondary-content my-6 border-2 border-dashed' /> */}
+			<ItemTransferLog />
+			<hr className='border-secondary-content my-6 border-2 border-dashed' />
 			<ItemWorkOrderEntry />
 			<hr className='border-secondary-content my-6 border-2 border-dashed' />
 			<ItemRequisition />

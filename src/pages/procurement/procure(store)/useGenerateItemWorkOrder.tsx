@@ -56,6 +56,7 @@ const useGenerateItemWorkOrder = ({ remove, watch, data, form }: IGenerateFieldD
 			header: 'Request Quantity',
 			accessorKey: 'request_quantity',
 			type: 'custom',
+			hidden: form.watch('without_item_request'),
 			component: (index: number) => {
 				return (
 					<RequestQuantity

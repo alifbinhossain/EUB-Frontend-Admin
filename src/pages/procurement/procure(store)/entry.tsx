@@ -1,3 +1,4 @@
+import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -237,6 +238,8 @@ const Entry = () => {
 				});
 		}
 	}
+
+	console.log(form.formState.errors);
 	return (
 		<CoreForm.AddEditWrapper
 			title={isUpdate ? 'Update Procure(Store)' : 'Add Procure(Store)'}
@@ -261,6 +264,7 @@ const Entry = () => {
 								name='done'
 								render={(props) => (
 									<CoreForm.Switch
+										disabled={!form.watch('is_delivery_statement')}
 										labelClassName='text-slate-100'
 										label='Done'
 										onCheckedChange={(e) => {
@@ -360,6 +364,27 @@ const Entry = () => {
 				fieldDefs={fieldDefsItems}
 				fields={itemsFields}
 				handleAdd={data?.is_delivery_statement ? undefined : handleAddItems}
+				extraHeader={
+					<FormField
+						control={form.control}
+						name='without_item_request'
+						render={(props) => (
+							<CoreForm.Switch
+								label='Without Item Request'
+								labelClassName='text-slate-100'
+								disabled={isUpdate}
+								onCheckedChange={(e) => {
+									if (e) {
+										form.getValues('item_work_order_entry').forEach((item: any, index: number) => {
+											form.setValue(`item_work_order_entry.${index}.request_quantity`, 0);
+										});
+									}
+								}}
+								{...props}
+							/>
+						)}
+					/>
+				}
 			>
 				<tr>
 					<td className='border-t text-right font-semibold' colSpan={5}>

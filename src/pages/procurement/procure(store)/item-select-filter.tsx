@@ -31,7 +31,9 @@ const ItemSelectFilter: React.FC<{ uuid?: string; form: any; index: number; disa
 }) => {
 	const pageAccess = useAccess('procurement__item') as string[];
 	const query = uuid ? `${getAccess(pageAccess)}` : `item_work_order_uuid=null&${getAccess(pageAccess)}`;
-	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>(query);
+	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>(
+		form.watch('without_item_request') ? '' : query
+	);
 	const fieldName = 'item_work_order_entry';
 	const selectedValues = form.watch('item_work_order_entry')?.map((item: any) => item.uuid) || [];
 	return (

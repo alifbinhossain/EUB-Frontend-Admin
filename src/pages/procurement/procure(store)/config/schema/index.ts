@@ -34,9 +34,10 @@ export const PROCURE_REQUEST_SCHEMA = z
 			z.object({
 				uuid: STRING_OPTIONAL,
 				item_uuid: STRING_OPTIONAL,
-				request_quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
-					message: 'Must be greater than 0',
-				}),
+				request_quantity: NUMBER_OPTIONAL,
+				// request_quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
+				// 	message: 'Must be greater than 0',
+				// }),
 				provided_quantity: NUMBER_REQUIRED.min(1, 'Provided Quantity must be greater than 0'),
 				unit_price: NUMBER_DOUBLE_OPTIONAL,
 			})
@@ -44,19 +45,21 @@ export const PROCURE_REQUEST_SCHEMA = z
 		work_order_remarks: STRING_NULLABLE,
 		vendor_uuid: STRING_REQUIRED,
 
+		without_item_request: BOOLEAN_REQUIRED.default(false),
 		is_delivery_statement: BOOLEAN_REQUIRED.default(false),
 		delivery_statement_date: STRING_OPTIONAL.nullable(),
 		delivery_statement_remarks: STRING_NULLABLE,
 	})
 	.superRefine((data, ctx) => {
 		data?.item_work_order_entry.forEach((item, index) => {
-			if (item?.request_quantity && item?.request_quantity < item?.provided_quantity) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					message: 'Provided Quantity must be less than or equal to Requested Quantity',
-					path: [`item_work_order_entry.${index}.provided_quantity`],
-				});
-			}
+			// if (item?.request_quantity && 0 < item?.provided_quantity) {
+			// 	ctx.addIssue({
+			// 		code: z.ZodIssueCode.custom,
+			// 		message: 'Provided Quantity must be less than or equal to Requested Quantity',
+			// 		path: [`item_work_order_entry.${index}.provided_quantity`],
+			// 	});
+			// }
+
 			if (data?.is_delivery_statement && (item?.unit_price === undefined || item?.unit_price <= 0)) {
 				ctx.addIssue({
 					code: z.ZodIssueCode.custom,
@@ -80,6 +83,7 @@ export const PROCURE_REQUEST_NULL: Partial<IProcureRequest> = {
 	work_order_remarks: null,
 	vendor_uuid: '',
 
+	without_item_request: false,
 	is_delivery_statement: false,
 	delivery_statement_date: null,
 	delivery_statement_remarks: null,
