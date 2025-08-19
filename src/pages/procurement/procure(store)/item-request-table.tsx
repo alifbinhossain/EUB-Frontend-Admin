@@ -10,22 +10,26 @@ import { IITemRequestTableData } from '../log/config/columns/columns.type';
 import { useItemRequested } from '../log/config/query';
 
 const getAccess = (pageAccess: string[]) => {
+	const types: string[] = [];
+
 	if (pageAccess.includes('show_maintenance')) {
-		return '&store_type=maintenance';
-	} else if (pageAccess.includes('show_general')) {
-		return '&store_type=general';
-	} else if (pageAccess.includes('show_it_store')) {
-		return '&store_type=it_store';
-	} else {
-		return '';
+		types.push('maintenance');
 	}
+	if (pageAccess.includes('show_general')) {
+		types.push('general');
+	}
+	if (pageAccess.includes('show_it_store')) {
+		types.push('it_store');
+	}
+
+	return types.length > 0 ? `store_type=${types.join(',')}` : '';
 };
 
 const ItemRequestTable = () => {
-	const pageAccess = useAccess('procurement__item_request') as string[];
+	const pageAccess = useAccess('procurement__item') as string[];
 	const [status, setStatus] = useState('pending');
 	const { data, isLoading, refetch } = useItemRequested<IITemRequestTableData[]>(
-		`status=${status}${getAccess(pageAccess)}`
+		`status=${status}&${getAccess(pageAccess)}`
 	);
 
 	const statusList = [
