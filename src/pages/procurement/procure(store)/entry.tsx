@@ -1,3 +1,4 @@
+import { watch } from 'fs';
 import { Suspense, useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -31,6 +32,7 @@ const Entry = () => {
 	const { user } = useAuth();
 	const {
 		data,
+		postData,
 		updateData,
 		deleteData,
 		imagePostData,
@@ -41,7 +43,6 @@ const Entry = () => {
 	const { invalidateQuery } = useItemWorkOrder<IProcureStoreTableData[]>();
 	const { data: vendorList } = useOtherVendor<IFormSelectOption[]>();
 	const { data: billList } = useOtherBill<IFormSelectOption[]>();
-	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>();
 	const { invalidateQuery: invalidQueryItem } = useItem();
 
 	const form = useRHF(PROCURE_REQUEST_SCHEMA, PROCURE_REQUEST_NULL);
@@ -88,18 +89,30 @@ const Entry = () => {
 	};
 	// * REMOVE ITEMS
 	const handleRemoveItems = (index: number) => {
-		if (itemsFields[index].uuid) {
-			const removeData = {
-				uuid: itemsFields[index].uuid,
-				item_work_order_uuid: null,
-				updated_at: getDateTime(),
-			};
-			updateData.mutateAsync({
-				url: `/procure/item-work-order-entry/${itemsFields[index].uuid}`,
-				updatedData: removeData,
-			});
-		} else {
+		if (form.watch('without_item_request')) {
+			if (itemsFields[index].uuid) {
+				deleteData.mutateAsync({
+					url: `/procure/item-work-order-entry/${itemsFields[index].uuid}`,
+				});
+			}
 			removeItems(index);
+		} else {
+			if (itemsFields[index].uuid) {
+				const removeData = {
+					uuid: itemsFields[index].uuid,
+					item_work_order_uuid: null,
+					updated_at: getDateTime(),
+				};
+
+				updateData.mutateAsync({
+					url: `/procure/item-work-order-entry/${itemsFields[index].uuid}`,
+					updatedData: removeData,
+				});
+
+				removeItems(index);
+			} else {
+				removeItems(index);
+			}
 		}
 	};
 
@@ -117,6 +130,7 @@ const Entry = () => {
 		acc += Number(curr.provided_quantity) * Number(curr.unit_price);
 		return acc;
 	}, 0);
+
 	async function onSubmit(values: IProcureRequest) {
 		const { item_work_order_entry, ...rest } = values;
 		if (item_work_order_entry.length === 0) {
@@ -149,6 +163,7 @@ const Entry = () => {
 			'vendor_uuid',
 			'delivery_statement_remarks',
 		];
+
 		formFields.forEach((field) => {
 			if (values[field as keyof typeof values] == null) {
 				formData.delete(field);
@@ -168,10 +183,39 @@ const Entry = () => {
 					// * UPDATE FOR ITEMS
 
 					const itemsPromise = item_work_order_entry?.map((entry, index) => {
+						if (rest.without_item_request) {
+							console.log(entry);
+							if (entry.uuid) {
+								const entryUpdateData = {
+									...entry,
+									index: index + 1,
+									item_work_order_uuid: uuid,
+									updated_at: getDateTime(),
+								};
+
+								return updateData.mutateAsync({
+									url: `/procure/item-work-order-entry/${entryUpdateData.uuid}`,
+									updatedData: entryUpdateData,
+								});
+							} else {
+								const entryData = {
+									...entry,
+									index: index + 1,
+									item_work_order_uuid: uuid,
+									created_at: getDateTime(),
+									created_by: user?.uuid,
+									uuid: nanoid(),
+								};
+
+								return postData.mutateAsync({
+									url: `/procure/item-work-order-entry`,
+									newData: entryData,
+								});
+							}
+						}
 						const entryUpdateData = {
 							...entry,
 							index: index + 1,
-							item_uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_uuid,
 							item_work_order_uuid: uuid,
 							updated_at: getDateTime(),
 						};
@@ -210,17 +254,33 @@ const Entry = () => {
 					// * ENTRY FOR ITEMS
 
 					const itemsPromise = item_work_order_entry?.map((entry, index) => {
-						const entryData = {
-							...entry,
-							index: index + 1,
-							item_uuid: itemList?.find((item) => item.value === entry.item_uuid)?.item_uuid,
-							item_work_order_uuid: new_uuid,
-							updated_at: getDateTime(),
-						};
-						return updateData.mutateAsync({
-							url: `/procure/item-work-order-entry/${entryData.uuid}`,
-							updatedData: entryData,
-						});
+						if (rest.without_item_request) {
+							const entryData = {
+								...entry,
+								index: index + 1,
+								item_work_order_uuid: new_uuid,
+								created_at: getDateTime(),
+								created_by: user?.uuid,
+								uuid: nanoid(),
+							};
+
+							return postData.mutateAsync({
+								url: `/procure/item-work-order-entry`,
+								newData: entryData,
+							});
+						} else {
+							const entryData = {
+								...entry,
+								index: index + 1,
+								item_work_order_uuid: new_uuid,
+								updated_at: getDateTime(),
+							};
+
+							return updateData.mutateAsync({
+								url: `/procure/item-work-order-entry/${entryData.uuid}`,
+								updatedData: entryData,
+							});
+						}
 					});
 					Promise.all([...itemsPromise]);
 				})
@@ -237,6 +297,7 @@ const Entry = () => {
 				});
 		}
 	}
+
 	return (
 		<CoreForm.AddEditWrapper
 			title={isUpdate ? 'Update Procure(Store)' : 'Add Procure(Store)'}
@@ -261,6 +322,7 @@ const Entry = () => {
 								name='done'
 								render={(props) => (
 									<CoreForm.Switch
+										disabled={!form.watch('is_delivery_statement')}
 										labelClassName='text-slate-100'
 										label='Done'
 										onCheckedChange={(e) => {
@@ -360,6 +422,27 @@ const Entry = () => {
 				fieldDefs={fieldDefsItems}
 				fields={itemsFields}
 				handleAdd={data?.is_delivery_statement ? undefined : handleAddItems}
+				extraHeader={
+					<FormField
+						control={form.control}
+						name='without_item_request'
+						render={(props) => (
+							<CoreForm.Switch
+								label='Without Request'
+								labelClassName='text-slate-100'
+								disabled={isUpdate}
+								onCheckedChange={(e) => {
+									if (e) {
+										form.getValues('item_work_order_entry').forEach((item: any, index: number) => {
+											form.setValue(`item_work_order_entry.${index}.request_quantity`, 0);
+										});
+									}
+								}}
+								{...props}
+							/>
+						)}
+					/>
+				}
 			>
 				<tr>
 					<td className='border-t text-right font-semibold' colSpan={5}>

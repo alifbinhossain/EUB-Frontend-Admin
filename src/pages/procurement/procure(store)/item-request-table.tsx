@@ -43,7 +43,7 @@ const ItemRequestTable = () => {
 
 	return (
 		<TableProvider
-			title={'Item Request Data'}
+			title={'Item Request'}
 			columns={columns}
 			data={data ?? []}
 			isLoading={isLoading}

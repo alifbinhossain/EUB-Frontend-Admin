@@ -2,6 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import StatusButton from '@/components/buttons/status';
 import TableCellAction from '@/components/core/data-table/_components/cell-action';
+import { CustomLink } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
 
 import {
@@ -52,6 +53,12 @@ export const itemWorkOrderEntryColumns = (): ColumnDef<IItemWorkOrderEntryTableD
 		accessorKey: 'item_work_order_id',
 		header: 'Item Work Order',
 		enableColumnFilter: true,
+		cell: (info) => (
+			<CustomLink
+				label={info.getValue() as string}
+				url={`/procurement/procure-store/${info.row.original.item_work_order_uuid}/details`}
+			/>
+		),
 	},
 	{
 		accessorKey: 'item_name',

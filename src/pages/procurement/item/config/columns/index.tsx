@@ -87,16 +87,16 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 
-	// {
-	// 	id: 'action_trx',
-	// 	header: 'Item Transfer',
-	// 	cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
-	// 	size: 40,
-	// 	meta: {
-	// 		hidden: !actionTrxAccess,
-	// 		disableFullFilter: true,
-	// 	},
-	// },
+	{
+		id: 'action_trx',
+		header: 'Item Transfer',
+		cell: (info) => <Transfer onClick={() => handleTrx(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !actionTrxAccess,
+			disableFullFilter: true,
+		},
+	},
 ];
 // * vendor
 export const vendorColumns = (): ColumnDef<IItemVendorTableData>[] => [

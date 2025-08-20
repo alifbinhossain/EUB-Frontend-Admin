@@ -14,6 +14,7 @@ export type IITemTransferTableData = {
 export type IItemWorkOrderEntryTableData = {
 	uuid: string;
 	item_work_order_name: string;
+	item_work_order_uuid: string;
 	item_name: string;
 	quantity: number;
 	unit_price: number;

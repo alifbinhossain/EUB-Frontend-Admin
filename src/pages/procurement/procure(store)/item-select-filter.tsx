@@ -4,7 +4,8 @@ import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 
-import { useOtherRequestedItems } from '@/lib/common-queries/other';
+import { useOtherItem, useOtherRequestedItems } from '@/lib/common-queries/other';
+import nanoid from '@/lib/nanoid';
 
 import { ICustomItemSelectOptions } from './utils';
 
@@ -32,8 +33,15 @@ const ItemSelectFilter: React.FC<{ uuid?: string; form: any; index: number; disa
 	const pageAccess = useAccess('procurement__item') as string[];
 	const query = uuid ? `${getAccess(pageAccess)}` : `item_work_order_uuid=null&${getAccess(pageAccess)}`;
 	const { data: itemList } = useOtherRequestedItems<ICustomItemSelectOptions[]>(query);
+	const { data: withOutReq } = useOtherItem<ICustomItemSelectOptions[]>(getAccess(pageAccess));
+
 	const fieldName = 'item_work_order_entry';
 	const selectedValues = form.watch('item_work_order_entry')?.map((item: any) => item.uuid) || [];
+	const selectedValuesWithOutReq = form.watch('item_work_order_entry')?.map((item: any) => item.item_uuid) || [];
+
+	const options = form.watch('without_item_request') ? withOutReq : itemList;
+	const optionsToExclude = form.watch('without_item_request') ? selectedValuesWithOutReq : selectedValues;
+
 	return (
 		<FormField
 			control={form.control}
@@ -41,15 +49,29 @@ const ItemSelectFilter: React.FC<{ uuid?: string; form: any; index: number; disa
 			render={(props) => (
 				<CoreForm.ReactSelect
 					disableLabel={true}
-					options={itemList!}
+					options={options!}
 					menuPortalTarget={document.body}
 					unique={true}
-					excludeOptions={selectedValues}
+					excludeOptions={optionsToExclude}
 					onChange={(e: ICustomItemSelectOptions) => {
-						form.setValue(`${fieldName}.${index}.uuid`, String(e?.value));
-						form.setValue(`${fieldName}.${index}.item_uuid`, String(e?.item_uuid));
-						form.setValue(`${fieldName}.${index}.request_quantity`, e?.request_quantity);
+						if (form.watch('without_item_request')) {
+							console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+							form.setValue(`${fieldName}.${index}.item_uuid`, String(e?.value));
+							form.setValue(`${fieldName}.${index}.uuid`, '');
+						} else {
+							console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+							form.setValue(`${fieldName}.${index}.uuid`, String(e?.value));
+							form.setValue(`${fieldName}.${index}.item_uuid`, String(e?.item_uuid));
+							form.setValue(`${fieldName}.${index}.request_quantity`, e?.request_quantity);
+						}
 					}}
+					value={options?.find((option) => {
+						if (form.watch('without_item_request')) {
+							return option.value === form.watch(`${fieldName}.${index}.item_uuid`);
+						} else {
+							return option.value === form.watch(`${fieldName}.${index}.uuid`);
+						}
+					})}
 					isDisabled={disabled}
 					placeholder='Select Item'
 					{...props}
