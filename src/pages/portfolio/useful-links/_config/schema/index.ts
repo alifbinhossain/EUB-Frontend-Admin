@@ -672,8 +672,8 @@ export const TENDER_SCHEMA = z.object({
 	title: STRING_REQUIRED,
 	file: z
 		.instanceof(File)
-		.refine((file) => file?.size !== 0, 'Please upload an file')
-		.or(STRING_REQUIRED),
+		// .refine((file) => file?.size !== 0, 'Please upload an file')
+		.or(STRING_NULLABLE),
 	published_date: STRING_REQUIRED,
 	remarks: STRING_NULLABLE,
 });
