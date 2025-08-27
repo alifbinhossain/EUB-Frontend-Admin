@@ -31,10 +31,10 @@ export const useOtherFaculty = <T>() =>
 	});
 
 //* GET OTHER USER
-export const useOtherUser = <T>() =>
+export const useOtherUser = <T>(param?: string) =>
 	useTQuery<T>({
 		queryKey: otherQK.user(),
-		url: `/other/hr/users/value/label`,
+		url: param ? `/other/hr/users/value/label?${param}` : `/other/hr/users/value/label`,
 	});
 //* GET OTHER USER BY QUERY
 export const useOtherUserQuery = <T>(query: string = '') =>

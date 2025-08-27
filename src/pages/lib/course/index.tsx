@@ -53,6 +53,7 @@ const Semester = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				defaultVisibleColumns={{ updated_at: false, created_by_name: false }}
 			>
 				{renderSuspenseModals([
 					<DeleteModal

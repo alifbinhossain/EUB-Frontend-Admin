@@ -29,10 +29,10 @@ const fdeRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 			{
-				name: 'Form',
-				path: '/fde/form',
+				name: 'Submission',
+				path: '/fde/submission',
 				element: <Form />,
-				page_name: 'fde__form',
+				page_name: 'fde__submission',
 				actions: ['create', 'read', 'update', 'delete', 'show_student_ID'],
 			},
 			{

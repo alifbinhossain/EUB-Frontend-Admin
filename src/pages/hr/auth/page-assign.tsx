@@ -28,7 +28,9 @@ const PageAssign: React.FC<IPageAssignProps> = ({ url, open, setOpen, updatedDat
 	const [searchPageName, setSearchPageName] = useState('');
 	const [selectPageName, setSelectPageName] = useState<string>('all');
 	const [filteredRoutes, setFilteredRoutes] = useState<IRoute[]>(allFlatRoutes);
-	const ALL_PAGE_NAMES = allPrivateRoutes.map((item) => item.name);
+	const ALL_PAGE_NAMES = allPrivateRoutes
+		.filter((item) => item.no_permission_needed !== true)
+		.map((item) => item.name);
 
 	const allPageActions = useMemo(() => {
 		return allFlatRoutes.filter((item) => item.actions !== undefined && item.actions.length > 0);

@@ -17,7 +17,7 @@ const Designation = () => {
 	const navigate = useNavigate();
 	const { data, isLoading, url, deleteData, refetch } = useFDERespondingStudent<IRespondingStudentTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('FDE/Form', url, 'fde__form'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('FDE/Submission', url, 'fde__submission'), [url]);
 	const pageAccess = useAccess('fde__form') as string[];
 	const show_student_ID = pageAccess.includes('show_student_ID');
 

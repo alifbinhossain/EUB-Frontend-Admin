@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, ArrowRight, CheckCircle2, Clock, Filter, RotateCcw, Settings } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
@@ -48,6 +48,17 @@ export function TimeRangePicker({
 	const [activeTab, setActiveTab] = useState<FilterTab>('all');
 	const [customDuration, setCustomDuration] = useState<number | null>(null);
 	const [pendingStartTime, setPendingStartTime] = useState<string | null>(null);
+
+	useEffect(() => {
+		setSelectedStart(null);
+		setSelectedEnd(null);
+		setSelectionError(null);
+		setCustomDuration(null);
+		setPendingStartTime(null);
+		setActualEndTime(null);
+		setShowAssignDialog(false);
+		setShowDurationDialog(false);
+	}, [selectedDay]);
 
 	const timeSlots = useMemo(
 		() => getAvailableTimeSlots(allocations, selectedDay, globalSettings),

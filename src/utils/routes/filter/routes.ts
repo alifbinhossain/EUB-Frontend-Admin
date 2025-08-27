@@ -9,6 +9,7 @@ function filterRoutes(routes: IRoute[]) {
 
 	// Helper function to check if a route has read access
 	function hasReadAccess(route: IRoute) {
+		if (route.no_permission_needed === true) return true;
 		return userAccess[route.page_name!] && userAccess[route.page_name!].includes('read');
 	}
 

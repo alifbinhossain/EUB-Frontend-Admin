@@ -1,6 +1,7 @@
 import { lazy, useMemo, useState } from 'react';
 import { PageProvider, TableProvider } from '@/context';
 import { Row } from '@tanstack/react-table';
+import { useNavigate } from 'react-router-dom';
 
 import { PageInfo } from '@/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
@@ -16,6 +17,8 @@ const Semester = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = useFDESemester<ISemesterTableData[]>();
 
 	const pageInfo = useMemo(() => new PageInfo('Library/Semester', url, 'library__semester'), [url]);
+
+	const navigate = useNavigate();
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -43,8 +46,14 @@ const Semester = () => {
 		});
 	};
 
+	const handleRoom = (row: Row<ISemesterTableData>) => {
+		navigate(`/lib/room-allocation/${row.original.uuid}/create`);
+	};
+	const handleCourse = (row: Row<ISemesterTableData>) => {
+		navigate(`/lib/course-assign/${row.original.uuid}/create`);
+	};
 	// Table Columns
-	const columns = semesterTableColumns();
+	const columns = semesterTableColumns(handleRoom, handleCourse);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
@@ -57,6 +66,7 @@ const Semester = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				defaultVisibleColumns={{ updated_at: false, created_by_name: false }}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

@@ -14,9 +14,9 @@ const privateRoutes: IRoute[] = [
 	...PortfolioRoutes,
 	...inquiryRoutes,
 	...procurementRoutes,
-	...ProfileRoutes,
 	...LIBRoutes,
 	...FDERoutes,
+	...ProfileRoutes,
 ];
 
 const privateRoutesClone = cloneDeep(privateRoutes);

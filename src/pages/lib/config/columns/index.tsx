@@ -1,4 +1,6 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
+import { ArrowBigLeft, ArrowRightCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import DateTime from '@/components/ui/date-time';
 
@@ -12,7 +14,10 @@ import {
 } from './columns.type';
 
 // * Semester Table Columns
-export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
+export const semesterTableColumns = (
+	handleRoomAssign: (row: Row<ISemesterTableData>) => void,
+	handleCourseAssign: (row: Row<ISemesterTableData>) => void
+): ColumnDef<ISemesterTableData>[] => [
 	{
 		accessorKey: 'name',
 		header: 'Semester Name',
@@ -26,13 +31,13 @@ export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
 	},
 	{
 		accessorKey: 'mid_started_at',
-		header: 'Mid Started At',
+		header: 'Mid\nStarted At',
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
 	{
 		accessorKey: 'final_started_at',
-		header: 'Final Started At',
+		header: `Final\nStarted At`,
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
@@ -42,6 +47,54 @@ export const semesterTableColumns = (): ColumnDef<ISemesterTableData>[] => [
 		enableColumnFilter: true,
 		cell: (info) => <DateTime date={info.getValue() as Date} isTime={false} />,
 	},
+	{
+		id: 'action_trx',
+		header: 'Assign\nCourse | Room',
+		cell: (info) => (
+			<div className='flex gap-10'>
+				<button onClick={() => handleCourseAssign(info.row)}>
+					<ArrowRightCircle size={24} className='text-blue-700' />
+				</button>
+				<button onClick={() => handleRoomAssign(info.row)}>
+					<ArrowRightCircle size={24} className='text-green-700' />
+				</button>
+			</div>
+		),
+		size: 40,
+		meta: {
+			disableFullFilter: true,
+		},
+	},
+	// {
+	// 	accessorKey: 'actionsAssigns',
+	// 	header: 'Assign',
+	// 	enableColumnFilter: false,
+	// 	columns: [
+	// 		{
+	// 			id: 'action_trx',
+	// 			header: 'Course',
+	// 			cell: (info) => (
+	// 				<div className='flex gap-10'>
+	// 					<button onClick={() => handleCourseAssign(info.row)}>
+	// 						<ArrowRightCircle size={24} className='text-blue-700' />
+	// 					</button>
+	// 				</div>
+	// 			),
+	// 		},
+	// 		{
+	// 			id: 'action_trx',
+	// 			header: 'Room',
+	// 			cell: (info) => (
+	// 				<div className='flex gap-10'>
+	// 					<button onClick={() => handleRoomAssign(info.row)}>
+	// 						<ArrowRightCircle size={24} className='text-green-700' />
+	// 					</button>
+	// 				</div>
+	// 			),
+	// 		},
+	// 	],
+	// },
+	// {
 ];
 
 // * Room Table Columns
