@@ -8,6 +8,7 @@ const ProfileRoutes: IRoute[] = [
 		path: '/profile',
 		element: <Profile />,
 		page_name: 'profile',
+		no_permission_needed: true,
 		actions: ['read', 'update', 'reset_password'],
 	},
 ];

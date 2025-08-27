@@ -28,7 +28,8 @@ const AddOrUpdate: React.FC<IAuthAddOrUpdateProps> = ({
 
 	const { user } = useAuth();
 	const { data } = useHrAuthByUUID(updatedData?.uuid as string);
-	const { data: userOptions } = useOtherUser<IFormSelectOption[]>();
+	const param = isUpdate ? '' : `is_new_auth=true`;
+	const { data: userOptions } = useOtherUser<IFormSelectOption[]>(param);
 
 	const form = useRHF(AUTH_SCHEMA(isUpdate) as any, AUTH_NULL);
 

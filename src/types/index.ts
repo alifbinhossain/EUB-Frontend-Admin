@@ -44,6 +44,7 @@ export type IRoute = RouteObject & {
 	hidden?: boolean;
 	page_name?: string;
 	actions?: string[];
+	no_permission_needed?: boolean;
 	disableCollapse?: boolean;
 	page_type?: {
 		type: 'library' | 'entry' | 'update' | 'normal' | 'custom';
