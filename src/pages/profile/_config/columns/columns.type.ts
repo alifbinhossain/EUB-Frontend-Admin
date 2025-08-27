@@ -19,6 +19,7 @@ export type IDesignationTableData = {
 //* User
 export type IUserTableData = {
 	uuid: string;
+	auth_user_uuid: string;
 	name: string;
 	email: string;
 	business_type: 'company' | 'individual';

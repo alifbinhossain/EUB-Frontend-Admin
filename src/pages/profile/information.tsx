@@ -34,7 +34,7 @@ const Information: React.FC<{
 	// Reset Password Handler
 	const handleResetPassword = () => {
 		setUpdateResetPasswordData({
-			uuid: data.uuid,
+			uuid: data.auth_user_uuid,
 			name: data.name,
 		});
 		setIsOpenResetPasswordModal(true);
