@@ -46,13 +46,13 @@ const fdeRoutes: IRoute[] = [
 				page_name: 'library__course_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-			{
-				name: 'Course Assign',
-				path: '/lib/course-assign',
-				element: <CourseAssign />,
-				page_name: 'library__course_assign',
-				actions: ['create', 'read', 'update'],
-			},
+			// {
+			// 	name: 'Course Assign',
+			// 	path: '/lib/course-assign',
+			// 	element: <CourseAssign />,
+			// 	page_name: 'library__course_assign',
+			// 	actions: ['create', 'read', 'update'],
+			// },
 			{
 				name: 'Course Assign Create',
 				path: '/lib/course-assign/:uuid/create',
@@ -69,13 +69,13 @@ const fdeRoutes: IRoute[] = [
 				actions: ['create', 'read', 'update', 'delete'],
 			},
 
-			{
-				name: 'Room Allocation',
-				path: '/lib/room-allocation',
-				element: <RoomAllocation />,
-				page_name: 'library__room_allocation',
-				actions: ['create', 'read', 'update'],
-			},
+			// {
+			// 	name: 'Room Allocation',
+			// 	path: '/lib/room-allocation',
+			// 	element: <RoomAllocation />,
+			// 	page_name: 'library__room_allocation',
+			// 	actions: ['create', 'read', 'update'],
+			// },
 			{
 				name: 'Course Assign Create',
 				path: '/lib/room-allocation/:uuid/create',
