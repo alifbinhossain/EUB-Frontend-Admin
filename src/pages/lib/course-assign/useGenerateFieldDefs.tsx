@@ -64,7 +64,7 @@ const useGenerateFieldDefs = ({
 			// 		.filter((uuid): uuid is string => uuid !== undefined) || [],
 		},
 		{
-			header: 'Class Size',
+			header: 'Total Students',
 			accessorKey: 'class_size',
 			type: 'number',
 		},
