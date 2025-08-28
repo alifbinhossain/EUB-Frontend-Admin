@@ -230,7 +230,6 @@ export function AssignmentDialog({
 									<span className='font-medium text-slate-800'>Semester</span>
 								</div>
 								<div className='text-sm'>
-									<span className='text-slate-500'>ID:</span>
 									<div className='font-medium text-slate-800'>{semester?.label}</div>
 								</div>
 							</div>
