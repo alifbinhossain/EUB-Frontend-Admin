@@ -86,12 +86,12 @@ const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 			<FormField
 				control={form.control}
 				name='mid_started_at'
-				render={(props) => <CoreForm.DatePicker label='Mid Started At' {...props} />}
+				render={(props) => <CoreForm.DatePicker label='Mid Exam Date' {...props} />}
 			/>
 			<FormField
 				control={form.control}
 				name='final_started_at'
-				render={(props) => <CoreForm.DatePicker label='Final Started At' {...props} />}
+				render={(props) => <CoreForm.DatePicker label='Final Exam Date' {...props} />}
 			/>
 			<FormField control={form.control} name='ended_at' render={(props) => <CoreForm.DatePicker {...props} />} />
 			<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
