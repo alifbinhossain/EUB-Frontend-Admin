@@ -120,7 +120,7 @@ const Designation = () => {
 						{...{
 							deleteItem,
 							setDeleteItem,
-							url,
+							url: '/procure/item',
 							deleteData,
 						}}
 					/>,
