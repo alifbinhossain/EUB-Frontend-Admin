@@ -233,6 +233,12 @@ const Entry = () => {
 					name='vendor_price'
 					render={(props) => <CoreForm.Input {...props} type='number' />}
 				/> */}
+
+				<FormField
+					control={form.control}
+					name='threshold'
+					render={(props) => <CoreForm.Input type='number' {...props} />}
+				/>
 				<FormField control={form.control} name='unit' render={(props) => <CoreForm.Input {...props} />} />
 				{/* <FormField
 					control={form.control}
@@ -244,13 +250,8 @@ const Entry = () => {
 
 				<FormField
 					control={form.control}
-					name='threshold'
-					render={(props) => <CoreForm.Input type='number' {...props} />}
-				/>
-				<FormField
-					control={form.control}
 					name='lead_time'
-					render={(props) => <CoreForm.Input type='number' {...props} />}
+					render={(props) => <CoreForm.Input type='number' label='Lead Time (Days)' {...props} />}
 				/>
 				<FormField control={form.control} name='remarks' render={(props) => <CoreForm.Textarea {...props} />} />
 			</CoreForm.Section>

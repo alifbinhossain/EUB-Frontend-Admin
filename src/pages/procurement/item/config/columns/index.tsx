@@ -61,10 +61,9 @@ export const itemColumns = (
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'unit',
-		header: 'Unit',
+		accessorKey: 'threshold',
+		header: 'Threshold',
 		enableColumnFilter: true,
-		size: 80,
 	},
 	{
 		id: 'request_action_trx',
@@ -76,14 +75,16 @@ export const itemColumns = (
 			disableFullFilter: true,
 		},
 	},
+
 	{
-		accessorKey: 'threshold',
-		header: 'Threshold',
+		accessorKey: 'unit',
+		header: 'Unit',
 		enableColumnFilter: true,
+		size: 80,
 	},
 	{
 		accessorKey: 'lead_time',
-		header: 'Lead Time',
+		header: 'Lead Time (Days)',
 		enableColumnFilter: true,
 	},
 
