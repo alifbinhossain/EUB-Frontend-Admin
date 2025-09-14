@@ -10,7 +10,7 @@ const Login = () => {
 
 	useEffect(() => {
 		if (signed === true) {
-			navigate('/', { replace: true });
+			navigate('/profile', { replace: true });
 		}
 	}, [signed, user, navigate]);
 

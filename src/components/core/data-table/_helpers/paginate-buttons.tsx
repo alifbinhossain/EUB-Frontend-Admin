@@ -27,7 +27,7 @@ function PaginateButtons({ totalPages, onChange, currentPage }: IPaginatedProps)
 			})}
 			previousClassName='hidden'
 			nextClassName='hidden'
-			containerClassName='flex gap-1.5 items-stretch'
+			containerClassName='flex gap-1.5 items-stretch flex-wrap justify-center'
 			breakLabel='...'
 			onPageChange={handlePageClick}
 			pageCount={totalPages}

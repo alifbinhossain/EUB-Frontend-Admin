@@ -16,11 +16,10 @@ const DeleteModal = lazy(() => import('@core/modal/delete'));
 const Bot = () => {
 	const { data, isLoading, url, deleteData, postData, updateData, refetch } = usePortfolioBot<IBotTableData[]>();
 
-	const pageInfo = useMemo(() => new PageInfo('Board Of Trustees', url, 'portfolio__bot'), [url]);
+	const pageInfo = useMemo(() => new PageInfo('Board Of Trustees', url, 'portfolio__committee_members'), [url]);
 
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
-
 	const handleCreate = () => {
 		setIsOpenAddModal(true);
 	};
@@ -72,7 +71,6 @@ const Bot = () => {
 							updateData,
 						}}
 					/>,
-
 					<DeleteModal
 						{...{
 							deleteItem,

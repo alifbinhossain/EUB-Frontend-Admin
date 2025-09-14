@@ -8,7 +8,6 @@ import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { officeColumns } from '../_config/columns';
 import { IOfficeTableData } from '../_config/columns/columns.type';
-import { type1FacetedFilters } from '../_config/columns/facetedFilters';
 import { usePortfolioOffice } from '../_config/query';
 
 const DeleteModal = lazy(() => import('@core/modal/delete'));
@@ -25,13 +24,11 @@ const Office = () => {
 	};
 
 	// Delete Modal state
-	// Single Delete Item
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
 
-	// Single Delete Handler
 	const handleDelete = (row: Row<IOfficeTableData>) => {
 		setDeleteItem({
 			id: row?.original?.uuid,
@@ -58,8 +55,6 @@ const Office = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
-				// TODO: Update facetedFilters (OPTIONAL)
-				facetedFilters={type1FacetedFilters}
 			>
 				{renderSuspenseModals([
 					<DeleteModal
