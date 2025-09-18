@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import DateTime from '@/components/ui/date-time';
 
+import { shiftTypeOptions } from '../../course/utils';
 import {
 	ICourseAssignTableData,
 	ICourseTableData,
@@ -124,14 +125,20 @@ export const roomTableColumns = (): ColumnDef<IRoomTableData>[] => [
 //*Course
 export const courseTableColumns = (): ColumnDef<ICourseTableData>[] => [
 	{
+		accessorKey: 'code',
+		header: 'Course Code',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'name',
 		header: 'Course Name',
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'code',
-		header: 'Course Code',
+		accessorKey: 'shift_type',
+		header: 'Shift',
 		enableColumnFilter: true,
+		cell: (info) => <span>{shiftTypeOptions.find((item) => item.value === info.getValue())?.label}</span>,
 	},
 ];
 

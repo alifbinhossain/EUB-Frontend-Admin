@@ -17,3 +17,15 @@ export interface IRoomAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 export interface ICourseAddOrUpdateProps extends IDefaultAddOrUpdateProps {
 	updatedData?: ICourseTableData | null;
 }
+
+export type IDataCourseAssign = {
+	course_uuid: string;
+	sem_crs_thr_entry: {
+		uuid: string;
+		semester_uuid: string;
+		course_section_type: 'regular' | 'evening';
+		course_section_uuid: string;
+		teachers_uuid: string;
+		class_size: number;
+	}[];
+};
