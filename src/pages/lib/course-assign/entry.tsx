@@ -13,11 +13,10 @@ import { useOtherTeachers } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
-import { ICourseAssignTableData, ISemesterTableData } from '../config/columns/columns.type';
+import { ISemesterTableData } from '../config/columns/columns.type';
 import { useCourseAssignByUUID, useFDESemesterByUUID } from '../config/query';
 import { COURSE_ASSIGN_NULL, COURSE_ASSIGN_SCHEMA, ICourseAssign } from '../config/schema';
 import { IDataCourseAssign } from '../config/types';
-import Header from './header';
 import { SideSearch } from './side-search';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 

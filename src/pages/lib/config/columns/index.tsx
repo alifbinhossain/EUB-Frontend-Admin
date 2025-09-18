@@ -1,5 +1,5 @@
 import { ColumnDef, Row } from '@tanstack/react-table';
-import { ArrowBigLeft, ArrowRightCircle } from 'lucide-react';
+import { ArrowBigLeft, ArrowRightCircle, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import DateTime from '@/components/ui/date-time';
@@ -17,7 +17,8 @@ import {
 // * Semester Table Columns
 export const semesterTableColumns = (
 	handleRoomAssign: (row: Row<ISemesterTableData>) => void,
-	handleCourseAssign: (row: Row<ISemesterTableData>) => void
+	handleCourseAssign: (row: Row<ISemesterTableData>) => void,
+	handleRoomView: (row: Row<ISemesterTableData>) => void
 ): ColumnDef<ISemesterTableData>[] => [
 	{
 		accessorKey: 'name',
@@ -65,6 +66,18 @@ export const semesterTableColumns = (
 		meta: {
 			disableFullFilter: true,
 		},
+	},
+	{
+		accessorKey: 'room_details_actions',
+		header: 'View\nRooms',
+		enableColumnFilter: false,
+		cell: (info) => (
+			<div className='flex gap-10'>
+				<button onClick={() => handleRoomView(info.row)}>
+					<Eye size={24} className='' />
+				</button>
+			</div>
+		),
 	},
 	// {
 	// 	accessorKey: 'actionsAssigns',

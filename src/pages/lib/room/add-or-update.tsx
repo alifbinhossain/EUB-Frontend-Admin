@@ -92,6 +92,10 @@ const AddOrUpdate: React.FC<IRoomAddOrUpdateProps> = ({
 								value: 'lab',
 								label: 'Lab',
 							},
+							{
+								value: 'online',
+								label: 'Online',
+							},
 						]}
 						{...props}
 					/>

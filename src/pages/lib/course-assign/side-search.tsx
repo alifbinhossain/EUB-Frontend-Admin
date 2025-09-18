@@ -23,7 +23,7 @@ export function SideSearch({ form }: { form?: any }) {
 						<CommandItem
 							className='mt-2 rounded-md border'
 							key={course.value}
-							value={String(course.label).toLowerCase()} // use label for searchable value
+							value={String(course.label).toLowerCase()}
 							onSelect={(currentValue) => {
 								const selected = courseData.find(
 									(c) => String(c.label).toLowerCase() === String(currentValue).toLowerCase()

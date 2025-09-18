@@ -1,7 +1,6 @@
 'use client';
 
 import { lazy, useCallback, useState } from 'react';
-import { se } from 'date-fns/locale';
 import { AlertCircle, Book, Building2, Settings } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 

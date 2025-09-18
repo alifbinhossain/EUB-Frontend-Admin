@@ -52,8 +52,11 @@ const Semester = () => {
 	const handleCourse = (row: Row<ISemesterTableData>) => {
 		navigate(`/lib/course-assign/${row.original.uuid}/create`);
 	};
+	const handleRoomView = (row: Row<ISemesterTableData>) => {
+		navigate(`/lib/room-details/${row.original.uuid}`);
+	};
 	// Table Columns
-	const columns = semesterTableColumns(handleRoom, handleCourse);
+	const columns = semesterTableColumns(handleRoom, handleCourse, handleRoomView);
 
 	return (
 		<PageProvider pageName={pageInfo.getTab()} pageTitle={pageInfo.getTabName()}>
