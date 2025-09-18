@@ -36,7 +36,7 @@ export type ISemester = z.infer<typeof SEMESTER_SCHEMA>;
 export const ROOM_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	capacity: NUMBER_REQUIRED,
-	type: z.enum(['general', 'lab']),
+	type: z.enum(['general', 'lab', 'online']),
 	location: STRING_NULLABLE,
 	remarks: STRING_NULLABLE,
 });

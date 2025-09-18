@@ -9,6 +9,7 @@ const Course = lazy(() => import('@/pages/lib/course'));
 const CourseEntry = lazy(() => import('@/pages/lib/course/entry'));
 
 const CourseAssign = lazy(() => import('@/pages/lib/course-assign'));
+const RoomDetails = lazy(() => import('@/pages/lib/room-details'));
 const CourseAssignEntry = lazy(() => import('@/pages/lib/course-assign/entry'));
 const Log = lazy(() => import('@/pages/lib/log'));
 
@@ -77,7 +78,15 @@ const fdeRoutes: IRoute[] = [
 			// 	actions: ['create', 'read', 'update'],
 			// },
 			{
-				name: 'Course Assign Create',
+				name: 'Room Details',
+				path: '/lib/room-details/:semester_id',
+				element: <RoomDetails />,
+				hidden: true,
+				page_name: 'library__room_details',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Room Allocation Create',
 				path: '/lib/room-allocation/:uuid/create',
 				element: <RoomAllocationEntry />,
 				hidden: true,

@@ -1,31 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import { Building2, Check, ChevronDown, ChevronUp, MapPin, Users } from 'lucide-react';
+import { Building2, Check, ChevronDown, ChevronUp } from 'lucide-react';
 
-import { Badge } from '@/components/ui/badge';
+import { IFormSelectOption } from '@/components/core/form/types';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { cn } from '@/lib/utils';
 
-import type { Room } from '../lib/types';
-
-interface RoomSelectorProps {
-	rooms: Room[];
-	selectedRoom: Room | null;
-	onRoomSelect: (room: Room) => void;
+interface SelectorProps {
+	options: IFormSelectOption[];
+	selected: IFormSelectOption | null;
+	onSelect: (room: IFormSelectOption) => void;
 	loading?: boolean;
 }
 
-export function RoomSelector({ rooms, selectedRoom, onRoomSelect, loading }: RoomSelectorProps) {
+export function Selector({ options, selected, onSelect, loading }: SelectorProps) {
 	const [open, setOpen] = useState(false);
 
 	if (loading) {
 		return (
 			<Button disabled variant='outline' className='w-full justify-between'>
-				Loading rooms...
+				Loading options...
 				<ChevronDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 			</Button>
 		);
@@ -35,16 +33,13 @@ export function RoomSelector({ rooms, selectedRoom, onRoomSelect, loading }: Roo
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<Button variant='outline' role='combobox' aria-expanded={open} className='w-full justify-between'>
-					{selectedRoom ? (
+					{selected ? (
 						<div className='flex min-w-0 flex-1 items-center gap-2'>
 							<Building2 className='h-4 w-4 shrink-0' />
-							<span className='truncate'>{selectedRoom.name}</span>
-							<Badge variant={selectedRoom.type === 'lab' ? 'default' : 'secondary'} className='shrink-0'>
-								{selectedRoom.type}
-							</Badge>
+							<span className='truncate'>{selected.label}</span>
 						</div>
 					) : (
-						'Select a room...'
+						'Select an option...'
 					)}
 					{open ? (
 						<ChevronUp className='ml-2 h-4 w-4 shrink-0 opacity-50' />
@@ -55,16 +50,16 @@ export function RoomSelector({ rooms, selectedRoom, onRoomSelect, loading }: Roo
 			</PopoverTrigger>
 			<PopoverContent className='w-[--radix-popover-trigger-width] p-0' align='start'>
 				<Command className='w-full'>
-					<CommandInput placeholder='Search rooms...' className='h-9 w-full' />
+					<CommandInput placeholder='Search options...' className='h-9 w-full' />
 					<CommandList>
-						<CommandEmpty>No rooms found.</CommandEmpty>
+						<CommandEmpty>No options found.</CommandEmpty>
 						<CommandGroup>
-							{rooms.map((room) => (
+							{options?.map((room) => (
 								<CommandItem
-									key={room.uuid}
-									value={`${room.name} ${room.type} ${room.location || ''}`}
+									key={room.value}
+									value={`${room.label}`}
 									onSelect={() => {
-										onRoomSelect(room);
+										onSelect(room);
 										setOpen(false);
 									}}
 									className='cursor-pointer'
@@ -75,29 +70,12 @@ export function RoomSelector({ rooms, selectedRoom, onRoomSelect, loading }: Roo
 												<Check
 													className={cn(
 														'h-4 w-4',
-														selectedRoom?.uuid === room.uuid ? 'opacity-100' : 'opacity-0'
+														selected?.value === room.value ? 'opacity-100' : 'opacity-0'
 													)}
 												/>
-												<span className='truncate font-medium'>{room.name}</span>
-												<Badge
-													variant={room.type === 'lab' ? 'default' : 'secondary'}
-													className='shrink-0'
-												>
-													{room.type}
-												</Badge>
+												<span className='truncate font-medium'>{room.label}</span>
 											</div>
-											<div className='ml-6 mt-1 flex items-center gap-4 text-xs text-muted-foreground'>
-												{room.location && (
-													<div className='flex items-center gap-1'>
-														<MapPin className='h-3 w-3' />
-														<span className='truncate'>{room.location}</span>
-													</div>
-												)}
-												<div className='flex shrink-0 items-center gap-1'>
-													<Users className='h-3 w-3' />
-													{room.capacity}
-												</div>
-											</div>
+											<div className='ml-6 mt-1 flex items-center gap-4 text-xs text-muted-foreground'></div>
 										</div>
 									</div>
 								</CommandItem>
