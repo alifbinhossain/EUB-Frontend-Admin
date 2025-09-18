@@ -62,12 +62,23 @@ export type IRoomAllocation = z.infer<typeof ROOM_ALLOCATION_SCHEMA>;
 export const COURSE_SCHEMA = z.object({
 	name: STRING_REQUIRED,
 	code: STRING_REQUIRED,
+	shift_type: z.enum(['regular', 'evening', 'regular_and_evening']),
 	remarks: STRING_NULLABLE,
-	course_section: z.array(
+	regular_section: z.array(
 		z.object({
 			uuid: STRING_OPTIONAL,
 			course_uuid: STRING_OPTIONAL,
 			name: STRING_REQUIRED,
+			type: STRING_OPTIONAL.nullable(),
+		})
+	),
+
+	evening_section: z.array(
+		z.object({
+			uuid: STRING_OPTIONAL,
+			course_uuid: STRING_OPTIONAL,
+			name: STRING_REQUIRED,
+			type: STRING_OPTIONAL.nullable(),
 		})
 	),
 });
@@ -76,13 +87,9 @@ export const COURSE_NULL: Partial<ICourse> = {
 	name: '',
 	code: '',
 	remarks: '',
-	course_section: [
-		{
-			uuid: '',
-			course_uuid: '',
-			name: '',
-		},
-	],
+	shift_type: 'regular',
+	regular_section: [],
+	evening_section: [],
 };
 
 export type ICourse = z.infer<typeof COURSE_SCHEMA>;
@@ -90,7 +97,33 @@ export type ICourse = z.infer<typeof COURSE_SCHEMA>;
 export const COURSE_ASSIGN_SCHEMA = z.object({
 	course_uuid: STRING_OPTIONAL,
 
-	sem_crs_thr_entry: z.array(
+	regular: z.array(
+		z
+			.object({
+				uuid: STRING_OPTIONAL,
+				semester_uuid: STRING_OPTIONAL,
+				course_section_uuid: STRING_OPTIONAL,
+				teachers_uuid: STRING_OPTIONAL,
+				class_size: NUMBER_OPTIONAL.default(0),
+			})
+			.superRefine((val, ctx) => {
+				if (val.teachers_uuid && (!val.class_size || val.class_size <= 0)) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Value must be greater than 0',
+						path: ['class_size'],
+					});
+				}
+				if (!val.teachers_uuid && val.class_size > 0) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Required',
+						path: ['teachers_uuid'],
+					});
+				}
+			})
+	),
+	evening: z.array(
 		z
 			.object({
 				uuid: STRING_OPTIONAL,
@@ -120,7 +153,8 @@ export const COURSE_ASSIGN_SCHEMA = z.object({
 
 export const COURSE_ASSIGN_NULL: Partial<ICourseAssign> = {
 	course_uuid: '',
-	sem_crs_thr_entry: [],
+	regular: [],
+	evening: [],
 };
 export type ICourseAssign = z.infer<typeof COURSE_ASSIGN_SCHEMA>;
 

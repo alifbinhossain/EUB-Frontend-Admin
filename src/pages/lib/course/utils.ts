@@ -24,3 +24,18 @@ export const type = [
 		value: 'range_4',
 	},
 ];
+
+export const shiftTypeOptions = [
+	{
+		label: 'Evening',
+		value: 'evening',
+	},
+	{
+		label: 'Regular',
+		value: 'regular',
+	},
+	{
+		label: 'Regular & Evening',
+		value: 'regular_and_evening',
+	},
+];

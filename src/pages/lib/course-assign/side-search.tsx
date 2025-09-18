@@ -12,11 +12,11 @@ export function SideSearch({ form }: { form?: any }) {
 	const { data: courseData } = useOtherCourse<IFormSelectOption[]>();
 
 	return (
-		<Command className=''>
-			<div className='rounded-md border'>
+		<Command className='flex h-full flex-col'>
+			<div className='flex-shrink-0 rounded-md border'>
 				<CommandInput placeholder='Search Course...' className='h-9' />
 			</div>
-			<CommandList className='max-h-60'>
+			<CommandList className='max-h-none flex-1 overflow-auto'>
 				<CommandEmpty>No course found</CommandEmpty>
 				<CommandGroup>
 					{courseData?.map((course) => (
