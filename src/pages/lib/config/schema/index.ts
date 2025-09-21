@@ -87,7 +87,7 @@ export const COURSE_NULL: Partial<ICourse> = {
 	name: '',
 	code: '',
 	remarks: '',
-	shift_type: 'regular',
+	shift_type: 'regular_and_evening',
 	regular_section: [],
 	evening_section: [],
 };
