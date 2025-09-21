@@ -31,13 +31,13 @@ const useGenerateFieldDefs = ({
 			component: (index: number) => {
 				if (form.watch(`${type}.${index}.teacher_uuid`) == null) {
 					return (
-						<span className='rounded-sm bg-red-400 p-1'>
+						<span className='rounded-sm bg-red-100 p-1 text-red-600'>
 							{form.watch(`${type}.${index}.course_section_name`)}
 						</span>
 					);
 				} else {
 					return (
-						<span className='rounded-sm bg-green-400 p-1'>
+						<span className='rounded-sm bg-green-100 p-1 text-green-600'>
 							{form.watch(`${type}.${index}.course_section_name`)}
 						</span>
 					);

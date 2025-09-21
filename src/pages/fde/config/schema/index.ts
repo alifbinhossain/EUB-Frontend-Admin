@@ -28,13 +28,25 @@ export const QUESTION_CATEGORY_NULL: Partial<IQuestionCategory> = {
 export type IQuestionCategory = z.infer<typeof QUESTION_CATEGORY_SCHEMA>;
 
 //* Question Schema
-export const QUESTION_SCHEMA = z.object({
-	index: NUMBER_REQUIRED,
-	qns_category_uuid: STRING_REQUIRED,
-	name: STRING_REQUIRED,
-	active: BOOLEAN_REQUIRED,
-	remarks: STRING_NULLABLE,
-});
+export const createQuestionSchemaWithIndexValidation = (occupiedIndices: number[] = []) => {
+	return z
+		.object({
+			index: NUMBER_REQUIRED,
+			qns_category_uuid: STRING_REQUIRED,
+			name: STRING_REQUIRED,
+			active: BOOLEAN_REQUIRED,
+			remarks: STRING_NULLABLE,
+		})
+		.superRefine((data, ctx) => {
+			if (occupiedIndices.includes(data.index)) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: `Index ${data.index} is already occupied`,
+					path: ['index'], // This specifically targets the index field
+				});
+			}
+		});
+};
 
 export const QUESTION_NULL: Partial<IQuestion> = {
 	index: 0,
@@ -44,7 +56,7 @@ export const QUESTION_NULL: Partial<IQuestion> = {
 	remarks: '',
 };
 
-export type IQuestion = z.infer<typeof QUESTION_SCHEMA>;
+export type IQuestion = z.infer<ReturnType<typeof createQuestionSchemaWithIndexValidation>>;
 //*Form Schema
 
 export const FORM_SCHEMA = z.object({
@@ -53,11 +65,11 @@ export const FORM_SCHEMA = z.object({
 		z.object({
 			uuid: STRING_OPTIONAL,
 			qns_uuid: STRING_OPTIONAL,
-			qns_category_uuid: STRING_REQUIRED,
+			qns_category_uuid: STRING_OPTIONAL,
 			rating: NUMBER_REQUIRED,
 		})
 	),
-	remarks: STRING_NULLABLE,
+	remarks: STRING_NULLABLE.optional(),
 });
 
 export const FORM_NULL: Partial<IForm> = {

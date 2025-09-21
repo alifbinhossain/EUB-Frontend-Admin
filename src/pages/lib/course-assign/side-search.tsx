@@ -12,7 +12,7 @@ export function SideSearch({ form }: { form?: any }) {
 	const { data: courseData } = useOtherCourse<IFormSelectOption[]>();
 
 	return (
-		<Command className='flex h-full flex-col'>
+		<Command className='flex h-full max-h-[75vh] flex-col'>
 			<div className='flex-shrink-0 rounded-md border'>
 				<CommandInput placeholder='Search Course...' className='h-9' />
 			</div>

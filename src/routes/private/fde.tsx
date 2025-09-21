@@ -56,7 +56,7 @@ const fdeRoutes: IRoute[] = [
 				path: '/fde/evaluation',
 				element: <List />,
 				page_name: 'fde__evaluation',
-				actions: ['create', 'read', 'update', 'delete'],
+				actions: ['create', 'read', 'update', 'delete', 'show_all_teacher'],
 			},
 			{
 				name: 'Log',
