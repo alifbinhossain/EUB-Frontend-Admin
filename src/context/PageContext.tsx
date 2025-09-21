@@ -38,7 +38,7 @@ const PageProvider: React.FC<IPageProviderProps> = ({ children, pageName, pageTi
 		}),
 		[pageName, readAccess, createAccess, updateAccess, deleteAccess]
 	);
-	console.log(value);
+
 	return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
 };
 

@@ -261,12 +261,7 @@ const Entry = () => {
 					control={form.control}
 					name='shift_type'
 					render={(props) => (
-						<CoreForm.ReactSelect
-							menuPortalTarget={document.body}
-							options={shiftTypeOptions}
-							isDisabled={isUpdate}
-							{...props}
-						/>
+						<CoreForm.ReactSelect menuPortalTarget={document.body} options={shiftTypeOptions} {...props} />
 					)}
 				/>
 			</CoreForm.Section>
