@@ -26,6 +26,12 @@ export const semesterTableColumns = (
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'type',
+		header: 'Type',
+		enableColumnFilter: true,
+		cell: (info) => <span>{info.getValue() === 'four_month' ? '4 Month' : '6 Month'}</span>,
+	},
+	{
 		accessorKey: 'started_at',
 		header: 'Started At',
 		enableColumnFilter: true,

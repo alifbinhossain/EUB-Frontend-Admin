@@ -12,6 +12,7 @@ import { getDateTime } from '@/utils';
 import { useFDESemesterByUUID } from '../config/query';
 import { ISemester, SEMESTER_NULL, SEMESTER_SCHEMA } from '../config/schema';
 import { ISemesterAddOrUpdateProps } from '../config/types';
+import { typeOptions } from './utils';
 
 const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 	url,
@@ -78,6 +79,11 @@ const AddOrUpdate: React.FC<ISemesterAddOrUpdateProps> = ({
 			onSubmit={onSubmit}
 		>
 			<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
+			<FormField
+				control={form.control}
+				name='type'
+				render={(props) => <CoreForm.ReactSelect placeholder='Select Type' options={typeOptions} {...props} />}
+			/>
 			<FormField
 				control={form.control}
 				name='started_at'

@@ -15,15 +15,17 @@ import {
 //* Semester Schema
 export const SEMESTER_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	type: z.enum(['four_month', 'six_month']),
 	started_at: STRING_REQUIRED,
-	mid_started_at: STRING_REQUIRED,
-	final_started_at: STRING_REQUIRED,
-	ended_at: STRING_REQUIRED,
+	mid_started_at: STRING_NULLABLE.optional(),
+	final_started_at: STRING_NULLABLE.optional(),
+	ended_at: STRING_NULLABLE.optional(),
 	remarks: STRING_NULLABLE,
 });
 
 export const SEMESTER_NULL: Partial<ISemester> = {
 	name: '',
+	type: 'four_month',
 	started_at: '',
 	mid_started_at: '',
 	final_started_at: '',
