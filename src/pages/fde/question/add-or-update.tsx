@@ -12,7 +12,7 @@ import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
 import { useFDEQuestion, useFDEQuestionByUUID } from '../config/query';
-import { IQuestion, QUESTION_NULL, QUESTION_SCHEMA } from '../config/schema';
+import { createQuestionSchemaWithIndexValidation, IQuestion, QUESTION_NULL } from '../config/schema';
 import { IQuestionAddOrUpdateProps } from '../config/types';
 
 const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
@@ -23,15 +23,15 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 	setUpdatedData,
 	postData,
 	updateData,
-}) => {
-	const isUpdate = !!updatedData;
+}: IQuestionAddOrUpdateProps) => {
+	const isUpdate = !!updatedData?.uuid;
 
 	const { user } = useAuth();
 	const { data } = useFDEQuestionByUUID(updatedData?.uuid as string);
 	const { data: questionCategoryOptions } = useOtherQuestionCategory<IFormSelectOption[]>();
 	const { invalidateQuery: invalidateQuerySubCategory } = useFDEQuestion();
 
-	const form = useRHF(QUESTION_SCHEMA, QUESTION_NULL);
+	const form = useRHF(createQuestionSchemaWithIndexValidation(updatedData?.indexOccupied), QUESTION_NULL);
 
 	const onClose = () => {
 		setUpdatedData?.(null);
@@ -88,7 +88,14 @@ const AddOrUpdate: React.FC<IQuestionAddOrUpdateProps> = ({
 			<FormField
 				control={form.control}
 				name='index'
-				render={(props) => <CoreForm.Input type='number' {...props} />}
+				render={(props) => (
+					<CoreForm.Input
+						type='number'
+						disabled={isUpdate}
+						subLabel={`${updatedData?.indexOccupied ? `${updatedData?.indexOccupied?.join(', ')} Index are Occupied` : ``}`}
+						{...props}
+					/>
+				)}
 			/>
 			<FormField
 				control={form.control}

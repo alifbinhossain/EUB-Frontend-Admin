@@ -168,3 +168,9 @@ export const useOtherTeacherSemesterSection = <T>(query?: string) =>
 		queryKey: otherQK.teacherSemesterSection(query ? query : ''),
 		url: query ? `/other/lib/sem-crs-thr-entry/value/label?${query}` : `/other/lib/sem-crs-thr-entry/value/label`,
 	});
+
+export const useOtherFinancialInfo = <T>() =>
+	useTQuery<T>({
+		queryKey: otherQK.financialInfo(),
+		url: `/other/portfolio/financial-info/value/label`,
+	});

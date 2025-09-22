@@ -24,3 +24,7 @@ export const type = [
 		value: 'range_4',
 	},
 ];
+export const typeOptions = [
+	{ label: '4 Month', value: 'four_month' },
+	{ label: '6 Month', value: 'six_month' },
+];

@@ -14,6 +14,7 @@ export type IQuestionTableData = {
 	name: string;
 	index: number;
 	active: boolean;
+	indexOccupied?: number[];
 };
 //*FDE respond Student
 export type IRespondingStudentTableData = {

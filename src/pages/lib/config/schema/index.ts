@@ -2,6 +2,7 @@ import { Search } from 'lucide-react';
 import { z } from 'zod';
 
 import {
+	NUMBER_DOUBLE_REQUIRED,
 	NUMBER_OPTIONAL,
 	NUMBER_REQUIRED,
 	PHONE_NUMBER_OPTIONAL,
@@ -14,15 +15,17 @@ import {
 //* Semester Schema
 export const SEMESTER_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	type: z.enum(['four_month', 'six_month']),
 	started_at: STRING_REQUIRED,
-	mid_started_at: STRING_REQUIRED,
-	final_started_at: STRING_REQUIRED,
-	ended_at: STRING_REQUIRED,
+	mid_started_at: STRING_NULLABLE.optional(),
+	final_started_at: STRING_NULLABLE.optional(),
+	ended_at: STRING_NULLABLE.optional(),
 	remarks: STRING_NULLABLE,
 });
 
 export const SEMESTER_NULL: Partial<ISemester> = {
 	name: '',
+	type: 'four_month',
 	started_at: '',
 	mid_started_at: '',
 	final_started_at: '',
@@ -61,8 +64,11 @@ export type IRoomAllocation = z.infer<typeof ROOM_ALLOCATION_SCHEMA>;
 //* Course Schema
 export const COURSE_SCHEMA = z.object({
 	name: STRING_REQUIRED,
+	financial_info_uuid: STRING_OPTIONAL,
 	code: STRING_REQUIRED,
+	credit: NUMBER_DOUBLE_REQUIRED,
 	shift_type: z.enum(['regular', 'evening', 'regular_and_evening']),
+	course_type: z.enum(['general', 'lab']),
 	remarks: STRING_NULLABLE,
 	regular_section: z.array(
 		z.object({
@@ -86,6 +92,8 @@ export const COURSE_SCHEMA = z.object({
 export const COURSE_NULL: Partial<ICourse> = {
 	name: '',
 	code: '',
+	credit: 0,
+	financial_info_uuid: '',
 	remarks: '',
 	shift_type: 'regular_and_evening',
 	regular_section: [],

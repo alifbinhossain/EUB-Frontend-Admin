@@ -260,13 +260,13 @@ const procurementRoutes: IRoute[] = [
 				page_name: 'procurement__item_update',
 				actions: ['create', 'read', 'update', 'delete'],
 			},
-			{
-				name: 'Item Request',
-				path: '/procurement/item-request',
-				element: <ItemRequest />,
-				page_name: 'procurement__item_request',
-				actions: ['create', 'read', 'update', 'delete'],
-			},
+			// {
+			// 	name: 'Item Request',
+			// 	path: '/procurement/item-request',
+			// 	element: <ItemRequest />,
+			// 	page_name: 'procurement__item_request',
+			// 	actions: ['create', 'read', 'update', 'delete'],
+			// },
 			{
 				name: 'Requisition',
 				path: '/procurement/requisition',

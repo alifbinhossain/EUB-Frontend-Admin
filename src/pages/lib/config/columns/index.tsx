@@ -26,6 +26,12 @@ export const semesterTableColumns = (
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'type',
+		header: 'Type',
+		enableColumnFilter: true,
+		cell: (info) => <span>{info.getValue() === 'four_month' ? '4 Month' : '6 Month'}</span>,
+	},
+	{
 		accessorKey: 'started_at',
 		header: 'Started At',
 		enableColumnFilter: true,
@@ -148,10 +154,25 @@ export const courseTableColumns = (): ColumnDef<ICourseTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
+		accessorKey: 'financial_info_name',
+		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
 		accessorKey: 'shift_type',
 		header: 'Shift',
 		enableColumnFilter: true,
 		cell: (info) => <span>{shiftTypeOptions.find((item) => item.value === info.getValue())?.label}</span>,
+	},
+	{
+		accessorKey: 'credit',
+		header: 'Credit',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_type',
+		header: 'Course Type',
+		enableColumnFilter: true,
 	},
 ];
 

@@ -138,6 +138,7 @@ export interface IFormAddEditWrapperProps {
 	form: UseFormReturn<any, any, undefined>;
 	onSubmit(values: any): void;
 	title?: string;
+	saveButtonNeeded?: boolean;
 }
 
 // * file upload

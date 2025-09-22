@@ -1,11 +1,7 @@
-import { EUB_LOGO } from '@/assets/images/base64';
 import { IGeneralStatement } from '@/pages/procurement/pdf-make/config/schema';
-import { format } from 'date-fns';
 
-import { customTable, DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
+import { DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
-
-import { getDateTime } from '@/utils';
 
 import pdfMake from '..';
 import { getPageFooter, getPageHeader } from './utils';

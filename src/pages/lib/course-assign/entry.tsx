@@ -158,7 +158,12 @@ const Entry = () => {
 		form: form,
 	});
 	return (
-		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Course' : 'Add Course'} form={form} onSubmit={onSubmit}>
+		<CoreForm.AddEditWrapper
+			title={isUpdate ? 'Edit Course' : 'Add Course'}
+			form={form}
+			onSubmit={onSubmit}
+			saveButtonNeeded={false}
+		>
 			{/* <Header /> */}
 
 			<div className='grid grid-cols-3 gap-4'>
@@ -186,6 +191,7 @@ const Entry = () => {
 								fields={eveningFields}
 							/>
 						)}
+						<CoreForm.Submit className='w-full' title='Save' />
 					</div>
 				) : (
 					<div className='col-span-2 flex items-center justify-center rounded-md bg-gray-300'>

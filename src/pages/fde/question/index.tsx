@@ -20,11 +20,13 @@ const Semester = () => {
 	// Add/Update Modal state
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
+	const [updatedData, setUpdatedData] = useState<IQuestionTableData | null>(null);
 	const handleCreate = () => {
+		setUpdatedData({
+			indexOccupied: data?.map((item) => item.index) || [],
+		} as IQuestionTableData);
 		setIsOpenAddModal(true);
 	};
-
-	const [updatedData, setUpdatedData] = useState<IQuestionTableData | null>(null);
 	const handleUpdate = (row: Row<IQuestionTableData>) => {
 		setUpdatedData(row.original);
 		setIsOpenAddModal(true);

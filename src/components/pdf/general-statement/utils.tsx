@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 import { getDateTime } from '@/utils';
 
-import { customTable, DEFAULT_FONT_SIZE } from '../ui';
+import { DEFAULT_FONT_SIZE } from '../ui';
 
 export const getPageHeader = (data: IGeneralStatement) => {
 	const emptyRowNeeded = Math.max(0, 10 - Math.floor((data?.general_note?.length || 0) / 110));

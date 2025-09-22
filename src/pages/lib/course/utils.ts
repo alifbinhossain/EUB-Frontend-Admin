@@ -39,3 +39,11 @@ export const shiftTypeOptions = [
 		value: 'regular_and_evening',
 	},
 ];
+
+export const courseTypeOptions = [
+	{ label: 'General', value: 'general' },
+	{
+		label: 'Lab',
+		value: 'lab',
+	},
+];

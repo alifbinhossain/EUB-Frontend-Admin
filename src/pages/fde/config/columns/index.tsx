@@ -1,10 +1,11 @@
 import { ColumnDef, Row } from '@tanstack/react-table';
-import { Link } from 'lucide-react';
+import { Clipboard, QrCode } from 'lucide-react';
 
 import { CustomLink, LinkOnly, LinkWithRedirect } from '@/components/others/link';
 import DateTime from '@/components/ui/date-time';
 import { Switch } from '@/components/ui/switch';
 
+import { EvaluationCell } from '../components';
 import {
 	IFDEListTableData,
 	IQuestionCategoryTableData,
@@ -102,9 +103,11 @@ export const respondingStudentColumns = ({
 export const fdeListColumns = ({
 	handleMidEvolution,
 	handleFinalEvolution,
+	handleQRClick,
 }: {
 	handleMidEvolution: (row: Row<IFDEListTableData>) => void;
 	handleFinalEvolution: (row: Row<IFDEListTableData>) => void;
+	handleQRClick: (row: Row<IFDEListTableData>, type: 'mid' | 'final') => void;
 }): ColumnDef<IFDEListTableData>[] => [
 	{
 		accessorKey: 'semester_name',
@@ -134,57 +137,34 @@ export const fdeListColumns = ({
 	},
 	{
 		accessorKey: 'is_mid_evaluation_complete',
-		header: 'MID Evaluation',
+		header: 'Mid Evaluation',
 		enableColumnFilter: true,
 		cell: (info) => (
-			<div className='flex flex-col'>
-				<Switch checked={info.getValue() as boolean} onCheckedChange={() => handleMidEvolution(info.row)} />
-				<span>{info.row.original.mid_evaluation_response + '/' + info.row.original.class_size}</span>
-			</div>
+			<EvaluationCell
+				rowData={info.row}
+				evaluationType='mid'
+				isComplete={info.row.original.is_mid_evaluation_complete}
+				responseCount={info.row.original.mid_evaluation_response || 0}
+				onSwitchChange={handleMidEvolution}
+				onQRClick={handleQRClick}
+			/>
 		),
-	},
-	{
-		accessorKey: 'mid_evolution_link',
-		header: 'Mid Link',
-		enableColumnFilter: true,
-		cell: (info) => {
-			if (info.row.original.is_mid_evaluation_complete) return <span>Completed</span>;
-			const fullURL = window.location.href;
-			const slice = fullURL.split('f');
-			const baseURl = slice[0];
-			const link = `${baseURl}fde/${info.row.original.uuid}/mid`;
-			return <LinkWithRedirect title={'Link'} uri={link} baseUrlNeeded={false} showCopyButton={true} />;
-		},
 	},
 	{
 		accessorKey: 'is_final_evaluation_complete',
 		header: 'Final Evaluation',
 		enableColumnFilter: true,
 		cell: (info) => (
-			<div className='flex flex-col'>
-				<Switch
-					checked={info.getValue() as boolean}
-					onCheckedChange={() => handleFinalEvolution(info.row)}
-					disabled={!info.row.original.is_mid_evaluation_complete}
-				/>
-				<span>{info.row.original.final_evaluation_response + '/' + info.row.original.class_size}</span>
-			</div>
+			<EvaluationCell
+				rowData={info.row}
+				evaluationType='final'
+				isComplete={info.row.original.is_final_evaluation_complete}
+				responseCount={info.row.original.final_evaluation_response || 0}
+				isDisabled={!info.row.original.is_mid_evaluation_complete}
+				onSwitchChange={handleFinalEvolution}
+				onQRClick={handleQRClick}
+			/>
 		),
-	},
-
-	{
-		accessorKey: 'final_evolution_link',
-		header: 'Final Link',
-		enableColumnFilter: true,
-		cell: (info) => {
-			if (info.row.original.is_final_evaluation_complete) return <span>Completed</span>;
-			else if (!info.row.original.is_mid_evaluation_complete) return <span>MID Evaluation is not completed</span>;
-			const fullURL = window.location.href;
-			const slice = fullURL.split('f');
-			const baseURl = slice[0];
-			const link = `${baseURl}fde/${info.row.original.uuid}/final`;
-			return <LinkWithRedirect title={'Link'} uri={link} baseUrlNeeded={false} showCopyButton={true} />;
-		},
 	},
 ];
 

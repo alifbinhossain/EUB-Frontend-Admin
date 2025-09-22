@@ -5,10 +5,12 @@ import { toast } from 'sonner';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { IFormSelectOption } from '@/components/core/form/types';
 import { FormField } from '@/components/ui/form';
 import CoreForm from '@core/form';
 import { DeleteModal } from '@core/modal';
 
+import { useOtherFinancialInfo } from '@/lib/common-queries/other';
 import nanoid from '@/lib/nanoid';
 import { getDateTime } from '@/utils';
 
@@ -16,7 +18,7 @@ import { ICourseTableData } from '../config/columns/columns.type';
 import { useFDECourse, useFDECourseByUUID } from '../config/query';
 import { COURSE_NULL, COURSE_SCHEMA, ICourse } from '../config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
-import { shiftTypeOptions } from './utils';
+import { courseTypeOptions, shiftTypeOptions } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -33,6 +35,7 @@ const Entry = () => {
 	} = useFDECourseByUUID(uuid as string);
 
 	const { invalidateQuery } = useFDECourse<ICourseTableData[]>();
+	const { data: financialInfo } = useOtherFinancialInfo<IFormSelectOption[]>();
 
 	const form = useRHF(COURSE_SCHEMA, COURSE_NULL);
 	const { fields, remove, append } = useFieldArray({
@@ -257,6 +260,35 @@ const Entry = () => {
 			<CoreForm.Section title={`Course`}>
 				<FormField control={form.control} name='name' render={(props) => <CoreForm.Input {...props} />} />
 				<FormField control={form.control} name='code' render={(props) => <CoreForm.Input {...props} />} />
+				<FormField
+					control={form.control}
+					name='credit'
+					render={(props) => <CoreForm.Input type='number' {...props} />}
+				/>
+				<FormField
+					control={form.control}
+					name='financial_info_uuid'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Department'
+							menuPortalTarget={document.body}
+							options={financialInfo!}
+							{...props}
+						/>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='course_type'
+					render={(props) => (
+						<CoreForm.ReactSelect
+							label='Course Type'
+							menuPortalTarget={document.body}
+							options={courseTypeOptions!}
+							{...props}
+						/>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name='shift_type'
