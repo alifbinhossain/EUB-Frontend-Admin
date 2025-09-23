@@ -65,16 +65,16 @@ export const itemColumns = (
 		header: 'Threshold',
 		enableColumnFilter: true,
 	},
-	// {
-	// 	id: 'request_action_trx',
-	// 	header: 'Request \nItem',
-	// 	cell: (info) => <Transfer onClick={() => handleRequest(info.row)} />,
-	// 	size: 40,
-	// 	meta: {
-	// 		hidden: !actionTrxAccess,
-	// 		disableFullFilter: true,
-	// 	},
-	// },
+	{
+		id: 'request_action_trx',
+		header: 'Request \nItem',
+		cell: (info) => <Transfer onClick={() => handleRequest(info.row)} />,
+		size: 40,
+		meta: {
+			hidden: !actionTrxAccess,
+			disableFullFilter: true,
+		},
+	},
 
 	{
 		accessorKey: 'unit',

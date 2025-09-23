@@ -19,7 +19,7 @@ interface PDFSelectorProps {
 	loading?: boolean;
 }
 
-export function PDFSelector({ data, onPdf, onPdfV2, onTeacherWisePdf, loading = false }: PDFSelectorProps) {
+export function PDFSelector({ data, onPdf, onPdfV2, loading = false }: PDFSelectorProps) {
 	const [selectedOption, setSelectedOption] = useState<string>('PDF');
 
 	const handleOptionSelect = (option: string, action: () => void) => {
@@ -30,13 +30,13 @@ export function PDFSelector({ data, onPdf, onPdfV2, onTeacherWisePdf, loading = 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant='outline' size='sm' className='h-9 px-3' disabled={loading}>
+				<Button variant='outline' size='sm' className='h-9 w-fit px-6' disabled={loading}>
 					<Book className='mr-2 h-4 w-4' />
 					{selectedOption}
 					<ChevronDown className='ml-1 h-3 w-3' />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align='end' className='w-48'>
+			<DropdownMenuContent align='end' className='dropdown-content-width-same-as-trigger'>
 				<DropdownMenuItem
 					onClick={() => handleOptionSelect('PDF', () => onPdf(data))}
 					className='cursor-pointer'
