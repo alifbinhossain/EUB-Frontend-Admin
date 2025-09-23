@@ -34,10 +34,6 @@ export const shiftTypeOptions = [
 		label: 'Regular',
 		value: 'regular',
 	},
-	{
-		label: 'Regular & Evening',
-		value: 'regular_and_evening',
-	},
 ];
 
 export const courseTypeOptions = [

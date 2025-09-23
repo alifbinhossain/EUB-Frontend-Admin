@@ -247,12 +247,14 @@ export default function RoomDetails() {
 						</div> */}
 						<div className='flex flex-col'>
 							<label className='text-sm font-medium text-slate-700'>Select Room</label>
-							<RoomSelector
-								rooms={rooms}
-								selectedRoom={selectedRoom}
-								onRoomSelect={selectRoom}
-								loading={loading}
-							/>
+							<div className='min-w-80'>
+								<RoomSelector
+									rooms={rooms}
+									selectedRoom={selectedRoom}
+									onRoomSelect={selectRoom}
+									loading={loading}
+								/>
+							</div>
 						</div>
 
 						{canShowSchedule && (

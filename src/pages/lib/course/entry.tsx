@@ -298,7 +298,7 @@ const Entry = () => {
 				/>
 			</CoreForm.Section>
 
-			{(form.watch('shift_type') === 'regular' || form.watch('shift_type') === 'regular_and_evening') && (
+			{form.watch('shift_type') === 'regular' && (
 				<CoreForm.DynamicFields
 					title='Regular'
 					form={form}
@@ -308,7 +308,7 @@ const Entry = () => {
 					handleAdd={handleAdd}
 				/>
 			)}
-			{(form.watch('shift_type') === 'evening' || form.watch('shift_type') === 'regular_and_evening') && (
+			{form.watch('shift_type') === 'evening' && (
 				<CoreForm.DynamicFields
 					title='Evening'
 					form={form}

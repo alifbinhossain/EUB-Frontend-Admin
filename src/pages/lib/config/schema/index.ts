@@ -67,7 +67,7 @@ export const COURSE_SCHEMA = z.object({
 	financial_info_uuid: STRING_OPTIONAL,
 	code: STRING_REQUIRED,
 	credit: NUMBER_DOUBLE_REQUIRED,
-	shift_type: z.enum(['regular', 'evening', 'regular_and_evening']),
+	shift_type: z.enum(['regular', 'evening']),
 	course_type: z.enum(['general', 'lab']),
 	remarks: STRING_NULLABLE,
 	regular_section: z.array(
@@ -95,7 +95,8 @@ export const COURSE_NULL: Partial<ICourse> = {
 	credit: 0,
 	financial_info_uuid: '',
 	remarks: '',
-	shift_type: 'regular_and_evening',
+	course_type: 'general',
+	shift_type: 'regular',
 	regular_section: [],
 	evening_section: [],
 };
