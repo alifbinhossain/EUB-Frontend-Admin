@@ -26,7 +26,7 @@ export function SideSearch({ form }: { form?: any }) {
 				(course) => String(course.label).replace(/-/g, ' ').toLowerCase(),
 				(course) => String(course.label).toLowerCase(),
 			],
-			threshold: matchSorter.rankings.CONTAINS,
+			threshold: matchSorter.rankings.ACRONYM,
 		});
 	}, [courseData, debouncedValue]);
 
