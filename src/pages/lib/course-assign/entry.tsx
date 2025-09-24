@@ -16,7 +16,6 @@ import { getDateTime } from '@/utils';
 import { ISemesterTableData } from '../config/columns/columns.type';
 import { useCourseAssignByUUID, useFDESemesterByUUID } from '../config/query';
 import { COURSE_ASSIGN_NULL, COURSE_ASSIGN_SCHEMA, ICourseAssign } from '../config/schema';
-import { IDataCourseAssign } from '../config/types';
 import { SideSearch } from './side-search';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
 
@@ -25,15 +24,10 @@ const Entry = () => {
 	const isUpdate = !!uuid;
 	const navigate = useNavigate();
 	const { user } = useAuth();
-
 	const form = useRHF(COURSE_ASSIGN_SCHEMA, COURSE_ASSIGN_NULL);
 	const { fields } = useFieldArray({
 		control: form.control,
-		name: 'regular',
-	});
-	const { fields: eveningFields } = useFieldArray({
-		control: form.control,
-		name: 'evening',
+		name: 'sem_crs_thr_entry',
 	});
 
 	const {
@@ -42,29 +36,19 @@ const Entry = () => {
 		postData,
 		deleteData,
 		invalidateQuery: invalidateCourseSectionEntry,
-	} = useCourseAssignByUUID<IDataCourseAssign>(form.watch('course_uuid') as string, `semester_uuid=${uuid}`);
+	} = useCourseAssignByUUID<ICourseAssign>(form.watch('course_uuid') as string, `semester_uuid=${uuid}`);
 	const { data: teachersList } = useOtherTeachers<IFormSelectOption[]>();
 	const { data: semData } = useFDESemesterByUUID<ISemesterTableData>(uuid as string);
 
 	useEffect(() => {
 		if (data) {
-			form.setValue(
-				'regular',
-				data.sem_crs_thr_entry.filter((item) => item.course_section_type === 'regular') || []
-			);
-
-			form.setValue(
-				'evening',
-				data.sem_crs_thr_entry.filter((item) => item.course_section_type === 'evening') || []
-			);
-			console.log(form.getValues());
+			form.setValue('sem_crs_thr_entry', data.sem_crs_thr_entry || []);
 		}
 	}, [data, form, form.watch]);
 
 	// Submit handler
 	async function onSubmit(values: ICourseAssign) {
-		const { evening, regular } = values;
-		const sem_crs_thr_entry = [...regular, ...evening];
+		const { sem_crs_thr_entry } = values;
 
 		const filteredEntries = sem_crs_thr_entry.filter((entry) => entry.teachers_uuid && entry.class_size > 0);
 
@@ -72,7 +56,6 @@ const Entry = () => {
 			toast.error('Please add at least one valid entry with a teacher and class size.');
 			return;
 		}
-
 		const entryUpdatePromise = filteredEntries.map((entry) => {
 			if (entry.uuid) {
 				return updateData.mutateAsync({
@@ -89,7 +72,6 @@ const Entry = () => {
 					created_by: user?.uuid,
 					uuid: nanoid(),
 				};
-
 				return postData.mutateAsync({
 					url: `/lib/sem-crs-thr-entry`,
 					newData: entryData,
@@ -102,40 +84,18 @@ const Entry = () => {
 
 		return Promise.all([...entryUpdatePromise]); // Wait for all entry updates to complete
 	}
-
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
 		name: string;
 	} | null>(null);
-
 	const handleRemove = (index: number) => {
 		if (fields[index].uuid) {
 			setDeleteItem({
 				id: fields[index].uuid,
-				name:
-					(teachersList?.find((teacher) => teacher.value === fields[index].teachers_uuid)?.label as string) ||
-					'',
+				name: fields[index].uuid,
 			});
 		} else {
-			form.setValue(`regular.${index}`, {
-				uuid: '',
-				semester_uuid: '',
-				course_section_uuid: '',
-				teachers_uuid: '',
-				class_size: 0,
-			});
-		}
-	};
-	const handleEveningRemove = (index: number) => {
-		if (eveningFields[index].uuid) {
-			setDeleteItem({
-				id: eveningFields[index].uuid,
-				name:
-					(teachersList?.find((teacher) => teacher.value === eveningFields[index].teachers_uuid)
-						?.label as string) || '',
-			});
-		} else {
-			form.setValue(`evening.${index}`, {
+			form.setValue(`sem_crs_thr_entry.${index}`, {
 				uuid: '',
 				semester_uuid: '',
 				course_section_uuid: '',
@@ -146,15 +106,12 @@ const Entry = () => {
 	};
 
 	const dynamicFieldDefs = useGenerateFieldDefs({
+		watch: form.watch,
+		set: form.setValue,
 		remove: handleRemove,
-		type: 'regular',
-		teacherLists: teachersList || [],
-		form: form,
-	});
-	const dynamicEveningFieldDefs = useGenerateFieldDefs({
-		remove: handleEveningRemove,
-		type: 'evening',
-		teacherLists: teachersList || [],
+		isUpdate,
+		isNew: false,
+		data: form.getValues(),
 		form: form,
 	});
 	return (
@@ -173,24 +130,13 @@ const Entry = () => {
 
 				{form.watch('course_uuid') ? (
 					<div className='col-span-2 flex flex-col gap-4'>
-						{fields.length > 0 && (
-							<CoreForm.DynamicFields
-								title='Regular'
-								form={form}
-								fieldName='regular'
-								fieldDefs={dynamicFieldDefs}
-								fields={fields}
-							/>
-						)}
-						{eveningFields.length > 0 && (
-							<CoreForm.DynamicFields
-								title='Evening'
-								form={form}
-								fieldName='evening'
-								fieldDefs={dynamicEveningFieldDefs}
-								fields={eveningFields}
-							/>
-						)}
+						<CoreForm.DynamicFields
+							title='Assign'
+							form={form}
+							fieldName='sem_crs_thr_entry'
+							fieldDefs={dynamicFieldDefs}
+							fields={fields}
+						/>
 						<CoreForm.Submit className='w-full' title='Save' />
 					</div>
 				) : (
@@ -199,7 +145,6 @@ const Entry = () => {
 					</div>
 				)}
 			</div>
-
 			<Suspense fallback={null}>
 				<DeleteModal
 					{...{
@@ -221,5 +166,4 @@ const Entry = () => {
 		</CoreForm.AddEditWrapper>
 	);
 };
-
 export default Entry;
