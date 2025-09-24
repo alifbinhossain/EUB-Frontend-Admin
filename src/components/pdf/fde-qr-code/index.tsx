@@ -7,7 +7,7 @@ import pdfMake from '..';
 import { getPageHeader } from './utils';
 
 export default async function Index(url: string) {
-	const headerHeight = 100;
+	const headerHeight = 150;
 	const GenerateQRCode = await QRCode.toString(`${url}`);
 
 	const pdfDocGenerator = pdfMake.createPdf({
@@ -28,8 +28,8 @@ export default async function Index(url: string) {
 			{
 				svg: GenerateQRCode,
 				alignment: 'center',
-				width: 100,
-				height: 80,
+				width: 200,
+				height: 180,
 			},
 			{
 				text: url,
