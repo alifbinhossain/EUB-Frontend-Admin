@@ -38,8 +38,9 @@ const useGenerateFieldDefs = ({
 			},
 		},
 		{
-			header: 'Name',
+			header: 'Section Name',
 			accessorKey: 'name',
+			placeholder: 'e.g. Sec - A',
 			type: 'text',
 		},
 		{

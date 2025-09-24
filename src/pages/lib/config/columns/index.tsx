@@ -159,12 +159,6 @@ export const courseTableColumns = (): ColumnDef<ICourseTableData>[] => [
 		enableColumnFilter: true,
 	},
 	{
-		accessorKey: 'shift_type',
-		header: 'Shift',
-		enableColumnFilter: true,
-		cell: (info) => <span>{shiftTypeOptions.find((item) => item.value === info.getValue())?.label}</span>,
-	},
-	{
 		accessorKey: 'credit',
 		header: 'Credit',
 		enableColumnFilter: true,

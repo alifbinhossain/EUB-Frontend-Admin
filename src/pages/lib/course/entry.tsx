@@ -18,7 +18,7 @@ import { ICourseTableData } from '../config/columns/columns.type';
 import { useFDECourse, useFDECourseByUUID } from '../config/query';
 import { COURSE_NULL, COURSE_SCHEMA, ICourse } from '../config/schema';
 import useGenerateFieldDefs from './useGenerateFieldDefs';
-import { courseTypeOptions, shiftTypeOptions } from './utils';
+import { courseTypeOptions } from './utils';
 
 const Entry = () => {
 	const { uuid } = useParams();
@@ -40,39 +40,39 @@ const Entry = () => {
 	const form = useRHF(COURSE_SCHEMA, COURSE_NULL);
 	const { fields, remove, append } = useFieldArray({
 		control: form.control,
-		name: 'regular_section',
+		name: 'course_section',
 	});
-	const {
-		fields: eveningFields,
-		remove: eveningRemove,
-		append: eveningAppend,
-	} = useFieldArray({
-		control: form.control,
-		name: 'evening_section',
-	});
+	// const {
+	// 	fields: eveningFields,
+	// 	remove: eveningRemove,
+	// 	append: eveningAppend,
+	// } = useFieldArray({
+	// 	control: form.control,
+	// 	name: 'evening_section',
+	// });
 
 	// Reset form values when data is updated
 	useEffect(() => {
 		if (data && isUpdate) {
 			// Reset form values
 			form.reset(data);
+			console.log('Form data:', form.getValues());
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
-	useEffect(() => {
-		const shiftType = form.watch('shift_type');
+	// useEffect(() => {
+	// 	const shiftType = form.watch('shift_type');
 
-		if (shiftType === 'regular') {
-			form.setValue('evening_section', []);
-		} else if (shiftType === 'evening') {
-			form.setValue('regular_section', []);
-		}
-	}, [form.watch('shift_type')]);
+	// 	if (shiftType === 'regular') {
+	// 		form.setValue('evening_section', []);
+	// 	} else if (shiftType === 'evening') {
+	// 		form.setValue('course_section', []);
+	// 	}
+	// }, [form.watch('shift_type')]);
 
 	// Submit handler
 	async function onSubmit(values: ICourse) {
-		const { regular_section, evening_section, ...rest } = values;
-		const course_section = regular_section?.concat(evening_section || []) || [];
+		const { course_section, ...rest } = values;
 
 		if (isUpdate) {
 			// UPDATE ITEM
@@ -175,17 +175,17 @@ const Entry = () => {
 			uuid: '',
 			course_uuid: '',
 			name: '',
-			type: 'regular',
+			// type: 'regular',
 		});
 	};
-	const handleEveningAdd = () => {
-		eveningAppend({
-			uuid: '',
-			course_uuid: '',
-			name: '',
-			type: 'evening',
-		});
-	};
+	// const handleEveningAdd = () => {
+	// 	eveningAppend({
+	// 		uuid: '',
+	// 		course_uuid: '',
+	// 		name: '',
+	// 		type: 'evening',
+	// 	});
+	// };
 
 	const [deleteItem, setDeleteItem] = useState<{
 		id: string;
@@ -205,35 +205,34 @@ const Entry = () => {
 
 	// Copy Handler
 	const handleCopy = (index: number) => {
-		const field = form.watch('regular_section')[index] || {};
+		const field = form.watch('course_section')[index] || {};
 		append({
 			uuid: '',
 			course_uuid: '',
 			name: field.name,
-			type: 'regular',
 		});
 	};
-	const handleEveningRemove = (index: number) => {
-		if (eveningFields[index].uuid) {
-			setDeleteItem({
-				id: eveningFields[index].uuid,
-				name: eveningFields[index].name,
-			});
-		} else {
-			eveningRemove(index);
-		}
-	};
+	// const handleEveningRemove = (index: number) => {
+	// 	if (eveningFields[index].uuid) {
+	// 		setDeleteItem({
+	// 			id: eveningFields[index].uuid,
+	// 			name: eveningFields[index].name,
+	// 		});
+	// 	} else {
+	// 		eveningRemove(index);
+	// 	}
+	// };
 
 	// Copy Handler
-	const handleEveningCopy = (index: number) => {
-		const field = form.watch('evening_section')[index];
-		append({
-			uuid: '',
-			course_uuid: '',
-			name: field.name,
-			type: 'evening',
-		});
-	};
+	// const handleEveningCopy = (index: number) => {
+	// 	const field = form.watch('evening_section')[index];
+	// 	append({
+	// 		uuid: '',
+	// 		course_uuid: '',
+	// 		name: field.name,
+	// 		type: 'evening',
+	// 	});
+	// };
 	const fieldDefsRegular = useGenerateFieldDefs({
 		watch: form.watch,
 		set: form.setValue,
@@ -244,16 +243,16 @@ const Entry = () => {
 		data: form.getValues(),
 		form: form,
 	});
-	const fieldDefsEvening = useGenerateFieldDefs({
-		watch: form.watch,
-		set: form.setValue,
-		remove: handleEveningRemove,
-		copy: handleEveningCopy,
-		isUpdate,
-		isNew: false,
-		data: form.getValues(),
-		form: form,
-	});
+	// const fieldDefsEvening = useGenerateFieldDefs({
+	// 	watch: form.watch,
+	// 	set: form.setValue,
+	// 	remove: handleEveningRemove,
+	// 	copy: handleEveningCopy,
+	// 	isUpdate,
+	// 	isNew: false,
+	// 	data: form.getValues(),
+	// 	form: form,
+	// });
 
 	return (
 		<CoreForm.AddEditWrapper title={isUpdate ? 'Edit Course' : 'Add Course'} form={form} onSubmit={onSubmit}>
@@ -289,35 +288,16 @@ const Entry = () => {
 						/>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name='shift_type'
-					render={(props) => (
-						<CoreForm.ReactSelect menuPortalTarget={document.body} options={shiftTypeOptions} {...props} />
-					)}
-				/>
 			</CoreForm.Section>
 
-			{form.watch('shift_type') === 'regular' && (
-				<CoreForm.DynamicFields
-					title='Regular'
-					form={form}
-					fieldName='regular_section'
-					fieldDefs={fieldDefsRegular}
-					fields={fields}
-					handleAdd={handleAdd}
-				/>
-			)}
-			{form.watch('shift_type') === 'evening' && (
-				<CoreForm.DynamicFields
-					title='Evening'
-					form={form}
-					fieldName='evening_section'
-					fieldDefs={fieldDefsEvening}
-					fields={eveningFields}
-					handleAdd={handleEveningAdd}
-				/>
-			)}
+			<CoreForm.DynamicFields
+				title='Section'
+				form={form}
+				fieldName='course_section'
+				fieldDefs={fieldDefsRegular}
+				fields={fields}
+				handleAdd={handleAdd}
+			/>
 
 			<Suspense fallback={null}>
 				<DeleteModal
@@ -330,8 +310,8 @@ const Entry = () => {
 						invalidateQueries: [invalidateQuery, invalidateCourseSectionEntry],
 						onClose: () => {
 							form.setValue(
-								'regular_section',
-								form.getValues('regular_section').filter((item) => item.uuid !== deleteItem?.id)
+								'course_section',
+								form.getValues('course_section').filter((item) => item.uuid !== deleteItem?.id)
 							);
 						},
 					}}
