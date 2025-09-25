@@ -38,6 +38,7 @@ const Entry = () => {
 	const { data: financialInfo } = useOtherFinancialInfo<IFormSelectOption[]>();
 
 	const form = useRHF(COURSE_SCHEMA, COURSE_NULL);
+
 	const { fields, remove, append } = useFieldArray({
 		control: form.control,
 		name: 'course_section',
@@ -56,7 +57,6 @@ const Entry = () => {
 		if (data && isUpdate) {
 			// Reset form values
 			form.reset(data);
-			console.log('Form data:', form.getValues());
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isUpdate]);
