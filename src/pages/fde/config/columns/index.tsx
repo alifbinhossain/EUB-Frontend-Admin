@@ -113,27 +113,45 @@ export const fdeListColumns = ({
 		accessorKey: 'semester_name',
 		header: 'Semester',
 		enableColumnFilter: true,
+		size: 40,
 	},
 	{
 		accessorKey: 'teacher_name',
 		header: 'Teacher',
+		enableColumnFilter: true,
+		size: 40,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
 		enableColumnFilter: true,
 	},
 	{
 		accessorKey: 'course_name',
 		header: 'Course',
 		enableColumnFilter: true,
+		size: 40,
+		cell: (info) => {
+			const { course_code, course_name } = info.row.original;
+			return (
+				<div>
+					<span className='font-semibold'>{course_code}</span>: {course_name}
+				</div>
+			);
+		},
 	},
 	{
 		accessorKey: 'course_section_name',
 		header: 'Section',
 		enableColumnFilter: true,
+		size: 40,
 	},
 
 	{
 		accessorKey: 'class_size',
 		header: 'Class Size',
 		enableColumnFilter: true,
+		size: 40,
 	},
 	{
 		accessorKey: 'is_mid_evaluation_complete',
@@ -149,6 +167,7 @@ export const fdeListColumns = ({
 				onQRClick={handleQRClick}
 			/>
 		),
+		size: 40,
 	},
 	{
 		accessorKey: 'is_final_evaluation_complete',
@@ -165,6 +184,7 @@ export const fdeListColumns = ({
 				onQRClick={handleQRClick}
 			/>
 		),
+		size: 40,
 	},
 ];
 

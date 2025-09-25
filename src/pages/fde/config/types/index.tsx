@@ -30,12 +30,24 @@ export interface IFdeQuestion {
 export interface ISemCrsThrEntry {
 	uuid: string;
 	semester_uuid: string;
+	semester_name: string;
 	course_section_uuid: string;
+	course_section_name: string;
+	course_uuid: string;
+	course_name: string;
+	course_code: string;
 	teachers_uuid: string;
+	teacher_uuid: string;
+	teacher_name: string;
+	teacher_email: string;
+	teacher_phone: string;
+	teacher_initials: string;
 	class_size: number;
+	department_name: string;
 	is_mid_evaluation_complete: boolean;
 	is_final_evaluation_complete: boolean;
 	created_by: string;
+	created_by_name: string;
 	created_at: string;
 	updated_at: string;
 	remarks: string;
