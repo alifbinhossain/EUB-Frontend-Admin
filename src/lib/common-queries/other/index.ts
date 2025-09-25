@@ -63,7 +63,7 @@ export const useOtherDepartments = <T>(query: string = '') =>
 		queryKey: otherQK.departments(query),
 		url: query
 			? `/other/portfolio/department/value/label?access=${query}`
-			: `/other/portfolio/department/value/label`,
+			: `/other/portfolio/department/value/label?only_department=true`,
 	});
 
 // * GET OTHER CATEGORY

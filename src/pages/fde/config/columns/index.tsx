@@ -188,6 +188,69 @@ export const fdeListColumns = ({
 	},
 ];
 
+export const bulkQrColumns = (): ColumnDef<IFDEListTableData>[] => [
+	{
+		accessorKey: 'semester_name',
+		header: 'Semester',
+		enableColumnFilter: true,
+		size: 40,
+	},
+	{
+		accessorKey: 'teacher_name',
+		header: 'Teacher',
+		enableColumnFilter: true,
+		size: 40,
+	},
+	{
+		accessorKey: 'department_name',
+		header: 'Department',
+		enableColumnFilter: true,
+	},
+	{
+		accessorKey: 'course_name',
+		header: 'Course',
+		enableColumnFilter: true,
+		size: 40,
+		cell: (info) => {
+			const { course_code, course_name } = info.row.original;
+			return (
+				<div>
+					<span className='font-semibold'>{course_code}</span>: {course_name}
+				</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'course_section_name',
+		header: 'Section',
+		enableColumnFilter: true,
+		size: 40,
+	},
+
+	{
+		accessorKey: 'class_size',
+		header: 'Class Size',
+		enableColumnFilter: true,
+		size: 40,
+	},
+	{
+		accessorKey: 'evaluation_type',
+		header: 'Evaluation Type',
+		enableColumnFilter: true,
+		cell: (info) => {
+			const { is_mid_evaluation_complete, is_final_evaluation_complete } = info.row.original;
+
+			if (!is_mid_evaluation_complete) {
+				return 'Mid Evaluation';
+			}
+
+			if (is_mid_evaluation_complete && !is_final_evaluation_complete) {
+				return 'Final Evaluation';
+			}
+		},
+	},
+];
+
 //* Responding Student
 export const respondingStudentLogColumns = ({
 	showStudentID,

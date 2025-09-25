@@ -8,7 +8,7 @@ import pdfMake from '..';
 import { getPageHeader } from './utils';
 
 export default async function Index(url: string, data: IFDEListTableData, type: 'mid' | 'final') {
-	const headerHeight = 180;
+	const headerHeight = 200;
 	const GenerateQRCode = await QRCode.toString(`${url}`);
 
 	const pdfDocGenerator = pdfMake.createPdf({
