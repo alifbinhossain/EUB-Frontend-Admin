@@ -26,6 +26,7 @@ import {
 } from '../../fde/config/query';
 import { FORM_NULL, FORM_SCHEMA, IForm } from '../../fde/config/schema';
 import { IFdeQuestion, IQuestionCategory, ISemCrsThrEntry } from '../config/types';
+import { BottomMessage, FormInfo, TopMessage } from './info';
 
 interface IEvaluationCategory {
 	section: string;
@@ -190,11 +191,11 @@ const Entry = () => {
 
 	// Rating Options
 	const ratingOptions = [
-		{ value: 1, label: 'Excellent', range: '100-90' },
-		{ value: 2, label: 'Very Good', range: '89-79' },
-		{ value: 3, label: 'Good', range: '78-69' },
-		{ value: 4, label: 'Satisfactory', range: '68-50' },
-		{ value: 5, label: 'Not Satisfactory', range: 'Below 50' },
+		{ value: 1, label: 'Strongly Agree', range: '5' },
+		{ value: 2, label: 'Agree', range: '4' },
+		{ value: 3, label: 'Neutral', range: '3' },
+		{ value: 4, label: 'Disagree', range: '2' },
+		{ value: 5, label: 'Strongly Disagree', range: '1' },
 	];
 
 	// Helper function to get question index
@@ -244,51 +245,28 @@ const Entry = () => {
 		);
 	} else {
 		return (
-			<div className={isUpdate ? '' : 'p-4 md:p-6'}>
+			<div className={cn('flex flex-col gap-6', isUpdate ? '' : 'mx-auto p-4 sm:max-w-5xl md:p-6')}>
+				<FormInfo data={teacher_course_entry as ISemCrsThrEntry} />
+				<TopMessage />
 				<CoreForm.AddEditWrapper
 					title={isUpdate ? 'Edit Faculty Department Evaluation' : 'Add Faculty Department Evaluation'}
 					form={form}
 					onSubmit={onSubmit}
 				>
-					<div className='mx-auto max-w-fit'>
+					<div className='max-w-fit'>
 						<FormField
 							control={form.control}
 							name='id'
 							render={(props) => <CoreForm.StudentID label='Student ID' disabled={isUpdate} {...props} />}
 						/>
 					</div>
-					{/* Rating Scale */}
-					<CoreForm.Section title={`Rating Scale`} className='block w-full p-2'>
-						{/* Desktop Rating Scale */}
-						<div className='hidden grid-cols-5 gap-3 md:grid'>
-							{ratingOptions.map((option) => (
-								<div key={option.value} className='bg-gradient rounded-lg border p-3 text-center'>
-									<div className='text-sm font-medium'>{option.label}</div>
-									<div className='mt-1 text-xs text-gray-600'>({option.range})</div>
-								</div>
-							))}
-						</div>
-
-						{/* Mobile Rating Scale */}
-						<div className='space-y-2 md:hidden'>
-							{ratingOptions.map((option) => (
-								<div
-									key={option.value}
-									className='bg-gradient flex items-center justify-between rounded-lg border p-2'
-								>
-									<div className='text-sm font-medium'>{option.label}</div>
-									<div className='text-xs text-gray-600'>({option.range})</div>
-								</div>
-							))}
-						</div>
-					</CoreForm.Section>
 
 					{/* Desktop Table View */}
 					<div className='hidden overflow-x-auto rounded-md border md:block'>
 						<Table className=''>
 							<TableHeader className='bg-primary text-white'>
 								<TableRow className='hover:bg-transparent'>
-									<TableHead className='w-1/2 text-lg font-medium text-primary-foreground'>
+									<TableHead className='w-3/4 text-lg font-medium text-primary-foreground'>
 										Evaluation Criteria
 									</TableHead>
 									{ratingOptions.map((option) => (
@@ -308,7 +286,7 @@ const Entry = () => {
 										{/* Section Header */}
 										<TableRow
 											key={categoryIndex}
-											className='bg-gradient hover:bg-gradient border-b'
+											className='bg-gradient hover:bg-gradient cursor-default border-b'
 										>
 											<TableCell
 												colSpan={6}
@@ -324,7 +302,7 @@ const Entry = () => {
 											return (
 												<TableRow
 													key={currentQuestionIndex}
-													className='border-b bg-white last:border-b-0 hover:bg-white'
+													className='cursor-default border-b bg-white last:border-b-0 hover:bg-white'
 												>
 													<TableCell className='py-4'>
 														<div className='flex gap-1'>
@@ -362,8 +340,8 @@ const Entry = () => {
 																					<RadioGroupItem
 																						value={option.value.toString()}
 																						id={`${item.index}_${option.value}`}
-																						className='size-4 border border-gray-400'
-																						circleClassName='size-3'
+																						className='size-6 border border-gray-400'
+																						circleClassName='size-5'
 																					/>
 																					<Label
 																						htmlFor={`${item.index}_${option.value}`}
@@ -499,7 +477,9 @@ const Entry = () => {
 					<FormField
 						control={form.control}
 						name='remarks'
-						render={(props) => <CoreForm.Textarea {...props} />}
+						render={(props) => (
+							<CoreForm.Textarea label='Any Comments on the course teacher or the course?' {...props} />
+						)}
 					/>
 				</CoreForm.AddEditWrapper>
 			</div>

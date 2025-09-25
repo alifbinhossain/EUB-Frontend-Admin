@@ -29,11 +29,16 @@ export type IFDEListTableData = {
 	uuid: string;
 	semester_uuid: string;
 	semester_name: string;
+	course_name: string;
+	course_code: string;
 	course_section_uuid: string;
+	course_section_name: string;
 	teacher_uuid: string;
+	teacher_name: string;
 	class_size: number;
 	is_mid_evaluation_complete: boolean;
 	is_final_evaluation_complete: boolean;
 	mid_evaluation_response: number;
 	final_evaluation_response: number;
+	department_name: string;
 };

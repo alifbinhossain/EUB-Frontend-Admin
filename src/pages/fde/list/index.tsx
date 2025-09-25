@@ -29,7 +29,7 @@ const Semester = () => {
 		? `status=${status}&semester_uuid=${semesterUuid}`
 		: `user_uuid=${user?.uuid}&status=${status}&semester_uuid=${semesterUuid}`;
 	// const query = `status=${status}`;
-	const { data, isLoading, url, updateData, refetch } = useFDEList<IFDEListTableData[]>(query);
+	const { data, isLoading, updateData, refetch } = useFDEList<IFDEListTableData[]>(query);
 
 	const { data: departmentOptions } = useOtherSemester<IFormSelectOption[]>();
 
@@ -54,7 +54,7 @@ const Semester = () => {
 		const slice = fullURL.split('f');
 		const baseURl = slice[0];
 		const link = `${baseURl}fde/${row.original?.uuid}/${type}`;
-		(await ChallanPdfV2(link)).print();
+		(await ChallanPdfV2(link, row.original, type)).print();
 	};
 	// Table Columns
 	const columns = fdeListColumns({ handleMidEvolution, handleFinalEvolution, handleQRClick });

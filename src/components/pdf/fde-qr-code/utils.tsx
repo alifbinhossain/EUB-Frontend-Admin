@@ -1,8 +1,9 @@
 import { EUB_LOGO } from '@/assets/images/base64';
+import { IFDEListTableData } from '@/pages/fde/config/columns/columns.type';
 
 import { DEFAULT_FONT_SIZE } from '../ui';
 
-export const getPageHeader = () => {
+export const getPageHeader = (data: IFDEListTableData, type: 'mid' | 'final') => {
 	return {
 		heights: ['auto', 2, 'auto', 'auto'],
 		widths: ['*'],
@@ -31,10 +32,44 @@ export const getPageHeader = () => {
 							],
 							[
 								{
-									text: 'Gabtoli, Mirpur, Dhaka-1216',
+									text: 'Proposed Course Evaluation Survey (CES)',
 									bold: true,
 									alignment: 'center',
 									colSpan: 3,
+									fontSize: DEFAULT_FONT_SIZE + 5,
+								},
+								'',
+								'',
+							],
+							[
+								{
+									text: `${data?.semester_name}: ${type.toUpperCase()} Evaluation`,
+									bold: true,
+									alignment: 'center',
+									colSpan: 3,
+									fontSize: DEFAULT_FONT_SIZE + 5,
+								},
+								'',
+								'',
+							],
+							[
+								{
+									text: `${data?.course_code}: ${data?.course_name} (${data?.course_section_name})`,
+									bold: true,
+									alignment: 'center',
+									colSpan: 3,
+									fontSize: DEFAULT_FONT_SIZE + 5,
+								},
+								'',
+								'',
+							],
+							[
+								{
+									text: data?.teacher_name,
+									bold: true,
+									alignment: 'center',
+									colSpan: 3,
+									fontSize: DEFAULT_FONT_SIZE + 5,
 								},
 								'',
 								'',

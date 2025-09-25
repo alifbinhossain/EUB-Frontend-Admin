@@ -1,13 +1,14 @@
+import { IFDEListTableData } from '@/pages/fde/config/columns/columns.type';
 import QRCode from 'qrcode';
 
-import { xMargin } from '@/components/pdf/ui';
+import { DEFAULT_FONT_SIZE, xMargin } from '@/components/pdf/ui';
 import { DEFAULT_A4_PAGE } from '@/components/pdf/utils';
 
 import pdfMake from '..';
 import { getPageHeader } from './utils';
 
-export default async function Index(url: string) {
-	const headerHeight = 150;
+export default async function Index(url: string, data: IFDEListTableData, type: 'mid' | 'final') {
+	const headerHeight = 180;
 	const GenerateQRCode = await QRCode.toString(`${url}`);
 
 	const pdfDocGenerator = pdfMake.createPdf({
@@ -18,7 +19,7 @@ export default async function Index(url: string) {
 
 		// * Page Header
 		header: {
-			table: getPageHeader() as any,
+			table: getPageHeader(data, type) as any,
 			layout: 'noBorders',
 			margin: [xMargin, 30, xMargin, 0],
 		},
@@ -28,13 +29,14 @@ export default async function Index(url: string) {
 			{
 				svg: GenerateQRCode,
 				alignment: 'center',
-				width: 200,
-				height: 180,
+				width: 500,
+				height: 480,
 			},
 			{
 				text: url,
 				alignment: 'center',
 				bold: true,
+				fontSize: DEFAULT_FONT_SIZE + 5,
 			},
 		],
 	});
