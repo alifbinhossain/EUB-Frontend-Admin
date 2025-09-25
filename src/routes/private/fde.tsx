@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import BulkQr from '@/pages/fde/bulk-qr';
 import Form from '@/pages/fde/form';
 import FormEntry from '@/pages/fde/form/entry';
 import List from '@/pages/fde/list';
@@ -56,6 +57,13 @@ const fdeRoutes: IRoute[] = [
 				path: '/fde/evaluation',
 				element: <List />,
 				page_name: 'fde__evaluation',
+				actions: ['create', 'read', 'update', 'delete', 'show_all_teacher'],
+			},
+			{
+				name: 'Bulk QR',
+				path: '/fde/bulk-qr',
+				element: <BulkQr />,
+				page_name: 'fde__fde__bulk_qr',
 				actions: ['create', 'read', 'update', 'delete', 'show_all_teacher'],
 			},
 			{

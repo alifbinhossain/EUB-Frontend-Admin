@@ -54,6 +54,17 @@ export const getPageHeader = (data: IFDEListTableData, type: 'mid' | 'final') =>
 							],
 							[
 								{
+									text: `${data?.department_name}`,
+									bold: true,
+									alignment: 'center',
+									colSpan: 3,
+									fontSize: DEFAULT_FONT_SIZE + 5,
+								},
+								'',
+								'',
+							],
+							[
+								{
 									text: `${data?.course_code}: ${data?.course_name} (${data?.course_section_name})`,
 									bold: true,
 									alignment: 'center',

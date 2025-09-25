@@ -13,6 +13,7 @@ export const FormInfo = ({ data }: { data: ISemCrsThrEntry }) => {
 					{data?.semester_name + ': '}
 					{path.split('/')[3] === 'mid' ? 'Mid Evaluation' : 'Final Evaluation'}
 				</span>
+				<span className='sm:text space-x-2 text-xs italic'>{data?.department_name}</span>
 				<div className='sm:text space-x-2 text-xs italic'>
 					<span className='font-semibold'>{data?.course_code}:</span>
 					<span>{data?.course_name + ' (' + data?.course_section_name + ')'}</span>
