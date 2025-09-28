@@ -76,7 +76,7 @@ export const getPageHeader = (data: IFDEListTableData, type: 'mid' | 'final') =>
 							],
 							[
 								{
-									text: data?.teacher_name,
+									text: `Teacher: ${data?.teacher_name}`,
 									bold: true,
 									alignment: 'center',
 									colSpan: 3,

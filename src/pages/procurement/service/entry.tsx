@@ -93,8 +93,6 @@ const Entry = () => {
 
 	// Submit handler
 	async function onSubmit(values: IService) {
-		console.log(values);
-
 		if (isUpdate) {
 			// * UPDATE ITEM
 			const { service_payment, ...rest } = values;
@@ -253,11 +251,16 @@ const Entry = () => {
 	} | null>(null);
 	// * REMOVE GENERAL NOTES
 	const handleRemoveGeneralNotes = (index: number) => {
-		if (generalNotesFields[index].uuid) {
-			setDeleteItem({
-				type: 'general_notes',
-				id: generalNotesFields[index].uuid,
-				name: generalNotesFields[index].id,
+		const servicePayment = generalNotesFields[index];
+		if (servicePayment.uuid) {
+			// setDeleteItem({
+			// 	type: 'general_notes',
+			// 	id: generalNotesFields[index].uuid,
+			// 	name: generalNotesFields[index].id,
+			// });
+			return updateData.mutateAsync({
+				url: `/procure/service-payment/${servicePayment.uuid}`,
+				updatedData: { amount: 0, payment_date: null, updated_at: getDateTime() },
 			});
 		} else {
 			removeGeneralNotes(index);
