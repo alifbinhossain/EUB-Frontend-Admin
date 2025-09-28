@@ -19,7 +19,7 @@ export function useRoomAllocation(semesterId: string) {
 		setLoading(true);
 		try {
 			// Replace with actual API call
-			const response = await api.get(`${BASE_API}/lib/room`);
+			const response = await api.get(`${BASE_API}/lib/room?semester_uuid=${semesterId}`);
 			setRooms(response.data);
 		} catch (err: any) {
 			setError('Failed to fetch rooms');

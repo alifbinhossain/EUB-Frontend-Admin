@@ -53,7 +53,7 @@ export default async function Index(BaseUrl: string, data: IFDEListTableData[], 
 						],
 						[
 							{
-								text: item?.teacher_name,
+								text: `Teacher: ${item?.teacher_name}`,
 								bold: true,
 								alignment: 'center',
 								fontSize: DEFAULT_FONT_SIZE + 5,

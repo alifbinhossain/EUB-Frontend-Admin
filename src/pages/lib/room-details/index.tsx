@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { useOtherSemester, useOtherTeachers } from '@/lib/common-queries/other';
+import { NAV_PADDING_HEIGHT } from '@/lib/nav-padding-height';
 import { cn } from '@/lib/utils';
 import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
@@ -180,8 +181,10 @@ export default function RoomDetails() {
 		<div
 			ref={containerRef}
 			className={cn(
-				'border-slate-200 shadow-sm transition-all duration-300',
-				isFullscreen ? 'fixed inset-0 z-50 overflow-auto bg-white p-6' : 'rounded-lg border'
+				`border-slate-200 shadow-sm transition-all duration-300`,
+				isFullscreen
+					? 'fixed inset-0 z-50 overflow-auto bg-white p-6'
+					: `h-full rounded-lg border ${NAV_PADDING_HEIGHT}`
 			)}
 		>
 			{/* Header */}
@@ -311,7 +314,10 @@ export default function RoomDetails() {
 						{/* Table - Only show when both semester and room are selected */}
 						<div className='overflow-hidden rounded-lg border border-slate-200'>
 							<div
-								className={cn('overflow-auto', isFullscreen ? 'max-h-[calc(100vh-200px)]' : 'max-h-96')}
+								className={cn(
+									'overflow-auto',
+									isFullscreen ? 'max-h-[calc(100vh-200px)]' : 'max-h-[calc(100vh-360px)]'
+								)}
 							>
 								<Table>
 									<TableHeader className='sticky top-0 z-10'>
@@ -580,4 +586,6 @@ export default function RoomDetails() {
 			])}
 		</div>
 	);
+
+	// return <div className={cn('border h-full', NAV_PADDING_HEIGHT)}></div>
 }

@@ -8,18 +8,19 @@ export const FormInfo = ({ data }: { data: ISemCrsThrEntry }) => {
 			<span className='sm:text text-sm font-semibold'>Proposed Course Evaluation Survey (CES)</span>
 
 			<div className='flex flex-col items-center'>
-				<span className='sm:text text-sm font-semibold'>{data?.department_name}</span>
 				<span className='font-semibold'>
 					{data?.semester_name + ': '}
 					{path.split('/')[3] === 'mid' ? 'Mid Evaluation' : 'Final Evaluation'}
 				</span>
-				<span className='sm:text space-x-2 text-xs italic'>{data?.department_name}</span>
+				<span className='sm:text text-sm font-semibold'>{data?.department_name}</span>
 				<div className='sm:text space-x-2 text-xs italic'>
 					<span className='font-semibold'>{data?.course_code}:</span>
 					<span>{data?.course_name + ' (' + data?.course_section_name + ')'}</span>
 				</div>
-
-				<span className='sm:text text-xs italic'>{data?.teacher_name}</span>
+				<div className='sm:text space-x-2 text-xs italic'>
+					<span className='font-semibold'>Teacher:</span>
+					<span className='sm:text text-xs italic'>Teacher: {data?.teacher_name}</span>
+				</div>
 			</div>
 		</div>
 	);

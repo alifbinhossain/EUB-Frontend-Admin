@@ -31,7 +31,7 @@ export function SideSearch({ form }: { form?: any }) {
 	}, [courseData, debouncedValue]);
 
 	return (
-		<Command className='flex h-full max-h-[75vh] flex-col' shouldFilter={false}>
+		<Command className={cn('flex h-full max-h-[calc(100dvh-180px)] flex-col')} shouldFilter={false}>
 			<div className='flex-shrink-0 rounded-md border'>
 				<CommandInput
 					placeholder='Search Course...'
