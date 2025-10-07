@@ -1,8 +1,15 @@
 import React from 'react';
-import { Eye } from 'lucide-react';
+import { Eye, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from '@/components/ui/dialog';
 
 import { cn } from '@/lib/utils';
 
@@ -25,6 +32,16 @@ const DetailsModal: React.FC<IDetailsModalProps> = ({ title, content, className,
 					<DialogTitle>{title}</DialogTitle>
 					<DialogDescription>{content}</DialogDescription>
 				</DialogHeader>
+
+				<DialogClose asChild>
+					<Button
+						variant='ghost'
+						size='icon'
+						className='absolute right-2 top-2 z-[99999] rounded-full bg-red-500 hover:bg-red-600'
+					>
+						<X className='h-5 w-5 text-white' />
+					</Button>
+				</DialogClose>
 			</DialogContent>
 		</Dialog>
 	);

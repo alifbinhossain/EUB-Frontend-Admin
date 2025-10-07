@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { url } from 'inspector/promises';
+import { useEffect, useState } from 'react';
 import { useSemCrsThrEntryByUUID } from '@/pages/lib/config/query';
 import { BanPage } from '@/pages/public/ban';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import useRHF from '@/hooks/useRHF';
 
+import { DetailsModal } from '@/components/core/modal';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent } from '@/components/ui/card';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -16,6 +18,7 @@ import CoreForm from '@core/form';
 import nanoid from '@/lib/nanoid';
 import { cn } from '@/lib/utils';
 import { getDateTime } from '@/utils';
+import renderSuspenseModals from '@/utils/renderSuspenseModals';
 
 import { IRespondingStudentTableData } from '../../fde/config/columns/columns.type';
 import {
@@ -26,6 +29,7 @@ import {
 } from '../../fde/config/query';
 import { FORM_NULL, FORM_SCHEMA, IForm } from '../../fde/config/schema';
 import { IFdeQuestion, IQuestionCategory, ISemCrsThrEntry } from '../config/types';
+import AlertInfo from './alert-info';
 import { BottomMessage, FormInfo, TopMessage } from './info';
 
 interface IEvaluationCategory {
@@ -39,6 +43,8 @@ const Entry = () => {
 	const isUpdate = !!uuid;
 	const navigate = useNavigate();
 	const { user } = useAuth();
+
+	const [open, setOpen] = useState(true);
 
 	const { invalidateQuery } = useFDERespondingStudent<IRespondingStudentTableData[]>();
 	const { data } = useFDEFormFullResponse<any>(uuid as string);
@@ -245,185 +251,84 @@ const Entry = () => {
 		);
 	} else {
 		return (
-			<div className={cn('flex flex-col gap-6', isUpdate ? '' : 'mx-auto p-4 sm:max-w-5xl md:p-6')}>
-				<FormInfo data={teacher_course_entry as ISemCrsThrEntry} />
-				<TopMessage />
-				<CoreForm.AddEditWrapper
-					title={isUpdate ? 'Edit Faculty Department Evaluation' : 'Add Faculty Department Evaluation'}
-					form={form}
-					onSubmit={onSubmit}
-				>
-					<div className='max-w-fit'>
-						<FormField
-							control={form.control}
-							name='id'
-							render={(props) => <CoreForm.StudentID label='Student ID' disabled={isUpdate} {...props} />}
-						/>
-					</div>
+			<>
+				<div className={cn('flex flex-col gap-6', isUpdate ? '' : 'mx-auto p-4 sm:max-w-5xl md:p-6')}>
+					<FormInfo data={teacher_course_entry as ISemCrsThrEntry} />
+					<TopMessage />
+					<CoreForm.AddEditWrapper
+						title={isUpdate ? 'Edit Faculty Department Evaluation' : 'Add Faculty Department Evaluation'}
+						form={form}
+						onSubmit={onSubmit}
+					>
+						<div className='max-w-fit'>
+							<FormField
+								control={form.control}
+								name='id'
+								render={(props) => (
+									<CoreForm.StudentID label='Student ID' disabled={isUpdate} {...props} />
+								)}
+							/>
+						</div>
 
-					{/* Desktop Table View */}
-					<div className='hidden overflow-x-auto rounded-md border md:block'>
-						<Table className=''>
-							<TableHeader className='bg-primary text-white'>
-								<TableRow className='hover:bg-transparent'>
-									<TableHead className='w-3/4 text-lg font-medium text-primary-foreground'>
-										Evaluation Criteria
-									</TableHead>
-									{ratingOptions.map((option) => (
-										<TableHead
-											key={option.value}
-											className='min-w-[100px] text-center font-semibold text-base-200'
-										>
-											<div className='text-xs'>{option.label}</div>
-											<div className='text-xs text-gray-300'>({option.range})</div>
+						{/* Desktop Table View */}
+						<div className='hidden overflow-x-auto rounded-md border md:block'>
+							<Table className=''>
+								<TableHeader className='bg-primary text-white'>
+									<TableRow className='hover:bg-transparent'>
+										<TableHead className='w-3/4 text-lg font-medium text-primary-foreground'>
+											Evaluation Criteria
 										</TableHead>
-									))}
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{evaluationCategories.map((category, categoryIndex) => (
-									<>
-										{/* Section Header */}
-										<TableRow
-											key={categoryIndex}
-											className='bg-gradient hover:bg-gradient cursor-default border-b'
-										>
-											<TableCell
-												colSpan={6}
-												className='text-base font-semibold text-base-content'
+										{ratingOptions.map((option) => (
+											<TableHead
+												key={option.value}
+												className='min-w-[100px] text-center font-semibold text-base-200'
 											>
-												{category.section}
-											</TableCell>
-										</TableRow>
-
-										{/* Section Items */}
-										{category.items.map((item) => {
-											const currentQuestionIndex = questionIndex++;
-											return (
-												<TableRow
-													key={currentQuestionIndex}
-													className='cursor-default border-b bg-white last:border-b-0 hover:bg-white'
+												<div className='text-xs'>{option.label}</div>
+												<div className='text-xs text-gray-300'>({option.range})</div>
+											</TableHead>
+										))}
+									</TableRow>
+								</TableHeader>
+								<TableBody>
+									{evaluationCategories.map((category, categoryIndex) => (
+										<>
+											{/* Section Header */}
+											<TableRow
+												key={categoryIndex}
+												className='bg-gradient hover:bg-gradient cursor-default border-b'
+											>
+												<TableCell
+													colSpan={6}
+													className='text-base font-semibold text-base-content'
 												>
-													<TableCell className='py-4'>
-														<div className='flex gap-1'>
-															<span className='mt-0.5 text-sm font-medium text-gray-500'>
-																{currentQuestionIndex + 1}.
-															</span>
-															<span className='text-sm leading-relaxed text-gray-700'>
-																{item.text}
-															</span>
-														</div>
-													</TableCell>
-
-													{ratingOptions.map((option) => (
-														<TableCell key={option.value} className='py-4 text-center'>
-															<FormField
-																control={form.control}
-																name={`qns.${currentQuestionIndex}.rating`}
-																render={({ field }) => (
-																	<FormItem>
-																		<FormControl>
-																			<RadioGroup
-																				onValueChange={(value) =>
-																					field.onChange(Number(value))
-																				}
-																				value={
-																					form
-																						.watch(
-																							`qns.${currentQuestionIndex}.rating`
-																						)
-																						?.toString() ?? ''
-																				}
-																				className='flex justify-center'
-																			>
-																				<div className='flex items-center'>
-																					<RadioGroupItem
-																						value={option.value.toString()}
-																						id={`${item.index}_${option.value}`}
-																						className='size-6 border border-gray-400'
-																						circleClassName='size-5'
-																					/>
-																					<Label
-																						htmlFor={`${item.index}_${option.value}`}
-																						className='sr-only'
-																					>
-																						{option.label}
-																					</Label>
-																				</div>
-																			</RadioGroup>
-																		</FormControl>
-
-																		<FormMessage />
-																	</FormItem>
-																)}
-															/>
-														</TableCell>
-													))}
-												</TableRow>
-											);
-										})}
-									</>
-								))}
-							</TableBody>
-						</Table>
-					</div>
-
-					{/* Mobile Card View */}
-					<div className='md:hidden'>
-						<h3 className='mb-2 text-base font-semibold text-gray-900'>Performance Evaluation</h3>
-						<Accordion type='multiple' className='space-y-2'>
-							{evaluationCategories.map((category, categoryIndex) => {
-								const isCompleted = isCategoryCompleted(categoryIndex);
-								const completedCount = category.items.filter((_, itemIndex) => {
-									const questionIndex = getQuestionIndex(categoryIndex, itemIndex);
-									const fieldValue = form.watch(`qns.${questionIndex}.rating`);
-									return fieldValue && fieldValue !== 0;
-								}).length;
-
-								return (
-									<AccordionItem
-										key={categoryIndex}
-										value={'category-' + categoryIndex}
-										className='rounded-lg border'
-									>
-										<AccordionTrigger className='px-4 py-3 hover:no-underline'>
-											<div className='mr-2 flex w-full items-center justify-between'>
-												<span className='text-left text-sm font-medium'>
 													{category.section}
-												</span>
-												<div className='flex items-center gap-2'>
-													<span className='text-xs text-gray-500'>
-														{completedCount}/{category.items.length}
-													</span>
-													<div
-														className={cn(
-															'size-2 rounded-full',
-															isCompleted ? 'bg-success' : 'bg-warning'
-														)}
-													/>
-												</div>
-											</div>
-										</AccordionTrigger>
-										<AccordionContent className='px-2 pb-4'>
-											<div className='space-y-2'>
-												{category.items.map((item, itemIndex) => {
-													const questionIndex = getQuestionIndex(categoryIndex, itemIndex);
-													return (
-														<Card key={questionIndex} className='border border-gray-200'>
-															<CardContent className='space-y-3 p-3'>
-																{/* Question */}
-																<div className='flex gap-0.5'>
-																	<span className='mt-0.5 flex-shrink-0 text-sm font-medium text-foreground'>
-																		{questionIndex + 1}.
-																	</span>
-																	<p className='text-sm leading-relaxed text-foreground'>
-																		{item.text}
-																	</p>
-																</div>
-																{/* Rating Options */}
+												</TableCell>
+											</TableRow>
+
+											{/* Section Items */}
+											{category.items.map((item) => {
+												const currentQuestionIndex = questionIndex++;
+												return (
+													<TableRow
+														key={currentQuestionIndex}
+														className='cursor-default border-b bg-white last:border-b-0 hover:bg-white'
+													>
+														<TableCell className='py-4'>
+															<div className='flex gap-1'>
+																<span className='mt-0.5 text-sm font-medium text-gray-500'>
+																	{currentQuestionIndex + 1}.
+																</span>
+																<span className='text-sm leading-relaxed text-gray-700'>
+																	{item.text}
+																</span>
+															</div>
+														</TableCell>
+
+														{ratingOptions.map((option) => (
+															<TableCell key={option.value} className='py-4 text-center'>
 																<FormField
 																	control={form.control}
-																	name={`qns.${questionIndex}.rating`}
+																	name={`qns.${currentQuestionIndex}.rating`}
 																	render={({ field }) => (
 																		<FormItem>
 																			<FormControl>
@@ -431,58 +336,175 @@ const Entry = () => {
 																					onValueChange={(value) =>
 																						field.onChange(Number(value))
 																					}
-																					value={field.value?.toString()}
-																					className='grid grid-cols-1 gap-2'
+																					value={
+																						form
+																							.watch(
+																								`qns.${currentQuestionIndex}.rating`
+																							)
+																							?.toString() ?? ''
+																					}
+																					className='flex justify-center'
 																				>
-																					{ratingOptions.map((option) => (
-																						<div
-																							key={option.value}
-																							className='flex items-center space-x-3 rounded-lg border border-gray-200 p-2 hover:bg-gray-50'
+																					<div className='flex items-center'>
+																						<RadioGroupItem
+																							value={option.value.toString()}
+																							id={`${item.index}_${option.value}`}
+																							className='size-6 border border-gray-400'
+																							circleClassName='size-5'
+																						/>
+																						<Label
+																							htmlFor={`${item.index}_${option.value}`}
+																							className='sr-only'
 																						>
-																							<RadioGroupItem
-																								value={option.value.toString()}
-																								id={`mobile_${questionIndex}_${option.value}`}
-																								className='h-4 w-4'
-																							/>
-																							<Label
-																								htmlFor={`mobile_${questionIndex}_${option.value}`}
-																								className='flex flex-1 cursor-pointer items-center justify-between text-sm'
-																							>
-																								<span className='font-medium'>
-																									{option.label}
-																								</span>
-																								<span className='text-xs text-gray-500'>
-																									({option.range})
-																								</span>
-																							</Label>
-																						</div>
-																					))}
+																							{option.label}
+																						</Label>
+																					</div>
 																				</RadioGroup>
 																			</FormControl>
+
 																			<FormMessage />
 																		</FormItem>
 																	)}
 																/>
-															</CardContent>
-														</Card>
-													);
-												})}
-											</div>
-										</AccordionContent>
-									</AccordionItem>
-								);
-							})}
-						</Accordion>
-					</div>
-					<FormField
-						control={form.control}
-						name='remarks'
-						render={(props) => (
-							<CoreForm.Textarea label='Any Comments on the course teacher or the course?' {...props} />
-						)}
-					/>
-				</CoreForm.AddEditWrapper>
-			</div>
+															</TableCell>
+														))}
+													</TableRow>
+												);
+											})}
+										</>
+									))}
+								</TableBody>
+							</Table>
+						</div>
+
+						{/* Mobile Card View */}
+						<div className='md:hidden'>
+							<h3 className='mb-2 text-base font-semibold text-gray-900'>Performance Evaluation</h3>
+							<Accordion type='multiple' className='space-y-2'>
+								{evaluationCategories.map((category, categoryIndex) => {
+									const isCompleted = isCategoryCompleted(categoryIndex);
+									const completedCount = category.items.filter((_, itemIndex) => {
+										const questionIndex = getQuestionIndex(categoryIndex, itemIndex);
+										const fieldValue = form.watch(`qns.${questionIndex}.rating`);
+										return fieldValue && fieldValue !== 0;
+									}).length;
+
+									return (
+										<AccordionItem
+											key={categoryIndex}
+											value={'category-' + categoryIndex}
+											className='rounded-lg border'
+										>
+											<AccordionTrigger className='px-4 py-3 hover:no-underline'>
+												<div className='mr-2 flex w-full items-center justify-between'>
+													<span className='text-left text-sm font-medium'>
+														{category.section}
+													</span>
+													<div className='flex items-center gap-2'>
+														<span className='text-xs text-gray-500'>
+															{completedCount}/{category.items.length}
+														</span>
+														<div
+															className={cn(
+																'size-2 rounded-full',
+																isCompleted ? 'bg-success' : 'bg-warning'
+															)}
+														/>
+													</div>
+												</div>
+											</AccordionTrigger>
+											<AccordionContent className='px-2 pb-4'>
+												<div className='space-y-2'>
+													{category.items.map((item, itemIndex) => {
+														const questionIndex = getQuestionIndex(
+															categoryIndex,
+															itemIndex
+														);
+														return (
+															<Card
+																key={questionIndex}
+																className='border border-gray-200'
+															>
+																<CardContent className='space-y-3 p-3'>
+																	{/* Question */}
+																	<div className='flex gap-0.5'>
+																		<span className='mt-0.5 flex-shrink-0 text-sm font-medium text-foreground'>
+																			{questionIndex + 1}.
+																		</span>
+																		<p className='text-sm leading-relaxed text-foreground'>
+																			{item.text}
+																		</p>
+																	</div>
+																	{/* Rating Options */}
+																	<FormField
+																		control={form.control}
+																		name={`qns.${questionIndex}.rating`}
+																		render={({ field }) => (
+																			<FormItem>
+																				<FormControl>
+																					<RadioGroup
+																						onValueChange={(value) =>
+																							field.onChange(
+																								Number(value)
+																							)
+																						}
+																						value={field.value?.toString()}
+																						className='grid grid-cols-1 gap-2'
+																					>
+																						{ratingOptions.map((option) => (
+																							<div
+																								key={option.value}
+																								className='flex items-center space-x-3 rounded-lg border border-gray-200 p-2 hover:bg-gray-50'
+																							>
+																								<RadioGroupItem
+																									value={option.value.toString()}
+																									id={`mobile_${questionIndex}_${option.value}`}
+																									className='h-4 w-4'
+																								/>
+																								<Label
+																									htmlFor={`mobile_${questionIndex}_${option.value}`}
+																									className='flex flex-1 cursor-pointer items-center justify-between text-sm'
+																								>
+																									<span className='font-medium'>
+																										{option.label}
+																									</span>
+																									<span className='text-xs text-gray-500'>
+																										({option.range})
+																									</span>
+																								</Label>
+																							</div>
+																						))}
+																					</RadioGroup>
+																				</FormControl>
+																				<FormMessage />
+																			</FormItem>
+																		)}
+																	/>
+																</CardContent>
+															</Card>
+														);
+													})}
+												</div>
+											</AccordionContent>
+										</AccordionItem>
+									);
+								})}
+							</Accordion>
+						</div>
+						<FormField
+							control={form.control}
+							name='remarks'
+							render={(props) => (
+								<CoreForm.Textarea
+									label='Any Comments on the course teacher or the course?'
+									{...props}
+								/>
+							)}
+						/>
+					</CoreForm.AddEditWrapper>
+				</div>
+				{renderSuspenseModals([<DetailsModal open={open} setOpen={setOpen} content={<AlertInfo />} />])}
+			</>
 		);
 	}
 };

@@ -19,7 +19,7 @@ export const FormInfo = ({ data }: { data: ISemCrsThrEntry }) => {
 				</div>
 				<div className='sm:text space-x-2 text-xs italic'>
 					<span className='font-semibold'>Teacher:</span>
-					<span className='sm:text text-xs italic'>Teacher: {data?.teacher_name}</span>
+					<span className='sm:text text-xs italic'>{data?.teacher_name}</span>
 				</div>
 			</div>
 		</div>
