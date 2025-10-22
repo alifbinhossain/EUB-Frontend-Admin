@@ -20,6 +20,7 @@ export const DepartmentAccess = [
 	'physics',
 	'chemistry',
 	'mathematics',
+	'other',
 ];
 
 export const InfoAccess = [
