@@ -58,6 +58,7 @@ const Vendor = () => {
 				handleUpdate={handleUpdate}
 				handleDelete={handleDelete}
 				handleRefetch={refetch}
+				defaultVisibleColumns={{ remarks: false }}
 			>
 				{renderSuspenseModals([
 					<AddOrUpdate

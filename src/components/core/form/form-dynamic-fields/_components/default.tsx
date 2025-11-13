@@ -82,6 +82,11 @@ const DefaultDynamicFields: React.FC<Omit<DynamicFieldsProps, 'title' | 'viewAs'
 															render={(props) => (
 																<CoreForm.JoinInputUnit
 																	unit={fieldDef.unit(fieldIndex + startIndex)}
+																	subLabel={
+																		fieldDef.subLabel
+																			? fieldDef.subLabel(fieldIndex + startIndex)
+																			: undefined
+																	}
 																	disableLabel
 																	disabled={fieldDef.disabled}
 																	type={fieldDef.inputType}

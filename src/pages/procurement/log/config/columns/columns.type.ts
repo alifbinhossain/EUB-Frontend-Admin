@@ -7,6 +7,8 @@ export type IITemTransferTableData = {
 	max_quantity: number;
 	reason: string;
 	is_requisition_received: boolean;
+	table_name?: string;
+	remarks?: string;
 };
 
 // *Item work Order Entry

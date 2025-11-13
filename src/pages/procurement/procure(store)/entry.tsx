@@ -184,7 +184,6 @@ const Entry = () => {
 
 					const itemsPromise = item_work_order_entry?.map((entry, index) => {
 						if (rest.without_item_request) {
-							console.log(entry);
 							if (entry.uuid) {
 								const entryUpdateData = {
 									...entry,
