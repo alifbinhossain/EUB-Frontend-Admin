@@ -55,11 +55,9 @@ const ItemSelectFilter: React.FC<{ uuid?: string; form: any; index: number; disa
 					excludeOptions={optionsToExclude}
 					onChange={(e: ICustomItemSelectOptions) => {
 						if (form.watch('without_item_request')) {
-							console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 							form.setValue(`${fieldName}.${index}.item_uuid`, String(e?.value));
 							form.setValue(`${fieldName}.${index}.uuid`, '');
 						} else {
-							console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
 							form.setValue(`${fieldName}.${index}.uuid`, String(e?.value));
 							form.setValue(`${fieldName}.${index}.item_uuid`, String(e?.item_uuid));
 							form.setValue(`${fieldName}.${index}.request_quantity`, e?.request_quantity);

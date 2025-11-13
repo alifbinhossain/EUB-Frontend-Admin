@@ -53,3 +53,9 @@ export const useItemRequestedByUUID = <T>(uuid: string) =>
 		url: `/procure/item-work-order-entry/${uuid}`,
 		enabled: !!uuid,
 	});
+export const useItemReqTicketEntry = <T>(uuid: string) =>
+	useTQuery<T>({
+		queryKey: ItemTransferQK.itemReqTicketEntry(uuid),
+		url: `/procure/req-ticket-item/${uuid}`,
+		enabled: !!uuid,
+	});

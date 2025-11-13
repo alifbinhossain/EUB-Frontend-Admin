@@ -20,6 +20,9 @@ const ProcureCapitalDetails = lazy(() => import('@/pages/procurement/procure/det
 const Service = lazy(() => import('@/pages/procurement/service'));
 const ServiceEntry = lazy(() => import('@/pages/procurement/service/entry'));
 const ServiceDetails = lazy(() => import('@/pages/procurement/service/details'));
+const Ticket = lazy(() => import('@/pages/procurement/ticket'));
+const TicketEntry = lazy(() => import('@/pages/procurement/ticket/entry'));
+const TicketDetails = lazy(() => import('@/pages/procurement/ticket/details'));
 const InternalCostCenter = lazy(() => import('@/pages/procurement/internal-cost-center'));
 const Requisition = lazy(() => import('@/pages/procurement/requisition'));
 const RequisitionEntry = lazy(() => import('@/pages/procurement/requisition/entry'));
@@ -190,6 +193,39 @@ const procurementRoutes: IRoute[] = [
 				element: <ServiceDetails />,
 				hidden: true,
 				page_name: 'procurement__service_details',
+				actions: ['read'],
+			},
+
+			// ? Ticket
+			{
+				name: 'Ticket',
+				path: '/procurement/ticket',
+				element: <Ticket />,
+				page_name: 'procurement__ticket',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Ticket Entry',
+				path: '/procurement/ticket/create',
+				element: <TicketEntry />,
+				hidden: true,
+				page_name: 'procurement__ticket_entry',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Ticket Update',
+				path: '/procurement/ticket/:uuid/update',
+				element: <TicketEntry />,
+				hidden: true,
+				page_name: 'procurement__ticket_update',
+				actions: ['create', 'read', 'update', 'delete'],
+			},
+			{
+				name: 'Ticket Details',
+				path: '/procurement/ticket-details/:uuid',
+				element: <TicketDetails />,
+				hidden: true,
+				page_name: 'procurement__ticket_details',
 				actions: ['read'],
 			},
 

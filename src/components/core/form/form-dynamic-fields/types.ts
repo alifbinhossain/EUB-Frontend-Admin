@@ -47,6 +47,7 @@ type FieldJoinInputUnit = {
 	type: 'join-input-unit';
 	placeholder?: string;
 	unit: (index: number) => string;
+	subLabel?: (index: number) => string | undefined;
 	disabled?: boolean;
 	inputType?: string;
 };

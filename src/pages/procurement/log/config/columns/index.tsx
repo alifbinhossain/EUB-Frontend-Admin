@@ -16,7 +16,7 @@ import {
 export const vendorColumns = (): ColumnDef<IITemTransferTableData>[] => [
 	{
 		accessorKey: 'is_requisition_received',
-		header: 'Requisition Received',
+		header: 'Requisition\nReceived',
 		enableColumnFilter: true,
 		cell: (info) => <StatusButton value={info.getValue() as number} />,
 	},
@@ -33,6 +33,11 @@ export const vendorColumns = (): ColumnDef<IITemTransferTableData>[] => [
 	{
 		accessorKey: 'reason',
 		header: 'Reason',
+		enableColumnFilter: true,
+	},
+	{
+		accessorFn: (row) => row.remarks,
+		header: 'Remarks',
 		enableColumnFilter: true,
 	},
 ];
