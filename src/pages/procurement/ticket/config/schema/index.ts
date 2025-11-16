@@ -5,7 +5,7 @@ import { BOOLEAN_REQUIRED, NUMBER_REQUIRED, STRING_OPTIONAL, STRING_REQUIRED } f
 // Ticket Schema
 export const TICKET_SCHEMA = z.object({
 	is_resolved: BOOLEAN_REQUIRED.default(false),
-	department: STRING_REQUIRED,
+	department: z.enum(['maintenance', 'it']),
 	problem_description: STRING_REQUIRED,
 	req_ticket_item: z.array(
 		z.object({
@@ -19,7 +19,7 @@ export const TICKET_SCHEMA = z.object({
 
 export const TICKET_NULL: Partial<ITicket> = {
 	is_resolved: false,
-	department: '',
+	department: 'maintenance',
 	problem_description: '',
 	req_ticket_item: [],
 };

@@ -28,4 +28,7 @@ export default defineConfig({
 		// port: 3000,
 		port: isProduction ? 4045 : 3000,
 	},
+	preview: {
+		port: 3000,
+	},
 });
