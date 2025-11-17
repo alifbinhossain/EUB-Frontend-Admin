@@ -37,26 +37,29 @@ const useGenerateItemWorkOrder = ({
 	const { data: itemData } = useOtherItem<IFormSelectOption[]>();
 
 	return [
+		// {
+		// 	header: 'Item',
+		// 	accessorKey: 'item_uuid',
+		// 	type: 'select',
+		// 	options: itemData || [],
+		// 	unique: true,
+		// 	excludeOptions:
+		// 		data.items?.map((item) => item.item_uuid).filter((uuid): uuid is string => uuid !== undefined) || [],
+		// 	// onChange(option, field) {
+		// 	// 	// const index = field.name.split('.')[1];
+		// 	// 	// set(`items.${index}.unit_price`, option?.unit_price);
+		// 	// },
+		// },
 		{
 			header: 'Item',
-			accessorKey: 'item_uuid',
-			type: 'select',
-			options: itemData || [],
-			unique: true,
-			excludeOptions:
-				data.items?.map((item) => item.item_uuid).filter((uuid): uuid is string => uuid !== undefined) || [],
-			// onChange(option, field) {
-			// 	// const index = field.name.split('.')[1];
-			// 	// set(`items.${index}.unit_price`, option?.unit_price);
-			// },
+			accessorKey: 'item',
+			type: 'text',
 		},
+
 		{
 			header: 'Quantity',
 			accessorKey: 'quantity',
-			type: 'join-input-unit',
-			inputType: 'number',
-			unit: (index: number) =>
-				itemData?.find((item) => item.value === watch(`items.${index}.item_uuid`))?.unit ?? '',
+			type: 'number',
 		},
 		// {
 		// 	header: 'Unit Price',
