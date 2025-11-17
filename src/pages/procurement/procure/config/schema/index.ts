@@ -47,7 +47,7 @@ export const CAPITAL_SCHEMA = z
 			.array(
 				z.object({
 					uuid: STRING_OPTIONAL,
-					item_uuid: STRING_OPTIONAL,
+					item: STRING_OPTIONAL,
 					quantity: NUMBER_OPTIONAL.refine((val) => val !== undefined && val > 0, {
 						message: 'Must be greater than 0',
 					}),

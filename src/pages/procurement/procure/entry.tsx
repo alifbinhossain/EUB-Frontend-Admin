@@ -123,7 +123,7 @@ const Entry = () => {
 		});
 
 		// * Filtered entries
-		const filteredItems = items?.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item_uuid);
+		const filteredItems = items?.filter((entry) => (entry.quantity ?? 0) > 0 && entry.item);
 
 		if (subCategory === 'Items' && filteredItems?.length === 0) {
 			toast.warning('please add at least one item entry');
@@ -388,7 +388,7 @@ const Entry = () => {
 	// * ADD ITEMS
 	const handleAddItems = () => {
 		appendItems({
-			item_uuid: '',
+			item: '',
 			quantity: 0,
 			is_received: false,
 			// received_date: null,
@@ -467,7 +467,7 @@ const Entry = () => {
 		const field = items[index];
 		if (field) {
 			appendItems({
-				item_uuid: field.item_uuid,
+				item: field.item,
 				quantity: field.quantity,
 				is_received: field.is_received,
 				// received_date: field.received_date,

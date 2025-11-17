@@ -159,7 +159,7 @@ const useGenerateFieldDefs = ({
 				return (
 					<FieldActionButton
 						handleRemove={remove}
-						hidden={watch ? watch('is_received') : false}
+						hidden={watch ? watch('is_received') || watch('is_store_received') : false}
 						index={index}
 					/>
 				);

@@ -40,24 +40,6 @@ export const ticketColumns = (
 		header: 'Problem Description',
 		enableColumnFilter: false,
 	},
-
-	{
-		accessorKey: 'created_at',
-		header: 'Created At',
-		enableColumnFilter: true,
-		cell: (info) => <DateTime date={info.getValue() as Date} isTime={true} />,
-	},
-	{
-		accessorKey: 'updated_at',
-		header: 'Updated At',
-		enableColumnFilter: true,
-		cell: (info) => <DateTime date={info.getValue() as Date} isTime={true} />,
-	},
-	{
-		accessorKey: 'created_by_name',
-		header: 'Created By',
-		enableColumnFilter: true,
-	},
 ];
 
 // * Ticket Entry
